@@ -5,8 +5,39 @@ package Profiles;
  */
 public class CheckValues {
 
-    public static boolean checkPassword(String password){
-        return true;
+
+    /**
+     * Checks if a password is correct
+     * @param password password that will be checked
+     * @return -1 if correct, 0 if password is to short,
+     * 1 if password doesn't contain upper case letter,
+     * 2 if password doesn't contain lower case letter
+     */
+    public static int checkPassword(String password){
+        if(password.length() < 7){
+            return 0;
+        } else {
+            boolean upper = false;
+            boolean lower = false;
+            boolean number = false;
+            for (char c: password.toCharArray()){
+                if(Character.isUpperCase(c)){
+                    upper = true;
+                }else if(Character.isLowerCase(c)){
+                    lower = true;
+                } else if (Character.isDigit(c)){
+                    number = true;
+                }
+            }
+            if(!upper){
+                return 1;
+            }else if (!lower){
+                return 2;
+            } else if (!number){
+                return 3;
+            }
+        }
+        return -1;
     }
 
     public static boolean checkEmail(String email){
