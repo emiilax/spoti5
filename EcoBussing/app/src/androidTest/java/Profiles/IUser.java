@@ -5,7 +5,9 @@ package Profiles;
  */
 public interface IUser extends IProfile {
 
-    public String getPassword();
     public String getEmail();
+
+    public void setPassword(String password);
+    public boolean checkPassword(String password);
 
 }
