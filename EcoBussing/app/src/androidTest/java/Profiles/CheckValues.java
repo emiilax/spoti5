@@ -41,7 +41,7 @@ public class CheckValues {
     }
 
     public static boolean checkEmail(String email){
-        return email.contains("@");
+        return (email.contains("@")&&email.contains("."));
     }
 
     public static boolean checkUsernameAvailabilty(String username){return true;}
