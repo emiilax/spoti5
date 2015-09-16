@@ -32,7 +32,6 @@ public class CheckValuesTest {
     private void checkPasswords(){
         for(String s: passwords){
             int value = CheckValues.checkPassword(s);
-            System.out.println(value);
             if(value == -1) {
                 System.out.println(s + " is a correct password");
             } else {
