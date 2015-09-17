@@ -10,4 +10,5 @@ public interface IUser extends IProfile {
     public void setPassword(String password);
     public boolean checkPassword(String password);
 
+    public void incMoneySaved(double moneySaved);
 }

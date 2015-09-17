@@ -9,14 +9,11 @@ public class Calculator {
 
     public void calculateDistance() {}
 
-
-    public double calculateMoney(double distanceKM, double petrolConsumption) {
+    public double moneySaved(double distanceKM, double petrolConsumption) {
         return distanceKM*petrolPrice*petrolConsumption/10;
     }
 
-    public double calculateCarbon(double distanceKM, double carbondioxideWaste) {
+    public double carbonSaved(double distanceKM, double carbondioxideWaste) {
         return distanceKM*carbondioxideWaste/10;
     }
-
-
 }
