@@ -1,14 +1,11 @@
 package com.example.spoti5.ecobussing;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
 /**
@@ -64,6 +60,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         loadSelection(0);
+
+        playOverview(); //Starts the animation activity
+    }
+
+    /**
+     * Starts the animation activity if any CO2 has been gathered since the last launch.
+     * Set the anyCO2SavedSinceLaunch to true to try it out.
+     * Temporary location.
+     */
+    private void playOverview() {
+        boolean anyCO2SavedSinceLastLaunch = false;
+        if (anyCO2SavedSinceLastLaunch) {
+            Intent overview = new Intent(MainActivity.this, SaveAnimation.class);
+            startActivity(overview);
+        }
     }
 
     private void loadSelection(int i){

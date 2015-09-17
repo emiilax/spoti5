@@ -7,11 +7,6 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.4" />
         <option name="gradleJvm" value="1.7" />
-        <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.4" />
-        <option name="gradleHome" value="E:\Android SDK\gradle\gradle-2.4" />
->>>>>>> 8f390c06b43e649c34e30452577887a7106ef18a
-        <option name="gradleJvm" value="1.8" />
->>>>>>> 899ec914453c020bfa5134ca6024e05e25e38361
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
