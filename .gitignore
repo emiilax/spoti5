@@ -15,6 +15,7 @@ gen/
 # Android Studio
 *.iml
 .idea
+*/.idea
 
 # Gradle files
 .gradle/
