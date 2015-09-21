@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Temporary location.
      */
     private void playOverview() {
-        boolean anyCO2SavedSinceLastLaunch = false;
+        boolean anyCO2SavedSinceLastLaunch = true;
         if (anyCO2SavedSinceLastLaunch) {
-            Intent overview = new Intent(MainActivity.this, SaveAnimation.class);
+            Intent overview = new Intent(MainActivity.this, Overview.class);
             startActivity(overview);
         }
     }

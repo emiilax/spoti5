@@ -1,11 +1,9 @@
-package Tests;
-
-import android.content.SyncStatusObserver;
+package com.example.spoti5.ecobussing.Tests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Profiles.CheckValues;
+import com.example.spoti5.ecobussing.Profiles.CheckValues;
 
 /**
  * Created by erikk on 2015-09-16.

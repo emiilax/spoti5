@@ -1,4 +1,4 @@
-package Profiles;
+package com.example.spoti5.ecobussing.Profiles;
 
 /**
  * Created by erikk on 2015-09-16.
