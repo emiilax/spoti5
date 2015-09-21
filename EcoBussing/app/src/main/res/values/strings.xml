@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EcoBussing</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
