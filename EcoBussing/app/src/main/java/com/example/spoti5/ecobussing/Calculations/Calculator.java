@@ -1,4 +1,4 @@
-package Calculations;
+package com.example.spoti5.ecobussing.Calculations;
 
 /**
  * Created by hilden on 2015-09-16.
