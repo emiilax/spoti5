@@ -102,10 +102,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch(position){
             case 0:
+                getSupportActionBar().setTitle("Fragment 1");
                 break;
             case 1:
+                getSupportActionBar().setTitle("Fragment 2");
                 break;
             case 2:
+                getSupportActionBar().setTitle("Fragment 3");
                 break;
 
         }
