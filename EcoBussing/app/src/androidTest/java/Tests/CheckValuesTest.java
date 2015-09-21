@@ -17,6 +17,8 @@ public class CheckValuesTest {
     CheckValuesTest(){
         addPasswords();
         checkPasswords();
+        addEmails();
+        checkEmails();
     }
 
     private void addPasswords(){
@@ -27,6 +29,14 @@ public class CheckValuesTest {
         passwords.add("hejsan1");
         passwords.add("Hejsan1"); // 7
         passwords.add("2Hejsan");
+    }
+
+    private void addEmails(){
+        emails.add("erik");
+        emails.add("erik.");
+        emails.add("erik.k@");
+        emails.add("erik.karlkvist@gmail.com");
+        emails.add("dadsa@dsadsa.dsadsa");
     }
 
     private void checkPasswords(){
@@ -46,6 +56,16 @@ public class CheckValuesTest {
                 } else {
                     System.out.println(s + "is weird");
                 }
+            }
+        }
+    }
+
+    private void checkEmails(){
+        for(String s: emails){
+            if(CheckValues.checkEmail(s)){
+                System.out.println(s + " is a correct email");
+            } else {
+                System.out.println(s + " is not a correct email");
             }
         }
     }

@@ -10,6 +10,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_example">Example action</string>
+
+    <string name="login_title">Log in</string>
     
     <string-array name="planets_array">
         <item>Section 1</item>
