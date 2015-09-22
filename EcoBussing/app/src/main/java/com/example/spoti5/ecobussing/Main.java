@@ -6,5 +6,7 @@ import com.example.spoti5.ecobussing.Profiles.User;
  */
 public class Main {
 
-    private User currentUser;
+    public static void main(String Args) {
+        System.out.println("JAJAJAJJAJAJAJAJJAJAJAJAJJJAJJAJAJAJJAJAJAJAJJAJAJA");
+    }
 }

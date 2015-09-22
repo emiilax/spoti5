@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ab.setDisplayHomeAsUpEnabled(true);
         loadSelection(0);
 
-        playOverview(); //Starts the animation activity
+        playOverview(); //Starts the overview activity
     }
 
     /**
