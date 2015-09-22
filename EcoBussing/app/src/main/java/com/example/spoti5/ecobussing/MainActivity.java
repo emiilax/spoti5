@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
@@ -60,21 +61,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         loadSelection(0);
-
-        playOverview(); //Starts the overview activity
-    }
-
-    /**
-     * Starts the animation activity if any CO2 has been gathered since the last launch.
-     * Set the anyCO2SavedSinceLaunch to true to try it out.
-     * Temporary location.
-     */
-    private void playOverview() {
-        boolean anyCO2SavedSinceLastLaunch = true;
-        if (anyCO2SavedSinceLastLaunch) {
-            Intent overview = new Intent(MainActivity.this, Overview.class);
-            startActivity(overview);
-        }
     }
 
     private void loadSelection(int i){
