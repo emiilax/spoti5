@@ -9,6 +9,7 @@ public interface IUser extends IProfile {
 
     public void setPassword(String password);
     public boolean checkPassword(String password);
+    public boolean checkUsername(String username);
 
     public void incMoneySaved(double moneySaved);
 }
