@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
@@ -27,7 +30,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //private ActionBar actionBar;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private FragmentTransaction fragmentTransaction;
 
+    private DrawerListAdapter listAdapter;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,16 +40,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+        listAdapter = new DrawerListAdapter(this);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        planetTitles = getResources().getStringArray(R.array.planets_array);
+        //planetTitles = getResources().getStringArray(R.array.planets_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
 
         // Set the adapter for the list view
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, planetTitles));
+        //drawerList.setAdapter(new ArrayAdapter<String>(this,
+        //        R.layout.drawer_list_item, planetTitles));
+
+        drawerList.setAdapter(listAdapter);
 
         drawerList.setOnItemClickListener(this);
 
@@ -53,12 +62,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar1));
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Toolbar");
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
         loadSelection(0);
 
         playOverview(); //Starts the animation activity
@@ -108,12 +121,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return super.onOptionsItemSelected(item);
     }
-
+    View prevView = null;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        if(prevView != null ) prevView.setBackgroundResource(R.color.unClicked);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         switch(position){
             case 0:
                 getSupportActionBar().setTitle("Fragment 1");
+                view.setBackgroundResource(R.color.clicked);
+                ProfileFragment profileFragment = new ProfileFragment();
+
+                fragmentTransaction.replace(R.id.container, profileFragment);
+
                 break;
             case 1:
                 getSupportActionBar().setTitle("Fragment 2");
@@ -123,6 +145,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
 
         }
+
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }

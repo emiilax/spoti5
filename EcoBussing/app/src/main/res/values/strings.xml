@@ -14,13 +14,16 @@
 
     <string name="login_title">Log in</string>
     
-    <string-array name="planets_array">
-        <item>Section 1</item>
-        <item>Section 2</item>
-        <item>Section 3</item>
+    <string-array name="drawer_array">
+        <item>Fragment 1</item>
+        <item>Fragment 2</item>
+        <item>Fragment 3</item>
 
     </string-array>
 
 
     <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
