@@ -86,6 +86,11 @@ public class User implements IUser {
     }
 
     @Override
+    public boolean checkUsername(String username) {
+        return this.username.equals((String)username);
+    }
+
+    @Override
     public void incMoneySaved(double moneySaved) {
         this.moneySaved = this.moneySaved + moneySaved;
     }
