@@ -51,7 +51,7 @@
                 android:id="@+id/button"
                 />
         </LinearLayout>
-        
+
     </LinearLayout>
 
 </LinearLayout>
