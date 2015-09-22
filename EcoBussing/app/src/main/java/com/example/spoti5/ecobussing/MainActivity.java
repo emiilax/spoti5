@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.spoti5.ecobussing.Profiles.User;
+
 /**
  * Created by emilaxelsson on 16/09/15.
  */
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private DrawerLayout drawerLayout;
     private ListView drawerList;
     //private ActionBar actionBar;
+
+    private User currentUser;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
         loadSelection(0);
+
+        startOverviewActivity();
+        startLoginActivity();
     }
 
     private void loadSelection(int i){
@@ -111,5 +118,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Starts the login activity.
+     */
+    private void startLoginActivity() {
+        Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(loginActivity);
+    }
+
+    /**
+     * Starts the overview activity.
+     */
+    private void startOverviewActivity() {
+        Intent overviewActivity = new Intent(MainActivity.this, Overview.class);
+        MainActivity.this.startActivity(overviewActivity);
     }
 }
