@@ -8,24 +8,50 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:background="@color/Primary"
+        android:gravity="center"
         >
 
-        <FrameLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textSize="50dp"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Username"
+            android:ems="10"
+            android:id="@+id/editText" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@color/Primary"
+            android:gravity="right"
             >
-
-
-            <TextView
-                android:layout_width="fill_parent"
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/login_title"
-                android:textSize="50dp"
-                android:id="@+id/textView2" />
-        </FrameLayout>
-
+                android:text="Go!"
+                android:id="@+id/button"
+                />
+        </LinearLayout>
+        
     </LinearLayout>
+
 </LinearLayout>
