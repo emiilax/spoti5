@@ -62,17 +62,25 @@ public class RegisterActivity extends Activity {
             initStrings();
             boolean passIsCorrect = checkPasswords();
 
-            if(valuesNotNull()){
+            if(valuesisOk()){
                 boolean usernameExists = database.usernameExists(username);
-                if(checkPasswords()){
-
+                boolean emailIsOk = CheckValues.checkEmail(email);
+                if(!usernameExists) {
+                    inputError.setText("Username already exists");
+                }else if(!emailIsOk){
+                    inputError.setText("Invalid email");
+                } else {
+                    inputError.setText("");
+                }
+                if(passIsCorrect && usernameExists && emailIsOk){
+                    System.out.println("SUCCESS!!");
                 }
             }
 
         }
     };
 
-    private boolean valuesNotNull(){
+    private boolean valuesisOk(){
         if(name.equals("") || username.equals("") || email.equals("")){
             inputError.setText("All fields must be filled");
             return false;
