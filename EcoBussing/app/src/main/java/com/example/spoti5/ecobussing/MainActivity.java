@@ -14,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView drawerList;
     //private ActionBar actionBar;
 
-    private User currentUser;
+    public static User currentUser;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
@@ -44,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        currentUser = new User("e", "e", "e");
 
         listAdapter = new DrawerListAdapter(this);
 
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      * Starts the overview activity.
      */
     private void startOverviewActivity() {
-        Intent overviewActivity = new Intent(MainActivity.this, Overview.class);
+        Intent overviewActivity = new Intent(MainActivity.this, OverviewActivity.class);
         MainActivity.this.startActivity(overviewActivity);
     }
 }
