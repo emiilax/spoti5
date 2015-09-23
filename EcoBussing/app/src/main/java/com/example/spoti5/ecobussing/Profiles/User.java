@@ -9,8 +9,8 @@ public class User implements IUser {
     private String username;
     private String password;
     private String name;
-    private double distance;               //Total distance traveled by bus.
-    private double currentDistance;        //Distance traveled by bus that has not yet been converted into co2 and money.
+    private double distance;               //Total distance traveled by bus, in KM.
+    private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
     private double moneySaved;             //Amount of money saved in KR.
     private double carPetrolConsumption;   //Liters of gas required to go one european mile.
@@ -27,7 +27,7 @@ public class User implements IUser {
         this.password = password;
         this.email = email;
         this.distance = 0;
-        this.currentDistance = 0;
+        this.currentDistance = 10;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
         this.carPetrolConsumption = 0.5;
@@ -37,7 +37,7 @@ public class User implements IUser {
         this(username, email, password);
         this.name = name;
         this.distance = 0;
-        this.currentDistance = 0;
+        this.currentDistance = 10;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
         this.carPetrolConsumption = 0.5;

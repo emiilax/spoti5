@@ -28,11 +28,10 @@ public class OverviewActivity extends Activity {
     }
 
     private void getOverviewText() {
-        double co2Saved = Calculator.getCalculator().carbonSaved(SaveHandler.getCurrentUser().getCurrentDistance(),
-                SaveHandler.getCurrentUser().getCarPetrolConsumption());
+        double co2Saved = Calculator.getCalculator().getCarbonSaved();
 
         if (co2Saved > 0) {
-            carbonSaved = "Du har sparat " + Double.toString(co2Saved) + " sen senaste starten!";
+            carbonSaved = "Du har sparat " + Double.toString(co2Saved) + "g koldioxid sen senaste starten!";
         } else {
             carbonSaved = "Du har inte sparat någonting din tölp.";
         }
