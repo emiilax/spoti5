@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/Primary"
+        android:background="@color/clear_white"
         android:layout_gravity="center_horizontal">
 
         <TextView
@@ -18,11 +18,14 @@
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="280dp"
             android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"></LinearLayout>
+            android:text=""
+            android:textColor="@color/error_text_red"
+            android:layout_gravity="center_horizontal"
+            android:gravity="bottom"
+            android:id="@+id/input_error" />
 
         <EditText
             android:layout_width="280dp"
@@ -48,11 +51,14 @@
             android:id="@+id/email"
             android:layout_gravity="center_horizontal" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="280dp"
             android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"></LinearLayout>
+            android:text=""
+            android:textColor="@color/error_text_red"
+            android:layout_gravity="center_horizontal"
+            android:gravity="bottom"
+            android:id="@+id/password_error" />
 
         <EditText
             android:layout_width="280dp"

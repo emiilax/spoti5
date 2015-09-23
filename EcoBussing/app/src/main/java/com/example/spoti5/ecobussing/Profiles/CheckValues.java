@@ -12,6 +12,7 @@ public class CheckValues {
      * @return -1 if correct, 0 if password is to short,
      * 1 if password doesn't contain upper case letter,
      * 2 if password doesn't contain lower case letter
+     * 3 if password doesn't contain a number
      */
     public static int checkPassword(String password){
         if(password.length() < 7){

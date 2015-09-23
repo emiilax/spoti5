@@ -2,5 +2,6 @@
 <resources>
     <color name="Primary">#95e38c</color>
     <color name="clicked">#dda133</color>
-    <color name="unClicked">#ffffff</color>
+    <color name="clear_white">#ffffff</color>
+    <color name="error_text_red">#ff0100</color>
 </resources>

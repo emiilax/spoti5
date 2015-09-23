@@ -14,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
@@ -118,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if(prevView != null ) prevView.setBackgroundResource(R.color.unClicked);
+        if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch(position){
