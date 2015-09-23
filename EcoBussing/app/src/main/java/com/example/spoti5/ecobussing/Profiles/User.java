@@ -12,7 +12,8 @@ public class User implements IUser {
     private double distance;               //Total distance traveled by bus.
     private double currentDistance;        //Distance traveled by bus that has not yet been converted into co2 and money.
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
-    private double moneySaved;             //Amount of money saved.
+    private double moneySaved;             //Amount of money saved in KR.
+    private double carPetrolConsumption;   //Liters of gas required to go one european mile.
 
     /**
      * Creates a user with username, email and password. This class does not check
@@ -29,6 +30,7 @@ public class User implements IUser {
         this.currentDistance = 0;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
+        this.carPetrolConsumption = 0.5;
     }
 
     public User(String username, String email, String password, String name){
@@ -38,6 +40,7 @@ public class User implements IUser {
         this.currentDistance = 0;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
+        this.carPetrolConsumption = 0.5;
     }
 
     @Override
@@ -74,6 +77,12 @@ public class User implements IUser {
     public double getMoneySaved() {
         return moneySaved;
     }
+
+    @Override
+    public double getCarPetrolConsumption() { return carPetrolConsumption; }
+
+    @Override
+    public void setCarPetrolConsumption(double carPetrolConsumption) { this.carPetrolConsumption = carPetrolConsumption; }
 
     @Override
     public void setPassword(String password) {

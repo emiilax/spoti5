@@ -9,6 +9,7 @@ public interface IProfile {
     public String getName();
     public double getDistance();
     public double getCurrentDistance();
+    public double getCarPetrolConsumption();
     public double getCO2Saved();
     public double getMoneySaved();
 
@@ -19,4 +20,5 @@ public interface IProfile {
     public void incCurrentDistance(double addedDistance);
     public void resetCurrentDistance();
     public void incCO2Saved(double carbonSaved);
+    public void setCarPetrolConsumption(double carPetrolConsumption);
 }

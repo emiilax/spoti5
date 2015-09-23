@@ -5,7 +5,16 @@ package com.example.spoti5.ecobussing.Calculations;
  */
 public class Calculator {
 
+    private static Calculator calculator;
+
     private double petrolPrice = 14.32;
+
+    public static Calculator getCalculator() {
+        if (calculator == null) {
+            calculator = new Calculator();
+        }
+        return calculator;
+    }
 
     public void calculateDistance() {}
 

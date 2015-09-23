@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView drawerList;
     //private ActionBar actionBar;
 
-    public static User currentUser;
-
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
 
@@ -42,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-
-        currentUser = new User("e", "e", "e");
 
         listAdapter = new DrawerListAdapter(this);
 

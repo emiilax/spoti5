@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by erikk on 2015-09-21.
@@ -20,8 +21,6 @@ public class LoginActivity extends Activity{
     Button loginButton;
     TextView usernameField;
     TextView passwordField;
-
-    IUser tmpUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +34,6 @@ public class LoginActivity extends Activity{
         passwordField = (TextView) findViewById(R.id.passwordField);
 
         passwordField.setOnKeyListener(autoLogin);
-
-        tmpUser = new User("e", "erik@gmail.com", "h");
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -49,8 +46,9 @@ public class LoginActivity extends Activity{
     private void login(){
         String inputUsername = usernameField.getText().toString();
         String inputPassword = passwordField.getText().toString();
-        if(tmpUser.checkPassword(inputPassword) && tmpUser.checkUsername(inputUsername)){ //must be rewritten
-            //Database.getProfileInformationAndStoreSomewhere xD
+        if(SaveHandler.getCurrentUser().checkPassword(inputPassword) &&
+                SaveHandler.getCurrentUser().checkUsername(inputUsername)){ //must be rewritten
+            //Database.getProfileInformationAndStoreSomewhere
             finish();
         } else {
             System.out.println("Incorrect!");

@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+
 /**
  * Created by hilden on 2015-09-17.
  * A class to store the animations that displays your increase in saved carbondioxid and cash.
@@ -18,19 +21,20 @@ public class OverviewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview);
 
-        getOverviewStats();
+        getOverviewText();
 
         TextView overviewTextView = (TextView) findViewById(R.id.overviewtextview);
         overviewTextView.setText(carbonSaved);
     }
 
-    private void getOverviewStats() {
-        double co2Saved = MainActivity.currentUser.getCO2Saved();
+    private void getOverviewText() {
+        double co2Saved = Calculator.getCalculator().carbonSaved(SaveHandler.getCurrentUser().getCurrentDistance(),
+                SaveHandler.getCurrentUser().getCarPetrolConsumption());
 
         if (co2Saved > 0) {
             carbonSaved = "Du har sparat " + Double.toString(co2Saved) + " sen senaste starten!";
         } else {
-            carbonSaved = "Du har inte sparat någonting din nörd.";
+            carbonSaved = "Du har inte sparat någonting din tölp.";
         }
     }
 
