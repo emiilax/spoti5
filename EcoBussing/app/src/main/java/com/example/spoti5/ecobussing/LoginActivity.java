@@ -33,6 +33,8 @@ public class LoginActivity extends Activity{
         usernameField = (TextView) findViewById(R.id.usernameField);
         passwordField = (TextView) findViewById(R.id.passwordField);
 
+        //usernameField.setOnClickListener(resetField);
+
         tmpUser = new User("e", "erik@gmail.com", "h");
     }
 
@@ -41,7 +43,7 @@ public class LoginActivity extends Activity{
         public void onClick(View v) {
             String inputUsername = usernameField.getText().toString();
             String inputPassword = passwordField.getText().toString();
-            if(tmpUser.checkPassword(inputPassword) && tmpUser.checkUsername(inputUsername)){
+            if(tmpUser.checkPassword(inputPassword) && tmpUser.checkUsername(inputUsername)){ //must be rewritten
                 //Database.getProfileInformationAndStoreSomewhere xD
                 finish();
             } else {
@@ -49,4 +51,20 @@ public class LoginActivity extends Activity{
             }
         }
     };
+
+   /* View.OnClickListener resetField = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(usernameField.isFocused()){
+                System.out.println("Hello1");
+                String inputUsername = usernameField.getText().toString();
+                if(inputUsername.equals("Username")){
+                    usernameField.setText("");
+                    System.out.println("Hello2");
+                }
+            }
+
+            String inputPassword = passwordField.getText().toString();
+        }
+    };*/
 }

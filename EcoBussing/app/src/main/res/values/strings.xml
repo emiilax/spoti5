@@ -13,6 +13,8 @@
     <string name="action_example">Example action</string>
 
     <string name="login_title">Log in</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
     
     <string-array name="drawer_array">
         <item>Fragment 1</item>
