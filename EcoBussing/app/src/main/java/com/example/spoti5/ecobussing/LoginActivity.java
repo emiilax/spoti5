@@ -33,7 +33,7 @@ public class LoginActivity extends Activity{
         usernameField = (TextView) findViewById(R.id.usernameField);
         passwordField = (TextView) findViewById(R.id.passwordField);
 
-        tmpUser = new User("Erik", "erik@gmail.com", "hej");
+        tmpUser = new User("e", "erik@gmail.com", "h");
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -42,8 +42,8 @@ public class LoginActivity extends Activity{
             String inputUsername = usernameField.getText().toString();
             String inputPassword = passwordField.getText().toString();
             if(tmpUser.checkPassword(inputPassword) && tmpUser.checkUsername(inputUsername)){
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(intent);
+                //Database.getProfileInformationAndStoreSomewhere xD
+                finish();
             } else {
                 System.out.println("Incorrect!");
             }

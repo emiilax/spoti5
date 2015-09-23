@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.spoti5.ecobussing.Profiles.User;
+
 /**
  * Created by emilaxelsson on 16/09/15.
  */
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ListView drawerList;
     //private ActionBar actionBar;
 
+    private User currentUser;
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
@@ -74,20 +79,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         loadSelection(0);
 
-        playOverview(); //Starts the animation activity
-    }
-
-    /**
-     * Starts the animation activity if any CO2 has been gathered since the last launch.
-     * Set the anyCO2SavedSinceLaunch to true to try it out.
-     * Temporary location.
-     */
-    private void playOverview() {
-        boolean anyCO2SavedSinceLastLaunch = true;
-        if (anyCO2SavedSinceLastLaunch) {
-            Intent overview = new Intent(MainActivity.this, Overview.class);
-            startActivity(overview);
-        }
+        startOverviewActivity();
+        startLoginActivity();
     }
 
     private void loadSelection(int i){
@@ -151,5 +144,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Starts the login activity.
+     */
+    private void startLoginActivity() {
+        Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(loginActivity);
+    }
+
+    /**
+     * Starts the overview activity.
+     */
+    private void startOverviewActivity() {
+        Intent overviewActivity = new Intent(MainActivity.this, Overview.class);
+        MainActivity.this.startActivity(overviewActivity);
     }
 }
