@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".Overview"></activity>
+        <activity android:name=".RegisterActivity"></activity>
 
         <activity
             android:name=".LoginActivity"

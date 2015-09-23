@@ -15,7 +15,15 @@
     <string name="login_title">Log in</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
-    
+
+    <string name="register_title">Register</string>
+    <string name="email_hint">Email (exampel@domain.com)</string>
+    <string name="redo_password_hint">Password again</string>
+    <string name="Name_hint">Name (Optional)</string>
+    <string name="register_button">Register</string>
+
+
+
     <string-array name="drawer_array">
         <item>Fragment 1</item>
         <item>Fragment 2</item>
