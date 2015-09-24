@@ -19,7 +19,7 @@
     <string name="register_title">Register</string>
     <string name="email_hint">Email (exampel@domain.com)</string>
     <string name="redo_password_hint">Password again</string>
-    <string name="Name_hint">Name (Optional)</string>
+    <string name="Name_hint">Name</string>
     <string name="register_button">Register</string>
 
 
