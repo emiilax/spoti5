@@ -33,10 +33,10 @@ public class TmpDatabase implements IDatabase{
     public boolean usernameExists(String username) {
         for(IUser u: allUsers) {
             if (u.getUsername().equals(username)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override

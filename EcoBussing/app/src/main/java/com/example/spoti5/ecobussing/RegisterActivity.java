@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.TmpDatabase;
+import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
 import com.example.spoti5.ecobussing.Profiles.CheckValues;
+import com.example.spoti5.ecobussing.Profiles.User;
 
 import org.w3c.dom.Text;
 
@@ -65,15 +67,20 @@ public class RegisterActivity extends Activity {
             if(valuesisOk()){
                 boolean usernameExists = database.usernameExists(username);
                 boolean emailIsOk = CheckValues.checkEmail(email);
-                if(!usernameExists) {
+                if(usernameExists) {
                     inputError.setText("Username already exists");
                 }else if(!emailIsOk){
                     inputError.setText("Invalid email");
                 } else {
                     inputError.setText("");
                 }
-                if(passIsCorrect && usernameExists && emailIsOk){
-                    System.out.println("SUCCESS!!");
+                if(passIsCorrect && !usernameExists && emailIsOk){
+                    try{
+                        database.addUser(new User(username, email, password, name));
+                        System.out.println("hej");
+                    } catch (UsernameAlreadyExistsException e){
+                        inputError.setText("Something went wrong");
+                    }
                 }
             }
 
