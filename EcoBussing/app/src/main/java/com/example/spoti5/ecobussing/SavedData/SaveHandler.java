@@ -15,6 +15,8 @@ public class SaveHandler {
         return currentUser;
     }
 
+    public void changeUser(User newUser) { currentUser = newUser; }
+
     public void SaveUser() {}
 
     public void LoadUser() {}

@@ -26,8 +26,8 @@ public class User implements IUser {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.distance = 0;
-        this.currentDistance = 10;
+        this.distance = 10;
+        this.currentDistance = 2.4;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
         this.carPetrolConsumption = 0.5;
@@ -36,8 +36,8 @@ public class User implements IUser {
     public User(String username, String email, String password, String name){
         this(username, email, password);
         this.name = name;
-        this.distance = 0;
-        this.currentDistance = 10;
+        this.distance = 10;
+        this.currentDistance = 2.4;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
         this.carPetrolConsumption = 0.5;
@@ -115,8 +115,8 @@ public class User implements IUser {
     }
 
     @Override
-    public void incDistance(double addedDistance) {
-        distance = distance + addedDistance;
+    public void updateDistance() {
+        distance = distance + currentDistance;
     }
 
     @Override

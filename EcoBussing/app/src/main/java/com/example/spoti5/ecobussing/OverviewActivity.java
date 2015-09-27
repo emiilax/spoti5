@@ -1,8 +1,11 @@
 package com.example.spoti5.ecobussing;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
@@ -16,30 +19,70 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 public class OverviewActivity extends Activity {
 
     private String carbonSaved;
+    private boolean tappedBefore;
+    private TextView overviewTextView1;
+    private TextView overviewTextView2;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview);
+        overviewTextView1 = (TextView) findViewById(R.id.overviewtextview1);
+        overviewTextView2 = (TextView) findViewById(R.id.overviewtextview2);
 
-        getOverviewText();
-
-        TextView overviewTextView = (TextView) findViewById(R.id.overviewtextview);
-        overviewTextView.setText(carbonSaved);
+        setOverviewText1();
+        tappedBefore = false;
     }
 
-    private void getOverviewText() {
-        double co2Saved = Calculator.getCalculator().getCarbonSaved();
+    private void updateSaveHandler() {
+        SaveHandler.getCurrentUser().incCO2Saved(Calculator.getCalculator().getCurrentCarbonSaved());
+        SaveHandler.getCurrentUser().incMoneySaved(Calculator.getCalculator().getCurrentMoneySaved());
+        SaveHandler.getCurrentUser().updateDistance();
+        SaveHandler.getCurrentUser().resetCurrentDistance();
+    }
 
-        if (co2Saved > 0) {
-            carbonSaved = "Du har sparat " + Double.toString(co2Saved) + "g koldioxid sen senaste starten!";
+    private void setOverviewText1() {
+        double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
+
+        if (CO2Saved > 0) {
+            overviewTextView1.setText("Du har sparat " + Integer.toString((int)CO2Saved) + "mg koldioxid sen senaste starten!");
         } else {
-            carbonSaved = "Du har inte sparat någonting din tölp.";
+            overviewTextView1.setText("Du har inte sparat någonting din tölp.");
         }
+    }
+
+    private void setOverviewText2() {
+        double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
+        double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
+
+        animateTextView((int)totCO2Saved, (int)(CO2Saved+totCO2Saved), overviewTextView1);
+        overviewTextView2.setText("+" + Integer.toString((int) CO2Saved));
+    }
+
+    /**
+     * The animation of increasing a number until it reaches another number.
+     * Should probably be moved, maybe?
+     */
+    private void animateTextView(int initialValue, int finalValue, final TextView  textview) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt((int) initialValue, (int) finalValue);
+        valueAnimator.setDuration(1200);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                textview.setText("Totalt: " + valueAnimator.getAnimatedValue().toString() + " mg");
+            }
+        });
+        valueAnimator.start();
     }
 
     public void onScreenTouch(View v) {
         if(v.getId() == R.id.overviewBackground) {
-            this.finish();
+            if (!tappedBefore) {
+                setOverviewText2();
+                tappedBefore = true;
+            } else {
+                updateSaveHandler();
+                this.finish();
+            }
         }
     }
 }
