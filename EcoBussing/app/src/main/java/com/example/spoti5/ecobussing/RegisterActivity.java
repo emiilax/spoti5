@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,12 +10,9 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.TmpDatabase;
 import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
 import com.example.spoti5.ecobussing.Profiles.CheckValues;
 import com.example.spoti5.ecobussing.Profiles.User;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by erikk on 2015-09-23.
@@ -29,6 +27,7 @@ public class RegisterActivity extends Activity {
     EditText secondPasswordView;
     TextView passwordError;
     TextView inputError;
+    TextView login;
 
     String name;
     String username;
@@ -52,42 +51,56 @@ public class RegisterActivity extends Activity {
 
         passwordError = (TextView) findViewById(R.id.password_error);
         inputError = (TextView) findViewById(R.id.input_error);
+        login = (TextView) findViewById(R.id.logInString);
 
+        login.setOnClickListener(goToLogin);
         register_button.setOnClickListener(register);
 
+        secondPasswordView.setOnKeyListener(autoReg);
+
     }
+
+    View.OnClickListener goToLogin = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
 
     View.OnClickListener register = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDatabase();
-            initStrings();
-            boolean passIsCorrect = checkPasswords();
-
-            if(valuesisOk()){
-                boolean usernameExists = database.usernameExists(username);
-                boolean emailIsOk = CheckValues.checkEmail(email);
-                if(usernameExists) {
-                    inputError.setText("Username already exists");
-                }else if(!emailIsOk){
-                    inputError.setText("Invalid email");
-                } else {
-                    inputError.setText("");
-                }
-                if(passIsCorrect && !usernameExists && emailIsOk){
-                    try{
-                        database.addUser(new User(username, email, password, name));
-                        System.out.println("hej");
-                    } catch (UsernameAlreadyExistsException e){
-                        inputError.setText("Something went wrong");
-                    }
-                }
-            }
-
+            register();
         }
     };
 
-    private boolean valuesisOk(){
+    private void register(){
+        getDatabase();
+        initStrings();
+        boolean passIsCorrect = checkPasswords();
+
+        if(valuesIsOk()){
+            boolean usernameExists = database.usernameExists(username);
+            boolean emailIsOk = CheckValues.checkEmail(email);
+            if(usernameExists) {
+                inputError.setText("Username already exists");
+            }else if(!emailIsOk){
+                inputError.setText("Invalid email");
+            } else {
+                inputError.setText("");
+            }
+            if(passIsCorrect && !usernameExists && emailIsOk){
+                try{
+                    database.addUser(new User(username, email, password, name));
+                    System.out.println("hej");
+                } catch (UsernameAlreadyExistsException e){
+                    inputError.setText("Something went wrong");
+                }
+            }
+        }
+    }
+
+    private boolean valuesIsOk(){
         if(name.equals("") || username.equals("") || email.equals("")){
             inputError.setText("All fields must be filled");
             return false;
@@ -130,6 +143,16 @@ public class RegisterActivity extends Activity {
             return false;
         }
     }
+
+    View.OnKeyListener autoReg = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event){
+            if(keyCode == event.KEYCODE_ENTER){
+                register();
+            }
+            return true;
+        }
+    };
 
 
 }

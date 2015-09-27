@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         startOverviewActivity();
         startLoginActivity();
+        startRegisterActivity();
     }
 
     private void loadSelection(int i){
@@ -143,6 +144,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
+     * Starts the overview activity.
+     */
+    private void startRegisterActivity() {
+        Intent registerActivity = new Intent(MainActivity.this, RegisterActivity.class);
+        MainActivity.this.startActivity(registerActivity);
+    }
+
+    /**
      * Starts the login activity.
      */
     private void startLoginActivity() {
@@ -155,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
      */
     private void startOverviewActivity() {
         Intent overviewActivity = new Intent(MainActivity.this, OverviewActivity.class);
+        overviewActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         MainActivity.this.startActivity(overviewActivity);
     }
 }
