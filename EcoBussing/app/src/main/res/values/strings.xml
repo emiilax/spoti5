@@ -23,6 +23,10 @@
     <string name="register_button">Register</string>
     <string name="logIn"><u>Log in</u></string>
 
+    <string name="profile_name"> Name: </string>
+    <string name="profile_email"> Email: </string>
+    <string name="profile_Username"> Username: </string>
+
 
 
     <string-array name="drawer_array">

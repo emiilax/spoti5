@@ -13,6 +13,7 @@ import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
 import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by erikk on 2015-09-23.
@@ -91,7 +92,9 @@ public class RegisterActivity extends ActivityController {
             }
             if(passIsCorrect && !usernameExists && emailIsOk){
                 try{
-                    database.addUser(new User(username, email, password, name));
+                    User newUser = new User(username, email, password, name);
+                    database.addUser(newUser);
+                    SaveHandler.changeUser(newUser);
                     startOverviewActivity();
                 } catch (UsernameAlreadyExistsException e){
                     inputError.setText("Username already exits");

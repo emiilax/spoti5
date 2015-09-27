@@ -1,7 +1,6 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +15,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -117,7 +117,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                getSupportActionBar().setTitle("Fragment 1");
+                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getUsername());
                 view.setBackgroundResource(R.color.clicked);
                 ProfileFragment profileFragment = new ProfileFragment();
 
@@ -126,6 +126,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
             case 1:
                 getSupportActionBar().setTitle("Fragment 2");
+                view.setBackgroundResource(R.color.clicked);
+                BusinessFragment businessFragment = new BusinessFragment();
+
+                fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
                 getSupportActionBar().setTitle("Fragment 3");
