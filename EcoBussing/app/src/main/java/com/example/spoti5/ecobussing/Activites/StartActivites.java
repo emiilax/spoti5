@@ -9,8 +9,6 @@ import android.os.Bundle;
  */
 public class StartActivites extends ActivityController {
 
-
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {

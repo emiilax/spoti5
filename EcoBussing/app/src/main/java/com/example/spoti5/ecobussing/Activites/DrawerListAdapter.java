@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 22/09/15.
+ * Created b emilaxelsson on 22/09/15.
  */
 public class DrawerListAdapter extends BaseAdapter {
 

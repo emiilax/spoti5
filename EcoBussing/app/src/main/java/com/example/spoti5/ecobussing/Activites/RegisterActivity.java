@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
-import com.example.spoti5.ecobussing.Calculations.CheckValues;
+import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 
@@ -81,7 +81,7 @@ public class RegisterActivity extends ActivityController {
 
         if(valuesIsOk()){
             boolean usernameExists = database.usernameExists(username);
-            boolean emailIsOk = CheckValues.checkEmail(email);
+            boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
             if(usernameExists) {
                 inputError.setText("Username already exists");
             }else if(!emailIsOk){
@@ -94,7 +94,7 @@ public class RegisterActivity extends ActivityController {
                     database.addUser(new User(username, email, password, name));
                     startOverviewActivity();
                 } catch (UsernameAlreadyExistsException e){
-                    inputError.setText("Something went wrong");
+                    inputError.setText("Username already exits");
                 }
             }
         }
@@ -127,7 +127,7 @@ public class RegisterActivity extends ActivityController {
             passwordError.setText("Password must match");
             return false;
         } else {
-            int index = CheckValues.checkPassword(password);
+            int index = CheckCreateUserInput.checkPassword(password);
             switch (index){
                 case -1: passwordError.setText("");
                         return true;
