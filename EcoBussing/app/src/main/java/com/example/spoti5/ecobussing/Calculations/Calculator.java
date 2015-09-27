@@ -21,13 +21,21 @@ public class Calculator {
 
     public void calculateDistance() {}
 
-    public double getMoneySaved() {
+    /**
+     * Returns the amount of money saved since last startup.
+     * @return
+     */
+    public double getCurrentMoneySaved() {
         return (SaveHandler.getCurrentUser().getCurrentDistance()/10)
                 *petrolPrice*SaveHandler.getCurrentUser().getCarPetrolConsumption();
     }
 
-    public double getCarbonSaved() {
+    /**
+     * Returns the amount of carbondioxide saved since last startup.
+     * @return
+     */
+    public double getCurrentCarbonSaved() {
         return (SaveHandler.getCurrentUser().getCurrentDistance()/10)*SaveHandler.getCurrentUser().getCarPetrolConsumption()
-                *carbondioxideEmittedPerLiter;
+                *carbondioxideEmittedPerLiter*1000;
     }
 }

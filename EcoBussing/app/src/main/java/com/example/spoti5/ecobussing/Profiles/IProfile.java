@@ -15,7 +15,7 @@ public interface IProfile {
 
     public void setUsername(String username);
     public void setName(String name);
-    public void incDistance(double addedDistance);
+    public void updateDistance();
     public void decDistance(double reducedDistance);
     public void incCurrentDistance(double addedDistance);
     public void resetCurrentDistance();
