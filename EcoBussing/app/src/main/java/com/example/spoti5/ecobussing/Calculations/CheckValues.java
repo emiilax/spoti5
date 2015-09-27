@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Profiles;
+package com.example.spoti5.ecobussing.Calculations;
 
 /**
  * Created by erikk on 2015-09-16.
@@ -34,9 +34,9 @@ public class CheckValues {
                 return 1;
             }else if (!lower){
                 return 2;
-            } else if (!number){
+            }/* else if (!number){
                 return 3;
-            }
+            }*/
         }
         return -1;
     }

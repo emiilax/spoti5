@@ -3,7 +3,7 @@ package com.example.spoti5.ecobussing.Tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.spoti5.ecobussing.Profiles.CheckValues;
+import com.example.spoti5.ecobussing.Calculations.CheckValues;
 
 /**
  * Created by erikk on 2015-09-16.
