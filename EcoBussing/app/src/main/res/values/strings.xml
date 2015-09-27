@@ -30,9 +30,11 @@
 
 
     <string-array name="drawer_array">
-        <item>Fragment 1</item>
+        <item>Profile</item>
         <item>Fragment 2</item>
         <item>Fragment 3</item>
+        <item>Fragment 4</item>
+        <item>Log out</item>
 
     </string-array>
 

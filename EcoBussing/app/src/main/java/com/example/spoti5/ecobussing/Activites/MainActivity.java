@@ -73,12 +73,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
         loadSelection(0);
     }
 
     private void loadSelection(int i){
-        drawerList.setItemChecked(i,true);
+        drawerList.setItemChecked(i, true);
     }
 
 
@@ -135,6 +134,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 getSupportActionBar().setTitle("Fragment 3");
                 break;
 
+            case 3:
+                getSupportActionBar().setTitle("Fragment 3");
+                break;
+
+            case 4:
+                logout();
+                break;
+
         }
 
         fragmentTransaction.addToBackStack(null);
@@ -142,5 +149,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+    }
+
+    private void logout() {
+        startRegisterActivity();
     }
 }

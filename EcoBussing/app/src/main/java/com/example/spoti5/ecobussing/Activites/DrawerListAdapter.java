@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class DrawerListAdapter extends BaseAdapter {
 
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
+            if(item.equals("Profile")){
+                item = SaveHandler.getCurrentUser().getUsername();
+            }
             listItems.add(item);
         }
 
