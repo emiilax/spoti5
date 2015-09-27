@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -17,12 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.ProfileFragment;
+import com.example.spoti5.ecobussing.R;
 
 /**
  * Created by emilaxelsson on 16/09/15.
  */
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends ActivityController implements AdapterView.OnItemClickListener {
 
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
@@ -74,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         fragmentTransaction = fragmentManager.beginTransaction();
 
         loadSelection(0);
-
-        startOverviewActivity();
-        startLoginActivity();
-        startRegisterActivity();
     }
 
     private void loadSelection(int i){
@@ -141,30 +138,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * Starts the overview activity.
-     */
-    private void startRegisterActivity() {
-        Intent registerActivity = new Intent(MainActivity.this, RegisterActivity.class);
-        MainActivity.this.startActivity(registerActivity);
-    }
-
-    /**
-     * Starts the login activity.
-     */
-    private void startLoginActivity() {
-        Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
-        MainActivity.this.startActivity(loginActivity);
-    }
-
-    /**
-     * Starts the overview activity.
-     */
-    private void startOverviewActivity() {
-        Intent overviewActivity = new Intent(MainActivity.this, OverviewActivity.class);
-        overviewActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        MainActivity.this.startActivity(overviewActivity);
     }
 }

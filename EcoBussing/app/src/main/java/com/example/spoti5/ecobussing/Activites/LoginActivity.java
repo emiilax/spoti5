@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,12 +11,13 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by erikk on 2015-09-21.
  */
-public class LoginActivity extends Activity{
+public class LoginActivity extends ActivityController{
 
     Button loginButton;
     TextView usernameField;
@@ -48,8 +49,7 @@ public class LoginActivity extends Activity{
         String inputPassword = passwordField.getText().toString();
         if(SaveHandler.getCurrentUser().checkPassword(inputPassword) &&
                 SaveHandler.getCurrentUser().checkUsername(inputUsername)){ //must be rewritten
-            //Database.getProfileInformationAndStoreSomewhere
-            finish();
+            startOverviewActivity();
         } else {
             System.out.println("Incorrect!");
         }

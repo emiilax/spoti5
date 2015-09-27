@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
@@ -13,7 +14,7 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  * A class to store the animations that displays your increase in saved carbondioxid and cash.
  *
  */
-public class OverviewActivity extends Activity {
+public class OverviewActivity extends ActivityController {
 
     private String carbonSaved;
 
@@ -39,7 +40,7 @@ public class OverviewActivity extends Activity {
 
     public void onScreenTouch(View v) {
         if(v.getId() == R.id.overviewBackground) {
-            this.finish();
+            startMainActivity();
         }
     }
 }

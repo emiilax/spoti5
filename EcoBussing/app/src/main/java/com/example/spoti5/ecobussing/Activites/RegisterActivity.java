@@ -1,6 +1,5 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,13 +10,14 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
-import com.example.spoti5.ecobussing.Profiles.CheckValues;
+import com.example.spoti5.ecobussing.Calculations.CheckValues;
 import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.R;
 
 /**
  * Created by erikk on 2015-09-23.
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends ActivityController {
 
     Button register_button;
     EditText nameView;
@@ -63,7 +63,7 @@ public class RegisterActivity extends Activity {
     View.OnClickListener goToLogin = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
+            startLoginActivity();
         }
     };
 
@@ -92,7 +92,7 @@ public class RegisterActivity extends Activity {
             if(passIsCorrect && !usernameExists && emailIsOk){
                 try{
                     database.addUser(new User(username, email, password, name));
-                    System.out.println("hej");
+                    startOverviewActivity();
                 } catch (UsernameAlreadyExistsException e){
                     inputError.setText("Something went wrong");
                 }

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.content.Context;
 import android.support.v4.view.LayoutInflaterCompat;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.spoti5.ecobussing.R;
 
 import java.util.ArrayList;
 import java.util.List;
