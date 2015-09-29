@@ -1,7 +1,10 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -61,6 +64,15 @@ public class LoginActivity extends ActivityController{
             if(keyCode == event.KEYCODE_ENTER){
                 login();
             }
+
+            /*
+            WifiManager wifiMan = (WifiManager) getSystemService(
+                    Context.WIFI_SERVICE);
+            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+            String macAddr = wifiInf.getBSSID();
+            System.out.println(macAddr);
+            */
+
             return true;
         }
     };

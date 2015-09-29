@@ -112,6 +112,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch(position){

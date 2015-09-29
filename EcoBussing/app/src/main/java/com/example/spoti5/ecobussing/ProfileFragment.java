@@ -4,6 +4,7 @@ package com.example.spoti5.ecobussing;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class ProfileFragment extends Fragment {
 
     private User currentUser;
     private View currentView;
+    private ViewPager viewPager;
+    CustomSwipeAdapter swipeAdapter;
 
     public ProfileFragment() {
 
@@ -42,17 +45,20 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         currentUser = SaveHandler.getCurrentUser();
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
         setDataStrings(view);
         return view;
     }
 
     private void setDataStrings(View view){
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
-        TextView emailView = (TextView)view.findViewById(R.id.emailView);
+        TextView ageView = (TextView)view.findViewById(R.id.ageView);
         TextView usernameView = (TextView)view.findViewById(R.id.usernameView);
+        TextView positionView = (TextView)view.findViewById(R.id.positionView);
 
         nameView.setText(currentUser.getName());
-        emailView.setText(currentUser.getEmail());
+        ageView.setText(Integer.toString(currentUser.getAge()));
+        positionView.setText(Integer.toString(currentUser.getPosition()));
         usernameView.setText(currentUser.getUsername());
     }
 
