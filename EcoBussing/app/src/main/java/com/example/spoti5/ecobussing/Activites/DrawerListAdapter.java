@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.content.Context;
 import android.support.v4.view.LayoutInflaterCompat;
@@ -9,11 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 22/09/15.
+ * Created b emilaxelsson on 22/09/15.
  */
 public class DrawerListAdapter extends BaseAdapter {
 
@@ -25,6 +28,9 @@ public class DrawerListAdapter extends BaseAdapter {
 
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
+            if(item.equals("Profile")){
+                item = SaveHandler.getCurrentUser().getUsername();
+            }
             listItems.add(item);
         }
 

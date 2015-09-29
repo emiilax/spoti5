@@ -5,15 +5,35 @@
     android:id="@+id/overviewBackground"
     android:onClick="onScreenTouch">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="This is where the animation will be displayed, tap to close it."
-        android:id="@+id/textView"
+        android:text="Overview"
+        android:id="@+id/overviewtextviewheadline"
+        android:layout_marginTop="40dp"
+        android:textSize="50dp"
         android:layout_gravity="center_horizontal" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="CO2 SPARAT"
+        android:id="@+id/overviewtextview1"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="60dp"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/overviewtextview2"
+        android:layout_marginTop="-27dp"
+        android:layout_marginLeft="80dp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

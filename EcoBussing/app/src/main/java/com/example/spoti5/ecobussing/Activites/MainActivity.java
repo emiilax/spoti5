@@ -1,7 +1,6 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -9,20 +8,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+
+import com.example.spoti5.ecobussing.BusinessFragment;
+import com.example.spoti5.ecobussing.ProfileFragment;
+import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by emilaxelsson on 16/09/15.
  */
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends ActivityController implements AdapterView.OnItemClickListener {
 
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
@@ -71,27 +73,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
         loadSelection(0);
-
-        playOverview(); //Starts the animation activity
-    }
-
-    /**
-     * Starts the animation activity if any CO2 has been gathered since the last launch.
-     * Set the anyCO2SavedSinceLaunch to true to try it out.
-     * Temporary location.
-     */
-    private void playOverview() {
-        boolean anyCO2SavedSinceLastLaunch = true;
-        if (anyCO2SavedSinceLastLaunch) {
-            Intent overview = new Intent(MainActivity.this, Overview.class);
-            startActivity(overview);
-        }
     }
 
     private void loadSelection(int i){
-        drawerList.setItemChecked(i,true);
+        drawerList.setItemChecked(i, true);
     }
 
 
@@ -125,12 +111,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if(prevView != null ) prevView.setBackgroundResource(R.color.unclicked);
+        if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch(position){
             case 0:
-                getSupportActionBar().setTitle("Fragment 1");
+                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getUsername());
                 view.setBackgroundResource(R.color.clicked);
                 ProfileFragment profileFragment = new ProfileFragment();
 
@@ -139,9 +126,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case 1:
                 getSupportActionBar().setTitle("Fragment 2");
+                view.setBackgroundResource(R.color.clicked);
+                BusinessFragment businessFragment = new BusinessFragment();
+
+                fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
                 getSupportActionBar().setTitle("Fragment 3");
+                break;
+
+            case 3:
+                getSupportActionBar().setTitle("Fragment 3");
+                break;
+
+            case 4:
+                logout();
                 break;
 
         }
@@ -151,5 +150,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+    }
+
+    private void logout() {
+        startRegisterActivity();
     }
 }

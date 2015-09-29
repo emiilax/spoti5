@@ -9,10 +9,11 @@ public class User implements IUser {
     private String username;
     private String password;
     private String name;
-    private double distance;               //Total distance traveled by bus.
-    private double currentDistance;        //Distance traveled by bus that has not yet been converted into co2 and money.
+    private double distance;               //Total distance traveled by bus, in KM.
+    private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
-    private double moneySaved;             //Amount of money saved.
+    private double moneySaved;             //Amount of money saved in KR.
+    private double carPetrolConsumption;   //Liters of gas required to go one european mile.
 
     /**
      * Creates a user with username, email and password. This class does not check
@@ -25,19 +26,21 @@ public class User implements IUser {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.distance = 0;
-        this.currentDistance = 0;
+        this.distance = 10;
+        this.currentDistance = 2.4;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
+        this.carPetrolConsumption = 0.5;
     }
 
     public User(String username, String email, String password, String name){
         this(username, email, password);
         this.name = name;
-        this.distance = 0;
-        this.currentDistance = 0;
+        this.distance = 10;
+        this.currentDistance = 2.4;
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
+        this.carPetrolConsumption = 0.5;
     }
 
     @Override
@@ -76,6 +79,12 @@ public class User implements IUser {
     }
 
     @Override
+    public double getCarPetrolConsumption() { return carPetrolConsumption; }
+
+    @Override
+    public void setCarPetrolConsumption(double carPetrolConsumption) { this.carPetrolConsumption = carPetrolConsumption; }
+
+    @Override
     public void setPassword(String password) {
         this.password = password;
     }
@@ -106,8 +115,8 @@ public class User implements IUser {
     }
 
     @Override
-    public void incDistance(double addedDistance) {
-        distance = distance + addedDistance;
+    public void updateDistance() {
+        distance = distance + currentDistance;
     }
 
     @Override

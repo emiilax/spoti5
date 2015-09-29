@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EcoBussing</string>
     <string name="title_activity_drawer">DrawerActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_start_activities">EcoTravel</string>
 
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -13,11 +13,28 @@
     <string name="action_example">Example action</string>
 
     <string name="login_title">Log in</string>
-    
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+
+    <string name="register_title">Register</string>
+    <string name="email_hint">Email (exampel@domain.com)</string>
+    <string name="redo_password_hint">Password again</string>
+    <string name="Name_hint">Name</string>
+    <string name="register_button">Register</string>
+    <string name="logIn"><u>Log in</u></string>
+
+    <string name="profile_name"> Name: </string>
+    <string name="profile_email"> Email: </string>
+    <string name="profile_Username"> Username: </string>
+
+
+
     <string-array name="drawer_array">
-        <item>Fragment 1</item>
+        <item>Profile</item>
         <item>Fragment 2</item>
         <item>Fragment 3</item>
+        <item>Fragment 4</item>
+        <item>Log out</item>
 
     </string-array>
 
