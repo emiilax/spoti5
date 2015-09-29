@@ -1,7 +1,10 @@
 package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +50,12 @@ public class LoginActivity extends Activity{
             } else {
                 System.out.println("Incorrect!");
             }
+
+            WifiManager wifiMan = (WifiManager) getSystemService(
+                    Context.WIFI_SERVICE);
+            WifiInfo wifiInf = wifiMan.getConnectionInfo();
+            String macAddr = wifiInf.getBSSID();
+            System.out.println(macAddr);
         }
     };
 }
