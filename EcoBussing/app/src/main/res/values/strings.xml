@@ -27,6 +27,10 @@
     <string name="profile_email"> Email: </string>
     <string name="profile_Username"> Username: </string>
 
+    <string name="tab_1">Personer</string>
+    <string name="tab_2">Företag</string>
+
+
 
 
     <string-array name="drawer_array">
