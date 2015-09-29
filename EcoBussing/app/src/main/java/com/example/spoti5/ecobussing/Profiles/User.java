@@ -9,6 +9,8 @@ public class User implements IUser {
     private String username;
     private String password;
     private String name;
+    private int age;
+    private int position; //position in toplist
     private double distance;               //Total distance traveled by bus, in KM.
     private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
@@ -31,6 +33,8 @@ public class User implements IUser {
         this.carbondioxideSaved = 0;
         this.moneySaved = 0;
         this.carPetrolConsumption = 0.5;
+        this.age = 0;
+        this.position = 0;
     }
 
     public User(String username, String email, String password, String name){
@@ -97,6 +101,26 @@ public class User implements IUser {
     @Override
     public boolean checkUsername(String username) {
         return this.username.equals((String)username);
+    }
+
+    @Override
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public int getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
