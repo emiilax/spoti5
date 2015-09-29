@@ -42,8 +42,6 @@ public class RegisterActivity extends ActivityController {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Firebase.setAndroidContext(this);
-
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);

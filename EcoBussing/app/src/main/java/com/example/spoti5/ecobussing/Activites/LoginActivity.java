@@ -31,8 +31,6 @@ public class LoginActivity extends ActivityController{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Firebase.setAndroidContext(this);
-
         setContentView(R.layout.login_screen);
 
         loginButton = (Button) findViewById(R.id.loginButton);
