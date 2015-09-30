@@ -19,7 +19,6 @@ import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.example.spoti5.ecobussing.Tests.CalculatorTest;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -113,6 +112,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch(position){

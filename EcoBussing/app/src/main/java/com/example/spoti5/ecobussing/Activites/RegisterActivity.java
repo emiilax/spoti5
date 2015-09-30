@@ -14,6 +14,7 @@ import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.firebase.client.Firebase;
 
 /**
  * Created by erikk on 2015-09-23.
@@ -40,6 +41,9 @@ public class RegisterActivity extends ActivityController {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Firebase.setAndroidContext(this);
+
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);
