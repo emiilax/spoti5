@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,12 +24,14 @@ public class OverviewActivity extends ActivityController {
     private boolean tappedBefore;
     private TextView overviewTextView1;
     private TextView overviewTextView2;
+    private TextView overViewTextView3;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview);
         overviewTextView1 = (TextView) findViewById(R.id.overviewtextview1);
         overviewTextView2 = (TextView) findViewById(R.id.overviewtextview2);
+        overViewTextView3 = (TextView) findViewById(R.id.overviewtextview3);
 
         setOverviewText1();
         tappedBefore = false;
@@ -55,7 +58,8 @@ public class OverviewActivity extends ActivityController {
         double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
         double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
 
-        animateTextView((int)totCO2Saved, (int)(CO2Saved+totCO2Saved), overviewTextView1);
+        overviewTextView1.setVisibility(View.INVISIBLE);
+        animateTextView((int) totCO2Saved, (int) (CO2Saved + totCO2Saved), overViewTextView3);
         overviewTextView2.setText("+" + Integer.toString((int) CO2Saved));
     }
 

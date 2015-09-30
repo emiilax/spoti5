@@ -13,7 +13,7 @@ public class User implements IUser {
     private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
     private double moneySaved;             //Amount of money saved in KR.
-    private double carPetrolConsumption;   //Liters of gas required to go one european mile.
+    private double carPetrolConsumption;   //Liters of gas required to drive one european mile.
 
     /**
      * Creates a user with username, email and password. This class does not check
@@ -24,6 +24,7 @@ public class User implements IUser {
      */
     public User(String username, String email, String password){
         this.username = username;
+        this.name = username;
         this.password = password;
         this.email = email;
         this.distance = 10;
@@ -36,11 +37,6 @@ public class User implements IUser {
     public User(String username, String email, String password, String name){
         this(username, email, password);
         this.name = name;
-        this.distance = 10;
-        this.currentDistance = 2.4;
-        this.carbondioxideSaved = 0;
-        this.moneySaved = 0;
-        this.carPetrolConsumption = 0.5;
     }
 
     @Override
@@ -100,11 +96,6 @@ public class User implements IUser {
     }
 
     @Override
-    public void incMoneySaved(double moneySaved) {
-        this.moneySaved = this.moneySaved + moneySaved;
-    }
-
-    @Override
     public void setUsername(String username) {
         this.username = username;
     }
@@ -115,18 +106,13 @@ public class User implements IUser {
     }
 
     @Override
-    public void updateDistance() {
-        distance = distance + currentDistance;
-    }
-
-    @Override
     public void decDistance(double reducedDistance) {
         distance = distance + reducedDistance;
     }
 
     @Override
-    public void incCurrentDistance(double addedDistance) {
-        currentDistance = currentDistance + addedDistance;
+    public void updateDistance() {
+        distance = distance + currentDistance;
     }
 
     @Override
@@ -135,8 +121,23 @@ public class User implements IUser {
     }
 
     @Override
-    public void incCO2Saved(double carbonSaved) {
-        carbondioxideSaved = carbondioxideSaved + carbonSaved;
+    public void incCurrentDistance(double addedDistance) {
+        if (addedDistance > 0) {
+            currentDistance = currentDistance + addedDistance;
+        }
     }
 
+    @Override
+    public void incMoneySaved(double moneySaved) {
+        if (moneySaved > 0) {
+            this.moneySaved = this.moneySaved + moneySaved;
+        }
+    }
+
+    @Override
+    public void incCO2Saved(double carbonSaved) {
+        if (carbonSaved > 0) {
+            carbondioxideSaved = carbondioxideSaved + carbonSaved;
+        }
+    }
 }
