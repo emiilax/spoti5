@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import org.w3c.dom.Text;
+
+import java.util.Observable;
 
 
 /**
@@ -77,4 +80,5 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

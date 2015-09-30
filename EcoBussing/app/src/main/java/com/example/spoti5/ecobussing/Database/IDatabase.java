@@ -1,5 +1,7 @@
 package com.example.spoti5.ecobussing.Database;
 
+import android.app.Activity;
+
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.firebase.client.FirebaseException;
@@ -12,10 +14,8 @@ import java.util.List;
 public interface IDatabase {
     public List<IUser> getUsers();
     public List<IUser> getToplist();
-    public void addUser(String email, String password, final IUser user);
+    public void addUser(String email, String password, final IUser user, IDatabaseConnected connection);
     public boolean checkIfCorrectEmail();
-    public boolean checkIfCorrectUsername();
-    public boolean isDone();
 }
 
 

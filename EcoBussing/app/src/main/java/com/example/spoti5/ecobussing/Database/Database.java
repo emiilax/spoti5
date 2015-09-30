@@ -9,18 +9,19 @@ import com.firebase.client.ValueEventListener;
 
 import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by matildahorppu on 30/09/15.
  */
-public class Database implements IDatabase {
+public class Database implements IDatabase{
 
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
     private boolean correctUsername = false;
     private boolean correctEmail = false;
-    private boolean isDone = false;
 
     public Database() {
         //Initializing firebase ref
@@ -41,58 +42,33 @@ public class Database implements IDatabase {
         return correctEmail;
     }
 
-    public boolean checkIfCorrectUsername() {return correctUsername; }
-
-    public boolean isDone(){
-        return isDone;
-    }
-
     @Override
-    public void addUser(String email, String password, final IUser user){
-        isDone = false;
+    public void addUser(String email, String password, final IUser user, final IDatabaseConnected connection){
         correctEmail = false;
-        correctUsername = false;
 
-        firebaseRef.createUser(email, password, new Firebase.ResultHandler() {
+        firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
 
             @Override
             public void onSuccess() {
 
-                final Firebase tmpRef = firebaseRef.child("users").child(user.getUsername());
-
-                tmpRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                Firebase tmpRef = firebaseRef.child("users").push();
+                tmpRef.setValue(user, new Firebase.CompletionListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.getValue() == null) {
-                            System.out.println("hello");
-                            correctUsername = true;
-                            correctEmail = true;
-                            isDone = true;
-                            tmpRef.setValue(user);
-                        } else {
-                            correctUsername = false;
-                            isDone = true;
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(FirebaseError firebaseError) {
-                        
+                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                        correctEmail = true;
+                        connection.addingUserFinished();
                     }
                 });
 
-                System.out.println("e" + correctEmail);
-                System.out.println("u" + correctUsername);
 
             }
+
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
                 correctEmail = false;
-                isDone = true;
+                connection.addingUserFinished();
             }
         });
     }
-
-
 }

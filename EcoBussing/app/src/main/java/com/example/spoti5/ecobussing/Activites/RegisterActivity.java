@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
 import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
@@ -17,10 +18,14 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseException;
 
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by erikk on 2015-09-23.
  */
-public class RegisterActivity extends ActivityController {
+public class RegisterActivity extends ActivityController implements IDatabaseConnected {
 
     Button register_button;
     EditText nameView;
@@ -94,21 +99,7 @@ public class RegisterActivity extends ActivityController {
             }
             if(passIsCorrect && emailIsOk){
                 User newUser = new User(username, email, password, name);
-                database.addUser(email, password, newUser);
-
-                if(!(database.checkIfCorrectEmail())){
-                    inputError.setText("Email already exists");
-                } else if (!(database.checkIfCorrectUsername())) {
-                    inputError.setText("Username already exists");
-                } else {
-                    //Logga in användaren på firebas!!!!!
-                    //SaveHandler.changeUser(newUser);
-                    //startOverviewActivity();
-                }
-
-
-
-
+                database.addUser(email, password, newUser, this);
             }
         }
     }
@@ -150,22 +141,50 @@ public class RegisterActivity extends ActivityController {
                         return false;
                 case 2: passwordError.setText("Password must contain an lower case letter");
                         return false;
-                case 3: passwordError.setText("Password must contain an number");
+                case 3: passwordError.setText("Password must contain a number");
                         return false;
             }
             return false;
         }
     }
 
-    View.OnKeyListener autoReg = new View.OnKeyListener() {
+    boolean timerRunning = false;
+    private View.OnKeyListener autoReg = new View.OnKeyListener() {
         @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event){
-            if(keyCode == event.KEYCODE_ENTER){
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+            final Timer t = new Timer();
+
+            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
                 register();
             }
-            return true;
+
+            /**
+             * Timer, otherwise it calls the database twice
+             */
+            timerRunning = true;
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timerRunning = false;
+                    t.cancel();
+                }
+            }, 5000);
+
+
+        return true;
         }
     };
 
 
+    @Override
+    public void addingUserFinished() {
+        if(!(database.checkIfCorrectEmail())){
+            inputError.setText("Email already exists");
+        } else {
+            //Logga in användaren på firebas!!!!!
+            //SaveHandler.changeUser(newUser);
+            //startOverviewActivity();
+        }
+    }
 }
