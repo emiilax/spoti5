@@ -8,7 +8,7 @@ public class DatabaseHolder {
 
     public static IDatabase getDatabase(){
         if(database == null){
-            database = new TmpDatabase();
+            database = new Database();
             return database;
         } else {
             return database;

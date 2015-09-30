@@ -19,6 +19,7 @@ import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.firebase.client.Firebase;
 
 /**
  * Created by emilaxelsson on 16/09/15.

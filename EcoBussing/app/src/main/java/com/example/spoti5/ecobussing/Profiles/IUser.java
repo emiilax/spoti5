@@ -24,6 +24,7 @@ public interface IUser extends IProfile {
     public boolean checkUsername(String username);
     public int getAge();
     public int getPosition();
+    public String getPassword();
 
     public void setAge(int age);
     public void setPosition(int position);

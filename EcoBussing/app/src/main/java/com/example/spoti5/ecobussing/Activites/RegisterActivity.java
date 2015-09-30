@@ -15,6 +15,7 @@ import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseException;
 
 /**
  * Created by erikk on 2015-09-23.
@@ -41,8 +42,6 @@ public class RegisterActivity extends ActivityController {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Firebase.setAndroidContext(this);
 
         setContentView(R.layout.register_screen);
 
@@ -85,24 +84,31 @@ public class RegisterActivity extends ActivityController {
         boolean passIsCorrect = checkPasswords();
 
         if(valuesIsOk()){
-            boolean usernameExists = database.usernameExists(username);
+
             boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
-            if(usernameExists) {
-                inputError.setText("Username already exists");
-            }else if(!emailIsOk){
+
+            if(!emailIsOk){
                 inputError.setText("Invalid email");
             } else {
                 inputError.setText("");
             }
-            if(passIsCorrect && !usernameExists && emailIsOk){
-                try{
-                    User newUser = new User(username, email, password, name);
-                    database.addUser(newUser);
-                    SaveHandler.changeUser(newUser);
-                    startOverviewActivity();
-                } catch (UsernameAlreadyExistsException e){
-                    inputError.setText("Username already exits");
+            if(passIsCorrect && emailIsOk){
+                User newUser = new User(username, email, password, name);
+                database.addUser(email, password, newUser);
+
+                if(!(database.checkIfCorrectEmail())){
+                    inputError.setText("Email already exists");
+                } else if (!(database.checkIfCorrectUsername())) {
+                    inputError.setText("Username already exists");
+                } else {
+                    //Logga in användaren på firebas!!!!!
+                    //SaveHandler.changeUser(newUser);
+                    //startOverviewActivity();
                 }
+
+
+
+
             }
         }
     }

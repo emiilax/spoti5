@@ -109,6 +109,11 @@ public class User implements IUser {
     }
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     public void setAge(int age) {
         this.age = age;
     }
