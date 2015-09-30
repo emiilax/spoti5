@@ -93,14 +93,22 @@ public class RegisterActivity extends ActivityController {
                 inputError.setText("");
             }
             if(passIsCorrect && emailIsOk){
-                try{
-                    User newUser = new User(username, email, password, name);
-                    database.addUser(email, password, newUser);
+                User newUser = new User(username, email, password, name);
+                database.addUser(email, password, newUser);
+
+                if(!(database.checkIfCorrectEmail())){
+                    inputError.setText("Email already exists");
+                } else if (!(database.checkIfCorrectUsername())) {
+                    inputError.setText("Username already exists");
+                } else {
+                    //Logga in användaren på firebas!!!!!
                     //SaveHandler.changeUser(newUser);
                     //startOverviewActivity();
-                } catch (Exception e){
-                    inputError.setText("Username already exits");
                 }
+
+
+
+
             }
         }
     }

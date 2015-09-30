@@ -12,5 +12,12 @@ import java.util.List;
 public interface IDatabase {
     public List<IUser> getUsers();
     public List<IUser> getToplist();
-    public void addUser(String email, String password, final IUser user) throws Exception;
+    public void addUser(String email, String password, final IUser user);
+    public boolean checkIfCorrectEmail();
+    public boolean checkIfCorrectUsername();
+    public boolean isDone();
 }
+
+
+
+
