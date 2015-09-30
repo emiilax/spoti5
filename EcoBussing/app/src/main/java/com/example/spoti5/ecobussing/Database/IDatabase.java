@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing.Database;
 
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.firebase.client.FirebaseException;
 
 import java.util.List;
 
@@ -11,11 +12,5 @@ import java.util.List;
 public interface IDatabase {
     public List<IUser> getUsers();
     public List<IUser> getToplist();
-
-    public boolean usernameExists(String username);
-
-    /**
-     * Throws exception if username already existz
-     */
-    public void addUser(IUser user) throws UsernameAlreadyExistsException;
+    public void addUser(String email, String password, final IUser user) throws Exception;
 }
