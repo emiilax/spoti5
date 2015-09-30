@@ -56,13 +56,11 @@ public class ProfileFragment extends Fragment {
     private void setDataStrings(View view){
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
         TextView ageView = (TextView)view.findViewById(R.id.ageView);
-        TextView usernameView = (TextView)view.findViewById(R.id.usernameView);
         TextView positionView = (TextView)view.findViewById(R.id.positionView);
 
         nameView.setText(currentUser.getName());
         ageView.setText(Integer.toString(currentUser.getAge()));
         positionView.setText(Integer.toString(currentUser.getPosition()));
-        usernameView.setText(currentUser.getUsername());
     }
 
     @Override

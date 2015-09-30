@@ -15,7 +15,9 @@ public interface IDatabase {
     public List<IUser> getUsers();
     public List<IUser> getToplist();
     public void addUser(String email, String password, final IUser user, IDatabaseConnected connection);
+    public void loginUser(String email, String password, IDatabaseConnected connection);
     public boolean checkIfCorrectEmail();
+    public boolean successLogin();
 }
 
 

@@ -1,31 +1,29 @@
 package com.example.spoti5.ecobussing.Activites;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Profiles.IProfile;
-import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.firebase.client.Firebase;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by erikk on 2015-09-21.
  */
-public class LoginActivity extends ActivityController{
+public class LoginActivity extends ActivityController implements IDatabaseConnected{
 
     Button loginButton;
-    TextView usernameField;
+    TextView emailField;
     TextView passwordField;
+    IDatabase database;
+    TextView error;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,10 +34,13 @@ public class LoginActivity extends ActivityController{
         loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(login);
 
-        usernameField = (TextView) findViewById(R.id.usernameField);
+        emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
+        error = (TextView) findViewById(R.id.login_error);
 
         passwordField.setOnKeyListener(autoLogin);
+
+        database = DatabaseHolder.getDatabase();
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -50,22 +51,32 @@ public class LoginActivity extends ActivityController{
     };
 
     private void login(){
-        String inputUsername = usernameField.getText().toString();
+        String inputEmail = emailField.getText().toString();
         String inputPassword = passwordField.getText().toString();
-        if(SaveHandler.getCurrentUser().checkPassword(inputPassword) &&
-                SaveHandler.getCurrentUser().checkUsername(inputUsername)){ //must be rewritten
-            startOverviewActivity();
-        } else {
-            System.out.println("Incorrect!");
-        }
+        database.loginUser(inputEmail, inputPassword, this);
     }
 
+    boolean timerRunning = false;
     View.OnKeyListener autoLogin = new View.OnKeyListener() {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event){
-            if(keyCode == event.KEYCODE_ENTER){
+            final Timer t = new Timer();
+
+            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
                 login();
             }
+
+            /**
+             * Timer, otherwise it calls the database twice
+             */
+            timerRunning = true;
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timerRunning = false;
+                    t.cancel();
+                }
+            }, 5000);
 
             /*
             WifiManager wifiMan = (WifiManager) getSystemService(
@@ -78,4 +89,19 @@ public class LoginActivity extends ActivityController{
             return true;
         }
     };
+
+    @Override
+    public void addingUserFinished() {
+        //never used here
+    }
+
+    @Override
+    public void loginFinished() {
+        if(database.successLogin()){
+            //SaveHandler ska byta till nya user här
+            startOverviewActivity();
+        } else {
+            error.setText("Fel användarnamn eller lösenord");
+        }
+    }
 }

@@ -41,14 +41,14 @@ public class BusinessProfile implements IProfile {
     public void addModeratorMember(User creator, User user) {
         boolean userAlreadyModerator = false;
         boolean userIsMember = false;
-        if (creatorMember.getUsername() == creator.getUsername()) {
+        if (creatorMember.getEmail() == creator.getEmail()) {
             for (int i = 0; i < moderatorMembers.size(); i++) {
-                if (moderatorMembers.get(i).getUsername() == user.getUsername()) {
+                if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
                     userAlreadyModerator = true;
                 }
             }
             for (int j = 0; j < members.size(); j++) {
-                if (members.get(j).getUsername() == user.getUsername()) {
+                if (members.get(j).getEmail() == user.getEmail()) {
                     userIsMember = true;
                 }
             }
@@ -65,7 +65,7 @@ public class BusinessProfile implements IProfile {
     public void addMember(User user) {
         boolean alreadyMember = false;
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getUsername() == user.getUsername()) {
+            if (members.get(i).getEmail() == user.getEmail()) {
                 alreadyMember = true;
             }
         }
@@ -81,9 +81,9 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void removeModeratorMember(User creator, User user) {
-        if (creator.getUsername() == creatorMember.getUsername()) {
+        if (creator.getEmail() == creatorMember.getEmail()) {
             for (int i = 0; i < moderatorMembers.size(); i++) {
-                if (moderatorMembers.get(i).getUsername() == user.getUsername()) {
+                if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
                     moderatorMembers.remove(i);
                     break;
                 }
@@ -97,13 +97,13 @@ public class BusinessProfile implements IProfile {
      */
     public void removeMember(User user) {
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getUsername() == user.getUsername()) {
+            if (members.get(i).getEmail() == user.getEmail()) {
                 members.remove(i);
                 break;
             }
         }
         for (int j = 0; j < moderatorMembers.size(); j++) {
-            if (members.get(j).getUsername() == user.getUsername()) {
+            if (members.get(j).getEmail() == user.getEmail()) {
                 moderatorMembers.remove(j);
                 break;
             }

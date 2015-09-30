@@ -5,4 +5,5 @@ package com.example.spoti5.ecobussing.Database;
  */
 public interface IDatabaseConnected {
     public void addingUserFinished();
+    public void loginFinished();
 }

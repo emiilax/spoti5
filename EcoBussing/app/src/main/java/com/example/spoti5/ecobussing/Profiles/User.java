@@ -6,8 +6,6 @@ package com.example.spoti5.ecobussing.Profiles;
 public class User implements IUser {
 
     private String email;
-    private String username;
-    private String password;
     private String name;
     private int age;
     private int position; //position in toplist
@@ -20,14 +18,9 @@ public class User implements IUser {
     /**
      * Creates a user with username, email and password. This class does not check
      * username and password
-     * @param username Has to be checked before entered here
      * @param email Has to cbe checked before entered here
-     * @param password Has to be checked before entered here
      */
-    public User(String username, String email, String password){
-        this.username = username;
-        this.name = username;
-        this.password = password;
+    public User(String email){
         this.email = email;
         this.distance = 10;
         this.currentDistance = 2.4;
@@ -38,8 +31,8 @@ public class User implements IUser {
         this.position = 0;
     }
 
-    public User(String username, String email, String password, String name){
-        this(username, email, password);
+    public User(String email, String name){
+        this(email);
         this.name = name;
     }
 
@@ -48,10 +41,6 @@ public class User implements IUser {
         return email;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public String getName() {
@@ -84,21 +73,6 @@ public class User implements IUser {
     @Override
     public void setCarPetrolConsumption(double carPetrolConsumption) { this.carPetrolConsumption = carPetrolConsumption; }
 
-    @Override
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public boolean checkPassword(String password) {
-        return this.password.equals((String)password);
-    }
-
-    @Override
-    public boolean checkUsername(String username) {
-        return this.username.equals((String)username);
-    }
-
     public int getAge() {
         return age;
     }
@@ -109,11 +83,6 @@ public class User implements IUser {
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public void setAge(int age) {
         this.age = age;
     }
@@ -121,11 +90,6 @@ public class User implements IUser {
     @Override
     public void setPosition(int position) {
         this.position = position;
-    }
-
-    @Override
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override

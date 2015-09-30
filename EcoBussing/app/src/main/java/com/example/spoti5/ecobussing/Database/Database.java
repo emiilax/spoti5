@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.Database;
 
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -22,6 +23,7 @@ public class Database implements IDatabase{
     private Firebase firebaseRef;
     private boolean correctUsername = false;
     private boolean correctEmail = false;
+    private boolean successLogin = false;
 
     public Database() {
         //Initializing firebase ref
@@ -43,14 +45,17 @@ public class Database implements IDatabase{
     }
 
     @Override
+    public boolean successLogin() {
+        return successLogin;
+    }
+
+    @Override
     public void addUser(String email, String password, final IUser user, final IDatabaseConnected connection){
         correctEmail = false;
-
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
 
             @Override
             public void onSuccess() {
-
                 Firebase tmpRef = firebaseRef.child("users").push();
                 tmpRef.setValue(user, new Firebase.CompletionListener() {
                     @Override
@@ -59,8 +64,6 @@ public class Database implements IDatabase{
                         connection.addingUserFinished();
                     }
                 });
-
-
             }
 
             @Override
@@ -68,6 +71,26 @@ public class Database implements IDatabase{
                 System.out.println(firebaseError.getMessage());
                 correctEmail = false;
                 connection.addingUserFinished();
+            }
+        });
+    }
+
+
+    @Override
+    public void loginUser(String email, String password, final IDatabaseConnected connection){
+        successLogin = false;
+        firebaseRef.child("users").authWithPassword(email, password, new Firebase.AuthResultHandler(){
+
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                successLogin = true;
+                connection.loginFinished();
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                successLogin = false;
+                connection.loginFinished();
             }
         });
     }
