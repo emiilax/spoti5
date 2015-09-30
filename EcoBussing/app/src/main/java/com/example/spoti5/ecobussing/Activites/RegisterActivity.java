@@ -14,6 +14,8 @@ import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseException;
 
 /**
  * Created by erikk on 2015-09-23.
@@ -40,6 +42,7 @@ public class RegisterActivity extends ActivityController {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);
@@ -81,22 +84,21 @@ public class RegisterActivity extends ActivityController {
         boolean passIsCorrect = checkPasswords();
 
         if(valuesIsOk()){
-            boolean usernameExists = database.usernameExists(username);
+
             boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
-            if(usernameExists) {
-                inputError.setText("Username already exists");
-            }else if(!emailIsOk){
+
+            if(!emailIsOk){
                 inputError.setText("Invalid email");
             } else {
                 inputError.setText("");
             }
-            if(passIsCorrect && !usernameExists && emailIsOk){
+            if(passIsCorrect && emailIsOk){
                 try{
                     User newUser = new User(username, email, password, name);
-                    database.addUser(newUser);
-                    SaveHandler.changeUser(newUser);
-                    startOverviewActivity();
-                } catch (UsernameAlreadyExistsException e){
+                    database.addUser(email, password, newUser);
+                    //SaveHandler.changeUser(newUser);
+                    //startOverviewActivity();
+                } catch (Exception e){
                     inputError.setText("Username already exits");
                 }
             }

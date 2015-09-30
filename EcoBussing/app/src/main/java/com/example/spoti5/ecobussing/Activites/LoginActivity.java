@@ -16,6 +16,7 @@ import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.firebase.client.Firebase;
 
 /**
  * Created by erikk on 2015-09-21.
@@ -29,6 +30,7 @@ public class LoginActivity extends ActivityController{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.login_screen);
 
         loginButton = (Button) findViewById(R.id.loginButton);
