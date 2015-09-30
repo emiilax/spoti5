@@ -34,4 +34,12 @@ public class BusinessProfileTest {
         mcDonalds.addMember(lars);
         mcDonalds.addMember(anna);
     }
+
+    public void test2() {
+
+    }
+
+    public void test3() {
+
+    }
 }
