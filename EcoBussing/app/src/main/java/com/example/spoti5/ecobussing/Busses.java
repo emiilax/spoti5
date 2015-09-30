@@ -24,26 +24,16 @@ public final class Busses {
     public static Bus eog631 = new Bus("Ericsson$171329", "YV3T1U225F1171329", "EOG631", "001395143bf2");
     public static Bus eog634 = new Bus("Ericsson$171330", "YV3T1U223F1171330", "EOG634", "001395135f20");
 
+
+    public static Bus simulated = new Bus("", "001", "EOG634", "001395135f20");
+
+
     // List of the busses
     public static List<Bus> theBusses = new ArrayList<Bus>(Arrays.asList(epo131, epo136, epo143,
             eog604, eog606, eog616, eog622, eog627, eog631, eog634));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+

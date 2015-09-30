@@ -1,6 +1,8 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +21,7 @@ import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.WifiReciever;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -133,6 +136,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
             case 2:
                 getSupportActionBar().setTitle("Fragment 3");
+                view.setBackgroundResource(R.color.clicked);
+                ToplistFragment toplistFragment = new ToplistFragment();
+
+                fragmentTransaction.replace(R.id.container, toplistFragment);
                 break;
 
             case 3:
@@ -144,6 +151,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
         }
+
+
 
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();

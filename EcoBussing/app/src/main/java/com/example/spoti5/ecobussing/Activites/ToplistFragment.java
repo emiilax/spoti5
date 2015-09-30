@@ -3,12 +3,16 @@ package com.example.spoti5.ecobussing.Activites;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.R;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +32,15 @@ public class ToplistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_toplist, container, false);
+        View view = inflater.inflate(R.layout.fragment_toplist, container, false);
+        //TextView tv = (TextView)view.findViewById(R.id.textviewTest);
+        //tv.setText("Test");
+        //TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        //tv.setText("New Tab Text");
+        return view;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -42,12 +53,13 @@ public class ToplistFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        /*
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
