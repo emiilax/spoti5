@@ -29,7 +29,7 @@ public class DrawerListAdapter extends BaseAdapter {
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
             if(item.equals("Profile")){
-                item = SaveHandler.getCurrentUser().getUsername();
+                item = SaveHandler.getCurrentUser().getName();
             }
             listItems.add(item);
         }

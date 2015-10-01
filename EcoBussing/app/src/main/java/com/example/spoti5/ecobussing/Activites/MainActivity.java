@@ -118,7 +118,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getUsername());
+                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getName());
                 view.setBackgroundResource(R.color.clicked);
                 ProfileFragment profileFragment = new ProfileFragment();
 
