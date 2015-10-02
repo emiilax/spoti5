@@ -13,7 +13,7 @@ public class CalculatorTest {
 
     Calculator calculator = Calculator.getCalculator();
     List<Double> distances = new ArrayList<Double>();
-    User testUser = new User("a", "eee", "a");
+    User testUser = new User("mail@mail.com");
 
     public CalculatorTest() {
         addDistances();

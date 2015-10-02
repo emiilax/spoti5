@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.R;
@@ -107,11 +108,15 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
     @Override
     public void loginFinished() {
-        if(database.successLogin()){
-            //SaveHandler ska byta till nya user här
-            startOverviewActivity();
-        } else {
-            error.setText("Fel användarnamn eller lösenord");
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: startOverviewActivity();
+                //SaveHandler ska byta till nya user här
+                break;
+            case ErrorCodes.BAD_EMAIL: error.setText("Ogiltig email");
+                break;
+            case ErrorCodes.NO_CONNECTION: error.setText("Fel användarnamn eller lösenord");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: error.setText("Fel användarnamn eller lösenord");
         }
     }
 }

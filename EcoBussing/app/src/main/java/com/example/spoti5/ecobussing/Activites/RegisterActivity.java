@@ -185,9 +185,14 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     @Override
     public void loginFinished() {
-        if(database.successLogin()){
-            SaveHandler.changeUser(newUser);
-            startOverviewActivity();
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: startOverviewActivity();
+                SaveHandler.changeUser(newUser);
+                break;
+            case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel.");
+                break;
         }
     }
 }

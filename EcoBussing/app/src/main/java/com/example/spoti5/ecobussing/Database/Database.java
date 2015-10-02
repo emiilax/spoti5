@@ -22,7 +22,6 @@ public class Database implements IDatabase{
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
-    private boolean correctUsername = false;
     private boolean successLogin = false;
 
     public Database() {
@@ -42,11 +41,6 @@ public class Database implements IDatabase{
 
     public int getErrorCode(){
         return errorCode;
-    }
-
-    @Override
-    public boolean successLogin() {
-        return successLogin;
     }
 
     @Override
@@ -84,18 +78,28 @@ public class Database implements IDatabase{
 
     @Override
     public void loginUser(String email, String password, final IDatabaseConnected connection){
-        successLogin = false;
+        errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").authWithPassword(email, password, new Firebase.AuthResultHandler(){
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                successLogin = true;
+                errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                successLogin = false;
+                System.out.println(firebaseError.getMessage());
+                int tmpError = firebaseError.getCode();
+                if(tmpError == FirebaseError.INVALID_CREDENTIALS){
+                    errorCode = ErrorCodes.WRONG_CREDENTIALS;
+                } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
+                    errorCode = ErrorCodes.NO_CONNECTION;
+                } else if(tmpError == FirebaseError.INVALID_EMAIL){
+                    errorCode = ErrorCodes.BAD_EMAIL;
+                } else {
+                    errorCode = ErrorCodes.UNKNOWN_ERROR;
+                }
                 connection.loginFinished();
             }
         });

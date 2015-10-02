@@ -17,7 +17,6 @@ public interface IDatabase {
     public void addUser(String email, String password, final IUser user, IDatabaseConnected connection);
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
-    public boolean successLogin();
 }
 
 

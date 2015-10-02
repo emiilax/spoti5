@@ -7,5 +7,6 @@ public class ErrorCodes {
     public static final int NO_ERROR = 0;
     public static final int BAD_EMAIL = 1000;
     public static final int NO_CONNECTION = 1001;
-    public static final int UNKNOWN_ERROR = 1002;
+    public static final int WRONG_CREDENTIALS = 1002;
+    public static final int UNKNOWN_ERROR = 1003;
 }
