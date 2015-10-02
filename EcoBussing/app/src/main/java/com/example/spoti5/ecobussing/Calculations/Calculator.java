@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.Calculations;
 
 import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
+import com.example.spoti5.ecobussing.JsonClasses.VA.StopLocation;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.google.gson.Gson;
 
@@ -28,6 +29,14 @@ public class Calculator {
             calculator = new Calculator();
         }
         return calculator;
+    }
+
+    public int calculateDistance(StopLocation origin, StopLocation destination, String key){
+        double originLat = Double.parseDouble(origin.getLat());
+        double originLng = Double.parseDouble(origin.getLon());
+        double destinationLat = Double.parseDouble(destination.getLat());
+        double destinationLng = Double.parseDouble(destination.getLon());
+        return calculateDistance(originLat, originLng, destinationLat, destinationLng, key);
     }
 
     /**
