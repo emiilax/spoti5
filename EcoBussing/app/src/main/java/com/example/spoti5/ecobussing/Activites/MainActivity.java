@@ -26,6 +26,7 @@ import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.WifiReciever;
+import com.firebase.client.Firebase;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -129,7 +130,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getUsername());
+                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getName());
                 view.setBackgroundResource(R.color.clicked);
                 ProfileFragment profileFragment = new ProfileFragment();
 

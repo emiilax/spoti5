@@ -56,11 +56,13 @@ public class WifiReciever extends BroadcastReceiver {
                     bssid = wifiInfo.getBSSID().replace(":", "");
                     System.out.println("Connected");
 
+                    /*
                     try{
                         ((MainActivity)activity).setConnected(bssid);
                     } catch (Exception e){
 
                     }
+                    */
 
                 }
 
@@ -73,11 +75,11 @@ public class WifiReciever extends BroadcastReceiver {
                     //busConnection.beginJourney(theBus);
                 //}
             } else{
-                try{
+                /*try{
                     ((MainActivity)activity).setDisconnected();
                 } catch (Exception e){
 
-                }
+                }*/
             }
         }
     }

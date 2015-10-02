@@ -1,11 +1,7 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.spoti5.ecobussing.ProfileFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -56,6 +52,23 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_Username"
+                    android:textSize="20dp"
+                    android:layout_column="1"
+                    android:gravity="right"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20dp"
+                    android:text="Large Text"
+                    android:id="@+id/usernameView"
+                    android:layout_column="3" />
 
             </TableRow>
 
@@ -104,4 +117,5 @@
             </TableRow>
         </TableLayout>
     </LinearLayout>
-</FrameLayout>
+
+</LinearLayout>

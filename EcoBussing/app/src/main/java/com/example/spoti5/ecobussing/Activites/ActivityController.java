@@ -75,4 +75,10 @@ public abstract class ActivityController extends AppCompatActivity {
         intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         registerReceiver(wifiReciever, intentFilter);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(wifiReciever);
+    }
 }

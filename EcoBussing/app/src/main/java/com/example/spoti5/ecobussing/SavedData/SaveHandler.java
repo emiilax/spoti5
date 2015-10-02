@@ -10,7 +10,7 @@ public class SaveHandler {
 
     public static User getCurrentUser() {
         if (currentUser == null) {
-            currentUser = new User("e", "blabla", "h");
+            currentUser = new User("mail@mail.com", "Sven");
         }
         return currentUser;
     }

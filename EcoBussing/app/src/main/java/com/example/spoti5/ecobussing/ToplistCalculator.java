@@ -16,36 +16,36 @@ public class ToplistCalculator {
 
         List<User> users = new ArrayList<User>();
         // 2
-        User one = new User("one", "e", "");
+        User one = new User("one", "e");
         one.incMoneySaved(200);
         users.add(one);
         // 5
-        User two = new User("two", "e", "");
+        User two = new User("two", "e");
         two.incMoneySaved(10);
         users.add(two);
         //4
-        User three = new User("three", "e", "");
+        User three = new User("three", "e");
         three.incMoneySaved(100);
         users.add(three);
         // 3
-        User four = new User("four", "e", "");
+        User four = new User("four", "e");
         four.incMoneySaved(199);
         users.add(four);
 
         // 1
-        User five = new User("five", "e", "");
+        User five = new User("five", "e");
         five.incMoneySaved(500);
         users.add(five);
 
         for(User usr: users){
-            System.out.println(usr.getUsername());
+            System.out.println(usr.getEmail());
         }
         System.out.println("----------");
 
         users = sortUsers(users);
 
         for(User usr: users){
-            System.out.println(usr.getUsername());
+            System.out.println(usr.getEmail());
         }
 
     }

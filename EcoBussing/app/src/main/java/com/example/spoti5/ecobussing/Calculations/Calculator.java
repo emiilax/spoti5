@@ -4,6 +4,7 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
  * Created by hilden on 2015-09-16.
+ * Move into user??
  */
 public class Calculator {
 
@@ -22,17 +23,18 @@ public class Calculator {
     public void calculateDistance() {}
 
     /**
-     * Returns the amount of money saved since last startup.
-     * @return
+     * @returns the amount of money saved since last startup in KR.
+     * Pulls information from the current users "currentdistance" variable.
      */
     public double getCurrentMoneySaved() {
+
         return (SaveHandler.getCurrentUser().getCurrentDistance()/10)
                 *petrolPrice*SaveHandler.getCurrentUser().getCarPetrolConsumption();
     }
 
     /**
-     * Returns the amount of carbondioxide saved since last startup.
-     * @return
+     * @returns the amount of carbondioxide saved since last startup in milligrams.
+     * Pulls information from the current users "currentdistance" variable.
      */
     public double getCurrentCarbonSaved() {
         return (SaveHandler.getCurrentUser().getCurrentDistance()/10)*SaveHandler.getCurrentUser().getCarPetrolConsumption()
