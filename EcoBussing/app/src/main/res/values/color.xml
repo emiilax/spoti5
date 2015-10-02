@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#8cdb78</color>
+    <color name="primary">#47a743</color>
     <color name="unclicked">#68f33b</color>
     <color name="clicked">#dda133</color>
     <color name="clear_white">#ffffff</color>

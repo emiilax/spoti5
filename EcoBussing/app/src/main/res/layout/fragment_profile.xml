@@ -22,9 +22,7 @@
             android:layout_height="140dp"
             android:id="@+id/profile_pic"
             android:src="@drawable/hampus_profil"
-
-
-            />
+          />
 
 
 

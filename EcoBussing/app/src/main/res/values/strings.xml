@@ -15,8 +15,9 @@
     <string name="login_title">Log in</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
+    <string name="register_label"><u>Registrera</u></string>
 
-    <string name="register_title">Register</string>
+    <string name="register_title"><b>Register</b></string>
     <string name="email_hint">Email (exampel@domain.com)</string>
     <string name="redo_password_hint">Password again</string>
     <string name="Name_hint">Name</string>

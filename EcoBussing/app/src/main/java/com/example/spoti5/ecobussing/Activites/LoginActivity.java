@@ -24,6 +24,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView passwordField;
     IDatabase database;
     TextView error;
+    TextView register;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,9 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
         error = (TextView) findViewById(R.id.login_error);
+        register = (TextView) findViewById(R.id.register_label);
 
+        register.setOnClickListener(registerListener);
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
@@ -47,6 +50,13 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         @Override
         public void onClick(View v) {
             login();
+        }
+    };
+
+    View.OnClickListener registerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startRegisterActivity();
         }
     };
 

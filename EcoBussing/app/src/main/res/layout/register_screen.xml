@@ -8,20 +8,30 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/clear_white"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:src="@drawable/logotype"
+            />
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
             android:text="@string/register_title"
-            android:textSize="50dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/navigation_text_size_biggest"
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal" />
 
         <TextView
+            android:layout_height="wrap_content"
             android:layout_width="280dp"
-            android:layout_height="50dp"
-            android:text=""
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:textColor="@color/error_text_red"
             android:layout_gravity="center_horizontal"
             android:gravity="bottom"
@@ -45,7 +55,7 @@
 
         <TextView
             android:layout_width="280dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/error_text_red"
             android:layout_gravity="center_horizontal"
