@@ -30,12 +30,22 @@ public class Calculator {
         return calculator;
     }
 
-    public int calculateDistance(double startLat, double startLng, double endLat, double endLng,
-                                    String key) {
+    /**
+     * @param originLat
+     * @param originLng
+     * @param destinationLat
+     * @param destinationLng
+     * @param key Server key for the Google Directions API
+     * @return The distance for driving from the start position to the end position
+     */
+    public int calculateDistance(double originLat, double originLng, double destinationLat,
+                                 double destinationLng, String key) {
         int dist = 0;
 
-        String completeURL = baseURL + "origin=" + startLat + "," + startLng + "&destination=" +
-                endLat + "," + endLng +"&key=" + key;
+        // Creates the complete URL used to get Json from Googles Diractions API. Consists of the
+        // baseURL, the doubles of origin and destination and the key.
+        String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
+                destinationLat + "," + destinationLng +"&key=" + key;
 
         try{
             String jsonString = readUrl(completeURL);
@@ -51,6 +61,7 @@ public class Calculator {
 
         return dist;
     }
+
 
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
