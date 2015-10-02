@@ -18,6 +18,7 @@ public class CalculatorTest {
     public CalculatorTest() {
         addDistances();
         applyDistances();
+        testCalculateDistance();
     }
 
 
@@ -43,6 +44,19 @@ public class CalculatorTest {
         }
 
         System.out.println("ANSWERS:");
+    }
+
+    //Just a small test to show that the calculateDistance method does something
+    private void testCalculateDistance(){
+        double startLat = 57.6858121;
+        double startLng = 11.9772288;
+        double endLat = 57.7081038;
+        double endLng = 11.9380502;
+        int distance;
+        distance = calculator.calculateDistance(startLat, startLng, endLat, endLng,
+                "AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg" );
+        System.out.println("Distance should be 9666 m.");
+        System.out.println("Distance is: " + distance + " m.");
     }
 
     public static void main(String Args[]) {
