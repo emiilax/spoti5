@@ -2,6 +2,9 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,12 +83,23 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Toolbar");
+        ab.setIcon(rezizedDrawable());
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         loadSelection(0);
+    }
+
+    private Drawable rezizedDrawable(){
+        Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
+        Bitmap mp = ((BitmapDrawable)logo).getBitmap();
+        Drawable smallLogo = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
+        return smallLogo;
+        /*Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
+        logo.setBounds(0,0,16,16);
+        return logo;*/
     }
 
     private void loadSelection(int i){
