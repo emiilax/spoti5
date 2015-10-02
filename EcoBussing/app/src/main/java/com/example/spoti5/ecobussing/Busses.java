@@ -20,9 +20,13 @@ public final class Busses {
     public static Bus eog606 = new Bus("Ericsson$171234", "YV3T1U225F1171234", "EOG606", "0013951349f7");
     public static Bus eog616 = new Bus("Ericsson$171235", "YV3T1U227F1171235", "EOG616", "0013950f92a4");
     public static Bus eog622 = new Bus("Ericsson$171327", "YV3T1U221F1171327", "EOG622", "001395136296");
-    public static Bus eog627 = new Bus("Ericsson$171328", "YV3T1U223F1171328", "EOG627", "001395134bbc");
+    public static Bus eog627 = new Bus("Ericsson$171328", "YV3T1U223F1171328", "EOG627", "04f0211009b9");
     public static Bus eog631 = new Bus("Ericsson$171329", "YV3T1U225F1171329", "EOG631", "001395143bf2");
     public static Bus eog634 = new Bus("Ericsson$171330", "YV3T1U223F1171330", "EOG634", "001395135f20");
+
+
+    public static Bus simulated = new Bus("", "001", "EOG634", "001395135f20");
+
 
     // List of the busses
     public static List<Bus> theBusses = new ArrayList<Bus>(Arrays.asList(epo131, epo136, epo143,
@@ -30,20 +34,6 @@ public final class Busses {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+

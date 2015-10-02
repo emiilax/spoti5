@@ -29,6 +29,10 @@
     <string name="profile_age"> Age: </string>
     <string name="profile_position"> Position: </string>
 
+    <string name="persons">Personer</string>
+    <string name="companies">Företag</string>
+
+
 
 
     <string-array name="drawer_array">
