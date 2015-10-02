@@ -18,11 +18,11 @@ import java.util.Observer;
  */
 public class Database implements IDatabase{
 
+    private int errorCode;
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
     private boolean correctUsername = false;
-    private boolean correctEmail = false;
     private boolean successLogin = false;
 
     public Database() {
@@ -40,8 +40,8 @@ public class Database implements IDatabase{
         return null;
     }
 
-    public boolean checkIfCorrectEmail(){
-        return correctEmail;
+    public int getErrorCode(){
+        return errorCode;
     }
 
     @Override
@@ -51,16 +51,15 @@ public class Database implements IDatabase{
 
     @Override
     public void addUser(String email, String password, final IUser user, final IDatabaseConnected connection){
-        correctEmail = false;
+        errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
-
             @Override
             public void onSuccess() {
                 Firebase tmpRef = firebaseRef.child("users").push();
                 tmpRef.setValue(user, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                        correctEmail = true;
+                        errorCode = ErrorCodes.NO_ERROR;
                         connection.addingUserFinished();
                     }
                 });
@@ -69,7 +68,14 @@ public class Database implements IDatabase{
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
-                correctEmail = false;
+                int tmpError = firebaseError.getCode();
+                if(tmpError == FirebaseError.EMAIL_TAKEN){
+                    errorCode = ErrorCodes.BAD_EMAIL;
+                } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR){
+                    errorCode = ErrorCodes.NO_CONNECTION;
+                } else {
+                    errorCode = ErrorCodes.UNKNOWN_ERROR;
+                }
                 connection.addingUserFinished();
             }
         });
