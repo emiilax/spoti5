@@ -26,6 +26,8 @@
     <string name="profile_name"> Name: </string>
     <string name="profile_email"> Email: </string>
     <string name="profile_Username"> Username: </string>
+    <string name="profile_age"> Age: </string>
+    <string name="profile_position"> Position: </string>
 
 
 

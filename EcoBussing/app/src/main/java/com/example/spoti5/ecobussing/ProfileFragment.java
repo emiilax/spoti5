@@ -4,15 +4,19 @@ package com.example.spoti5.ecobussing;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import org.w3c.dom.Text;
+
+import java.util.Observable;
 
 
 /**
@@ -22,6 +26,8 @@ public class ProfileFragment extends Fragment {
 
     private User currentUser;
     private View currentView;
+    private ViewPager viewPager;
+    CustomSwipeAdapter swipeAdapter;
 
     public ProfileFragment() {
 
@@ -42,18 +48,19 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         currentUser = SaveHandler.getCurrentUser();
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
         setDataStrings(view);
         return view;
     }
 
     private void setDataStrings(View view){
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
-        TextView emailView = (TextView)view.findViewById(R.id.emailView);
-        TextView usernameView = (TextView)view.findViewById(R.id.usernameView);
+        TextView ageView = (TextView)view.findViewById(R.id.ageView);
+        TextView positionView = (TextView)view.findViewById(R.id.positionView);
 
         nameView.setText(currentUser.getName());
-        emailView.setText(currentUser.getEmail());
-        usernameView.setText(currentUser.getUsername());
+        ageView.setText(Integer.toString(currentUser.getAge()));
+        positionView.setText(Integer.toString(currentUser.getPosition()));
     }
 
     @Override
@@ -71,4 +78,5 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
