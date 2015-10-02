@@ -14,7 +14,6 @@ import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +41,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("Hej");
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);
