@@ -155,12 +155,16 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 3:
                 getSupportActionBar().setTitle("Fragment 3");
                 view.setBackgroundResource(R.color.clicked);
+
+                /*
                 WifiDetect wifiDetect = new WifiDetect();
+                 
                 wifi = true;
                 fragmentTransaction.replace(R.id.container, wifiDetect);
                 if(wifiReciever.getBssid() != null){
                     setConnected(wifiReciever.getBssid());
                 }
+                */
 
                 break;
 
@@ -179,6 +183,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
 
+    /*
     public void setConnected(String bssid){
         if(wifi){
             TextView con = (TextView) findViewById(R.id.connected);
@@ -217,6 +222,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     }
 
+    */
 
 
 
