@@ -1,13 +1,11 @@
-package com.example.spoti5.ecobussing;
-
-import java.util.Date;
+package com.example.spoti5.ecobussing.JsonClasses.EA;
 
 /**
  * Created by emilaxelsson on 27/09/15.
  *
  * An instance of this class will be created when a requested answer has arrived.
  */
-public class RespondConverter {
+public class EARespond {
 
     /** The name of the request */
     private String resourceSpec;
@@ -23,7 +21,7 @@ public class RespondConverter {
     private String gatewayId;
 
 
-    public RespondConverter(String resourceSpec, long timeStamp, String value, String gatewayId){
+    public EARespond(String resourceSpec, long timeStamp, String value, String gatewayId){
         this.resourceSpec = resourceSpec;
         this.timestamp = timeStamp;
 
@@ -51,8 +49,8 @@ public class RespondConverter {
     public String getGatewayId() { return gatewayId; }
 
     public boolean equals(Object o){
-        if(o instanceof RespondConverter){
-            if (((RespondConverter)o).getResourceSpec().equals(this.resourceSpec)){
+        if(o instanceof EARespond){
+            if (((EARespond)o).getResourceSpec().equals(this.resourceSpec)){
                 return true;
 
             }else
