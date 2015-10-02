@@ -1,11 +1,9 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -19,17 +17,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
-import android.widget.TabWidget;
-import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Bus;
 import com.example.spoti5.ecobussing.BusinessFragment;
-import com.example.spoti5.ecobussing.Busses;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.example.spoti5.ecobussing.WifiReciever;
-import com.firebase.client.Firebase;
 
 /**
  * Created by emilaxelsson on 16/09/15.
