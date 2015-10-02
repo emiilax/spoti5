@@ -1,6 +1,8 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -14,11 +16,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Bus;
 import com.example.spoti5.ecobussing.BusinessFragment;
+import com.example.spoti5.ecobussing.Busses;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.WifiReciever;
 import com.firebase.client.Firebase;
 
 /**
@@ -42,6 +49,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        //registerReceiver(wifiReciever, intentFilter);
+        //addWifiChangeHandler();
 
         listAdapter = new DrawerListAdapter(this);
 
@@ -109,6 +120,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         return super.onOptionsItemSelected(item);
     }
     View prevView = null;
+    Boolean wifi = false;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -134,10 +146,27 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
             case 2:
                 getSupportActionBar().setTitle("Fragment 3");
+                view.setBackgroundResource(R.color.clicked);
+                ToplistFragment toplistFragment = new ToplistFragment();
+
+
+                fragmentTransaction.replace(R.id.container, toplistFragment);
                 break;
 
             case 3:
                 getSupportActionBar().setTitle("Fragment 3");
+                view.setBackgroundResource(R.color.clicked);
+
+                /*
+                WifiDetect wifiDetect = new WifiDetect();
+                 
+                wifi = true;
+                fragmentTransaction.replace(R.id.container, wifiDetect);
+                if(wifiReciever.getBssid() != null){
+                    setConnected(wifiReciever.getBssid());
+                }
+                */
+
                 break;
 
             case 4:
@@ -146,12 +175,58 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         }
 
+
+
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         prevView = view;
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
+
+    /*
+    public void setConnected(String bssid){
+        if(wifi){
+            TextView con = (TextView) findViewById(R.id.connected);
+            TextView dwg = (TextView) findViewById(R.id.dwg);
+            TextView vinnr = (TextView) findViewById(R.id.vinnr);
+            TextView regnr = (TextView) findViewById(R.id.regnr);
+            TextView mac = (TextView) findViewById(R.id.mac);
+            for(Bus b: Busses.theBusses){
+                if(bssid.equals(b.getMacAdress())){
+                    dwg.setText(b.getDwg());
+                    vinnr.setText(b.getVIN());
+                    regnr.setText(b.getRegNr());
+                    mac.setText(b.getMacAdress());
+                }
+            }
+            mac.setText(bssid);
+
+            con.setText("Connected");
+        }
+
+    }
+    public void setDisconnected(){
+        if(wifi){
+            TextView con = (TextView) findViewById(R.id.connected);
+            TextView dwg = (TextView) findViewById(R.id.dwg);
+            TextView vinnr = (TextView) findViewById(R.id.vinnr);
+            TextView regnr = (TextView) findViewById(R.id.regnr);
+            TextView mac = (TextView) findViewById(R.id.mac);
+
+            dwg.setText("");
+            vinnr.setText("");
+            regnr.setText("");
+            mac.setText("");
+            con.setText("Disconnected");
+        }
+
+    }
+
+    */
+
+
+
 
     private void logout() {
         startRegisterActivity();

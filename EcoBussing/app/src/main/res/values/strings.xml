@@ -29,6 +29,10 @@
     <string name="profile_age"> år </string>
     <string name="profile_position"> Plats: </string>
 
+    <string name="persons">Personer</string>
+    <string name="companies">Företag</string>
+
+
 
 
     <string-array name="drawer_array">
