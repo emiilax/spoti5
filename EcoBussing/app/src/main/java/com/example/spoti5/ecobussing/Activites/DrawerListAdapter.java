@@ -15,6 +15,7 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created b emilaxelsson on 22/09/15.
  */
@@ -29,7 +30,7 @@ public class DrawerListAdapter extends BaseAdapter {
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
             if(item.equals("Profile")){
-                item = SaveHandler.getCurrentUser().getName();
+                item = " " + SaveHandler.getCurrentUser().getName();
             }
             listItems.add(item);
         }
@@ -67,7 +68,12 @@ public class DrawerListAdapter extends BaseAdapter {
 
         TextView rowLabel = (TextView) row.findViewById(R.id.listItemLabel);
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
-
+        ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
+        switch (position){
+            case 0:
+                icon.setImageResource(R.drawable.empty_profile);
+                break;
+        }
         rowLabel.setText(listItems.get(position));
 
         return row;

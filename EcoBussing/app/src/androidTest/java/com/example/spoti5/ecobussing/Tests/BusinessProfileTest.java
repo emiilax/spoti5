@@ -19,7 +19,7 @@ public class BusinessProfileTest {
     private BusinessProfile ericsson;
     private BusinessProfile burgerKing;
 
-    public BusinessProfileTest() {
+    /*public BusinessProfileTest() {
         lovisa = new User("lovisa", "f@gmail.com", "abc123");
         sara = new User("sara", "e@gmail.com", "abc123");
         anna = new User("anna", "d@gmail.com", "abc123");
@@ -41,5 +41,5 @@ public class BusinessProfileTest {
 
     public void test3() {
 
-    }
+    }*/
 }

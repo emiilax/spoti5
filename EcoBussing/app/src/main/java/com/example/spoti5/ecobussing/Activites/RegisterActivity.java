@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
@@ -41,7 +42,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Hej");
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);
@@ -86,7 +86,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
 
             if(!emailIsOk){
-                inputError.setText("Invalid email");
+                inputError.setText("Ogiltig email");
             } else {
                 inputError.setText("");
             }
@@ -99,7 +99,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     private boolean valuesIsOk(){
         if(name.equals("") || email.equals("")){
-            inputError.setText("All fields must be filled");
+            inputError.setText("Alla fält måste fyllas i");
             return false;
         } else {
             inputError.setText("");
@@ -120,20 +120,20 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     private boolean checkPasswords(){
         if(!password.equals(secondPassword)){
-            passwordError.setText("Password must match");
+            passwordError.setText("Lösenorden måste matcha");
             return false;
         } else {
             int index = CheckCreateUserInput.checkPassword(password);
             switch (index){
                 case -1: passwordError.setText("");
                         return true;
-                case 0: passwordError.setText("Password to short");
+                case 0: passwordError.setText("Lösenordet är för kort");
                         return false;
-                case 1: passwordError.setText("Password must contain an upper case letter");
+                case 1: passwordError.setText("Lösenordet måste innehålla en stor bokstav");
                         return false;
-                case 2: passwordError.setText("Password must contain an lower case letter");
+                case 2: passwordError.setText("Lösenordet måste innehålla en liten bokstav");
                         return false;
-                case 3: passwordError.setText("Password must contain a number");
+                case 3: passwordError.setText("Lösenordet måste innehålla en siffra");
                         return false;
             }
             return false;
@@ -170,18 +170,29 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     @Override
     public void addingUserFinished() {
-        if(database.checkIfCorrectEmail()) {
-            database.loginUser(email, password, this);
-        } else {
-            inputError.setText("Email already exists");
+        System.out.println(database.getErrorCode());
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);
+                System.out.println("Logging in");
+                break;
+            case ErrorCodes.BAD_EMAIL: inputError.setText("Mailen är upptagen");
+                break;
+            case ErrorCodes.NO_CONNECTION: inputError.setText("Ingen uppkoppling");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel");
         }
     }
 
     @Override
     public void loginFinished() {
-        if(database.successLogin()){
-            SaveHandler.changeUser(newUser);
-            startOverviewActivity();
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: startOverviewActivity();
+                SaveHandler.changeUser(newUser);
+                break;
+            case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel.");
+                break;
         }
     }
 }

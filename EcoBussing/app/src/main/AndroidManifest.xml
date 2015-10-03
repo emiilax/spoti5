@@ -7,9 +7,11 @@
     <application
         android:name=".EcoTravelApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_compact"
+        android:debuggable="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".Activites.MainActivity"
             android:label="@string/title_activity_drawer">
@@ -23,6 +25,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
 

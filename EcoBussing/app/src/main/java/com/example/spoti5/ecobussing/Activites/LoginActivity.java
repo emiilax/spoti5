@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.R;
@@ -24,6 +25,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView passwordField;
     IDatabase database;
     TextView error;
+    TextView register;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,9 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
         error = (TextView) findViewById(R.id.login_error);
+        register = (TextView) findViewById(R.id.register_label);
 
+        register.setOnClickListener(registerListener);
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
@@ -47,6 +51,13 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         @Override
         public void onClick(View v) {
             login();
+        }
+    };
+
+    View.OnClickListener registerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startRegisterActivity();
         }
     };
 
@@ -97,11 +108,15 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
     @Override
     public void loginFinished() {
-        if(database.successLogin()){
-            //SaveHandler ska byta till nya user här
-            startOverviewActivity();
-        } else {
-            error.setText("Fel användarnamn eller lösenord");
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: startOverviewActivity();
+                //SaveHandler ska byta till nya user här
+                break;
+            case ErrorCodes.BAD_EMAIL: error.setText("Ogiltig email");
+                break;
+            case ErrorCodes.NO_CONNECTION: error.setText("Fel användarnamn eller lösenord");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: error.setText("Fel användarnamn eller lösenord");
         }
     }
 }
