@@ -22,6 +22,8 @@ import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
+import com.example.spoti5.ecobussing.SwipeScreens.TestFragment;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -82,6 +84,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         loadSelection(0);
+    }
+
+    protected void setUpDrawer(){
+
     }
 
     private Drawable rezizedDrawable(){
@@ -155,14 +161,18 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 view.setBackgroundResource(R.color.clicked);
                 ToplistFragment toplistFragment = new ToplistFragment();
 
-
+                System.out.println("top");
                 fragmentTransaction.replace(R.id.container, toplistFragment);
                 break;
 
             case 3:
-                getSupportActionBar().setTitle("Fragment 3");
+                getSupportActionBar().setTitle("Fragment 4");
                 view.setBackgroundResource(R.color.clicked);
 
+                SwipeFragments test = new SwipeFragments();
+
+                System.out.println("frag 4");
+                fragmentTransaction.replace(R.id.container, test);
                 /*
                 WifiDetect wifiDetect = new WifiDetect();
                  
