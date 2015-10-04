@@ -16,6 +16,8 @@ import com.example.spoti5.ecobussing.R;
  */
 public class SwipeFragments extends Fragment {
 
+    // 
+
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
 
