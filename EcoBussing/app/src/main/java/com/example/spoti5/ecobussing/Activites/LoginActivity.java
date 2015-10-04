@@ -13,6 +13,7 @@ import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -71,18 +72,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         String inputEmail = emailField.getText().toString();
         String inputPassword = passwordField.getText().toString();
 
-
-        User user;
-        ArrayList list = database.getUser();
-        System.out.println("got the user");
-        System.out.println("size = " + list.size());
-
-       // for(int i = 0; i < list.size(); i++){
-
-       //     System.out.println("printprint");
-       // }
-
-
         database.loginUser(inputEmail, inputPassword, this);
 
     }
@@ -130,7 +119,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     public void loginFinished() {
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
-                //SaveHandler ska byta till nya user här
+                SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
                 break;
             case ErrorCodes.BAD_EMAIL: error.setText("Ogiltig email");
                 break;

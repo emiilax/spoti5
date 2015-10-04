@@ -10,6 +10,8 @@ public interface IProfile {
     public double getCO2Saved();
 
     public void setName(String name);
+    public void setDistance(double distance);
+    public void setCO2Saved(double CO2Saved);
     public void updateDistance();
     public void decDistance(double reducedDistance);
 }

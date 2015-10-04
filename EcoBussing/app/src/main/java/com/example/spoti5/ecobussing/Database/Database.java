@@ -1,7 +1,9 @@
 package com.example.spoti5.ecobussing.Database;
 
+import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
 
+import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
@@ -29,15 +31,12 @@ public class Database implements IDatabase{
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
     private boolean successLogin = false;
+    private List<IUser> allUsers;
 
     public Database() {
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
-    }
-
-    @Override
-    public List<IUser> getUsers() {
-        return null;
+        allUsers = generateUserList();
     }
 
     @Override
@@ -50,13 +49,23 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addUser(String email, String password, final IUser user, final IDatabaseConnected connection){
+    public IUser getUser(String email) {
+        for(IUser u: getUsers()){
+            if(u.getEmail().equals(email)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child("users").push();
-                tmpRef.setValue(user, new Firebase.CompletionListener() {
+                Firebase tmpRef = firebaseRef.push();
+                tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         errorCode = ErrorCodes.NO_ERROR;
@@ -114,41 +123,107 @@ public class Database implements IDatabase{
         });
     }
 
+    private List<IUser> generateUserList(){
+        final ArrayList userList = new ArrayList();
 
-    public ArrayList getUser() {
-
-        final ArrayList list = new ArrayList();
-        Firebase tmpRef = firebaseRef;
-        Query queryRef = tmpRef.orderByKey();
-
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //TUser user = dataSnapshot.getValue(TUser.class);
-                System.out.println(dataSnapshot.getKey());
-
-            }
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    for(DataSnapshot userSnapshots: dataSnapshot.getChildren()) {
+                        IUser user = new User((String)userSnapshots.child("email").getValue());
+                        user.setAge(((Long)userSnapshots.child("age").getValue()).intValue());
+                        user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
+                        user.setPosition(((Long) userSnapshots.child("position").getValue()).intValue());
+                        user.setName((String) userSnapshots.child("name").getValue());
+                        user.setDistance((double) userSnapshots.child("distance").getValue());
+                        user.setCO2Saved((double) userSnapshots.child("co2Saved").getValue());
+                        user.setCurrentDistance((double) userSnapshots.child("currentDistance").getValue());
+                        user.setMoneySaved((double) userSnapshots.child("moneySaved").getValue());
 
-            }
+                        userList.add(user);
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                    }
+                } catch (FirebaseException var4) {
+                    System.out.println(var4.getMessage());
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed " + firebaseError.getMessage());
 
             }
         });
 
-        return list;
-}}
+        return userList;
+    }
+
+    @Override
+    public List<IUser> getUsers() {
+        if(allUsers != null){
+            return allUsers;
+        } else {
+            return generateUserList();
+        }
+    }
+
+    private static class TmpUser {
+        private String email;
+        private String name;
+        private int age;
+        private int position; //position in toplist
+        private double distance;               //Total distance traveled by bus, in KM.
+        private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
+        private double carbondioxideSaved;     //Amount of carbondioxide saved.
+        private double moneySaved;             //Amount of money saved in KR.
+        private double carPetrolConsumption;   //Liters of gas required to drive one european mile.
+        private long stackId;
+
+        public TmpUser() {
+
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getDistance() {
+            return distance;
+        }
+
+        public double getCurrentDistance() {
+            return currentDistance;
+        }
+
+        public double getCO2Saved() {
+            return carbondioxideSaved;
+        }
+
+        public double getMoneySaved() {
+            return moneySaved;
+        }
+
+        public double getCarPetrolConsumption() {
+            return carPetrolConsumption;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public long getStackId() {
+            return stackId;
+        }
+
+      /*  @Override
+        public String toString() { return "User{handle='"+email+"', name='"+name+"', age='"+age+"', age='"+age+"', stackId="+stackId+"\'}"; }
+        }*/
+    }
+
+}

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
@@ -24,7 +25,7 @@ import java.util.Observable;
  */
 public class ProfileFragment extends Fragment {
 
-    private User currentUser;
+    private IUser currentUser;
     private View currentView;
     private ViewPager viewPager;
     CustomSwipeAdapter swipeAdapter;

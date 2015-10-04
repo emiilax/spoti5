@@ -98,8 +98,28 @@ public class User implements IUser {
     }
 
     @Override
+    public void setMoneySaved(double moneySaved) {
+        this.moneySaved = moneySaved;
+    }
+
+    @Override
+    public void setCurrentDistance(double currentDistance) {
+        this.currentDistance = currentDistance;
+    }
+
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public void setCO2Saved(double CO2Saved) {
+        this.carbondioxideSaved = CO2Saved;
     }
 
     @Override
