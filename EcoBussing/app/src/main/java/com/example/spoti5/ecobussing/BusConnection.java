@@ -4,6 +4,8 @@ package com.example.spoti5.ecobussing;
 
 
 
+import com.example.spoti5.ecobussing.BusData.Bus;
+import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.JsonClasses.EA.EARespond;
 import com.example.spoti5.ecobussing.JsonClasses.VA.VANearbyStops;
 import com.google.gson.Gson;

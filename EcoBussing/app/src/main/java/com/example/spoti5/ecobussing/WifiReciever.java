@@ -8,7 +8,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.BusData.Bus;
+import com.example.spoti5.ecobussing.BusData.Busses;
 
 import java.util.List;
 

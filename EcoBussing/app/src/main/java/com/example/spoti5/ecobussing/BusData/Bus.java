@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.BusData;
 
 /**
  * Created by emilaxelsson on 28/09/15.

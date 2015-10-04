@@ -1,4 +1,6 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.BusData;
+
+import com.example.spoti5.ecobussing.BusData.Bus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
