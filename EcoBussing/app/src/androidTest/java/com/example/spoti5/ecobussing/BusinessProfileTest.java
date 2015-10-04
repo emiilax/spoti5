@@ -19,12 +19,12 @@ public class BusinessProfileTest {
     private BusinessProfile mcDonalds;
 
     public BusinessProfileTest() {
-        lovisa = new User("Lovisa", "f@gmail.com", "abc123");
-        sara = new User("Sara", "e@gmail.com", "abc123");
-        anna = new User("Anna", "d@gmail.com", "abc123");
-        lars = new User("Lars", "c@gmail.com", "abc123");
-        tomas = new User("Tomas", "b@gmail.com", "abc123");
-        bert = new User("Bert", "a@gmail.com", "abc123");
+        lovisa = new User("f@gmail.com");
+        sara = new User("e@gmail.com");
+        anna = new User("d@gmail.com");
+        lars = new User("c@gmail.com");
+        tomas = new User("b@gmail.com");
+        bert = new User("a@gmail.com");
 
         mcDonalds = new BusinessProfile("MC Donalds" ,bert);
     }
