@@ -32,6 +32,7 @@ public class Database implements IDatabase{
     private Firebase firebaseRef;
     private boolean successLogin = false;
     private List<IUser> allUsers;
+    private String UID;
 
     public Database() {
         //Initializing firebase ref
@@ -59,6 +60,14 @@ public class Database implements IDatabase{
     }
 
     @Override
+    public void updateUser(IUser user) {
+        if(UID != null){
+            Firebase ref = firebaseRef.child("users").child(UID);
+            ref.setValue(user);
+        }
+    }
+
+    @Override
     public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
@@ -68,6 +77,7 @@ public class Database implements IDatabase{
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+
                         errorCode = ErrorCodes.NO_ERROR;
                         connection.addingUserFinished();
                     }
@@ -100,7 +110,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-
+                
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
@@ -131,9 +141,9 @@ public class Database implements IDatabase{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    for(DataSnapshot userSnapshots: dataSnapshot.getChildren()) {
-                        IUser user = new User((String)userSnapshots.child("email").getValue());
-                        user.setAge(((Long)userSnapshots.child("age").getValue()).intValue());
+                    for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
+                        IUser user = new User((String) userSnapshots.child("email").getValue());
+                        user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
                         user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
                         user.setPosition(((Long) userSnapshots.child("position").getValue()).intValue());
                         user.setName((String) userSnapshots.child("name").getValue());
@@ -167,63 +177,6 @@ public class Database implements IDatabase{
         } else {
             return generateUserList();
         }
-    }
-
-    private static class TmpUser {
-        private String email;
-        private String name;
-        private int age;
-        private int position; //position in toplist
-        private double distance;               //Total distance traveled by bus, in KM.
-        private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
-        private double carbondioxideSaved;     //Amount of carbondioxide saved.
-        private double moneySaved;             //Amount of money saved in KR.
-        private double carPetrolConsumption;   //Liters of gas required to drive one european mile.
-        private long stackId;
-
-        public TmpUser() {
-
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public double getDistance() {
-            return distance;
-        }
-
-        public double getCurrentDistance() {
-            return currentDistance;
-        }
-
-        public double getCO2Saved() {
-            return carbondioxideSaved;
-        }
-
-        public double getMoneySaved() {
-            return moneySaved;
-        }
-
-        public double getCarPetrolConsumption() {
-            return carPetrolConsumption;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-
-        public long getStackId() {
-            return stackId;
-        }
-
-      /*  @Override
-        public String toString() { return "User{handle='"+email+"', name='"+name+"', age='"+age+"', age='"+age+"', stackId="+stackId+"\'}"; }
-        }*/
     }
 
 }

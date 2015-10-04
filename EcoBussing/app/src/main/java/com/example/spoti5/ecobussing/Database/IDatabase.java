@@ -20,6 +20,7 @@ public interface IDatabase {
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
     public IUser getUser(String email);
+    public void updateUser(IUser user);
 }
 
 

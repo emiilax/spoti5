@@ -26,9 +26,6 @@ import java.util.Observable;
 public class ProfileFragment extends Fragment {
 
     private IUser currentUser;
-    private View currentView;
-    private ViewPager viewPager;
-    CustomSwipeAdapter swipeAdapter;
 
     public ProfileFragment() {
 
