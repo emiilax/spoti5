@@ -20,6 +20,11 @@ public class User implements IUser {
      * username and password
      * @param email Has to cbe checked before entered here
      */
+
+    public User(){
+
+    }
+
     public User(String email){
         this.email = email;
         this.distance = 10;

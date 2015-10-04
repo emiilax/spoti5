@@ -10,8 +10,11 @@ import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
+import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,6 +29,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     IDatabase database;
     TextView error;
     TextView register;
+
+    IUser user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
+
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -64,7 +70,21 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     private void login(){
         String inputEmail = emailField.getText().toString();
         String inputPassword = passwordField.getText().toString();
+
+
+        User user;
+        ArrayList list = database.getUser();
+        System.out.println("got the user");
+        System.out.println("size = " + list.size());
+
+       // for(int i = 0; i < list.size(); i++){
+
+       //     System.out.println("printprint");
+       // }
+
+
         database.loginUser(inputEmail, inputPassword, this);
+
     }
 
     boolean timerRunning = false;
