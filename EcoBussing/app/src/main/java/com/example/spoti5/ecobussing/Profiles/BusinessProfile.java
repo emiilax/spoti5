@@ -34,7 +34,7 @@ public class BusinessProfile implements IProfile {
     }
 
     public boolean userIsCreator(User user) {
-        if (creatorMember.getUsername() == user.getUsername()) {
+        if (creatorMember.getEmail() == user.getEmail()) {
             return true;
         } else {
             return false;
@@ -43,7 +43,7 @@ public class BusinessProfile implements IProfile {
 
     public boolean userIsModerator(User user) {
         for (int i = 0; i < moderatorMembers.size(); i++) {
-            if (moderatorMembers.get(i).getUsername() == user.getUsername()) {
+            if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
                 return true;
             }
         }
@@ -52,7 +52,7 @@ public class BusinessProfile implements IProfile {
 
     public boolean userIsMember(User user) {
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getUsername() == user.getUsername()) {
+            if (members.get(i).getEmail() == user.getEmail()) {
                 return true;
             }
         }

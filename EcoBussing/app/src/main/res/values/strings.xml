@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EcoBussing</string>
+    <string name="app_name">EcoTravel</string>
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="title_start_activities">EcoTravel</string>
 
@@ -12,22 +12,26 @@
 
     <string name="action_example">Example action</string>
 
-    <string name="login_title">Log in</string>
-    <string name="username_hint">Username</string>
-    <string name="password_hint">Password</string>
+    <string name="login_title"><b>Logga in</b></string>
+    <string name="username_hint">Användarnamn</string>
+    <string name="password_hint">Lösenord</string>
+    <string name="register_label"><u>Registrera</u></string>
 
-    <string name="register_title">Register</string>
-    <string name="email_hint">Email (exampel@domain.com)</string>
-    <string name="redo_password_hint">Password again</string>
-    <string name="Name_hint">Name</string>
-    <string name="register_button">Register</string>
-    <string name="logIn"><u>Log in</u></string>
+    <string name="register_title"><b>Registrera</b></string>
+    <string name="email_hint">Email (exempel@domain.com)</string>
+    <string name="redo_password_hint">Lösenord igen</string>
+    <string name="Name_hint">Namn</string>
+    <string name="register_button">Registrera</string>
+    <string name="logIn"><u>Logga in</u></string>
 
-    <string name="profile_name"> Name: </string>
+    <string name="profile_name"> Namn: </string>
     <string name="profile_email"> Email: </string>
-    <string name="profile_Username"> Username: </string>
-    <string name="profile_age"> Age: </string>
-    <string name="profile_position"> Position: </string>
+    <string name="profile_age"> år </string>
+    <string name="profile_position"> Plats: </string>
+
+    <string name="persons">Personer</string>
+    <string name="companies">Företag</string>
+
 
 
 

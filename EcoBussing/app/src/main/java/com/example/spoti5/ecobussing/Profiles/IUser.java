@@ -5,9 +5,6 @@ package com.example.spoti5.ecobussing.Profiles;
  */
 public interface IUser extends IProfile {
 
-    public String getUsername();
-    public void setUsername(String username);
-
     public double getCarPetrolConsumption();
     public void setCarPetrolConsumption(double carPetrolConsumption);
 
@@ -19,9 +16,6 @@ public interface IUser extends IProfile {
 
     public void incCO2Saved(double carbonSaved);
 
-    public void setPassword(String password);
-    public boolean checkPassword(String password);
-    public boolean checkUsername(String username);
     public int getAge();
     public int getPosition();
 

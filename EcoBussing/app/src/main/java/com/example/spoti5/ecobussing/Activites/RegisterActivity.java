@@ -8,22 +8,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.UsernameAlreadyExistsException;
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.firebase.client.Firebase;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by erikk on 2015-09-23.
  */
-public class RegisterActivity extends ActivityController {
+public class RegisterActivity extends ActivityController implements IDatabaseConnected{
 
     Button register_button;
     EditText nameView;
-    EditText usernameView;
     EditText emailView;
     EditText passwordView;
     EditText secondPasswordView;
@@ -32,23 +33,19 @@ public class RegisterActivity extends ActivityController {
     TextView login;
 
     String name;
-    String username;
     String email;
     String password;
     String secondPassword;
 
     IDatabase database;
+    User newUser;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Firebase.setAndroidContext(this);
-
         setContentView(R.layout.register_screen);
 
         register_button = (Button) findViewById(R.id.button_register);
         nameView = (EditText) (findViewById(R.id.name));
-        usernameView = (EditText) (findViewById(R.id.username));
         emailView = (EditText) findViewById(R.id.email);
 
         passwordView = (EditText) findViewById(R.id.first_password);
@@ -85,31 +82,24 @@ public class RegisterActivity extends ActivityController {
         boolean passIsCorrect = checkPasswords();
 
         if(valuesIsOk()){
-            boolean usernameExists = database.usernameExists(username);
+
             boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
-            if(usernameExists) {
-                inputError.setText("Username already exists");
-            }else if(!emailIsOk){
-                inputError.setText("Invalid email");
+
+            if(!emailIsOk){
+                inputError.setText("Ogiltig email");
             } else {
                 inputError.setText("");
             }
-            if(passIsCorrect && !usernameExists && emailIsOk){
-                try{
-                    User newUser = new User(username, email, password, name);
-                    database.addUser(newUser);
-                    SaveHandler.changeUser(newUser);
-                    startOverviewActivity();
-                } catch (UsernameAlreadyExistsException e){
-                    inputError.setText("Username already exits");
-                }
+            if(passIsCorrect && emailIsOk){
+                newUser = new User(email, name);
+                database.addUser(email, password, newUser, this);
             }
         }
     }
 
     private boolean valuesIsOk(){
-        if(name.equals("") || username.equals("") || email.equals("")){
-            inputError.setText("All fields must be filled");
+        if(name.equals("") || email.equals("")){
+            inputError.setText("Alla fält måste fyllas i");
             return false;
         } else {
             inputError.setText("");
@@ -123,7 +113,6 @@ public class RegisterActivity extends ActivityController {
 
     private void initStrings(){
         name = nameView.getText().toString();
-        username = usernameView.getText().toString();
         email = emailView.getText().toString();
         password = passwordView.getText().toString();
         secondPassword = secondPasswordView.getText().toString();
@@ -131,35 +120,79 @@ public class RegisterActivity extends ActivityController {
 
     private boolean checkPasswords(){
         if(!password.equals(secondPassword)){
-            passwordError.setText("Password must match");
+            passwordError.setText("Lösenorden måste matcha");
             return false;
         } else {
             int index = CheckCreateUserInput.checkPassword(password);
             switch (index){
                 case -1: passwordError.setText("");
                         return true;
-                case 0: passwordError.setText("Password to short");
+                case 0: passwordError.setText("Lösenordet är för kort");
                         return false;
-                case 1: passwordError.setText("Password must contain an upper case letter");
+                case 1: passwordError.setText("Lösenordet måste innehålla en stor bokstav");
                         return false;
-                case 2: passwordError.setText("Password must contain an lower case letter");
+                case 2: passwordError.setText("Lösenordet måste innehålla en liten bokstav");
                         return false;
-                case 3: passwordError.setText("Password must contain an number");
+                case 3: passwordError.setText("Lösenordet måste innehålla en siffra");
                         return false;
             }
             return false;
         }
     }
 
-    View.OnKeyListener autoReg = new View.OnKeyListener() {
+    boolean timerRunning = false;
+    private View.OnKeyListener autoReg = new View.OnKeyListener() {
         @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event){
-            if(keyCode == event.KEYCODE_ENTER){
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+            final Timer t = new Timer();
+
+            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
                 register();
             }
-            return true;
+
+            /**
+             * Timer, otherwise it calls the database twice
+             */
+            timerRunning = true;
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timerRunning = false;
+                    t.cancel();
+                }
+            }, 5000);
+
+
+        return true;
         }
     };
 
+    @Override
+    public void addingUserFinished() {
+        System.out.println(database.getErrorCode());
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);
+                System.out.println("Logging in");
+                break;
+            case ErrorCodes.BAD_EMAIL: inputError.setText("Mailen är upptagen");
+                break;
+            case ErrorCodes.NO_CONNECTION: inputError.setText("Ingen uppkoppling");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel");
+        }
+    }
 
+    @Override
+    public void loginFinished() {
+        switch (database.getErrorCode()){
+            case ErrorCodes.NO_ERROR: startOverviewActivity();
+                SaveHandler.changeUser(newUser);
+                break;
+            case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel.");
+                break;
+        }
+    }
 }

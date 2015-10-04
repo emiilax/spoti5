@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import org.w3c.dom.Text;
+
+import java.util.Observable;
 
 
 /**
@@ -53,13 +56,11 @@ public class ProfileFragment extends Fragment {
     private void setDataStrings(View view){
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
         TextView ageView = (TextView)view.findViewById(R.id.ageView);
-        TextView usernameView = (TextView)view.findViewById(R.id.usernameView);
         TextView positionView = (TextView)view.findViewById(R.id.positionView);
 
         nameView.setText(currentUser.getName());
-        ageView.setText(Integer.toString(currentUser.getAge()));
-        positionView.setText(Integer.toString(currentUser.getPosition()));
-        usernameView.setText(currentUser.getUsername());
+        ageView.setText(Integer.toString(currentUser.getAge()) + " år");
+        positionView.setText("Plats: " + Integer.toString(currentUser.getPosition()));
     }
 
     @Override
@@ -77,4 +78,5 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
