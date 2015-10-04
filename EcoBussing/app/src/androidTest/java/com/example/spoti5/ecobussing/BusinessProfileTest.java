@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing;
 
-import com.example.spoti5.ecobussing.Bus;
 import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
 import com.example.spoti5.ecobussing.Profiles.User;
 
