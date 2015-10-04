@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Tests;
+package com.example.spoti5.ecobussing;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.example.spoti5.ecobussing.Profiles.User;

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Tests;
+package com.example.spoti5.ecobussing;
 
 import java.util.ArrayList;
 import java.util.List;
