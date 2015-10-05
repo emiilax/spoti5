@@ -61,10 +61,8 @@ public class Database implements IDatabase{
 
     @Override
     public void updateUser(IUser user) {
-        if(UID != null){
-            Firebase ref = firebaseRef.child("users").child(UID);
-            ref.setValue(user);
-        }
+        Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+        ref.setValue(user);
     }
 
     @Override
@@ -73,7 +71,7 @@ public class Database implements IDatabase{
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.push();
+                Firebase tmpRef = firebaseRef.child(editEmail(theUser.getEmail()));
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -102,6 +100,12 @@ public class Database implements IDatabase{
 
     }
 
+    private String editEmail(String email){
+        email = email.toLowerCase();
+        email = email.replace('.',',');
+        return email;
+    }
+
 
     @Override
     public void loginUser(String email, String password, final IDatabaseConnected connection){
@@ -110,7 +114,6 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
