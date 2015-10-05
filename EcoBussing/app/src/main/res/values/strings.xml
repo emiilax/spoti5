@@ -32,7 +32,8 @@
     <string name="persons">Personer</string>
     <string name="companies">Företag</string>
 
-
+    <string name="edit_profile_button">Spara ändringar</string>
+    <string name="profil_title"><b>Profil</b></string>
 
 
     <string-array name="drawer_array">
@@ -40,6 +41,7 @@
         <item>Fragment 2</item>
         <item>Fragment 3</item>
         <item>Fragment 4</item>
+        <item>Redigera profil</item>
         <item>Log out</item>
 
     </string-array>

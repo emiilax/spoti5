@@ -14,12 +14,23 @@ public class User implements IUser {
     private double carbondioxideSaved;     //Amount of carbondioxide saved.
     private double moneySaved;             //Amount of money saved in KR.
     private double carPetrolConsumption;   //Liters of gas required to drive one european mile.
+    private String companyKey;             //Company database key.
+    private String connectedCompany;       //The company which the user is connected to.
 
     /**
      * Creates a user with username, email and password. This class does not check
      * username and password
      * @param email Has to cbe checked before entered here
      */
+
+    public User(){
+
+    }
+
+    public User(int koldioxid){
+        this.carbondioxideSaved = koldioxid;
+    }
+
     public User(String email){
         this.email = email;
         this.distance = 10;
@@ -83,6 +94,16 @@ public class User implements IUser {
     }
 
     @Override
+    public String getCompany() {
+        return connectedCompany;
+    }
+
+    @Override
+    public String getCompanyKey() {
+        return companyKey;
+    }
+
+    @Override
     public void setAge(int age) {
         this.age = age;
     }
@@ -93,8 +114,38 @@ public class User implements IUser {
     }
 
     @Override
+    public void setMoneySaved(double moneySaved) {
+        this.moneySaved = moneySaved;
+    }
+
+    @Override
+    public void setCurrentDistance(double currentDistance) {
+        this.currentDistance = currentDistance;
+    }
+
+    @Override
+    public void setCompany(String name) {
+        this.connectedCompany = name;
+    }
+
+    @Override
+    public void setCompanyKey(String key) {
+        this.companyKey = key;
+    }
+
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public void setCO2Saved(double CO2Saved) {
+        this.carbondioxideSaved = CO2Saved;
     }
 
     @Override

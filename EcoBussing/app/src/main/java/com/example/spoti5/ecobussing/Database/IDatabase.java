@@ -2,10 +2,13 @@ package com.example.spoti5.ecobussing.Database;
 
 import android.app.Activity;
 
+import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.FirebaseException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,10 +16,15 @@ import java.util.List;
  */
 public interface IDatabase {
     public List<IUser> getUsers();
-    public List<IUser> getToplist();
-    public void addUser(String email, String password, final IUser user, IDatabaseConnected connection);
+    public List<IUser> getUserToplist();
+    public List<IUser> getCompTopList();
+    public void addUser(String email, String password, final User user, IDatabaseConnected connection);
+    public void addCompany(String name, String password, final BusinessProfile company, IDatabaseConnected connection);
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
+    public IUser getUser(String email);
+    public List<IProfile> getCompanies();
+    public void updateUser(IUser user);
 }
 
 
