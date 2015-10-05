@@ -33,28 +33,41 @@ public class BusinessProfile implements IProfile {
         members = new ArrayList<User>();
     }
 
+    public boolean userIsCreator(User user) {
+        if (creatorMember.getEmail() == user.getEmail()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean userIsModerator(User user) {
+        for (int i = 0; i < moderatorMembers.size(); i++) {
+            if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean userIsMember(User user) {
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getEmail() == user.getEmail()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
-     * The business-profile creator adds a user to the moderatorMember list if the user is a member of the business and not already a moderatorMember.
+     * The business-profile creator adds a user to the moderatorMember list.
+     * The parameters are validated as they are entered.
      * @param creator
      * @param user
      */
     public void addModeratorMember(User creator, User user) {
-        boolean userAlreadyModerator = false;
-        boolean userIsMember = false;
-        if (creatorMember.getEmail() == creator.getEmail()) {
-            for (int i = 0; i < moderatorMembers.size(); i++) {
-                if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
-                    userAlreadyModerator = true;
-                }
-            }
-            for (int j = 0; j < members.size(); j++) {
-                if (members.get(j).getEmail() == user.getEmail()) {
-                    userIsMember = true;
-                }
-            }
-            if (!userAlreadyModerator && userIsMember) {
-                moderatorMembers.add(user);
-            }
+        if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
+            moderatorMembers.add(user);
         }
     }
 
@@ -63,49 +76,37 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void addMember(User user) {
-        boolean alreadyMember = false;
-        for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getEmail() == user.getEmail()) {
-                alreadyMember = true;
-            }
-        }
-        if (!alreadyMember) {
+        if (!userIsMember(user)) {
             members.add(user);
         }
     }
 
     /**
      * The business-profile creator removes a user from the moderatorMember list if it is a moderatorMember.
-     * (Does not removed the user from the member list)
+     * (Does not remove the user from the member list)
      * @param creator
      * @param user
      */
     public void removeModeratorMember(User creator, User user) {
-        if (creator.getEmail() == creatorMember.getEmail()) {
-            for (int i = 0; i < moderatorMembers.size(); i++) {
-                if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
-                    moderatorMembers.remove(i);
-                    break;
-                }
-            }
+        if (userIsCreator(creator) && userIsModerator(user)) {
+            moderatorMembers.remove(user);
         }
     }
 
     /**
-     * Removes the user from the member list if the user is a member. Also removes the user from the moderatorMember list if the user is a moderatorMember.
+     * Removes the user from the member list if the user is a member and not the creator.
+     * Also removes the user from the moderatorMember list if the user is a moderatorMember.
      * @param user
      */
     public void removeMember(User user) {
-        for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getEmail() == user.getEmail()) {
-                members.remove(i);
-                break;
-            }
-        }
-        for (int j = 0; j < moderatorMembers.size(); j++) {
-            if (members.get(j).getEmail() == user.getEmail()) {
-                moderatorMembers.remove(j);
-                break;
+        if (!userIsCreator(user)) {
+            if (userIsModerator(user)) {
+                moderatorMembers.remove(user);
+                members.remove(user);
+            } else {
+                if (userIsMember(user)) {
+                    members.remove(user);
+                }
             }
         }
     }
@@ -142,6 +143,18 @@ public class BusinessProfile implements IProfile {
 
     @Override
     public void decDistance(double reducedDistance) {}
+
+    public User getCreatorMember() {
+        return creatorMember;
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public List<User> getModeratorMembers() {
+        return moderatorMembers;
+    }
 
     @Override
     public void updateDistance() {
