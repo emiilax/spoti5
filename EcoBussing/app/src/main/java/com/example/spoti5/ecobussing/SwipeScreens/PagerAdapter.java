@@ -30,7 +30,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "OBJECT " + (position + 1); //dummy title
+        return "OBJECT "; //dummy title
     }
 
 }

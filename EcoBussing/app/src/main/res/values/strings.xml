@@ -44,6 +44,30 @@
 
     </string-array>
 
+    <string-array name="test_array">
+        <item>Object 1</item>
+        <item>Object 2</item>
+        <item>Object 3</item>
+        <item>Object 4</item>
+        <item>Object 5</item>
+        <item>Object 1</item>
+        <item>Object 2</item>
+        <item>Object 3</item>
+        <item>Object 4</item>
+        <item>Object 5</item>
+        <item>Object 1</item>
+        <item>Object 2</item>
+        <item>Object 3</item>
+        <item>Object 4</item>
+        <item>Object 5</item>
+        <item>Object 1</item>
+        <item>Object 2</item>
+        <item>Object 3</item>
+        <item>Object 4</item>
+        <item>Object 5</item>
+
+    </string-array>
+
 
     <string name="action_settings">Settings</string>
 

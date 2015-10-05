@@ -5,42 +5,63 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
 
-    tools:context="com.example.spoti5.ecobussing.Activites.ToplistFragment">
+
+    tools:context="com.example.spoti5.ecobussing.Activites.ToplistFragment"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:id="@+id/toplist_buttongroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/toplist_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:onClick="onSaveButtonClick"
+            android:text="Vecka"/>
+
+        <Button
+            android:id="@+id/toplist_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="onCancelButtonClick"
+            android:text="Månad"/>
+        <Button
+            android:id="@+id/toplist_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:onClick="onCancelButtonClick"
+            android:text="År"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/toplistListView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
-
-    <LinearLayout
-        android:orientation="horizontal"
-
-        android:paddingLeft="4.0dip"
-        android:paddingTop="5.0dip"
-        android:paddingRight="4.0dip"
-        android:paddingBottom="1.0dip"
-        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toplistListView"
-        >
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
 
 
-
-        <Button
-            android:id="@+id/persons"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/persons"
-            android:layout_weight="1.0" />
-
-        <Button
-            android:id="@+id/companies"
-            android:layout_width="0.0dip" android:layout_height="fill_parent"
-            android:text="@string/companies"
-            android:layout_weight="1.0" />
-
-    </LinearLayout>
-
-
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_above="@id/toplist_buttongroup"
+        ></ListView>
 
 
 </RelativeLayout>

@@ -1,9 +1,13 @@
 package com.example.spoti5.ecobussing.SwipeScreens;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +37,11 @@ public class SwipeFragments extends Fragment {
                         getActivity().getSupportFragmentManager());
         mViewPager = (ViewPager)view.findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setSelectedTabIndicatorHeight(3);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));
 
         //mPagerAdapter.getItem(0);
         //System.out.println(mViewPager.);
