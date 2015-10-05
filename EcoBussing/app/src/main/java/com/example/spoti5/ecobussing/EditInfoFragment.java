@@ -22,6 +22,9 @@ public class EditInfoFragment extends Fragment {
 
     private IUser currentUser;
     private EditText nameField;
+    private EditText ageField;
+    private EditText password1;
+    private EditText password2;
     private Button saveChanges;
 
     public EditInfoFragment(){
@@ -44,6 +47,9 @@ public class EditInfoFragment extends Fragment {
         currentUser = SaveHandler.getCurrentUser();
         View view = inflater.inflate(R.layout.edit_info_fragment, container, false);
         nameField = (EditText) view.findViewById(R.id.nameField);
+        ageField = (EditText) view.findViewById(R.id.ageField);
+        password1 = (EditText) view.findViewById(R.id.password1);
+        password2 = (EditText) view.findViewById(R.id.password2);
         saveChanges = (Button) view.findViewById(R.id.save_button);
         saveChanges.setOnClickListener(save);
         return view;
@@ -53,6 +59,7 @@ public class EditInfoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             currentUser.setName(nameField.getText().toString());
+            currentUser.setAge(Integer.parseInt(ageField.getText().toString()));
             SaveHandler.changeUser(currentUser);
             DatabaseHolder.getDatabase().updateUser(currentUser);
         }

@@ -144,6 +144,7 @@ public class Database implements IDatabase{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
+                    userList.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         IUser user = new User((String) userSnapshots.child("email").getValue());
                         user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());

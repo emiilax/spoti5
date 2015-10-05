@@ -33,6 +33,7 @@
     <string name="companies">Företag</string>
 
     <string name="edit_profile_button">Spara ändringar</string>
+    <string name="profil_title"><b>Profil</b></string>
 
 
     <string-array name="drawer_array">
