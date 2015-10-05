@@ -190,6 +190,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 view.setBackgroundResource(R.color.clicked);
                 EditInfoFragment fragment = new EditInfoFragment();
                 fragmentTransaction.replace(R.id.container, fragment);
+                break;
             case 5:
                 logout();
                 break;
