@@ -4,6 +4,8 @@ import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
 
 import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
+import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
@@ -34,6 +36,7 @@ public class Database implements IDatabase{
     private Firebase firebaseRef;
     private boolean successLogin = false;
     private List<IUser> allUsers;
+    private List<IProfile> allCompanies;
     private String UID;
 
     public Database() {
@@ -43,7 +46,7 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public List<IUser> getToplist() {
+    public List<IUser> getUserToplist() {
 
         List<IUser> topList = getUsers();
 
@@ -61,6 +64,14 @@ public class Database implements IDatabase{
         });
 
         return topList;
+    }
+
+    @Override
+    public List<IUser> getCompTopList() {
+
+        List<IProfile> topList = getCompanies();
+
+        return null;
     }
 
     public int getErrorCode(){
@@ -118,6 +129,16 @@ public class Database implements IDatabase{
 
     }
 
+    @Override
+    public void addCompany(String name, String password, BusinessProfile company, IDatabaseConnected connection) {
+
+        //key kan kanske vara lösenordet för att ansluta till företaget?
+        errorCode = ErrorCodes.NO_ERROR;
+        firebaseRef.child("companies").push();
+
+
+    }
+
     private String editEmail(String email){
         email = email.toLowerCase();
         email = email.replace('.',',');
@@ -164,7 +185,6 @@ public class Database implements IDatabase{
 
                 try {
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
-                        System.out.println(userSnapshots.getKey());
                         IUser user = new User((String) userSnapshots.child("email").getValue());
                         user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
                         user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
@@ -193,12 +213,24 @@ public class Database implements IDatabase{
         return userList;
     }
 
+    private List<IProfile> generateCompanyList(){
+        return null;
+    }
+
     @Override
     public List<IUser> getUsers() {
         if(allUsers != null){
             return allUsers;
         } else {
             return generateUserList();
+        }
+    }
+    @Override
+    public List<IProfile> getCompanies(){
+        if(allCompanies != null){
+            return allCompanies;
+        }else{
+            return generateCompanyList();
         }
     }
 
