@@ -54,8 +54,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
-
-        List list = database.getToplist();
+        
 
     }
 
