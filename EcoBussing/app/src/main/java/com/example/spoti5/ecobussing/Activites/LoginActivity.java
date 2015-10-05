@@ -18,6 +18,7 @@ import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -53,6 +54,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
+
+        List list = database.getToplist();
 
     }
 
