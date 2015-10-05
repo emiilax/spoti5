@@ -1,7 +1,9 @@
 package com.example.spoti5.ecobussing.Database;
 
+import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
 
+import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
@@ -29,15 +31,13 @@ public class Database implements IDatabase{
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
     private boolean successLogin = false;
+    private List<IUser> allUsers;
+    private String UID;
 
     public Database() {
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
-    }
-
-    @Override
-    public List<IUser> getUsers() {
-        return null;
+        allUsers = generateUserList();
     }
 
     @Override
@@ -50,15 +50,34 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addUser(String email, String password, final IUser user, final IDatabaseConnected connection){
+    public IUser getUser(String email) {
+        for(IUser u: getUsers()){
+            if(u.getEmail().equals(email)){
+                return u;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateUser(IUser user) {
+        if(UID != null){
+            Firebase ref = firebaseRef.child("users").child(UID);
+            ref.setValue(user);
+        }
+    }
+
+    @Override
+    public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child("users").push();
-                tmpRef.setValue(user, new Firebase.CompletionListener() {
+                Firebase tmpRef = firebaseRef.push();
+                tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+
                         errorCode = ErrorCodes.NO_ERROR;
                         connection.addingUserFinished();
                     }
@@ -91,7 +110,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-
+                
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
@@ -114,41 +133,50 @@ public class Database implements IDatabase{
         });
     }
 
+    private List<IUser> generateUserList(){
+        final ArrayList userList = new ArrayList();
 
-    public ArrayList getUser() {
-
-        final ArrayList list = new ArrayList();
-        Firebase tmpRef = firebaseRef;
-        Query queryRef = tmpRef.orderByKey();
-
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //TUser user = dataSnapshot.getValue(TUser.class);
-                System.out.println(dataSnapshot.getKey());
-
-            }
+        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
+                        IUser user = new User((String) userSnapshots.child("email").getValue());
+                        user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
+                        user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
+                        user.setPosition(((Long) userSnapshots.child("position").getValue()).intValue());
+                        user.setName((String) userSnapshots.child("name").getValue());
+                        user.setDistance((double) userSnapshots.child("distance").getValue());
+                        user.setCO2Saved((double) userSnapshots.child("co2Saved").getValue());
+                        user.setCurrentDistance((double) userSnapshots.child("currentDistance").getValue());
+                        user.setMoneySaved((double) userSnapshots.child("moneySaved").getValue());
 
-            }
+                        userList.add(user);
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                    }
+                } catch (FirebaseException var4) {
+                    System.out.println(var4.getMessage());
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed " + firebaseError.getMessage());
 
             }
         });
 
-        return list;
-}}
+        return userList;
+    }
+
+    @Override
+    public List<IUser> getUsers() {
+        if(allUsers != null){
+            return allUsers;
+        } else {
+            return generateUserList();
+        }
+    }
+
+}

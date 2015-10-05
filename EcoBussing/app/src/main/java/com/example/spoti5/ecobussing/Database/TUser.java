@@ -1,9 +1,12 @@
 package com.example.spoti5.ecobussing.Database;
 
+import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
+
 /**
  * Created by matildahorppu on 02/10/15.
  */
-public class TUser {
+public class TUser extends User {
     private String email;
     private String name;
     private int age;
