@@ -17,6 +17,8 @@ import com.firebase.client.ValueEventListener;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -42,7 +44,23 @@ public class Database implements IDatabase{
 
     @Override
     public List<IUser> getToplist() {
-        return null;
+
+        List<IUser> topList = getUsers();
+
+        Collections.sort(topList, new Comparator<IUser>() {
+            // @Override
+            public int compare(IUser lhs, IUser rhs) {
+                if(lhs.getCO2Saved() < rhs.getCO2Saved()){
+                    return -1;
+                }else if(lhs.getCO2Saved() > rhs.getCO2Saved()){
+                    return 1;
+                }else{
+                    return 0;
+                }
+            }
+        });
+
+        return topList;
     }
 
     public int getErrorCode(){
@@ -143,9 +161,11 @@ public class Database implements IDatabase{
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 try {
                     userList.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
+                        System.out.println(userSnapshots.getKey());
                         IUser user = new User((String) userSnapshots.child("email").getValue());
                         user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
                         user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
