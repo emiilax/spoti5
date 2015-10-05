@@ -132,6 +132,16 @@ public class BusinessProfile implements IProfile {
     }
 
     @Override
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public void setCO2Saved(double CO2Saved) {
+        this.carbondioxideSaved = CO2Saved;
+    }
+
+    @Override
     public void decDistance(double reducedDistance) {}
 
     public User getCreatorMember() {

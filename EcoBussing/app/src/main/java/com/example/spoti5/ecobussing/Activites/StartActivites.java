@@ -22,6 +22,6 @@ public class StartActivites extends ActivityController {
     }
 
     private boolean playerIsLogged(){
-        return false;
+        return true;
     }
 }

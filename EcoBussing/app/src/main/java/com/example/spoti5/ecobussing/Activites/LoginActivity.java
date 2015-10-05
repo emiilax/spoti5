@@ -1,17 +1,24 @@
 package com.example.spoti5.ecobussing.Activites;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
+import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,6 +33,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     IDatabase database;
     TextView error;
     TextView register;
+
+    IUser user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
+        
+
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -64,7 +75,9 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     private void login(){
         String inputEmail = emailField.getText().toString();
         String inputPassword = passwordField.getText().toString();
+
         database.loginUser(inputEmail, inputPassword, this);
+
     }
 
     boolean timerRunning = false;
@@ -108,15 +121,26 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
     @Override
     public void loginFinished() {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence text = "Hello toast!";
+        Toast toast;
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
-                //SaveHandler ska byta till nya user här
+                SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
                 break;
-            case ErrorCodes.BAD_EMAIL: error.setText("Ogiltig email");
+            case ErrorCodes.BAD_EMAIL: text = "Ogiltig email";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
                 break;
-            case ErrorCodes.NO_CONNECTION: error.setText("Fel användarnamn eller lösenord");
+            case ErrorCodes.NO_CONNECTION:text = "Fel användarnamn eller lösenord";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
                 break;
-            case ErrorCodes.UNKNOWN_ERROR: error.setText("Fel användarnamn eller lösenord");
+            case ErrorCodes.UNKNOWN_ERROR: text = "Fel användarnamn eller lösenord";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                break;
         }
     }
 }
