@@ -73,6 +73,7 @@ public class DrawerListAdapter extends BaseAdapter {
             case 0:
                 icon.setImageResource(R.drawable.empty_profile);
                 break;
+
         }
         rowLabel.setText(listItems.get(position));
 

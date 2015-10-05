@@ -8,5 +8,4 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="navigation_text_size_big">20dp</dimen>
     <dimen name="navigation_text_size_biggest">25dp</dimen>
-
 </resources>

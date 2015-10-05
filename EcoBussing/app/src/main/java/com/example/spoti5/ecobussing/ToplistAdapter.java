@@ -25,7 +25,7 @@ public class ToplistAdapter extends BaseAdapter {
         this.context = context;
 
 
-        for(String item: context.getResources().getStringArray(R.array.test_array)){
+        for(String item: context.getResources().getStringArray(R.array.anders_array)){
 
             listItems.add(item);
         }
@@ -55,21 +55,17 @@ public class ToplistAdapter extends BaseAdapter {
 
         if(convertView == null){
 
-            row = inflater.inflate(R.layout.drawer_list_item, parent, false);
+            row = inflater.inflate(R.layout.toplist_item, parent, false);
 
         }else{
             row = convertView;
         }
 
-        TextView rowLabel = (TextView) row.findViewById(R.id.listItemLabel);
+        TextView name = (TextView) row.findViewById(R.id.toplistItem_name);
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
-        ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
-        switch (position){
-            case 0:
-                icon.setImageResource(R.drawable.empty_profile);
-                break;
-        }
-        rowLabel.setText(listItems.get(position));
+        //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
+
+        name.setText((position + 1) + ". " + listItems.get(position));
 
         return row;
     }

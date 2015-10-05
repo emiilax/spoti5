@@ -23,7 +23,6 @@ import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
-import com.example.spoti5.ecobussing.SwipeScreens.TestFragment;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -157,22 +156,17 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
-                getSupportActionBar().setTitle("Fragment 3");
-                view.setBackgroundResource(R.color.clicked);
-                ToplistFragment toplistFragment = new ToplistFragment();
+                getSupportActionBar().setTitle("Topplista");
+                view.setBackgroundResource(R.color.third);
 
-                System.out.println("top");
-                fragmentTransaction.replace(R.id.container, toplistFragment);
+                SwipeFragments test = new SwipeFragments();
+
+                fragmentTransaction.replace(R.id.container, test);
                 break;
 
             case 3:
                 getSupportActionBar().setTitle("Fragment 4");
-                view.setBackgroundResource(R.color.clicked);
 
-                SwipeFragments test = new SwipeFragments();
-
-                System.out.println("frag 4");
-                fragmentTransaction.replace(R.id.container, test);
                 /*
                 WifiDetect wifiDetect = new WifiDetect();
                  
