@@ -156,6 +156,8 @@ public class BusinessProfile implements IProfile {
         return moderatorMembers;
     }
 
+
+    //NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDS CHANGEEEEEEEEEEEEEE
     @Override
     public void updateDistance() {
         distance = 0;
