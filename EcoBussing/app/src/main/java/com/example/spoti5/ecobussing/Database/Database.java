@@ -110,7 +110,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                
+
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
