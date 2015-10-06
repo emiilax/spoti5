@@ -211,7 +211,7 @@ public class Database implements IDatabase{
             }
         });
 
-        return userList;
+        return userList
     }
 
     private List<IProfile> generateCompanyList(){
