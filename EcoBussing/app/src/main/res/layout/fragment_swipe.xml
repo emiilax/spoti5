@@ -1,15 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.view.ViewPager
-    android:id="@+id/pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v4.view.PagerTitleStrip
-        android:id="@+id/pagerTitleStrip"
-        android:layout_height="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_gravity="top"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"/>
-</android.support.v4.view.ViewPager>
+        android:layout_height="20dp"
+        android:background="@color/secondary"
+        />
+
+    <LinearLayout
+        android:id="@+id/toplist_buttongroup"
+        android:background="@drawable/border"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:layout_marginBottom="-4dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/swipe_btnWeek"
+            android:background="@color/third"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginRight="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_weight="1"
+            android:text="Vecka"/>
+
+        <Button
+            android:id="@+id/swipe_btnMonth"
+            android:layout_width="0dp"
+            android:background="@color/third"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="-1dp"
+            android:layout_marginLeft="-1dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Månad"/>
+        <Button
+            android:id="@+id/swipe_btnYear"
+            android:layout_width="0dp"
+            android:background="@color/third"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginRight="-1dp"
+            android:layout_weight="1"
+            android:text="År"/>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sliding_tabs"
+        android:layout_above="@id/toplist_buttongroup"
+
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    </android.support.v4.view.ViewPager>
+
+
+</RelativeLayout>

@@ -17,20 +17,20 @@ public class BusinessProfile implements IProfile {
      * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
      */
     private User creatorMember;     //The creator of the bussiness-profile, has deletion right.
-    List<User> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
-    List<User> members;             //All members of the bussiness profile.
+    ArrayList<User> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
+    ArrayList<User> members;             //All members of the bussiness profile.
 
 
     public BusinessProfile(String businessName, User creatorMember) {
         companyName = businessName;
         this.creatorMember = creatorMember;
+        moderatorMembers = new ArrayList<User>();
+        members = new ArrayList<User>();
         moderatorMembers.add(creatorMember);
         members.add(creatorMember);
         distance = 0;
         currentDistance = 0;
         carbondioxideSaved = 0;
-        moderatorMembers = new ArrayList<User>();
-        members = new ArrayList<User>();
     }
 
     public boolean userIsCreator(User user) {
@@ -88,7 +88,7 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void removeModeratorMember(User creator, User user) {
-        if (userIsCreator(creator) && userIsModerator(user)) {
+        if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
             moderatorMembers.remove(user);
         }
     }
@@ -129,6 +129,16 @@ public class BusinessProfile implements IProfile {
     @Override
     public void setName(String name) {
         companyName = name;
+    }
+
+    @Override
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    @Override
+    public void setCO2Saved(double CO2Saved) {
+        this.carbondioxideSaved = CO2Saved;
     }
 
     @Override
