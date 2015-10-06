@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,9 @@ import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
+
+import java.util.Calendar;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -42,7 +46,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
@@ -83,6 +86,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         loadSelection(0);
+    }
+
+    protected void setUpDrawer(){
+
     }
 
     private Drawable rezizedDrawable(){
@@ -152,23 +159,35 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
-                getSupportActionBar().setTitle("Fragment 3");
-                view.setBackgroundResource(R.color.clicked);
-                ToplistFragment toplistFragment = new ToplistFragment();
+                getSupportActionBar().setTitle("Topplista");
+                view.setBackgroundResource(R.color.third);
 
+                SwipeFragments test = new SwipeFragments();
 
-                fragmentTransaction.replace(R.id.container, toplistFragment);
+                fragmentTransaction.replace(R.id.container, test);
                 break;
 
             case 3:
+                getSupportActionBar().setTitle("Fragment 4");
+
+                /*
+                WifiDetect wifiDetect = new WifiDetect();
+                 
+                wifi = true;
+                fragmentTransaction.replace(R.id.container, wifiDetect);
+                if(wifiReciever.getBssid() != null){
+                    setConnected(wifiReciever.getBssid());
+                }
+                */
+
+                break;
+            case 4:
                 getSupportActionBar().setTitle("Redigera profil");
                 view.setBackgroundResource(R.color.clicked);
                 EditInfoFragment fragment = new EditInfoFragment();
                 fragmentTransaction.replace(R.id.container, fragment);
-
                 break;
-
-            case 4:
+            case 5:
                 logout();
                 break;
 

@@ -6,15 +6,18 @@
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:weightSum="1"
+    android:paddingLeft="12dp"
     >
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:id="@+id/listItemIcon"
+
         android:clickable="false"
         android:layout_gravity="center"
-        android:src="@android:drawable/ic_menu_gallery" />
+        android:src="@android:drawable/ic_menu_gallery"
+        android:padding="4dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -22,6 +25,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center|left"
         android:text="Large Text"
-        android:id="@+id/listItemLabel" />
+        android:id="@+id/listItemLabel"
+        android:focusableInTouchMode="false"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:paddingLeft="12dp" />
 
 </LinearLayout>

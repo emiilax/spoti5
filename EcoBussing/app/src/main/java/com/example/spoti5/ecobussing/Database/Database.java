@@ -4,6 +4,8 @@ import android.provider.ContactsContract;
 import android.widget.ArrayAdapter;
 
 import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
+import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
@@ -17,6 +19,8 @@ import com.firebase.client.ValueEventListener;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -32,6 +36,7 @@ public class Database implements IDatabase{
     private Firebase firebaseRef;
     private boolean successLogin = false;
     private List<IUser> allUsers;
+    private List<IProfile> allCompanies;
     private String UID;
 
     public Database() {
@@ -41,7 +46,31 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public List<IUser> getToplist() {
+    public List<IUser> getUserToplist() {
+
+        List<IUser> topList = getUsers();
+
+        Collections.sort(topList, new Comparator<IUser>() {
+            // @Override
+            public int compare(IUser lhs, IUser rhs) {
+                if(lhs.getCO2Saved() < rhs.getCO2Saved()){
+                    return -1;
+                }else if(lhs.getCO2Saved() > rhs.getCO2Saved()){
+                    return 1;
+                }else{
+                    return 0;
+                }
+            }
+        });
+
+        return topList;
+    }
+
+    @Override
+    public List<IUser> getCompTopList() {
+
+        List<IProfile> topList = getCompanies();
+
         return null;
     }
 
@@ -61,10 +90,8 @@ public class Database implements IDatabase{
 
     @Override
     public void updateUser(IUser user) {
-        if(UID != null){
-            Firebase ref = firebaseRef.child("users").child(UID);
-            ref.setValue(user);
-        }
+        Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+        ref.setValue(user);
     }
 
     @Override
@@ -73,7 +100,7 @@ public class Database implements IDatabase{
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.push();
+                Firebase tmpRef = firebaseRef.child(editEmail(theUser.getEmail()));
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -102,6 +129,22 @@ public class Database implements IDatabase{
 
     }
 
+    @Override
+    public void addCompany(String name, String password, BusinessProfile company, IDatabaseConnected connection) {
+
+        //key kan kanske vara lösenordet för att ansluta till företaget?
+        errorCode = ErrorCodes.NO_ERROR;
+        firebaseRef.child("companies").push();
+
+
+    }
+
+    private String editEmail(String email){
+        email = email.toLowerCase();
+        email = email.replace('.',',');
+        return email;
+    }
+
 
     @Override
     public void loginUser(String email, String password, final IDatabaseConnected connection){
@@ -110,7 +153,6 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
@@ -140,7 +182,9 @@ public class Database implements IDatabase{
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 try {
+                    userList.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         IUser user = new User((String) userSnapshots.child("email").getValue());
                         user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
@@ -167,7 +211,11 @@ public class Database implements IDatabase{
             }
         });
 
-        return userList;
+        return userList
+    }
+
+    private List<IProfile> generateCompanyList(){
+        return null;
     }
 
     @Override
@@ -176,6 +224,14 @@ public class Database implements IDatabase{
             return allUsers;
         } else {
             return generateUserList();
+        }
+    }
+    @Override
+    public List<IProfile> getCompanies(){
+        if(allCompanies != null){
+            return allCompanies;
+        }else{
+            return generateCompanyList();
         }
     }
 

@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.ToplistAdapter;
 
 import org.w3c.dom.Text;
 
@@ -35,6 +37,17 @@ public class ToplistFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_toplist, container, false);
+
+        ListView drawerList= (ListView) view.findViewById(R.id.toplistListView);
+
+
+        // Set the adapter for the list view
+        //drawerList.setAdapter(new ArrayAdapter<String>(this,
+        //        R.layout.drawer_list_item, planetTitles));
+        ToplistAdapter listAdapter = new ToplistAdapter(view.getContext());
+        drawerList.setAdapter(listAdapter);
+
+        //drawerList.setOnItemClickListener((MainActivity)view.getContext());
         //TextView tv = (TextView)view.findViewById(R.id.textviewTest);
         //tv.setText("Test");
         //TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
