@@ -21,10 +21,16 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 public class OverviewActivity extends ActivityController {
 
     private String carbonSaved;
+
+    private double CO2Saved;
+    private double currentDistance;
+    private double totalDistance;
+
     private boolean tappedBefore;
     private TextView overviewTextView1;
     private TextView overviewTextView2;
     private TextView overViewTextView3;
+    private TextView overViewTextView4;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +38,19 @@ public class OverviewActivity extends ActivityController {
         overviewTextView1 = (TextView) findViewById(R.id.overviewtextview1);
         overviewTextView2 = (TextView) findViewById(R.id.overviewtextview2);
         overViewTextView3 = (TextView) findViewById(R.id.overviewtextview3);
+        overViewTextView4 = (TextView) findViewById(R.id.overviewtextview4);
 
-        setOverviewText1();
-        tappedBefore = false;
+        CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
+        currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
+        totalDistance = SaveHandler.getCurrentUser().getDistance();
+
+        if (currentDistance > 0) {
+            setOverviewText1();
+            tappedBefore = false;
+        } else {
+            setOverviewText2();
+            tappedBefore = true;
+        }
     }
 
     private void updateSaveHandler() {
@@ -46,19 +62,14 @@ public class OverviewActivity extends ActivityController {
 
     private void setOverviewText1() {
         double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
-
-        if (CO2Saved > 0) {
-            overviewTextView1.setText("Du har sparat " + Integer.toString((int)CO2Saved) + "mg koldioxid sen senaste starten!");
-        } else {
-            overviewTextView1.setText("Du har inte sparat någonting din tölp.");
-        }
+        overviewTextView1.setText("Du har åkt " + Double.toString(currentDistance) + " km kollektivt");
+        overViewTextView4.setText("Genom att göra det har du sparat " + carbonSaved + " mg koldioxid!");
     }
 
     private void setOverviewText2() {
         double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
-        double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
 
-        overviewTextView1.setVisibility(View.INVISIBLE);
+       // overviewTextView1.setVisibility(View.INVISIBLE);
         animateTextView((int) totCO2Saved, (int) (CO2Saved + totCO2Saved), overViewTextView3);
         overviewTextView2.setText("+" + Integer.toString((int) CO2Saved));
     }
@@ -73,7 +84,7 @@ public class OverviewActivity extends ActivityController {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                textview.setText("Totalt: " + valueAnimator.getAnimatedValue().toString() + " mg");
+                textview.setText(valueAnimator.getAnimatedValue().toString() + " mg");
             }
         });
         valueAnimator.start();
