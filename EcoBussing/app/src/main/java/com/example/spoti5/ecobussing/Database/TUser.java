@@ -20,7 +20,6 @@ public class TUser extends User {
     /**
      * Creates a user with username, email and password. This class does not check
      * username and password
-     * @param email Has to cbe checked before entered here
      */
 
     public TUser(){
