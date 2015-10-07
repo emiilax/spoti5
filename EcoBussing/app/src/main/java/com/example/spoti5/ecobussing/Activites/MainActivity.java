@@ -249,5 +249,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void logout() {
         startRegisterActivity();
+        SaveHandler.changeUser(null);
     }
 }
