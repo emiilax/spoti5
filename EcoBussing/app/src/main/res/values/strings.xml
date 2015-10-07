@@ -12,10 +12,10 @@
 
     <string name="action_example">Example action</string>
 
-    <string name="login_title"><b>Logga in</b></string>
+    <string name="login_title">Välkommen!</string>
     <string name="username_hint">Användarnamn</string>
     <string name="password_hint">Lösenord</string>
-    <string name="register_label"><u>Registrera</u></string>
+    <string name="register_label"><u>Registrera dig här!</u></string>
 
     <string name="register_title"><b>Registrera</b></string>
     <string name="email_hint">Email (exempel@domain.com)</string>
@@ -35,6 +35,8 @@
     <string name="edit_profile_button">Spara ändringar</string>
     <string name="profil_title"><b>Profil</b></string>
 
+    <string name="add_company_text">Här kan du registrera ditt företag så att du och dina anställda kan spara koldioxid tillsammans!</string>
+
 
     <string-array name="drawer_array">
         <item>Profile</item>
@@ -42,6 +44,7 @@
         <item>Fragment 3</item>
         <item>Fragment 4</item>
         <item>Redigera profil</item>
+        <item>Skapa företag</item>
         <item>Log out</item>
 
     </string-array>
