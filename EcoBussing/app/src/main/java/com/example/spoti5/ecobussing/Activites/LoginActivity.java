@@ -35,6 +35,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView register;
 
     IUser user;
+    private List<IUser> allUsers;
+    private List<IUser> topList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     public void loginFinished() {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
-        CharSequence text = "Hello toast!";
+        CharSequence text;
         Toast toast;
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
@@ -143,4 +145,5 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
                 break;
         }
     }
+
 }

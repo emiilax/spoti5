@@ -16,7 +16,8 @@ import java.util.List;
  */
 public interface IDatabase {
     public List<IUser> getUsers();
-    public List<IUser> getUserToplist();
+    public List<IUser> getUserToplistAll();
+
     public List<IUser> getCompTopList();
     public void addUser(String email, String password, final User user, IDatabaseConnected connection);
     public void addCompany(String name, String password, final BusinessProfile company, IDatabaseConnected connection);

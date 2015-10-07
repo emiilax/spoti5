@@ -1,9 +1,11 @@
 package com.example.spoti5.ecobussing.Profiles;
 
+import java.io.Serializable;
+
 /**
  * Created by erikk on 2015-09-16.
  */
-public interface IProfile {
+public interface IProfile extends Serializable {
 
     public String getName();
     public double getDistance();
