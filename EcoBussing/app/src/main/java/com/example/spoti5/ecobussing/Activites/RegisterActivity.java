@@ -189,7 +189,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
                 SaveHandler.changeUser(newUser);
-                SaveHandler.setPassword(password);
                 break;
             case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
                 break;

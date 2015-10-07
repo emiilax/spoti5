@@ -130,7 +130,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
                 SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
-                SaveHandler.setPassword(passwordField.getText().toString());
                 break;
             case ErrorCodes.BAD_EMAIL: text = "Ogiltig email";
                 toast = Toast.makeText(context, text, duration);
