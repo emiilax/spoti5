@@ -168,8 +168,13 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 3:
                 getSupportActionBar().setTitle("Fragment 4");
 
+
+                WifiFragment wfrag = new WifiFragment();
+
+                fragmentTransaction.replace(R.id.container, wfrag);
+
                 /*
-                WifiDetect wifiDetect = new WifiDetect();
+
                  
                 wifi = true;
                 fragmentTransaction.replace(R.id.container, wifiDetect);

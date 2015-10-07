@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 
 /**
@@ -24,6 +23,8 @@ public class Calculator {
 
     private String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
 
+    private final String key = "AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
+
     public static Calculator getCalculator() {
         if (calculator == null) {
             calculator = new Calculator();
@@ -31,7 +32,7 @@ public class Calculator {
         return calculator;
     }
 
-    public int calculateDistance(StopLocation origin, StopLocation destination, String key){
+    public int calculateDistance(StopLocation origin, StopLocation destination){
         double originLat = Double.parseDouble(origin.getLat());
         double originLng = Double.parseDouble(origin.getLon());
         double destinationLat = Double.parseDouble(destination.getLat());

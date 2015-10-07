@@ -15,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.spoti5.ecobussing.BusConnection;
+import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.R;
+
+import java.io.IOException;
 
 /**
  * Created by emilaxelsson on 03/10/15.
@@ -32,6 +36,7 @@ public class SwipeFragments extends Fragment implements View.OnClickListener {
     private TabLayout tabLayout;
     private View view;
 
+    private BusConnection busC = new BusConnection();
 
     //@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -78,13 +83,24 @@ public class SwipeFragments extends Fragment implements View.OnClickListener {
 
         if(v == btnWeek){
             btnWeek.setBackgroundColor(getResources().getColor(R.color.secondary));
+
         }
 
         if(v == btnMonth){
             btnMonth.setBackgroundColor(getResources().getColor(R.color.secondary));
+            try {
+                busC.beginJourey(Busses.simulated);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if(v == btnYear){
             btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
+            try {
+                busC.endJourney(Busses.simulated);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

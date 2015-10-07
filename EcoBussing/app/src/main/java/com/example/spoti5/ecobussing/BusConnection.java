@@ -5,8 +5,11 @@ package com.example.spoti5.ecobussing;
 
 
 import com.example.spoti5.ecobussing.BusData.Bus;
+import com.example.spoti5.ecobussing.BusData.Bus55Stops;
 import com.example.spoti5.ecobussing.BusData.Busses;
+import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.example.spoti5.ecobussing.JsonClasses.EA.EARespond;
+import com.example.spoti5.ecobussing.JsonClasses.VA.StopLocation;
 import com.example.spoti5.ecobussing.JsonClasses.VA.VANearbyStops;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,25 +32,32 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by emilaxelsson on 24/09/15.
  */
-public class BusConnection {
+public class BusConnection implements Runnable{
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
 
         BusConnection demo = new BusConnection();
-        try {
-            demo.beginJourey(Busses.simulated);
-            //demo.vasttrafikApi();
-
-            //demo.getRespond(Sensor.NEXTSTOP);
-            //demo.doGet();
-            //String url = demo.getElecticityRequsetUrl(true,"Ericsson$GPS2", "001", System.currentTimeMillis()-(30*1000) ,System.currentTimeMillis());
-        } catch (IOException e) {
-        }
+        //try {
+        demo.beginJourey(Busses.simulated);
+        //demo.vasttrafikApi();
+        //demo.testVA();
+        //new Thread(demo).start();
+        //demo.getRespond(Sensor.NEXTSTOP);
+        //demo.doGet();
+        //String url = demo.getElecticityRequsetUrl(true,"Ericsson$GPS2", "001", System.currentTimeMillis()-(30*1000) ,System.currentTimeMillis());
+        //} catch (IOException e) {
+        //}
 
     }
 
-    private Bus theBus;
+    public BusConnection(){
 
+    }
+
+
+    private Bus theBus;
+    private boolean stillConnected;
     // Authorization-keys for the API's
     private final String EAkey = "Z3JwMjY6REhrdUFQRlZuIw==";
     private final String VAkey = "97ba5902-0424-4e46-9dad-4a5dadd218da";
@@ -56,29 +66,107 @@ public class BusConnection {
     private final String GPS2 = "Ericsson$GPS2";
 
 
+    boolean hasStarted = false;
+    private StopLocation startLoc;
+    private StopLocation endLoc;
     /**
      * Called when the device is connected to a bus wifi.
      *
      * @param bus, the bus the device is connected to
      * @throws IOException
      */
-    private void beginJourey(Bus bus) throws IOException {
-        String vinNr = bus.getVIN();
+    public void beginJourey(Bus bus) throws IOException {
 
+        if(!hasStarted){
+            String vinNr = bus.getVIN();
+
+            System.out.println("Journey begin");
+
+            List<EARespond> gpsInfo = getGPSInfo(vinNr);
+
+            for(EARespond rsp: gpsInfo){
+                System.out.println(rsp);
+            }
+
+            stillConnected = true;
+
+            double lon = getEAValue("Longitude2_Value", gpsInfo);
+            double lat = getEAValue("Latitude2_Value", gpsInfo);
+
+            VANearbyStops locations = getNearbyStops(lon, lat, 20);
+
+            //startLoc = locations.getStopLocation(0);
+
+            for(StopLocation nStop: locations.getLocationList().getStopLocation()){
+
+                if(Bus55Stops.stops.contains(nStop)){
+                    int i = Bus55Stops.stops.indexOf(nStop);
+                    System.out.println(nStop.getName());
+                    startLoc = Bus55Stops.stops.get(i);
+                    System.out.println("found it!");
+                    System.out.println(startLoc.getName());
+                    break;
+                }
+
+            }
+
+            System.out.println("Startloc finished");
+
+            if(!hasStarted){
+                new Thread(this).start();
+            }
+        }
+
+
+        hasStarted = true;
+
+    }
+
+    boolean hasEnded = false;
+    public void endJourney(Bus bus) throws IOException {
+        /*
+        String vinNr = bus.getVIN();
+        System.out.println("Journey end");
         List<EARespond> gpsInfo = getGPSInfo(vinNr);
 
+        /*
         for(EARespond rsp: gpsInfo){
             System.out.println(rsp);
         }
 
+
         double lon = getEAValue("Longitude2_Value", gpsInfo);
         double lat = getEAValue("Latitude2_Value", gpsInfo);
 
-        VANearbyStops nbs = getNearbyStops(lon, lat, 3);
+        VANearbyStops locations = getNearbyStops(lon, lat, 3);*/
+        if(!hasEnded){
+            stillConnected = false;
+            for(StopLocation nStop: lastLocations.getLocationList().getStopLocation()){
 
-        System.out.println(nbs.getLocationList().getStopLocation().get(0).getName());
+                if(Bus55Stops.stops.contains(nStop)){
+                    int i = Bus55Stops.stops.indexOf(nStop);
+                    System.out.println(nStop.getName());
+                    endLoc = Bus55Stops.stops.get(i);
+                    System.out.println("found it!");
+                    System.out.println(startLoc.getName());
+                    break;
+                }
+
+                hasEnded = true;
+
+                //endLoc = stopL;
+                System.out.println(endLoc.getName());
+                System.out.println("Endloc finished");
 
 
+
+                double distance = Calculator.getCalculator().calculateDistance(startLoc, endLoc);
+
+                System.out.println(distance);
+            }
+
+        }
+        
     }
 
     /**
@@ -188,6 +276,13 @@ public class BusConnection {
 
         String response = "";
 
+        /*
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        */
+
         // Used to point out the "resource" on internet
         URL requestURL = new URL(url);
 
@@ -218,7 +313,7 @@ public class BusConnection {
         }
         in.close();
 
-        System.out.println(response);
+        //System.out.println(response);
 
         return response;
     }
@@ -257,6 +352,13 @@ public class BusConnection {
      */
     public String getVAResponse(String url) throws IOException {
         String response = "";
+
+
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        */
         URL requestURL = new URL(url);
 
         HttpURLConnection con = (HttpURLConnection) requestURL.openConnection();
@@ -270,7 +372,7 @@ public class BusConnection {
 
         String inputline = "";
         while((inputline = in.readLine()) != null){
-            System.out.println(inputline);
+            //System.out.println(inputline);
             response +=inputline;
         }
 
@@ -310,4 +412,81 @@ public class BusConnection {
     }
 
 
+    public void testVA() throws IOException {
+        String url = "http://api.vasttrafik.se/bin/rest.exe/v1/location.nearbystops?" +
+                "authKey=" + VAkey + "&originCoordLong=" + "11.973029" +
+                "&originCoordLat=" + "57.694108" + "&maxNo=" + "5&useVas=0&useLDTrain=0&useRegTrain=0&useBoat=0&useTram=0" +
+                "&format=json&jsonpCallback=processJSON";
+
+        String url2 = "http://api.vasttrafik.se/bin/rest.exe/v1/location.name?authKey=" + VAkey
+                + "&input=chalmers&format=json&jsonpCallback=processJSON";
+
+        String url3 = "http://api.vasttrafik.se/bin/rest.exe/v1/trip?authKey=" + VAkey +
+                "&originId=9022014008000000&destCoordLat=57.689298&destCoordLong=11.973469" +
+                "&destCoordName=Chalmersplatsen&date=2015-09-08&time=07:02&useVas=0&useLDTrain=0" +
+                "&useRegTrain=0&useBoat=0&useTram=0&format=json&jsonpCallback=processJSON";
+
+        String url4 = "http://api.vasttrafik.se/bin/rest.exe/v1/departureBoard?authKey=" + VAkey +
+                "&id=9021014001961000&date=2015-09-08&time=07:02&journeyDetail=1" +
+                "&format=json&jsonpCallback=processJSON";
+
+        String url5  = "http://api.vasttrafik.se/bin/rest.exe/v1/journeyDetail?" +
+                "ref=379377%2F145210%2F479540%2F113315%2F80%3Fdate%3D2015-09-08%26station_evaId%" +
+                "3D1961001%26station_type%3Ddep%26authKey%3D97ba5902-0424-4e46-9dad-4a5dadd218da%" +
+                "26format%3Djson%26jsonpCallback%3DprocessJSON%26";
+
+
+        String jsonObject = getVAResponse(url);
+        System.out.println(jsonObject);
+
+
+    }
+
+
+
+    StopLocation stopL = null;
+    VANearbyStops lastLocations = null;
+    @Override
+    public void run() {
+
+        System.out.println("Run");
+
+        while(stillConnected){
+
+            List<EARespond> gpsInfo = null;
+            try {
+                gpsInfo = getGPSInfo(Busses.simulated.getVIN());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        /*
+        for(EARespond rsp: gpsInfo){
+            System.out.println(rsp);
+        }
+        */
+            System.out.println("Check location");
+            double lon = getEAValue("Longitude2_Value", gpsInfo);
+            double lat = getEAValue("Latitude2_Value", gpsInfo);
+
+            try {
+                lastLocations = getNearbyStops(lon, lat, 10);
+                stopL = lastLocations.getStopLocation(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            double dist = Calculator.getCalculator().calculateDistance(startLoc, stopL);
+
+            try {
+                synchronized (this) {
+                    this.wait(5000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
 }

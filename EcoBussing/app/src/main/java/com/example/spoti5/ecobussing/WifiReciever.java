@@ -11,6 +11,9 @@ import android.net.wifi.WifiManager;
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Busses;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,20 +25,21 @@ public class WifiReciever extends BroadcastReceiver {
     private String bssid;
     private Bus theBus;
     private BusConnection busConnection;
-    private boolean onBus;
+    private boolean onBus = false;
+    private boolean connectedToWifi = false;
     private Activity activity;
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 
-    private WifiReciever(Activity activity){
+    private WifiReciever(){
         busConnection = new BusConnection();
-        this.activity = activity;
 
     }
 
-    public static WifiReciever getInstance(Activity activity){
+    public static WifiReciever getInstance(){
 
         if(theReciver == null){
-            theReciver = new WifiReciever(activity);
+            theReciver = new WifiReciever();
         }
 
         return theReciver;
@@ -56,26 +60,41 @@ public class WifiReciever extends BroadcastReceiver {
                 if(wifiInfo.getBSSID() != null){
                     bssid = wifiInfo.getBSSID().replace(":", "");
                     System.out.println("Connected");
+                    this.pcs.firePropertyChange("connected", null, bssid);
+                    onBus = true;
 
-                    /*
-                    try{
-                        ((MainActivity)activity).setConnected(bssid);
-                    } catch (Exception e){
 
+                    try {
+                        busConnection.beginJourey(Busses.simulated);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    */
 
                 }
+                connectedToWifi = true;
 
 
-                System.out.println("Connected");
-                System.out.println(bssid);
+                //System.out.println("Connected");
+                //System.out.println(bssid);
+
 
                 //if(onTheBus() && !onBus){
                  //   onBus = true;
                     //busConnection.beginJourney(theBus);
                 //}
             } else{
+                connectedToWifi = false;
+                this.pcs.firePropertyChange("disconnected", null, null);
+                if(onBus){
+
+                    try {
+                        busConnection.endJourney(Busses.simulated);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
                 /*try{
                     ((MainActivity)activity).setDisconnected();
                 } catch (Exception e){
@@ -99,7 +118,19 @@ public class WifiReciever extends BroadcastReceiver {
 
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.removePropertyChangeListener(listener);
+    }
+
     public String getBssid(){
         return bssid;
+    }
+
+    public boolean isConnectedToWifi(){
+        return connectedToWifi;
     }
 }

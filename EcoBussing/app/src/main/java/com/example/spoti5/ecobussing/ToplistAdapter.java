@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
@@ -18,17 +21,14 @@ import java.util.List;
  */
 public class ToplistAdapter extends BaseAdapter {
 
-    private List<String> listItems;
+    private List<IUser> listItems;
     private Context context;
     public ToplistAdapter(Context context){
-        listItems = new ArrayList<>();
+        listItems = new ArrayList<IUser>();
         this.context = context;
 
-
-        for(String item: context.getResources().getStringArray(R.array.anders_array)){
-
-            listItems.add(item);
-        }
+        listItems = DatabaseHolder.getDatabase().getUsers();
+        System.out.println(listItems.size());
 
     }
 
@@ -62,10 +62,14 @@ public class ToplistAdapter extends BaseAdapter {
         }
 
         TextView name = (TextView) row.findViewById(R.id.toplistItem_name);
+        TextView co2 = (TextView) row.findViewById(R.id.toplistItem_subtitle);
+
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
 
-        name.setText((position + 1) + ". " + listItems.get(position));
+        name.setText((position + 1) + ". " + listItems.get(position).getName());
+        //System.out.println(listItems.size());
+        //co2.setText(Double.toString(listItems.get(position).getCO2Saved()));
 
         return row;
     }
