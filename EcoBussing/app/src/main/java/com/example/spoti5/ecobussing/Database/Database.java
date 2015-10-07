@@ -31,39 +31,39 @@ import java.util.Observer;
 public class Database implements IDatabase{
 
     private int errorCode;
+
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
-    private boolean successLogin = false;
     private List<IUser> allUsers;
     private List<IProfile> allCompanies;
-    private String UID;
+    private List<IUser> topListAll = new ArrayList<>();
 
     public Database() {
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
         allUsers = generateUserList();
+        generateToplistAll();
     }
 
-    @Override
-    public List<IUser> getUserToplist() {
+    private void generateToplistAll() {
+        final Query queryRef = firebaseRef.orderByChild("co2Saved");
 
-        List<IUser> topList = getUsers();
-
-        Collections.sort(topList, new Comparator<IUser>() {
-            // @Override
-            public int compare(IUser lhs, IUser rhs) {
-                if(lhs.getCO2Saved() < rhs.getCO2Saved()){
-                    return -1;
-                }else if(lhs.getCO2Saved() > rhs.getCO2Saved()){
-                    return 1;
-                }else{
-                    return 0;
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                topListAll.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User u = snapshot.getValue(User.class);
+                    topListAll.add(u);
                 }
             }
-        });
 
-        return topList;
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println(firebaseError.getMessage());
+            }
+        });
     }
 
     @Override
@@ -94,6 +94,15 @@ public class Database implements IDatabase{
         ref.setValue(user);
     }
 
+    /**
+     * Adds user to database. This takes time and onSuccess is called if the connection and
+     * adding user went ok. Otherwise onError is called and stores the errorcode that can be
+     * fetched with getErrorCode()
+     * @param email the email that the user will have as credential
+     * @param password the password the user will have as credential
+     * @param theUser all variables that will be stored in the database
+     * @param connection  the origin class that is called after the user is added or failed to be added
+     */
     @Override
     public List getCompanyMembers(String companyKey) {
         return null;
@@ -103,13 +112,13 @@ public class Database implements IDatabase{
     public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
+
             @Override
             public void onSuccess() {
                 Firebase tmpRef = firebaseRef.child(editEmail(theUser.getEmail()));
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-
                         errorCode = ErrorCodes.NO_ERROR;
                         connection.addingUserFinished();
                     }
@@ -119,19 +128,23 @@ public class Database implements IDatabase{
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
-                int tmpError = firebaseError.getCode();
-                if (tmpError == FirebaseError.EMAIL_TAKEN) {
-                    errorCode = ErrorCodes.BAD_EMAIL;
-                } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
-                    errorCode = ErrorCodes.NO_CONNECTION;
-                } else {
-                    errorCode = ErrorCodes.UNKNOWN_ERROR;
-                }
+                setErrorCode(firebaseError);
                 connection.addingUserFinished();
             }
         });
+    }
 
-
+    private void setErrorCode(FirebaseError error){
+        int tmpError = error.getCode();
+        if (tmpError == FirebaseError.INVALID_CREDENTIALS) {
+            errorCode = ErrorCodes.WRONG_CREDENTIALS;
+        } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
+            errorCode = ErrorCodes.NO_CONNECTION;
+        } else if (tmpError == FirebaseError.INVALID_EMAIL || tmpError == FirebaseError.EMAIL_TAKEN) {
+            errorCode = ErrorCodes.BAD_EMAIL;
+        } else {
+            errorCode = ErrorCodes.UNKNOWN_ERROR;
+        }
     }
 
     @Override
@@ -163,6 +176,11 @@ public class Database implements IDatabase{
 
     }
 
+    /**
+     *
+     * @param email that will be edited
+     * @return a new email that firebase can use as node name ('.' are not allowed)
+     */
     private String editEmail(String email){
         email = email.toLowerCase();
         email = email.replace('.',',');
@@ -177,6 +195,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
+                System.out.println("Database logged in");
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
@@ -184,16 +203,7 @@ public class Database implements IDatabase{
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
-                int tmpError = firebaseError.getCode();
-                if (tmpError == FirebaseError.INVALID_CREDENTIALS) {
-                    errorCode = ErrorCodes.WRONG_CREDENTIALS;
-                } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
-                    errorCode = ErrorCodes.NO_CONNECTION;
-                } else if (tmpError == FirebaseError.INVALID_EMAIL) {
-                    errorCode = ErrorCodes.BAD_EMAIL;
-                } else {
-                    errorCode = ErrorCodes.UNKNOWN_ERROR;
-                }
+                setErrorCode(firebaseError);
                 connection.loginFinished();
             }
         });
@@ -210,16 +220,8 @@ public class Database implements IDatabase{
                 try {
                     userList.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
-                        IUser user = new User((String) userSnapshots.child("email").getValue());
-                        user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
-                        user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
-                        user.setPosition(((Long) userSnapshots.child("position").getValue()).intValue());
-                        user.setName((String) userSnapshots.child("name").getValue());
-                        user.setDistance((double) userSnapshots.child("distance").getValue());
-                        user.setCO2Saved((double) userSnapshots.child("co2Saved").getValue());
-                        user.setCurrentDistance((double) userSnapshots.child("currentDistance").getValue());
-                        user.setMoneySaved((double) userSnapshots.child("moneySaved").getValue());
-
+                        User user = userSnapshots.getValue(User.class);
+                        System.out.println(user.getEmail());
                         userList.add(user);
 
                     }
@@ -250,6 +252,12 @@ public class Database implements IDatabase{
             return generateUserList();
         }
     }
+
+    @Override
+    public List<IUser> getUserToplistAll() {
+        return topListAll;
+    }
+
     @Override
     public List<IProfile> getCompanies(){
         if(allCompanies != null){

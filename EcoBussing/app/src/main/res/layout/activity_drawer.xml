@@ -45,12 +45,15 @@
          android:layout_gravity="left" instead. -->
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <ListView android:id="@+id/left_drawer"
+    <ListView
+        android:id="@+id/left_drawer"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@null"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
         android:dividerHeight="0dp"
         android:background="#FFFFFF"/>
         //android:name="com.example.spoti5.ecobussing.NavigationDrawerFragment"

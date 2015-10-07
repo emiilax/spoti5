@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.spoti5.ecobussing.Activites.ToplistFragment;
+
 /**
  * Created by emilaxelsson on 03/10/15.
  */
@@ -18,8 +20,18 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
+        Fragment fragment = null;
+        switch(i){
+            case 0:
+                fragment = new ToplistFragment();
+                break;
+
+            case 1:
+                fragment = new ToplistFragment();
+                break;
+        }
         System.out.println("get item called");
-        Fragment fragment = new TestFragment();
+
         return fragment;
     }
 
@@ -30,7 +42,17 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "OBJECT " + (position + 1); //dummy title
+        String category = "";
+        switch(position){
+            case 0:
+                category = "Personer";
+                break;
+
+            case 1:
+                category = "Företag";
+                break;
+        }
+        return category; //dummy title
     }
 
 }

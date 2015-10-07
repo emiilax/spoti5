@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.DatabaseTest;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
@@ -188,6 +189,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
                 SaveHandler.changeUser(newUser);
+                SaveHandler.setPassword(password);
                 break;
             case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
                 break;

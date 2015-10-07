@@ -81,6 +81,14 @@ public class BusConnection {
 
     }
 
+    /**
+     * Used to get a specific value from the array of o
+     * bjects that were created from the JSon-object
+     *
+     * @param theValue, the name of the value
+     * @param list, the list of objects
+     * @return
+     */
     public double getEAValue(String theValue, List<EARespond> list){
         double value = 0;
 
@@ -124,6 +132,12 @@ public class BusConnection {
         return list;
     }
 
+    /**
+     * Checks so there is only one object of ech value in the list.
+     *
+     * @param list, the list of objects
+     * @return a list with one of each object
+     */
     public List<EARespond> sortObjectList(List<EARespond> list){
         List<EARespond> newList = new ArrayList<EARespond>();
 
@@ -267,6 +281,13 @@ public class BusConnection {
 
     }
 
+    /**
+     * The response from the API do not work with the GSon-class.
+     * Therefore the response must be fixed.
+     *
+     * @param response, the response from the API
+     * @return a cleaned up response
+     */
     public String getFixedVAResponse(String response){
         int start = 0;
         for(int i = 0; i < response.length(); i++){

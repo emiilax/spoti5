@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by emilaxelsson on 30/09/15.
  */
+
 public class WifiReciever extends BroadcastReceiver {
 
     private static WifiReciever theReciver = null;

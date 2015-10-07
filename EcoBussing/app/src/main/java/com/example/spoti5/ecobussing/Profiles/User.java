@@ -1,9 +1,11 @@
 package com.example.spoti5.ecobussing.Profiles;
 
+import java.io.Serializable;
+
 /**
  * Created by erikk on 2015-09-16.
  */
-public class User implements IUser {
+public class User implements IUser{
 
     private String email;
     private String name;
@@ -182,5 +184,13 @@ public class User implements IUser {
         if (carbonSaved > 0) {
             carbondioxideSaved = carbondioxideSaved + carbonSaved;
         }
+    }
+
+    @Override
+    public String toString(){
+        return "User [email=" + email + ", distance=" + distance + ", currentDistance="
+                + currentDistance +", carbondioxideSaved=" +carbondioxideSaved +", moneySaved="
+                + moneySaved +", carPetrolConsumption=" + carPetrolConsumption +", age="+ age +", position=x"+ position + "]";
+
     }
 }
