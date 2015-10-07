@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/headerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_company_text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="20dp"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="@dimen/centered_field_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textPersonName"
+            android:hint="Företagets namn"
+            android:id="@+id/editTextCompName"
+            android:textSize="20dp" />
+
+        <EditText
+            android:layout_width="@dimen/centered_field_size"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:inputType="textPassword"
+            android:hint="Lösenord"
+            android:ems="10"
+            android:id="@+id/editTextPassword"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:text="Skapa"
+            android:id="@+id/saveCompButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.04"
+            android:padding="10dp"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="30dp"
+            android:textColor="@color/nice_green" />
+
+    </LinearLayout>
+</LinearLayout>

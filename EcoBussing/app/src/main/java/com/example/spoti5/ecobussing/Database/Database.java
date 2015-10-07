@@ -104,6 +104,11 @@ public class Database implements IDatabase{
      * @param connection  the origin class that is called after the user is added or failed to be added
      */
     @Override
+    public List getCompanyMembers(String companyKey) {
+        return null;
+    }
+
+    @Override
     public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
         firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
@@ -144,11 +149,30 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addCompany(String name, String password, BusinessProfile company, IDatabaseConnected connection) {
+    public void addCompany(final String name, String password, final BusinessProfile company, final IDatabaseConnected connection) {
 
         //key kan kanske vara lösenordet för att ansluta till företaget?
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("companies").push();
+        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler(){
+
+            @Override
+            public void onSuccess() {
+                Firebase tmpRef = firebaseRef.child(name);
+                tmpRef.setValue(company, new Firebase.CompletionListener() {
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                        errorCode = ErrorCodes.NO_ERROR;
+                        connection.addingUserFinished();
+                    }
+                });
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                System.out.println(firebaseError.getMessage());
+                connection.addingUserFinished();
+            }
+        });
 
 
     }
