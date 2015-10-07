@@ -35,6 +35,8 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView register;
 
     IUser user;
+    private List<IUser> allUsers;
+    private List<IUser> topList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,4 +146,5 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
                 break;
         }
     }
+
 }

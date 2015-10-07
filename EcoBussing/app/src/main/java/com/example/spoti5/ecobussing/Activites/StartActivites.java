@@ -45,7 +45,7 @@ public class StartActivites extends ActivityController implements IDatabaseConne
 
     @Override
     public void loginFinished() {
-        if(database.getErrorCode() == ErrorCodes.NO_ERROR){
+        if(database.getErrorCode() == ErrorCodes.NO_ERROR && false){
             startOverviewActivity();
         } else {
             startRegisterActivity();

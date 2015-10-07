@@ -18,7 +18,7 @@ import static com.example.spoti5.ecobussing.Activites.StartActivites.*;
  * Created by hilden on 2015-09-23.
  */
 public class SaveHandler {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 7863262235394607247L;
     private static String filename = "ecoTravel.ser";
 
     private static String filenamePass = "pass.ser";

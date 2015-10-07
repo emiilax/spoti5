@@ -47,6 +47,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_drawer);
 
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
