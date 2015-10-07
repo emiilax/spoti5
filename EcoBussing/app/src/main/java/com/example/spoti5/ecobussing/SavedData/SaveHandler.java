@@ -21,11 +21,12 @@ public class SaveHandler {
     private static final long serialVersionUID = 7863262235394607247L;
     private static String filename = "ecoTravel.ser";
 
-    private static String filenamePass = "pass.ser";
-
     private static IUser currentUser;
-    private static String password;
 
+    /**
+     * Loads user from local harddrive. If not user exists this will return null
+     * @return Null if no user is logged locally
+     */
     public static IUser getCurrentUser() {
         if(currentUser == null){
             try {
@@ -44,57 +45,13 @@ public class SaveHandler {
                 e.printStackTrace();
             }
         }
-        if(currentUser == null){
-            currentUser = new User("tmp@mail.mm", "sven");
-        }
         return currentUser;
     }
 
     public static void changeUser(IUser newUser) {
         Context context = StartActivites.getContext();
         currentUser = newUser;
-        SaveUser(context);}
-
-    public static  void setPassword(String newPassword){
-        Context context = StartActivites.getContext();
-        password = newPassword;
-        SavePassword(context);
-    }
-
-    private static void SavePassword(Context context) {
-        try{
-            FileOutputStream passfos = context.openFileOutput(filenamePass, Context.MODE_PRIVATE);
-            ObjectOutputStream passOos = new ObjectOutputStream(passfos);
-            passOos.writeObject(password);
-            passOos.close();
-            passfos.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public static String getPassword(){
-        Context context = StartActivites.getContext();
-        if(password == null){
-            try {
-                FileInputStream fileInputStream = context.openFileInput(filenamePass);
-                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                password = (String) objectInputStream.readObject();
-                objectInputStream.close();
-                fileInputStream.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if(password == null){
-            password ="badPass";
-        }
-        return password;
+        SaveUser(context);
     }
 
     public static void SaveUser(Context context) {
