@@ -5,4 +5,5 @@
     <color name="clicked">#dda133</color>
     <color name="clear_white">#ffffff</color>
     <color name="error_text_red">#ff0100</color>
+    <color name="nice_green">#85c869</color>
 </resources>
