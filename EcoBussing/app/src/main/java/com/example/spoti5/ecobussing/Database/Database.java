@@ -35,14 +35,14 @@ public class Database implements IDatabase{
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
-    private List<IUser> allUsers;
+    private List<IUser> allUsers = new ArrayList<>();
     private List<IProfile> allCompanies;
     private List<IUser> topListAll = new ArrayList<>();
 
     public Database() {
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
-        allUsers = generateUserList();
+        generateUserList();
         generateToplistAll();
     }
 
@@ -114,6 +114,7 @@ public class Database implements IDatabase{
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                        generateUserList();
                         errorCode = ErrorCodes.NO_ERROR;
                         connection.addingUserFinished();
                     }
@@ -185,8 +186,7 @@ public class Database implements IDatabase{
         });
     }
 
-    private List<IUser> generateUserList(){
-        final ArrayList userList = new ArrayList();
+    private void generateUserList(){
 
         firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -194,11 +194,11 @@ public class Database implements IDatabase{
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 try {
-                    userList.clear();
+                    allUsers.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         User user = userSnapshots.getValue(User.class);
                         System.out.println(user.getEmail());
-                        userList.add(user);
+                        allUsers.add(user);
 
                     }
                 } catch (FirebaseException var4) {
@@ -212,8 +212,6 @@ public class Database implements IDatabase{
 
             }
         });
-
-        return userList;
     }
 
     private List<IProfile> generateCompanyList(){
@@ -225,7 +223,8 @@ public class Database implements IDatabase{
         if(allUsers != null){
             return allUsers;
         } else {
-            return generateUserList();
+            generateUserList();
+            return allUsers;
         }
     }
 
