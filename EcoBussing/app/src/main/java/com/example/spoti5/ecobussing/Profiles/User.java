@@ -183,4 +183,12 @@ public class User implements IUser {
             carbondioxideSaved = carbondioxideSaved + carbonSaved;
         }
     }
+
+    @Override
+    public String toString(){
+        return "User [email=" + email + ", distance=" + distance + ", currentDistance="
+                + currentDistance +", carbondioxideSaved=" +carbondioxideSaved +", moneySaved="
+                + moneySaved +", carPetrolConsumption=" + carPetrolConsumption +", age="+ age +", position=x"+ position + "]";
+
+    }
 }

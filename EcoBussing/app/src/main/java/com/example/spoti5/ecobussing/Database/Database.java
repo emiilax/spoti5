@@ -16,6 +16,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -186,15 +187,8 @@ public class Database implements IDatabase{
                 try {
                     userList.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
-                        IUser user = new User((String) userSnapshots.child("email").getValue());
-                        user.setAge(((Long) userSnapshots.child("age").getValue()).intValue());
-                        user.setCarPetrolConsumption((Double) userSnapshots.child("carPetrolConsumption").getValue());
-                        user.setPosition(((Long) userSnapshots.child("position").getValue()).intValue());
-                        user.setName((String) userSnapshots.child("name").getValue());
-                        user.setDistance((double) userSnapshots.child("distance").getValue());
-                        user.setCO2Saved((double) userSnapshots.child("co2Saved").getValue());
-                        user.setCurrentDistance((double) userSnapshots.child("currentDistance").getValue());
-                        user.setMoneySaved((double) userSnapshots.child("moneySaved").getValue());
+                        User user = userSnapshots.getValue(User.class);
+                        System.out.println("name: " +user.getName());
 
                         userList.add(user);
 
