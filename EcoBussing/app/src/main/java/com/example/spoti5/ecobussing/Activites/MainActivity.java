@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.EditProfile.EditInfoFragment;
+import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -183,7 +184,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 4:
                 getSupportActionBar().setTitle("Redigera profil");
                 view.setBackgroundResource(R.color.clicked);
-                EditInfoFragment fragment = new EditInfoFragment();
+                ProfileSwipeFragment fragment = new ProfileSwipeFragment();
                 fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:

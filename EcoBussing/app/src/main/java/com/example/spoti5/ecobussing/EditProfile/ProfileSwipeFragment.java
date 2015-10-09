@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.EditProfile;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -21,14 +21,13 @@ public class ProfileSwipeFragment extends Fragment {
     private FragmentStatePagerAdapter adapter;
     private TabLayout tabLayout;
     private View view;
-    private CharSequence titles[];
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        System.out.println("skapa swipe");
         view = inflater.inflate(R.layout.profile_swipe, container, false);
-        titles[0] = "Redigera profil";
-        titles[1] = "Koppla till Företag";
+        System.out.println("skapaaat vyyyyy");
 
-        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         pager = (ViewPager)view.findViewById(R.id.profilePager);
         pager.setAdapter(adapter);
 
