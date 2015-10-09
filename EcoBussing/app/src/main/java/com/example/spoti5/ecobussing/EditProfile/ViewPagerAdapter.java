@@ -9,13 +9,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
-    CharSequence titles[];
-    int nbrOfTabs;
 
-    public ViewPagerAdapter(FragmentManager fm, CharSequence titles[], int nbrOfTabs){
+    public ViewPagerAdapter(FragmentManager fm){
         super(fm);
-        this.titles = titles;
-        this.nbrOfTabs = nbrOfTabs;
     }
 
     @Override
@@ -30,11 +26,18 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
     }
 
     public CharSequence getPageTitle(int position) {
-        return titles[position];
+        CharSequence tabTitle = "";
+        switch(position){
+            case 0: tabTitle = "Redigera profil";
+                break;
+            case 1: tabTitle = "Anslut till företag";
+                break;
+        }
+        return tabTitle;
     }
 
     @Override
     public int getCount() {
-        return nbrOfTabs;
+        return 2;
     }
 }
