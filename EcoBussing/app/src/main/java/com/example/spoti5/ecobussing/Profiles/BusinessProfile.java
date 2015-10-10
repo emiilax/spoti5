@@ -33,6 +33,29 @@ public class BusinessProfile implements IProfile {
         carbondioxideSaved = 0;
     }
 
+    @Override
+    public String getName() {
+        return companyName;
+    }
+
+    @Override
+    public void setName(String name) {
+        companyName = name;
+    }
+
+    public User getCreatorMember() {
+        return creatorMember;
+    }
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public List<User> getModeratorMembers() {
+        return moderatorMembers;
+    }
+
+
     public boolean userIsCreator(User user) {
         if (creatorMember.getEmail() == user.getEmail()) {
             return true;
@@ -112,51 +135,46 @@ public class BusinessProfile implements IProfile {
     }
 
     @Override
-    public String getName() {
-        return companyName;
+    public Double getDistanceTraveled() {
+        return null;
+    }
+
+
+    @Override
+    public Double getCO2Saved() {
+        return null;
     }
 
     @Override
-    public double getDistance() {
-        return distance;
+    public Double getCO2SavedYear(Integer year) {
+        return null;
     }
 
     @Override
-    public double getCO2Saved() {
-        return carbondioxideSaved;
+    public Double getCO2SavedMonth(Integer year, Integer month) {
+        return null;
     }
 
     @Override
-    public void setName(String name) {
-        companyName = name;
+    public Double getCO2SavedDate(Integer year, Integer month, Integer day) {
+        return null;
     }
 
     @Override
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public Double getCO2SavedPast7Days() {
+        return null;
     }
+
+
+
+
 
     @Override
-    public void setCO2Saved(double CO2Saved) {
-        this.carbondioxideSaved = CO2Saved;
+    public void incCO2Saved(double distance) {
+
     }
 
-    @Override
-    public void decDistance(double reducedDistance) {}
-
-    public User getCreatorMember() {
-        return creatorMember;
-    }
-
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public List<User> getModeratorMembers() {
-        return moderatorMembers;
-    }
-
-
+/*
     //NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDS CHANGEEEEEEEEEEEEEE
     @Override
     public void updateDistance() {
@@ -171,5 +189,5 @@ public class BusinessProfile implements IProfile {
         for (int i = 0; i < members.size(); i++) {
             carbondioxideSaved = carbondioxideSaved + members.get(i).getCO2Saved();
         }
-    }
+    } */
 }

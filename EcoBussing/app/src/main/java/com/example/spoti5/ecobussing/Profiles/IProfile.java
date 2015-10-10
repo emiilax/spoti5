@@ -6,12 +6,16 @@ package com.example.spoti5.ecobussing.Profiles;
 public interface IProfile {
 
     public String getName();
-    public double getDistance();
-    public double getCO2Saved();
+
+    public Double getDistanceTraveled();
+
+    public void incCO2Saved(double distance);
+
+    public Double getCO2Saved();
+    public Double getCO2SavedYear(Integer year);
+    public Double getCO2SavedMonth(Integer year, Integer month);
+    public Double getCO2SavedDate(Integer year, Integer month, Integer day);
+    public Double getCO2SavedPast7Days();
 
     public void setName(String name);
-    public void setDistance(double distance);
-    public void setCO2Saved(double CO2Saved);
-    public void updateDistance();
-    public void decDistance(double reducedDistance);
 }

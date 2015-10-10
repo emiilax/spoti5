@@ -59,7 +59,6 @@ public class EditInfoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             currentUser.setName(nameField.getText().toString());
-            currentUser.setAge(Integer.parseInt(ageField.getText().toString()));
             SaveHandler.changeUser(currentUser);
             DatabaseHolder.getDatabase().updateUser(currentUser);
         }
