@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class EditInfoFragment extends Fragment {
     private EditText password1;
     private EditText password2;
     private Button saveChanges;
+    private Context context;
 
     public EditInfoFragment(){
 
@@ -44,6 +46,7 @@ public class EditInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context = super.getContext();
         currentUser = SaveHandler.getCurrentUser();
         View view = inflater.inflate(R.layout.edit_info_fragment, container, false);
         nameField = (EditText) view.findViewById(R.id.nameField);
@@ -52,16 +55,26 @@ public class EditInfoFragment extends Fragment {
         password2 = (EditText) view.findViewById(R.id.password2);
         saveChanges = (Button) view.findViewById(R.id.save_button);
         saveChanges.setOnClickListener(save);
+        initFields();
         return view;
     }
+
+    private void initFields(){
+        nameField.setText(currentUser.getName());
+    }
+
 
     private View.OnClickListener save = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            currentUser.setName(nameField.getText().toString());
-            SaveHandler.changeUser(currentUser);
-            DatabaseHolder.getDatabase().updateUser(currentUser);
+            changeUser();
         }
     };
+
+    private void changeUser(){
+        currentUser.setName(nameField.getText().toString());
+        SaveHandler.changeUser(currentUser);
+        DatabaseHolder.getDatabase().updateUser(currentUser);
+    }
 
 }

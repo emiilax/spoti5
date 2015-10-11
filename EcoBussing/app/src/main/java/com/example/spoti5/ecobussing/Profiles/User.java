@@ -1,13 +1,15 @@
 package com.example.spoti5.ecobussing.Profiles;
 
+
 import com.example.spoti5.ecobussing.Calculations.Calculator;
 
 import java.util.Calendar;
 
+
 /**
  * Created by erikk on 2015-09-16.
  */
-public class User implements IUser {
+public class User implements IUser{
 
     private String email;
     private String name;
@@ -239,4 +241,5 @@ public class User implements IUser {
                 ", moneySavedMap=" + moneySavedMap +
                 '}';
     }
+
 }

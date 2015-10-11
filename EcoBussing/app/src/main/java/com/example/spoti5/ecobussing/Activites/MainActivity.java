@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
+import com.example.spoti5.ecobussing.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
@@ -47,6 +49,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_drawer);
 
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -188,6 +191,13 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:
+                getSupportActionBar().setTitle("Skapa företagsprofil");
+                view.setBackgroundResource(R.color.clicked);
+                CreateCompanyFragment companyFragment = new CreateCompanyFragment();
+                System.out.println("Create company");
+                fragmentTransaction.replace(R.id.container, companyFragment);
+                break;
+            case 6:
                 logout();
                 break;
 
@@ -248,5 +258,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void logout() {
         startRegisterActivity();
+        SaveHandler.changeUser(null);
     }
 }
