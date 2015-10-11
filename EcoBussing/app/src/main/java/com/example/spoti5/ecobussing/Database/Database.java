@@ -16,6 +16,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class Database implements IDatabase{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 topListAll.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    System.out.println(snapshot.getKey().toString());
                     User u = snapshot.getValue(User.class);
                     topListAll.add(u);
                 }

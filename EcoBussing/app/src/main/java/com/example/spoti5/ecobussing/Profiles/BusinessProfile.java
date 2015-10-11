@@ -141,7 +141,7 @@ public class BusinessProfile implements IProfile {
 
 
     @Override
-    public Double getCO2Saved() {
+    public Double getCO2Saved(boolean avoidDatabaseUpload) {
         return null;
     }
 
@@ -161,7 +161,7 @@ public class BusinessProfile implements IProfile {
     }
 
     @Override
-    public Double getCO2SavedPast7Days() {
+    public Double getCO2SavedPast7Days(boolean avoidDatabaseUpload) {
         return null;
     }
 

@@ -54,7 +54,7 @@ public class ToplistCalculator {
 
         Collections.sort(theUsers, new Comparator<User>() {
             public int compare(User usr1, User usr2) {
-                return Double.compare(usr2.getMoneySaved(),usr1.getMoneySaved());
+                return Double.compare(usr2.getMoneySaved(true),usr1.getMoneySaved(true));
             }
         });
 

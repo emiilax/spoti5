@@ -15,11 +15,22 @@ public interface IUser extends IProfile {
 
     public void incMoneySaved(double distance);
 
-    public Double getMoneySaved();
+    /**
+     *
+     * @param avoidDatabaseUpload doesn't matter if true or false, this avoids MoneySaved to be stored in the database.
+     * @return total money saved
+     */
+    public Double getMoneySaved(boolean avoidDatabaseUpload);
     public Double getMoneySavedYear(Integer year);
     public Double getMoneySavedMonth(Integer year, Integer month);
     public Double getMoneySavedDate(Integer year, Integer month, Integer day);
-    public Double getMoneySavedPast7Days();
+
+    /**
+     *
+     * @param avoidDatabaseUpload doesn't matter if true of false, this avoids MoneySavedPast7Days to be stored in the database.
+     * @return total money saved
+     */
+    public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
 
     public String getCompany();
 

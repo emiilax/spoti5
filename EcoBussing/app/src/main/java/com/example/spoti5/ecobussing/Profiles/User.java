@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing.Profiles;
 
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 
@@ -17,6 +18,9 @@ public class User implements IUser{
     private double currentDistance;        //Distance traveled by bus that has not yet been displayed to the user, in KM.
 
     private Calendar calendar = Calendar.getInstance();
+
+
+
     private long timeStampInMillis;
     private Integer stampedMonth;
     private Integer stampedYear;
@@ -29,6 +33,10 @@ public class User implements IUser{
     private double co2CurrentMonth;
     private double co2CurrentYear;
     private double co2Tot;
+
+    private String co2Json;
+
+    private String moneyJson;
 
     private DeepMap<Integer, Integer, Integer, Double> co2SavedMap;
     private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;
@@ -49,6 +57,8 @@ public class User implements IUser{
         this.firstUse = true;
         this.co2SavedMap = new DeepMap<>();
         this.moneySavedMap = new DeepMap<>();
+
+        this.connectedCompany = "";
     }
 
     public User(String email, String name){
@@ -111,7 +121,7 @@ public class User implements IUser{
     }
 
     @Override
-    public Double getCO2Saved() {
+    public Double getCO2Saved(boolean avoidDatabaseUpload) {
         return co2SavedMap.getSumOfAllDates();
     }
 
@@ -131,7 +141,7 @@ public class User implements IUser{
     }
 
     @Override
-    public Double getCO2SavedPast7Days() {
+    public Double getCO2SavedPast7Days(boolean avoidDatabaseUpload) {
         return co2SavedMap.getSumOfPastSevenDays();
     }
 
@@ -191,7 +201,7 @@ public class User implements IUser{
     }
 
     @Override
-    public Double getMoneySaved() {
+    public Double getMoneySaved(boolean avoidDatabaseUpload) {
         return moneySavedMap.getSumOfAllDates();
     }
 
@@ -211,7 +221,7 @@ public class User implements IUser{
     }
 
     @Override
-    public Double getMoneySavedPast7Days() {
+    public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload) {
         return moneySavedMap.getSumOfPastSevenDays();
     }
 
@@ -223,7 +233,8 @@ public class User implements IUser{
     @Override
     public String toString() {
         return "User{" +
-                "email='" + email + '\'' +
+                "moneyJson='" + moneyJson + '\'' +
+                ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", connectedCompany='" + connectedCompany + '\'' +
                 ", currentDistance=" + currentDistance +
@@ -237,9 +248,41 @@ public class User implements IUser{
                 ", co2CurrentMonth=" + co2CurrentMonth +
                 ", co2CurrentYear=" + co2CurrentYear +
                 ", co2Tot=" + co2Tot +
-                ", co2SavedMap=" + co2SavedMap +
-                ", moneySavedMap=" + moneySavedMap +
+                ", co2Json='" + co2Json + '\'' +
                 '}';
     }
 
+    public long getTimeStampInMillis() {
+        return timeStampInMillis;
+    }
+
+    public Integer getStampedMonth() {
+        return stampedMonth;
+    }
+
+    public Integer getStampedYear() {
+        return stampedYear;
+    }
+
+    public Integer getSavedMonth() {
+        return savedMonth;
+    }
+
+    public Integer getSavedYear() {
+        return savedYear;
+    }
+
+    public boolean isFirstUse() {
+        return firstUse;
+    }
+
+    public String getCo2Json() {
+        Gson gson = new Gson();
+        return gson.toJson(co2Json);
+    }
+
+    public String getMoneyJson() {
+        Gson gson = new Gson();
+        return gson.toJson(moneyJson);
+    }
 }
