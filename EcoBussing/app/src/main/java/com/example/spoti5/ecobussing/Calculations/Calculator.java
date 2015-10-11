@@ -36,7 +36,7 @@ public class Calculator {
         double originLng = Double.parseDouble(origin.getLon());
         double destinationLat = Double.parseDouble(destination.getLat());
         double destinationLng = Double.parseDouble(destination.getLon());
-        return calculateDistance(originLat, originLng, destinationLat, destinationLng, key);
+        return calculateDistance(originLat, originLng, destinationLat, destinationLng);
     }
 
     /**
@@ -44,17 +44,16 @@ public class Calculator {
      * @param originLng
      * @param destinationLat
      * @param destinationLng
-     * @param key Server key for the Google Directions API
      * @return The distance for driving from the start position to the end position
      */
     public int calculateDistance(double originLat, double originLng, double destinationLat,
-                                 double destinationLng, String key) {
+                                 double destinationLng) {
         int dist = 0;
 
         // Creates the complete URL used to get Json from Googles Diractions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
         String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
-                destinationLat + "," + destinationLng +"&key=" + key;
+                destinationLat + "," + destinationLng +"&key=AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
 
         try{
             String jsonString = readUrl(completeURL);
