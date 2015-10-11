@@ -36,7 +36,7 @@ public class Database implements IDatabase{
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
-    private List<IUser> allUsers;
+    private List<IUser> allUsers = new ArrayList<>();
     private List<IProfile> allCompanies;
     private List<IUser> topListAll = new ArrayList<>();
 
