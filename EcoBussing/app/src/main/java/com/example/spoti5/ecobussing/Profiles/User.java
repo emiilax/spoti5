@@ -14,7 +14,7 @@ public class User implements IUser {
     private String connectedCompany;       //The name of the company the user is connected to.
     private double currentDistance;        //Distance traveled by bus that has not yet been displayed to the user, in KM.
 
-    Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
     private long timeStampInMillis;
     private Integer stampedMonth;
     private Integer stampedYear;
@@ -216,5 +216,27 @@ public class User implements IUser {
     @Override
     public Double getDistanceTraveled() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", connectedCompany='" + connectedCompany + '\'' +
+                ", currentDistance=" + currentDistance +
+                ", calendar=" + calendar +
+                ", timeStampInMillis=" + timeStampInMillis +
+                ", stampedMonth=" + stampedMonth +
+                ", stampedYear=" + stampedYear +
+                ", savedMonth=" + savedMonth +
+                ", savedYear=" + savedYear +
+                ", firstUse=" + firstUse +
+                ", co2CurrentMonth=" + co2CurrentMonth +
+                ", co2CurrentYear=" + co2CurrentYear +
+                ", co2Tot=" + co2Tot +
+                ", co2SavedMap=" + co2SavedMap +
+                ", moneySavedMap=" + moneySavedMap +
+                '}';
     }
 }

@@ -286,4 +286,18 @@ public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
     public Collection<Map<K2, Map<K3, V>>> values() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "DeepMap{" +
+                "underlyingMap=" + underlyingMap +
+                ", tempMap1=" + tempMap1 +
+                ", tempMap2=" + tempMap2 +
+                ", calendar=" + calendar +
+                ", timeStampInMillis=" + timeStampInMillis +
+                ", stampedDay=" + stampedDay +
+                ", stampedMonth=" + stampedMonth +
+                ", stampedYear=" + stampedYear +
+                '}';
+    }
 }
