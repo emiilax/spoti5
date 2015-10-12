@@ -1,7 +1,5 @@
 package com.example.spoti5.ecobussing.Profiles;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,25 +12,14 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment shown in the ViewPager in UserProfileView. This Fragment contains some user info and
+ * a profile picture.
  */
 public class ProfileInfo extends Fragment {
 
     private IUser currentUser;
 
-    public ProfileInfo() {
-
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public ProfileInfo() {    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,21 +35,4 @@ public class ProfileInfo extends Fragment {
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
         nameView.setText(currentUser.getName());
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
 }
