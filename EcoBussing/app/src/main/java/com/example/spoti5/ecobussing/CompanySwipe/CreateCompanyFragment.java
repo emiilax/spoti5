@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -16,6 +16,7 @@ import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
@@ -23,18 +24,20 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  */
 public class CreateCompanyFragment extends Fragment implements IDatabaseConnected{
 
-    TextView header;
-    EditText nameTextField;
-    EditText passwordTextField;
-    Button saveButton;
+    private TextView header;
+    private EditText nameTextField;
+    private EditText nbrEmployeesTextField;
+    private EditText passwordTextField;
+    private EditText password2TextField;
+    private Button saveButton;
 
-    String name;
-    String password;
-    BusinessProfile newCompany;
+    private String name;
+    private String password;
+    private BusinessProfile newCompany;
 
-    IUser currentUser;
+    private IUser currentUser;
 
-    IDatabase database;
+    private IDatabase database;
 
     public CreateCompanyFragment(){
 
@@ -59,7 +62,9 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         header = (TextView)view.findViewById(R.id.headerTextView);
         nameTextField = (EditText)view.findViewById(R.id.editTextCompName);
+        nbrEmployeesTextField = (EditText)view.findViewById(R.id.editTextEmployees);
         passwordTextField = (EditText)view.findViewById(R.id.editTextPassword);
+        password2TextField = (EditText)view.findViewById(R.id.editTextPassword2);
         saveButton = (Button)view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
@@ -70,9 +75,19 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         @Override
         public void onClick(View v) {
-            registerCompany();
+            if(checkPassword()) {
+                registerCompany();
+            }else{
+                //Error lösen matchar inte
+            }
         }
     };
+
+    private boolean checkPassword(){
+        //Ska vi ha fler krav på företagslösen?
+        return passwordTextField.getText() == password2TextField.getText();
+
+    }
 
 
     private void registerCompany(){

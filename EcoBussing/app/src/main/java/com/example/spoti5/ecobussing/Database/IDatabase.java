@@ -26,6 +26,7 @@ public interface IDatabase {
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
     public IUser getUser(String email);
+    public IProfile getCompany(String name);
     public List<IProfile> getCompanies();
     public void updateUser(IUser user);
     //Kanske behöver finnas med

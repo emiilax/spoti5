@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.EditProfile;
+package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
@@ -11,8 +11,12 @@ import com.example.spoti5.ecobussing.TestSwipe;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
+    private CharSequence titles;
+    private int nbrTabs;
+    private int tabGroup;
 
-    public ViewPagerAdapter(FragmentManager fm){
+
+    public ViewPagerAdapter(FragmentManager fm, CharSequence titles[], int nbrTabs, int tabGroup){
         super(fm);
     }
 
@@ -28,6 +32,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
     }
 
     public CharSequence getPageTitle(int position) {
+
         CharSequence tabTitle = "";
         switch(position){
             case 0: tabTitle = "Redigera profil";

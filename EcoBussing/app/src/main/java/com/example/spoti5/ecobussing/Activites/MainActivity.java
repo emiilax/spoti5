@@ -19,9 +19,8 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
-import com.example.spoti5.ecobussing.CreateCompanyFragment;
-import com.example.spoti5.ecobussing.EditProfile.EditInfoFragment;
-import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
+import com.example.spoti5.ecobussing.CompanySwipe.CreateCompanyFragment;
+import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -159,7 +158,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
-                getSupportActionBar().setTitle("Topplista");
+                getSupportActionBar().setTitle("Topplistor");
                 view.setBackgroundResource(R.color.third);
 
                 SwipeFragments test = new SwipeFragments();
@@ -182,17 +181,17 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 break;
             case 4:
-                getSupportActionBar().setTitle("Redigera profil");
-                view.setBackgroundResource(R.color.clicked);
-                ProfileSwipeFragment fragment = new ProfileSwipeFragment();
-                fragmentTransaction.replace(R.id.container, fragment);
-                break;
-            case 5:
-                getSupportActionBar().setTitle("Skapa företagsprofil");
+                getSupportActionBar().setTitle("Företagsinställningar");
                 view.setBackgroundResource(R.color.clicked);
                 CreateCompanyFragment companyFragment = new CreateCompanyFragment();
                 System.out.println("Create company");
                 fragmentTransaction.replace(R.id.container, companyFragment);
+                break;
+            case 5:
+                getSupportActionBar().setTitle("Redigera profil");
+                view.setBackgroundResource(R.color.clicked);
+                CompanySwipeFragment fragment = new CompanySwipeFragment();
+                fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 6:
                 logout();
