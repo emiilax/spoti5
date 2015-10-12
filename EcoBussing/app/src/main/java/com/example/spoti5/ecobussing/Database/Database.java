@@ -92,7 +92,7 @@ public class Database implements IDatabase{
     @Override
     public void updateUser(IUser user) {
         if(user != null) {
-            Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+            Firebase ref = firebaseRef.child("users").child(editEmail(user.getEmail()));
             ref.setValue(user);
         }
     }
@@ -125,7 +125,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child(editEmail(theUser.getEmail()));
+                Firebase tmpRef = firebaseRef.child("users").child(editEmail(theUser.getEmail()));
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -165,7 +165,7 @@ public class Database implements IDatabase{
         tmpRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(name)){
+                if (!dataSnapshot.hasChild(name)) {
                     tmpRef.child(name).setValue(company);
                     errorCode = ErrorCodes.NO_ERROR;
                 } else {
@@ -228,6 +228,7 @@ public class Database implements IDatabase{
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         User user = userSnapshots.getValue(User.class);
                         allUsers.add(user);
+                        System.out.println(user.getEmail());
 
                     }
                 } catch (FirebaseException var4) {
@@ -249,7 +250,7 @@ public class Database implements IDatabase{
 
     @Override
     public List<IUser> getUsers() {
-        if(allUsers.size() == 0){
+        if(allUsers.size() != 0){
             return allUsers;
         } else {
             generateUserList();
