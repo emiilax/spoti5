@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.Database;
 
-import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
@@ -9,7 +9,6 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
@@ -38,10 +37,10 @@ public class Database implements IDatabase{
     private List<IProfile> topListMonthCompanies = new ArrayList<>();
     private List<IProfile> topListYearCompanies = new ArrayList<>();
 
-    private static final int allValue = 0, topListAllValue = 1, topListMonthValue = 2, topListYearValue = 3;
+    private static final int allValue = 100, topListAllValue = 101, topListMonthValue = 102, topListYearValue = 103;
 
 
-    private boolean allGenerated;
+    private boolean allGenerated = true;
 
 
     public Database() {
@@ -51,6 +50,11 @@ public class Database implements IDatabase{
         generateUserList(topListAllValue);
         generateUserList(topListMonthValue);
         generateUserList(topListYearValue);
+
+        generateCompaniesList(allValue);
+        generateCompaniesList(topListAllValue);
+        generateCompaniesList(topListMonthValue);
+        generateCompaniesList(topListYearValue);
     }
 
     @Override
@@ -144,7 +148,7 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addCompany(final String name, final BusinessProfile company, final IDatabaseConnected connection) {
+    public void addCompany(final String name, final Company company, final IDatabaseConnected connection) {
 
         errorCode = ErrorCodes.NO_ERROR;
         final Firebase tmpRef = firebaseRef.child(companiesString);
@@ -214,10 +218,11 @@ public class Database implements IDatabase{
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         IUser user = userSnapshots.getValue(User.class);
                         addUserToList(listValue, user);
-                        System.out.println(user.getEmail());
+                        //System.out.println(user.getEmail());
 
                     }
                 } catch (FirebaseException var4) {
+                    allGenerated = false;
                     System.out.println(var4.getMessage());
                 }
             }
@@ -245,18 +250,35 @@ public class Database implements IDatabase{
                     topListYear.clear();
                     break;
             }
-        } /*else {
-            switch (listValue){
-                case Database.allValue: allCompanies.clear();
-                    break;
-                case Database.topListAllValue: topListAllCompanies.clear();
-                    break;
-                case Database.topListMonthValue: topListMonthCompanies.clear();
-                    break;
-                case Database.topListYearValue: topListYearCompanies.clear();
-                    break;
+        }
+
+    private void generateCompaniesList(final int listValue){
+
+        firebaseRef.child(companiesString).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    clearListCompany(listValue);
+                    for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
+                        IProfile company = companySnapshots.getValue(Company.class);
+                        addCompanyToList(listValue, company);
+                        System.out.println(company.getName());
+
+                    }
+                } catch (FirebaseException var4) {
+                    allGenerated = false;
+                }
             }
-        }*/
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed " + firebaseError.getMessage());
+
+            }
+        });
+    }
 
     private void addUserToList(int listValue, IUser user){
             switch(listValue){
@@ -269,19 +291,37 @@ public class Database implements IDatabase{
                 case Database.topListYearValue: topListYear.add(user);
                     break;
             }
-        } /*else {
-            switch (listValue){
-                case Database.allValue: allCompanies.clear();
-                    break;
-                case Database.topListAllValue: topListAllCompanies.clear();
-                    break;
-                case Database.topListMonthValue: topListMonthCompanies.clear();
-                    break;
-                case Database.topListYearValue: topListYearCompanies.clear();
-                    break;
-            }
-        }*/
+        }
 
+    private void clearListCompany(int listValue){
+        switch (listValue){
+            case Database.allValue: allCompanies.clear();
+                break;
+            case Database.topListAllValue: topListAllCompanies.clear();
+                break;
+            case Database.topListMonthValue: topListMonthCompanies.clear();
+                break;
+            case Database.topListYearValue: topListYearCompanies.clear();
+                break;
+        }
+    }
+
+    private void addCompanyToList(int listValue, IProfile company){
+        switch (listValue) {
+            case Database.allValue:
+                allCompanies.clear();
+                break;
+            case Database.topListAllValue:
+                topListAllCompanies.clear();
+                break;
+            case Database.topListMonthValue:
+                topListMonthCompanies.clear();
+                break;
+            case Database.topListYearValue:
+                topListYearCompanies.clear();
+                break;
+        }
+    }
 
     private List<IProfile> generateCompanyList(){
         return null;

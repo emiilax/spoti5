@@ -3,6 +3,10 @@ package com.example.spoti5.ecobussing.Profiles;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.List;
 /**
  * Created by hilden on 2015-09-29.
  */
-public class BusinessProfile implements IProfile {
+public class Company implements IProfile {
 
     private IDatabase database;
 
@@ -27,8 +31,13 @@ public class BusinessProfile implements IProfile {
     private ArrayList<IUser> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
     private ArrayList<IUser> members;             //All members of the bussiness profile.
 
+    private String modMemberJson;
+    private String memberJson;
 
-    public BusinessProfile(String businessName, User creatorMember) {
+    private String oldMomMemberJson;
+    private String oldMemberJson;
+
+    public Company(String businessName, User creatorMember) {
         companyName = businessName;
         this.creatorMember = creatorMember.getEmail();
 
@@ -63,11 +72,34 @@ public class BusinessProfile implements IProfile {
         return creatorMember;
     }
 
+    private void updateMembersFromJson(){
+        if(oldMemberJson != memberJson) {
+            if (!memberJson.equals(null)) {
+                Gson gson = new Gson();
+                ArrayList obj = gson.fromJson(memberJson, new TypeToken<List<IUser>>(){}.getType());
+                members = obj;
+                oldMemberJson = memberJson;
+            }
+        }
+    }
+
+    private void updateModMembersFromJson(){
+        if(oldMomMemberJson != modMemberJson) {
+            if (!modMemberJson.equals(null)) {
+                Gson gson = new Gson();
+                moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<IUser>>(){}.getType());
+                oldMomMemberJson = modMemberJson;
+            }
+        }
+    }
+
     public List<IUser> getMembers(boolean avoidDatabaseUpload) {
+        updateMembersFromJson();
         return members;
     }
 
     public List<IUser> getModeratorMembers(boolean avoidDatabaseUpload) {
+        updateModMembersFromJson();
         return moderatorMembers;
     }
 
@@ -81,6 +113,7 @@ public class BusinessProfile implements IProfile {
     }
 
     public boolean userIsModerator(User user) {
+        updateModMembersFromJson();
         for (int i = 0; i < moderatorMembers.size(); i++) {
             if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
                 return true;
@@ -90,6 +123,7 @@ public class BusinessProfile implements IProfile {
     }
 
     public boolean userIsMember(User user) {
+        updateMembersFromJson();
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getEmail() == user.getEmail()) {
                 return true;
@@ -105,8 +139,10 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void addModeratorMember(User creator, User user) {
+        updateModMembersFromJson();
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
             moderatorMembers.add(user);
+            getModMemberJson();
         }
     }
 
@@ -115,6 +151,7 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void addMember(User user) {
+        updateMembersFromJson();
         if (!userIsMember(user)) {
             members.add(user);
         }
@@ -127,6 +164,7 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void removeModeratorMember(User creator, User user) {
+        updateModMembersFromJson();
         if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
             moderatorMembers.remove(user);
         }
@@ -138,6 +176,8 @@ public class BusinessProfile implements IProfile {
      * @param user
      */
     public void removeMember(User user) {
+        updateMembersFromJson();
+        updateModMembersFromJson();
         if (!userIsCreator(user)) {
             if (userIsModerator(user)) {
                 moderatorMembers.remove(user);
@@ -151,6 +191,8 @@ public class BusinessProfile implements IProfile {
     }
 
     public void updateMembers(){
+        updateMembersFromJson();
+        updateModMembersFromJson();
         List<IUser> tmpList = database.getUsers();
         for(IUser member:members){
             for (IUser user:tmpList) {
@@ -222,7 +264,33 @@ public class BusinessProfile implements IProfile {
         return companyInfo;
     }
 
-/*
+    public String getModMemberJson() {
+        Gson gson = new Gson();
+        modMemberJson = gson.toJson(moderatorMembers);
+        return modMemberJson;
+    }
+
+    public String getMemberJson() {
+        Gson gson = new Gson();
+        memberJson = gson.toJson(members);
+        return memberJson;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "companyName='" + companyName + '\'' +
+                ", co2CurrentMonth=" + co2CurrentMonth +
+                ", co2CurrentYear=" + co2CurrentYear +
+                ", co2Tot=" + co2Tot +
+                ", companyInfo='" + companyInfo + '\'' +
+                ", creatorMember='" + creatorMember + '\'' +
+                ", modMemberJson='" + modMemberJson + '\'' +
+                ", memberJson='" + memberJson + '\'' +
+                '}';
+    }
+
+    /*
     //NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDS CHANGEEEEEEEEEEEEEE
     @Override
     public void updateDistance() {

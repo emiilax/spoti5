@@ -58,7 +58,6 @@ public class User implements IUser{
         this.firstUse = true;
 
         this.connectedCompany = "";
-        this.co2Json = getCo2Json();
     }
 
     public User(String email, String name){
@@ -278,12 +277,24 @@ public class User implements IUser{
 
     public String getCo2Json() {
         Gson gson = new Gson();
-        String json =  gson.toJson(co2SavedMap);
-        return json;
+        co2Json =  gson.toJson(co2SavedMap);
+        return co2Json;
     }
 
     public String getMoneyJson() {
         Gson gson = new Gson();
-        return gson.toJson(moneySavedMap);
+        moneyJson =  gson.toJson(moneySavedMap);
+        updateMoneyMap();
+        return moneyJson;
+    }
+
+    private void updateMoneyMap(){
+        Gson gson = new Gson();
+        moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
+    }
+
+    private void updateCo2Json(){
+        Gson gson = new Gson();
+        co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
     }
 }

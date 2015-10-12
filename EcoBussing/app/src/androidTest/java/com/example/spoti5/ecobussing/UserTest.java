@@ -19,7 +19,7 @@ public class UserTest extends AndroidTestCase {
         testUser.incCO2Saved(1.0);
         testUser.incCO2Saved(1.0);
         System.out.println("-------------------------- TEST ------------------------------");
-        System.out.println(Double.toString(testUser.getCO2Saved()));
+        System.out.println(Double.toString(testUser.getCO2Saved(true)));
         System.out.println(Double.toString(testUser.getCo2Tot()));
         System.out.println(Double.toString(testUser.getCo2CurrentYear()));
         System.out.println(Double.toString(testUser.getCo2CurrentMonth()));

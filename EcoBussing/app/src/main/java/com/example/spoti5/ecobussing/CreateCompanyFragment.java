@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
-import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -30,7 +30,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     String name;
     String password;
-    BusinessProfile newCompany;
+    Company newCompany;
 
     IUser currentUser;
 
@@ -78,7 +78,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private void registerCompany(){
         initStrings();
 
-        newCompany = new BusinessProfile(name, (User)currentUser);
+        newCompany = new Company(name, (User)currentUser);
         database.addCompany(name, newCompany, this);
 
     }
@@ -92,7 +92,9 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     @Override
     public void addingFinished() {
-        System.out.println("WOOHOHOHOHOHOHOHO");
+        for(IUser user: newCompany.getMembers(true)){
+            user.getEmail();
+        }
     }
 
     @Override
