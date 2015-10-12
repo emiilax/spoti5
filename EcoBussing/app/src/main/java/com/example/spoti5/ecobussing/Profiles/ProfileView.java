@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Profiles;
 
         import android.app.Activity;
         import android.net.Uri;
@@ -11,7 +11,7 @@ package com.example.spoti5.ecobussing;
         import android.view.ViewGroup;
         import android.widget.ImageView;
 
-        import com.example.spoti5.ecobussing.Profiles.ProfilePagerAdapter;
+        import com.example.spoti5.ecobussing.R;
 
 
 /**
