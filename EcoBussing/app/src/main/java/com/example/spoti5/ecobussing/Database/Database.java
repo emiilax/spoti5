@@ -36,9 +36,15 @@ public class Database implements IDatabase{
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
     private Firebase firebaseRef;
-    private List<IUser> allUsers = new ArrayList<>();
+
     private List<IProfile> allCompanies;
+
+    private List<IUser> allUsers = new ArrayList<>();
     private List<IUser> topListAll = new ArrayList<>();
+    private List<IUser> topListMonth = new ArrayList<>();
+    private List<IUser> topListYear = new ArrayList<>();
+    private boolean allGenerated;
+
 
     public Database() {
         //Initializing firebase ref
@@ -48,22 +54,22 @@ public class Database implements IDatabase{
     }
 
     private void generateToplistAll() {
-        final Query queryRef = firebaseRef.orderByChild("co2Saved");
+        final Query queryRef = firebaseRef.orderByChild("co2Tot");
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 topListAll.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    System.out.println(snapshot.getKey().toString());
                     User u = snapshot.getValue(User.class);
                     topListAll.add(u);
+                    allGenerated = true;
                 }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println(firebaseError.getMessage());
+                allGenerated = false;
             }
         });
     }
@@ -267,5 +273,56 @@ public class Database implements IDatabase{
             return generateCompanyList();
         }
     }
+
+    private void generateToplistMonth() {
+        final Query queryRef = firebaseRef.orderByChild("co2CurrentMonth");
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                topListMonth.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User u = snapshot.getValue(User.class);
+                    topListMonth.add(u);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
+            }
+        });
+    }
+
+    @Override
+    public List<IUser> getUserToplistMonth() {
+        return getUserToplistMonth();
+    }
+
+    private void generateToplistYear() {
+        final Query queryRef = firebaseRef.orderByChild("co2CurrentYear");
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                topListAll.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User u = snapshot.getValue(User.class);
+                    topListAll.add(u);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
+            }
+        });
+    }
+
+    @Override
+    public List<IUser> getUserToplistYear() {
+        return topListYear;
+    }
+
 
 }

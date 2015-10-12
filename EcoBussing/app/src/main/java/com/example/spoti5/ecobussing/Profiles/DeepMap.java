@@ -2,6 +2,8 @@ package com.example.spoti5.ecobussing.Profiles;
 
 import android.support.annotation.NonNull;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,22 +13,30 @@ import java.util.Set;
 /**
  * Created by hilden on 2015-10-07.
  */
+
 public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
 
-    private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap;
-    private Map<Integer, Map<Integer, Double>> tempMap1;
-    private Map<Integer, Double> tempMap2;
+    private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap = new HashMap<>();
 
-    Calendar calendar = Calendar.getInstance();
-    private long timeStampInMillis;
-    private Integer stampedDay;
-    private Integer stampedMonth;
-    private Integer stampedYear;
+    private Map<Integer, Map<Integer, Double>> tempMap1 = new HashMap<>();
 
+    private Map<Integer, Double> tempMap2 = new HashMap<>();
+
+    private Calendar calendar = Calendar.getInstance();
+    private long timeStampInMillis = 0;
+    private Integer stampedDay = new Integer(0);
+    private Integer stampedMonth = new Integer(0);
+    private Integer stampedYear = new Integer(0);
+
+
+    /**
+     * Inits tempmaps and underlying map, has to be done in order to be created as a Json object
+     */
     public DeepMap() {
-        underlyingMap = new HashMap<>();
-        tempMap1 = new HashMap<>();
-        tempMap2 = new HashMap<>();
+        tempMap2.put(0,0.0);
+        tempMap1.put(0, tempMap2);
+        underlyingMap.put(0, tempMap1);
+
     }
 
     /**
@@ -293,7 +303,6 @@ public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
                 "underlyingMap=" + underlyingMap +
                 ", tempMap1=" + tempMap1 +
                 ", tempMap2=" + tempMap2 +
-                ", calendar=" + calendar +
                 ", timeStampInMillis=" + timeStampInMillis +
                 ", stampedDay=" + stampedDay +
                 ", stampedMonth=" + stampedMonth +
