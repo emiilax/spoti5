@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,9 +13,9 @@ import java.util.Set;
 
 /**
  * Created by hilden on 2015-10-07.
- */
+*/
+public class DeepMap<K1, K2, K3, V> implements Serializable{
 
-public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
 
     private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap = new HashMap<>();
 
@@ -214,12 +215,12 @@ public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
         return sum;
     }
 
-    @Override
+
     public void clear() {
         underlyingMap.clear();
     }
 
-    @Override
+
     public int size() {
         return underlyingMap.size();
     }
@@ -231,72 +232,7 @@ public class DeepMap<K1, K2, K3, V> implements Map<K1, Map<K2, Map<K3, V>>> {
     public int innerSize(K1 key1, K2 key2) {
         return underlyingMap.get(key1).get(key2).size();
     }
-
-
-
-
-
-
-
-
-
-
-// --- NOT YET IMPLEMENTED METHODS ---
-
-    @Override
-    public boolean containsKey(Object key) {
-        return false;
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        return false;
-    }
-
-    @NonNull
-    @Override
-    public Set<Entry<K1, Map<K2, Map<K3, V>>>> entrySet() {
-        return null;
-    }
-
-    @Override
-    public Map<K2, Map<K3, V>> get(Object key) {
-        return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @NonNull
-    @Override
-    public Set<K1> keySet() {
-        return null;
-    }
-
-    @Override
-    public Map<K2, Map<K3, V>> put(K1 key, Map<K2, Map<K3, V>> value) {
-        return null;
-    }
-
-    @Override
-    public void putAll(Map<? extends K1, ? extends Map<K2, Map<K3, V>>> map) {
-
-    }
-
-    @Override
-    public Map<K2, Map<K3, V>> remove(Object key) {
-        return null;
-    }
-
-
-    @NonNull
-    @Override
-    public Collection<Map<K2, Map<K3, V>>> values() {
-        return null;
-    }
-
+    
     @Override
     public String toString() {
         return "DeepMap{" +

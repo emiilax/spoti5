@@ -278,13 +278,12 @@ public class User implements IUser{
 
     public String getCo2Json() {
         Gson gson = new Gson();
-        System.out.println(co2SavedMap.toString());
-        String json =  gson.toJson(co2Json);
+        String json =  gson.toJson(co2SavedMap);
         return json;
     }
 
     public String getMoneyJson() {
         Gson gson = new Gson();
-        return gson.toJson(moneyJson);
+        return gson.toJson(moneySavedMap);
     }
 }

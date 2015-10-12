@@ -174,7 +174,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         System.out.println(database.getErrorCode());
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);
-                System.out.println("Logging in");
+                SaveHandler.changeUser(newUser);
                 break;
             case ErrorCodes.BAD_EMAIL: inputError.setText("Mailen är upptagen");
                 break;

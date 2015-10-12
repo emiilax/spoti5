@@ -25,13 +25,15 @@ public class Database implements IDatabase{
     //Database setup
     public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
-
     private List<IProfile> allCompanies;
 
     private List<IUser> allUsers = new ArrayList<>();
     private List<IUser> topListAll = new ArrayList<>();
     private List<IUser> topListMonth = new ArrayList<>();
     private List<IUser> topListYear = new ArrayList<>();
+
+
+
     private boolean allGenerated;
 
 
@@ -89,8 +91,10 @@ public class Database implements IDatabase{
 
     @Override
     public void updateUser(IUser user) {
-        Firebase ref = firebaseRef.child("users").child(editEmail(user.getEmail()));
-        ref.setValue(user);
+        if(user != null) {
+            Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+            ref.setValue(user);
+        }
     }
 
     @Override
@@ -158,7 +162,6 @@ public class Database implements IDatabase{
 
         errorCode = ErrorCodes.NO_ERROR;
         final Firebase tmpRef = firebaseRef.child("companies");
-
         tmpRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -318,5 +321,8 @@ public class Database implements IDatabase{
         return topListYear;
     }
 
+    public boolean isAllGenerated() {
+        return allGenerated;
+    }
 
 }
