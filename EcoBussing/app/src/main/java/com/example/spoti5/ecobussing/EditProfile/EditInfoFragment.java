@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.EditProfile;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,7 +61,6 @@ public class EditInfoFragment extends Fragment {
 
     private void initFields(){
         nameField.setText(currentUser.getName());
-        ageField.setText(currentUser.getAge());
     }
 
 
@@ -74,7 +73,6 @@ public class EditInfoFragment extends Fragment {
 
     private void changeUser(){
         currentUser.setName(nameField.getText().toString());
-        currentUser.setAge(Integer.parseInt(ageField.getText().toString()));
         SaveHandler.changeUser(currentUser);
         DatabaseHolder.getDatabase().updateUser(currentUser);
     }

@@ -20,6 +20,8 @@ public class Calculator {
 
     private double petrolPrice = 14.32;
     private double carbondioxideEmittedPerLiter = 2.348; //Currently measured in grams.
+    private double avgCarPetrolConsumption = 0.7;
+
 
     private String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
 
@@ -92,21 +94,16 @@ public class Calculator {
     }
 
     /**
-     * @returns the amount of money saved since last startup in KR.
-     * Pulls information from the current users "currentdistance" variable.
+     * @returns the amount of money in KR saved from the distance given.
      */
-    public double getCurrentMoneySaved() {
-
-        return (SaveHandler.getCurrentUser().getCurrentDistance()/10)
-                *petrolPrice*SaveHandler.getCurrentUser().getCarPetrolConsumption();
+    public double calculateMoneySaved(Double distance) {
+        return (distance/10)*petrolPrice* avgCarPetrolConsumption;
     }
 
     /**
-     * @returns the amount of carbondioxide saved since last startup in milligrams.
-     * Pulls information from the current users "currentdistance" variable.
+     * @returns the amount of carbondioxide in milligrams saved from the distance given.
      */
-    public double getCurrentCarbonSaved() {
-        return (SaveHandler.getCurrentUser().getCurrentDistance()/10)*SaveHandler.getCurrentUser().getCarPetrolConsumption()
-                *carbondioxideEmittedPerLiter*1000;
+    public double calculateCarbonSaved(Double distance) {
+        return (distance/10)*avgCarPetrolConsumption*carbondioxideEmittedPerLiter*1000;
     }
 }

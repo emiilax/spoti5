@@ -17,16 +17,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:src="@drawable/logotype"
-            />
-
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text="@string/register_title"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/navigation_text_size_biggest"
-            android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal" />
+            android:padding="20dp" />
 
         <TextView
             android:layout_height="wrap_content"
@@ -89,38 +80,24 @@
 
             >
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logIn"
-                    android:id="@+id/logInString"
-                    android:textSize="20dp"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+            <Button
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end"
-                >
-
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_button"
-                    android:id="@+id/button_register" />
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:text="@string/register_button"
+                android:id="@+id/button_register"
+                android:textColor="@color/nice_green"
+                android:textSize="30dp" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/logIn"
+            android:id="@+id/logInString"
+            android:textSize="15dp" />
 
     </LinearLayout>
 </LinearLayout>

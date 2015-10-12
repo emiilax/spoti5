@@ -7,30 +7,32 @@ import java.io.Serializable;
  */
 public interface IUser extends IProfile {
 
-    public double getCarPetrolConsumption();
-
-
     public String getEmail();
 
     public void incCurrentDistance(double addedDistance);
     public void resetCurrentDistance();
     public double getCurrentDistance();
 
-    public void incCO2Saved(double carbonSaved);
+    public void incMoneySaved(double distance);
 
-    public int getAge();
-    public int getPosition();
+    /**
+     *
+     * @param avoidDatabaseUpload doesn't matter if true or false, this avoids MoneySaved to be stored in the database.
+     * @return total money saved
+     */
+    public Double getMoneySaved(boolean avoidDatabaseUpload);
+    public Double getMoneySavedYear(Integer year);
+    public Double getMoneySavedMonth(Integer year, Integer month);
+    public Double getMoneySavedDate(Integer year, Integer month, Integer day);
+
+    /**
+     *
+     * @param avoidDatabaseUpload doesn't matter if true of false, this avoids MoneySavedPast7Days to be stored in the database.
+     * @return total money saved
+     */
+    public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
+
     public String getCompany();
-    public String getCompanyKey();
 
-    public void setCarPetrolConsumption(double carPetrolConsumption);
-    public void setAge(int age);
-    public void setPosition(int position);
-    public void setMoneySaved(double moneySaved);
-    public void setCurrentDistance(double currentDistance);
     public void setCompany(String name);
-    public void setCompanyKey(String key);
-
-    public void incMoneySaved(double moneySaved);
-    public double getMoneySaved();
 }
