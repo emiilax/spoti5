@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.spoti5.ecobussing.R;
 
@@ -64,8 +65,10 @@ public class ProfileOtherThing extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_other_thing, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_other_thing, container, false);
+        ImageView graph = (ImageView)view.findViewById(R.id.graphView);
+        graph.setImageResource(R.drawable.graph);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

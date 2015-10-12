@@ -10,7 +10,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_column="1"
         android:layout_gravity="left"
         >
@@ -18,8 +18,8 @@
         <ImageView
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
             android:id="@+id/profile_pic"
             android:src="@drawable/empty_profile"
           />
@@ -46,42 +46,6 @@
             </TableRow>
 
 
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:text="Large Text"
-                    android:textSize="@dimen/navigation_text_size_big"
-                    android:id="@+id/ageView"
-                    android:layout_column="1" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_vertical_margin"
-                    android:textSize="@dimen/navigation_text_size_big"
-                    android:text="Large Text"
-                    android:id="@+id/positionView"
-                    android:layout_column="1" />
-
-            </TableRow>
         </TableLayout>
     </LinearLayout>
 </FrameLayout>

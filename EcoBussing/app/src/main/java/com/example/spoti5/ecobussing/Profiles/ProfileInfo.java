@@ -46,9 +46,6 @@ public class ProfileInfo extends Fragment {
 
     private void setDataStrings(View view){
         TextView nameView = (TextView)view.findViewById(R.id.nameView);
-        TextView ageView = (TextView)view.findViewById(R.id.ageView);
-        TextView positionView = (TextView)view.findViewById(R.id.positionView);
-
         nameView.setText(currentUser.getName());
     }
 
