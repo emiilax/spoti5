@@ -1,30 +1,19 @@
 package com.example.spoti5.ecobussing.Database;
 
-import android.provider.ContactsContract;
-import android.widget.ArrayAdapter;
-
-import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
 import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.google.gson.Gson;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by matildahorppu on 30/09/15.
@@ -34,7 +23,7 @@ public class Database implements IDatabase{
     private int errorCode;
 
     //Database setup
-    public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
+    public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
 
     private List<IProfile> allCompanies;
@@ -56,7 +45,7 @@ public class Database implements IDatabase{
     }
 
     private void generateToplistAll() {
-        final Query queryRef = firebaseRef.orderByChild("co2Tot");
+        final Query queryRef = firebaseRef.child("users").orderByChild("co2Tot");
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,13 +89,13 @@ public class Database implements IDatabase{
 
     @Override
     public void updateUser(IUser user) {
-        Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+        Firebase ref = firebaseRef.child("users").child(editEmail(user.getEmail()));
         ref.setValue(user);
     }
 
     @Override
     public void updateCompany(IProfile company) {
-        Firebase ref = firebaseRef.child(company.getName());
+        Firebase ref = firebaseRef.child("companies").child(company.getName());
         ref.setValue(company);
     }
 
@@ -137,7 +126,7 @@ public class Database implements IDatabase{
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         errorCode = ErrorCodes.NO_ERROR;
-                        connection.addingUserFinished();
+                        connection.addingFinished();
                     }
                 });
             }
@@ -146,7 +135,7 @@ public class Database implements IDatabase{
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
                 setErrorCode(firebaseError);
-                connection.addingUserFinished();
+                connection.addingFinished();
             }
         });
     }
@@ -165,33 +154,30 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addCompany(final String name, String password, final BusinessProfile company, final IDatabaseConnected connection) {
+    public void addCompany(final String name, final BusinessProfile company, final IDatabaseConnected connection) {
 
-        //key kan kanske vara lösenordet för att ansluta till företaget?
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler() {
+        final Firebase tmpRef = firebaseRef.child("companies");
 
+        tmpRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child(name);
-                tmpRef.setValue(company, new Firebase.CompletionListener() {
-                    @Override
-                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                        errorCode = ErrorCodes.NO_ERROR;
-                        connection.addingUserFinished();
-                    }
-                });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(name)){
+                    tmpRef.child(name).setValue(company);
+                    errorCode = ErrorCodes.NO_ERROR;
+                } else {
+                    errorCode = ErrorCodes.COMPANY_ALREADY_EXISTS;
+                }
+                connection.addingFinished();
+
             }
 
             @Override
-            public void onError(FirebaseError firebaseError) {
+            public void onCancelled(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
                 setErrorCode(firebaseError);
-                connection.addingUserFinished();
             }
         });
-
-
     }
 
     /**
@@ -229,7 +215,7 @@ public class Database implements IDatabase{
 
     private void generateUserList(){
 
-        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -283,7 +269,7 @@ public class Database implements IDatabase{
     }
 
     private void generateToplistMonth() {
-        final Query queryRef = firebaseRef.orderByChild("co2CurrentMonth");
+        final Query queryRef = firebaseRef.child("users").orderByChild("co2CurrentMonth");
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -308,7 +294,7 @@ public class Database implements IDatabase{
     }
 
     private void generateToplistYear() {
-        final Query queryRef = firebaseRef.orderByChild("co2CurrentYear");
+        final Query queryRef = firebaseRef.child("users").orderByChild("co2CurrentYear");
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

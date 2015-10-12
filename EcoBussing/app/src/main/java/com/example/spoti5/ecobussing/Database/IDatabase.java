@@ -22,7 +22,7 @@ public interface IDatabase {
 
     public List<IUser> getCompTopList();
     public void addUser(String email, String password, final User user, IDatabaseConnected connection);
-    public void addCompany(String name, String password, final BusinessProfile company, IDatabaseConnected connection);
+    public void addCompany(String name, final BusinessProfile company, IDatabaseConnected connection);
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
     public IUser getUser(String email);

@@ -117,7 +117,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     };
 
     @Override
-    public void addingUserFinished() {
+    public void addingFinished() {
         //never used here
     }
 

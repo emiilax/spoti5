@@ -79,7 +79,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         initStrings();
 
         newCompany = new BusinessProfile(name, (User)currentUser);
-        database.addCompany(name, password, newCompany, this);
+        database.addCompany(name, newCompany, this);
 
     }
 
@@ -91,8 +91,8 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
 
     @Override
-    public void addingUserFinished() {
-        System.out.println(database.getErrorCode());
+    public void addingFinished() {
+        System.out.println("WOOHOHOHOHOHOHOHO");
     }
 
     @Override
