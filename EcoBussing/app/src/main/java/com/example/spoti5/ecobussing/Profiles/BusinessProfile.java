@@ -150,6 +150,9 @@ public class BusinessProfile implements IProfile {
         }
     }
 
+    /**
+     * Updates the company's member lists with the current information of each member from the database
+     */
     public void updateMembers(){
         List<IUser> tmpList = database.getUsers();
         for(IUser member:members){
@@ -172,12 +175,7 @@ public class BusinessProfile implements IProfile {
 
     @Override
     public Double getDistanceTraveled() {
-        return null;
-    }
-
-
-    @Override
-    public Double getCO2Saved(boolean avoidDatabaseUpload) {
+        //co2Tot/co2 saved per km?
         return null;
     }
 
@@ -206,16 +204,17 @@ public class BusinessProfile implements IProfile {
 
     }
 
+    @Override
+    public Double getCO2Saved(boolean avoidDatabaseUpload) {
+        return co2Tot;
+    }
+
     public double getCo2CurrentYear() {
         return co2CurrentYear;
     }
 
     public double getCo2CurrentMonth() {
         return co2CurrentMonth;
-    }
-
-    public double getCo2Tot() {
-        return co2Tot;
     }
 
     public String getCompanyInfo() {

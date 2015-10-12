@@ -92,6 +92,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     @Override
     public void addingFinished() {
+        //En liten toast kanske? och byta till redigera company
         System.out.println("WOOHOHOHOHOHOHOHO");
     }
 
