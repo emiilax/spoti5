@@ -32,13 +32,13 @@ public class DatabaseTest implements IDatabaseConnected{
         user4 = new User("hejhej004@mail.com", "stefan");
         user5 = new User("hejhej005@mail.com", "stefan");
 
-
+        /*
         user.setCO2Saved(2.0);
         user2.setCO2Saved(1.5);
         user3.setCO2Saved(2.0);
         user4.setCO2Saved(3.1);
         user5.setCO2Saved(0.2);
-
+        */
         database.addUser(user.getEmail(), "Zzzzzzz", user, this);
         database.addUser(user2.getEmail(), "Zzzzzzz", user, this);
         database.addUser(user3.getEmail(), "Zzzzzzz", user, this);
@@ -95,7 +95,7 @@ public class DatabaseTest implements IDatabaseConnected{
         }
         for (IUser u: topList){
             System.out.println("----------------------");
-            System.out.println(u.getCO2Saved());
+            System.out.println(u.getCO2Saved(true));
         }
         System.out.println("----------------------");
     }

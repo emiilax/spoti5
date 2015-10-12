@@ -57,8 +57,6 @@ public class ProfileFragment extends Fragment {
         TextView positionView = (TextView)view.findViewById(R.id.positionView);
 
         nameView.setText(currentUser.getName());
-        ageView.setText(Integer.toString(currentUser.getAge()) + " år");
-        positionView.setText("Plats: " + Integer.toString(currentUser.getPosition()));
     }
 
     @Override
