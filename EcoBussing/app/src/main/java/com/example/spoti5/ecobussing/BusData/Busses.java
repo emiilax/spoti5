@@ -27,7 +27,7 @@ public final class Busses {
     public static Bus eog634 = new Bus("Ericsson$171330", "YV3T1U223F1171330", "EOG634", "04f0211009b7");
 
 
-    public static Bus simulated = new Bus("", "001", "EOG634", "001395135f20");
+    public static Bus simulated = new Bus("Ericsson$Vin_Num_001", "001", "EOG634", "001395135f20");
 
 
     // List of the busses

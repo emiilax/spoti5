@@ -62,45 +62,37 @@ public class WifiReciever extends BroadcastReceiver {
                     bssid = wifiInfo.getBSSID().replace(":", "");
                     System.out.println("Connected");
                     this.pcs.firePropertyChange("connected", null, bssid);
-                    onBus = true;
 
 
-                    /*try {
-                        busConnection.beginJourey(Busses.simulated);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
+                    for(Bus b: Busses.theBusses){
+                        if(bssid.equals(b.getMacAdress())){
+                            onBus = true;
+                            try {
+                                busConnection.beginJourey(b);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+
+                        }
+                    }
+
 
                 }
                 connectedToWifi = true;
 
-
-                //System.out.println("Connected");
-                //System.out.println(bssid);
-
-
-                //if(onTheBus() && !onBus){
-                 //   onBus = true;
-                    //busConnection.beginJourney(theBus);
-                //}
             } else{
                 connectedToWifi = false;
                 this.pcs.firePropertyChange("disconnected", null, null);
-               /* if(onBus){
 
+                if(onBus){
                     try {
-                        busConnection.endJourney(Busses.simulated);
+                        busConnection.endJourney();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                }*/
-
-                /*try{
-                    ((MainActivity)activity).setDisconnected();
-                } catch (Exception e){
-
-                }*/
+                    onBus = false;
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.example.spoti5.ecobussing.JsonClasses.EA.EARespond;
 import com.example.spoti5.ecobussing.JsonClasses.VA.StopLocation;
 import com.example.spoti5.ecobussing.JsonClasses.VA.VANearbyStops;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,7 +42,7 @@ public class BusConnection implements Runnable{
 
         BusConnection demo = new BusConnection();
         //try {
-        demo.beginJourey(Busses.simulated);
+        demo.beginJourey(Busses.eog622);
         //demo.vasttrafikApi();
         //demo.testVA();
         //new Thread(demo).start();
@@ -67,7 +68,7 @@ public class BusConnection implements Runnable{
     // Requestnames for the E-Api
     private final String GPS2 = "Ericsson$GPS2";
 
-
+    private Bus currentBus;
     boolean hasStarted = false;
     private StopLocation startLoc;
     private StopLocation endLoc;
@@ -80,11 +81,12 @@ public class BusConnection implements Runnable{
     public void beginJourey(Bus bus) throws IOException {
 
         if(!hasStarted){
-            String vinNr = bus.getVIN();
+            currentBus = bus;
+            String dwgNr = bus.getDwg();
 
             System.out.println("Journey begin");
 
-            List<EARespond> gpsInfo = getGPSInfo(vinNr);
+            List<EARespond> gpsInfo = getGPSInfo(dwgNr);
 
             for(EARespond rsp: gpsInfo){
                 System.out.println(rsp);
@@ -125,22 +127,8 @@ public class BusConnection implements Runnable{
     }
 
     boolean hasEnded = false;
-    public void endJourney(Bus bus) throws IOException {
-        /*
-        String vinNr = bus.getVIN();
-        System.out.println("Journey end");
-        List<EARespond> gpsInfo = getGPSInfo(vinNr);
+    public void endJourney() throws IOException {
 
-        /*
-        for(EARespond rsp: gpsInfo){
-            System.out.println(rsp);
-        }
-
-
-        double lon = getEAValue("Longitude2_Value", gpsInfo);
-        double lat = getEAValue("Latitude2_Value", gpsInfo);
-
-        VANearbyStops locations = getNearbyStops(lon, lat, 3);*/
         if(!hasEnded){
             stillConnected = false;
             for(StopLocation nStop: lastLocations.getLocationList().getStopLocation()){
@@ -166,6 +154,7 @@ public class BusConnection implements Runnable{
 
             System.out.println(distance);
 
+            SaveHandler.changeUser();
 
         }
         
@@ -196,18 +185,18 @@ public class BusConnection implements Runnable{
      * Get the GPS information from a specific bus. This
      * method uses the sensor Ericsson$GPS2 from the Electricity API
      *
-     * @param vinNr, the vin-number of the bus
+     * @param dwgNr, the dwg-number of the bus
      *
      * @return a list of five instances that contains
      *          different information:
      *          Latitude, Longitude, Speed, Course, Altitude.
      *
      */
-    public List<EARespond> getGPSInfo(String vinNr) throws IOException {
+    public List<EARespond> getGPSInfo(String dwgNr) throws IOException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (30 * 1000);
 
-        String url = getElecticityRequsetUrl(true, GPS2, vinNr, t1, t2);
+        String url = getElecticityRequsetUrl(true, GPS2, dwgNr, t1, t2);
 
         String response = getEAResponse(url);
 
@@ -246,21 +235,21 @@ public class BusConnection implements Runnable{
      *
      * @param isSensor, whether it is a sensor or a resource
      * @param requestName, the name of the sensor/resource
-     * @param vinNr, the vin-number of the bus
+     * @param dwgNr, the dwg-number of the bus
      * @param t1, timespan begin
      * @param t2, timespan end
      *
      * @return the request-url
      */
     public String getElecticityRequsetUrl(boolean isSensor, String requestName,
-                                                    String vinNr, long t1, long t2){
+                                                    String dwgNr, long t1, long t2){
 
         String url = "";
         if(isSensor){
-            url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_" + vinNr +
+            url = "https://ece01.ericsson.net:4443/ecity?dgw=" + dwgNr +
                     "&sensorSpec=" + requestName + "&t1=" +  t1 + "&t2=" + t2;
         }else{
-            url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$Vin_Num_" + vinNr +
+            url = "https://ece01.ericsson.net:4443/ecity?dgw=" + dwgNr +
                     "&resourceSpec=" + requestName + "&t1=" +  t1 + "&t2=" + t2;
         }
 
@@ -278,12 +267,12 @@ public class BusConnection implements Runnable{
 
         String response = "";
 
-
+        /*
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-
+        */
 
         // Used to point out the "resource" on internet
         URL requestURL = new URL(url);
@@ -355,12 +344,12 @@ public class BusConnection implements Runnable{
     public String getVAResponse(String url) throws IOException {
         String response = "";
 
-
+        /*
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-
+        */
         URL requestURL = new URL(url);
 
         HttpURLConnection con = (HttpURLConnection) requestURL.openConnection();
@@ -457,7 +446,7 @@ public class BusConnection implements Runnable{
 
             List<EARespond> gpsInfo = null;
             try {
-                gpsInfo = getGPSInfo(Busses.simulated.getVIN());
+                gpsInfo = getGPSInfo(currentBus.getDwg());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -478,7 +467,7 @@ public class BusConnection implements Runnable{
                 e.printStackTrace();
             }
 
-            double dist = Calculator.getCalculator().calculateDistance(startLoc, stopL);
+            //double dist = Calculator.getCalculator().calculateDistance(startLoc, stopL);
 
             try {
                 synchronized (this) {
