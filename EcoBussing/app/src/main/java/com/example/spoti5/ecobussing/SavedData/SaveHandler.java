@@ -2,6 +2,8 @@ package com.example.spoti5.ecobussing.SavedData;
 import android.content.Context;
 
 import com.example.spoti5.ecobussing.Activites.StartActivites;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 
@@ -20,7 +22,7 @@ import static com.example.spoti5.ecobussing.Activites.StartActivites.*;
 public class SaveHandler {
     private static final long serialVersionUID = 7863262235394607247L;
     private static String filename = "ecoTravel.ser";
-
+    private static IDatabase database = DatabaseHolder.getDatabase();
     private static IUser currentUser;
 
     /**
@@ -52,6 +54,7 @@ public class SaveHandler {
         Context context = StartActivites.getContext();
         currentUser = newUser;
         SaveUser(context);
+        database.updateUser(newUser);
     }
 
     public static void SaveUser(Context context) {

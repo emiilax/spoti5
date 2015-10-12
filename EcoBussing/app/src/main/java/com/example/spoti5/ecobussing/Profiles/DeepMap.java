@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Set;
 /**
  * Created by hilden on 2015-10-07.
 */
-public class DeepMap<K1, K2, K3, V>{
+public class DeepMap<K1, K2, K3, V> implements Serializable{
 
 
     private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap = new HashMap<>();
