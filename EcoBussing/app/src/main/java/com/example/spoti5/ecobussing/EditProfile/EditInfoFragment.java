@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.EditProfile;
 
 import android.app.Activity;
 import android.content.Context;

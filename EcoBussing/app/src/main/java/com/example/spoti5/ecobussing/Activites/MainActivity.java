@@ -6,13 +6,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +20,12 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CreateCompanyFragment;
-import com.example.spoti5.ecobussing.EditInfoFragment;
+import com.example.spoti5.ecobussing.EditProfile.EditInfoFragment;
+import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
-
-import java.util.Calendar;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -187,7 +184,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 4:
                 getSupportActionBar().setTitle("Redigera profil");
                 view.setBackgroundResource(R.color.clicked);
-                EditInfoFragment fragment = new EditInfoFragment();
+                ProfileSwipeFragment fragment = new ProfileSwipeFragment();
                 fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:
