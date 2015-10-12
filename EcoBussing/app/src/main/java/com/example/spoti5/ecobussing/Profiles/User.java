@@ -1,12 +1,10 @@
 package com.example.spoti5.ecobussing.Profiles;
 
-
 import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
-
 
 /**
  * Created by erikk on 2015-09-16.
@@ -19,8 +17,6 @@ public class User implements IUser{
     private double currentDistance;        //Distance traveled by bus that has not yet been displayed to the user, in KM.
 
     private Calendar calendar = Calendar.getInstance();
-
-
 
     private long timeStampInMillis;
     private Integer stampedMonth;
@@ -162,13 +158,13 @@ public class User implements IUser{
             firstUse = false;
         }
 
-        if (stampedYear != savedYear) {
+        if (!stampedYear.equals(savedYear)) {
             co2CurrentYear = 0;
             co2CurrentMonth = 0;
             savedYear = stampedYear;
             savedMonth = stampedMonth;
         } else {
-            if (stampedMonth != savedMonth) {
+            if (!stampedMonth.equals(savedMonth)) {
                 co2CurrentMonth = 0;
                 savedMonth = stampedMonth;
             }
