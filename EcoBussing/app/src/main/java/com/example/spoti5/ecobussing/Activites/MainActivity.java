@@ -23,6 +23,7 @@ import com.example.spoti5.ecobussing.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.EditProfile.EditInfoFragment;
 import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
 import com.example.spoti5.ecobussing.ProfileFragment;
+import com.example.spoti5.ecobussing.Profiles.ProfileView;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
@@ -146,9 +147,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 0:
                 getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getName());
                 view.setBackgroundResource(R.color.clicked);
-                ProfileFragment profileFragment = new ProfileFragment();
+                ProfileView profileView = new ProfileView();
 
-                fragmentTransaction.replace(R.id.container, profileFragment);
+                fragmentTransaction.replace(R.id.container, profileView);
 
                 break;
             case 1:
