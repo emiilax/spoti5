@@ -12,7 +12,9 @@
         <!-- colorAccent is used as the default value for colorControlActivated
              which is used to tint widgets -->
         <item name="android:colorAccent" tools:targetApi="lollipop">#FF4081</item>
-        <!-- You can also set colorControlNormal, colorControlActivated
+        <!-- colorControlActivated is used for the colour when a textfield is chosen-->
+        <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/nice_green</item>
+        <!-- You can also set colorControlNormal,
              colorControlHighlight and colorSwitchThumbNormal. -->
     </style>
     <style name="Divider">

@@ -100,8 +100,10 @@ public class Database implements IDatabase{
 
     @Override
     public void updateUser(IUser user) {
-        Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
-        ref.setValue(user);
+        if(user != null) {
+            Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+            ref.setValue(user);
+        }
     }
 
 
