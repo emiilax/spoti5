@@ -11,14 +11,6 @@ import android.widget.ImageView;
 import com.example.spoti5.ecobussing.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileOtherThing.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileOtherThing#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileOtherThing extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
