@@ -1,5 +1,9 @@
 package com.example.spoti5.ecobussing.Profiles;
 
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,29 +12,37 @@ import java.util.List;
  */
 public class BusinessProfile implements IProfile {
 
+    private IDatabase database;
+
     private String companyName;
-    private double distance;               //Total distance traveled by bus, in KM.
-    private double currentDistance;        //Distance traveled by bus that has not yet been transferred to total, in KM.
-    private double carbondioxideSaved;     //Amount of carbondioxide saved.
+    private double co2CurrentMonth;
+    private double co2CurrentYear;
+    private double co2Tot;
+    private String companyInfo;
 
     /**
      * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
      */
-    private User creatorMember;     //The creator of the bussiness-profile, has deletion right.
-    ArrayList<User> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
-    ArrayList<User> members;             //All members of the bussiness profile.
+    private String creatorMember;                 //The creator of the bussiness-profile, has deletion right.
+    private ArrayList<IUser> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
+    private ArrayList<IUser> members;             //All members of the bussiness profile.
 
 
     public BusinessProfile(String businessName, User creatorMember) {
         companyName = businessName;
-        this.creatorMember = creatorMember;
-        moderatorMembers = new ArrayList<User>();
-        members = new ArrayList<User>();
+        this.creatorMember = creatorMember.getEmail();
+
+        moderatorMembers = new ArrayList<IUser>();
+        members = new ArrayList<IUser>();
+
         moderatorMembers.add(creatorMember);
         members.add(creatorMember);
-        distance = 0;
-        currentDistance = 0;
-        carbondioxideSaved = 0;
+
+        co2CurrentMonth = 0;
+        co2CurrentYear = 0;
+        co2Tot = 0;
+
+        database = DatabaseHolder.getDatabase();
     }
 
     @Override
@@ -43,21 +55,25 @@ public class BusinessProfile implements IProfile {
         companyName = name;
     }
 
-    public User getCreatorMember() {
+    public void setCompanyInfo(String info){
+        companyInfo = info;
+    }
+
+    public String getCreatorMember() {
         return creatorMember;
     }
 
-    public List<User> getMembers() {
+    public List<IUser> getMembers(boolean avoidDatabaseUpload) {
         return members;
     }
 
-    public List<User> getModeratorMembers() {
+    public List<IUser> getModeratorMembers(boolean avoidDatabaseUpload) {
         return moderatorMembers;
     }
 
 
     public boolean userIsCreator(User user) {
-        if (creatorMember.getEmail() == user.getEmail()) {
+        if (creatorMember == user.getEmail()) {
             return true;
         } else {
             return false;
@@ -134,6 +150,26 @@ public class BusinessProfile implements IProfile {
         }
     }
 
+    public void updateMembers(){
+        List<IUser> tmpList = database.getUsers();
+        for(IUser member:members){
+            for (IUser user:tmpList) {
+                if(member.getEmail() == user.getEmail()){
+                    member = user;
+                }
+            }
+        }
+
+        for(IUser modMember:moderatorMembers){
+            for (IUser member:members) {
+                if(modMember.getEmail() == member.getEmail()){
+                    modMember = member;
+                }
+            }
+        }
+    }
+
+
     @Override
     public Double getDistanceTraveled() {
         return null;
@@ -165,13 +201,25 @@ public class BusinessProfile implements IProfile {
         return null;
     }
 
-
-
-
-
     @Override
     public void incCO2Saved(double distance) {
 
+    }
+
+    public double getCo2CurrentYear() {
+        return co2CurrentYear;
+    }
+
+    public double getCo2CurrentMonth() {
+        return co2CurrentMonth;
+    }
+
+    public double getCo2Tot() {
+        return co2Tot;
+    }
+
+    public String getCompanyInfo() {
+        return companyInfo;
     }
 
 /*
