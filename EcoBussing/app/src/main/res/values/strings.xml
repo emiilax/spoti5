@@ -39,7 +39,7 @@
     <string-array name="drawer_array">
         <item>Profile</item>
         <item>Fragment 2</item>
-        <item>Fragment 3</item>
+        <item>Topplista</item>
         <item>Fragment 4</item>
         <item>Redigera profil</item>
         <item>Log out</item>

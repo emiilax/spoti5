@@ -65,11 +65,11 @@ public class WifiReciever extends BroadcastReceiver {
                     onBus = true;
 
 
-                    try {
+                    /*try {
                         busConnection.beginJourey(Busses.simulated);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 
                 }
                 connectedToWifi = true;
@@ -86,7 +86,7 @@ public class WifiReciever extends BroadcastReceiver {
             } else{
                 connectedToWifi = false;
                 this.pcs.firePropertyChange("disconnected", null, null);
-                if(onBus){
+               /* if(onBus){
 
                     try {
                         busConnection.endJourney(Busses.simulated);
@@ -94,7 +94,7 @@ public class WifiReciever extends BroadcastReceiver {
                         e.printStackTrace();
                     }
 
-                }
+                }*/
 
                 /*try{
                     ((MainActivity)activity).setDisconnected();

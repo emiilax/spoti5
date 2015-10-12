@@ -4,6 +4,8 @@ package com.example.spoti5.ecobussing;
 
 
 
+import android.os.StrictMode;
+
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Bus55Stops;
 import com.example.spoti5.ecobussing.BusData.Busses;
@@ -151,19 +153,19 @@ public class BusConnection implements Runnable{
                     System.out.println(startLoc.getName());
                     break;
                 }
-
-                hasEnded = true;
-
-                //endLoc = stopL;
-                System.out.println(endLoc.getName());
-                System.out.println("Endloc finished");
-
-
-
-                double distance = Calculator.getCalculator().calculateDistance(startLoc, endLoc);
-
-                System.out.println(distance);
             }
+            hasEnded = true;
+
+            //endLoc = stopL;
+            System.out.println(endLoc.getName());
+            System.out.println("Endloc finished");
+
+
+
+            double distance = Calculator.getCalculator().calculateDistance(startLoc, endLoc);
+
+            System.out.println(distance);
+
 
         }
         
@@ -276,12 +278,12 @@ public class BusConnection implements Runnable{
 
         String response = "";
 
-        /*
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-        */
+
 
         // Used to point out the "resource" on internet
         URL requestURL = new URL(url);
@@ -354,11 +356,11 @@ public class BusConnection implements Runnable{
         String response = "";
 
 
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-        */
+
         URL requestURL = new URL(url);
 
         HttpURLConnection con = (HttpURLConnection) requestURL.openConnection();
@@ -470,7 +472,7 @@ public class BusConnection implements Runnable{
             double lat = getEAValue("Latitude2_Value", gpsInfo);
 
             try {
-                lastLocations = getNearbyStops(lon, lat, 10);
+                lastLocations = getNearbyStops(lon, lat, 20);
                 stopL = lastLocations.getStopLocation(0);
             } catch (IOException e) {
                 e.printStackTrace();
