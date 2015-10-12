@@ -17,6 +17,8 @@ import java.util.List;
 public interface IDatabase {
     public List<IUser> getUsers();
     public List<IUser> getUserToplistAll();
+    public List<IUser> getUserToplistMonth();
+    public List<IUser> getUserToplistYear();
 
     public List<IUser> getCompTopList();
     public void addUser(String email, String password, final User user, IDatabaseConnected connection);

@@ -3,6 +3,7 @@ package com.example.spoti5.ecobussing.Profiles;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Calendar;
 
@@ -38,8 +39,8 @@ public class User implements IUser{
 
     private String moneyJson;
 
-    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap;
-    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;
+    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap  = new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap  = new DeepMap<>();
 
     public User(){}
 
@@ -55,10 +56,9 @@ public class User implements IUser{
         this.co2CurrentYear = 0;
         this.co2Tot = 0;
         this.firstUse = true;
-        this.co2SavedMap = new DeepMap<>();
-        this.moneySavedMap = new DeepMap<>();
 
         this.connectedCompany = "";
+        this.co2Json = getCo2Json();
     }
 
     public User(String email, String name){
@@ -277,8 +277,10 @@ public class User implements IUser{
     }
 
     public String getCo2Json() {
-        Gson gson = new Gson();
-        return gson.toJson(co2Json);
+        Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
+        System.out.println(co2SavedMap.toString());
+        String json =  gson.toJson(co2SavedMap);
+        return json;
     }
 
     public String getMoneyJson() {
