@@ -11,6 +11,8 @@ package com.example.spoti5.ecobussing;
         import android.view.ViewGroup;
         import android.widget.ImageView;
 
+        import com.example.spoti5.ecobussing.Profiles.ProfilePagerAdapter;
+
 
 /**
  * A simple {@link Fragment} subclass.
