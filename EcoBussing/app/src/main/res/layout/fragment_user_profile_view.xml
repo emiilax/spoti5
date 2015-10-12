@@ -48,6 +48,10 @@
             </LinearLayout>
 
         </TableRow>
+        
+        <View style="@style/Divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <TableRow
             android:layout_width="match_parent"
@@ -84,6 +88,8 @@
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
 
+                <View style="@style/Divider"/>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -106,6 +112,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true" />
                 </RelativeLayout>
+
+                <View style="@style/Divider"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
