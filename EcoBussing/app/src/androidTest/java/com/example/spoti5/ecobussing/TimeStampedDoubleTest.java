@@ -13,10 +13,10 @@ public class TimeStampedDoubleTest extends AndroidTestCase {
 
     public TimeStampedDoubleTest() {
         distance = new TimeStampedDouble(20.0);
-        Test1();
+        timeStampedDoubleTest();
     }
 
-    private void Test1() {
+    private void timeStampedDoubleTest() {
         System.out.println("-------------------------------- TIMESTAMPEDDOUBLE TEST -------------------------------");
         System.out.println("This should match the current date:");
         System.out.println("YEAR: " + distance.getStampedYear());

@@ -5,7 +5,19 @@
 =======
     <mapping directory="" vcs="" />
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 >>>>>>> master
+>>>>>>> 97c72040b7ee28a1ba97f35c2982c78bef6f895e
+=======
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+=======
+>>>>>>> master
+>>>>>>> database
+>>>>>>> DeepMap
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
   </component>
 </project>
