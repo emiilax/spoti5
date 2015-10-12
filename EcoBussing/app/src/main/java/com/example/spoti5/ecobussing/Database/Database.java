@@ -43,6 +43,9 @@ public class Database implements IDatabase{
     private List<IUser> topListAll = new ArrayList<>();
     private List<IUser> topListMonth = new ArrayList<>();
     private List<IUser> topListYear = new ArrayList<>();
+
+
+
     private boolean allGenerated;
 
 
@@ -161,7 +164,7 @@ public class Database implements IDatabase{
 
         //key kan kanske vara lösenordet för att ansluta till företaget?
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler(){
+        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler() {
 
             @Override
             public void onSuccess() {
@@ -229,7 +232,6 @@ public class Database implements IDatabase{
                     allUsers.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         User user = userSnapshots.getValue(User.class);
-                        System.out.println("Added user. EmaiL: " + user.getEmail());
                         allUsers.add(user);
 
                     }
@@ -324,5 +326,8 @@ public class Database implements IDatabase{
         return topListYear;
     }
 
+    public boolean isAllGenerated() {
+        return allGenerated;
+    }
 
 }
