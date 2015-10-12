@@ -28,6 +28,7 @@ public interface IDatabase {
     public IUser getUser(String email);
     public List<IProfile> getCompanies();
     public void updateUser(IUser user);
+    public void updateCompany(IProfile company);
     //Kanske behöver finnas med
     public List getCompanyMembers(String companyKey);
 }

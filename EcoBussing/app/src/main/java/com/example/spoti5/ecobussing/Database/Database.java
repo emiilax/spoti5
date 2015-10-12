@@ -104,6 +104,12 @@ public class Database implements IDatabase{
         ref.setValue(user);
     }
 
+    @Override
+    public void updateCompany(IProfile company) {
+        Firebase ref = firebaseRef.child(company.getName());
+        ref.setValue(company);
+    }
+
 
     @Override
     public List getCompanyMembers(String companyKey) {
@@ -163,7 +169,7 @@ public class Database implements IDatabase{
 
         //key kan kanske vara lösenordet för att ansluta till företaget?
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler(){
+        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler() {
 
             @Override
             public void onSuccess() {
@@ -180,6 +186,7 @@ public class Database implements IDatabase{
             @Override
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
+                setErrorCode(firebaseError);
                 connection.addingUserFinished();
             }
         });
@@ -231,7 +238,6 @@ public class Database implements IDatabase{
                     allUsers.clear();
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         User user = userSnapshots.getValue(User.class);
-                        System.out.println("Added user. EmaiL: " + user.getEmail());
                         allUsers.add(user);
 
                     }

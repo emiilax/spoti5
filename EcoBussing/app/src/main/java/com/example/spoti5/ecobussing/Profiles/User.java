@@ -279,7 +279,7 @@ public class User implements IUser{
     public String getCo2Json() {
         Gson gson = new Gson();
         System.out.println(co2SavedMap.toString());
-        String json =  gson.toJson(co2SavedMap);
+        String json =  gson.toJson(co2Json);
         return json;
     }
 
