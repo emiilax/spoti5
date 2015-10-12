@@ -22,11 +22,11 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new ProfileInfo();
+                fragment = new UserProfileInfo();
                 break;
 
             case 1:
-                fragment = new ProfileOtherThing();
+                fragment = new UserProfileOtherThing();
                 break;
         }
 

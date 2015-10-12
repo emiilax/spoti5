@@ -15,17 +15,17 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  * Fragment shown in the ViewPager in UserProfileView. This Fragment contains some user info and
  * a profile picture.
  */
-public class ProfileInfo extends Fragment {
+public class UserProfileInfo extends Fragment {
 
     private IUser currentUser;
 
-    public ProfileInfo() {    }
+    public UserProfileInfo() {    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         currentUser = SaveHandler.getCurrentUser();
-        View view = inflater.inflate(R.layout.fragment_profile_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile_info, container, false);
 
         setDataStrings(view);
         return view;

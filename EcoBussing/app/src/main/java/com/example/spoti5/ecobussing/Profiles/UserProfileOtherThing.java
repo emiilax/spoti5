@@ -11,17 +11,18 @@ import com.example.spoti5.ecobussing.R;
 
 /**
  * Fragment shown in the ViewPager in UserProfileView. This Fragment contains a graph atm.
+ * UserProfileOtherThing should be renamed at some point.
  */
-public class ProfileOtherThing extends Fragment {
+public class UserProfileOtherThing extends Fragment {
 
-    public ProfileOtherThing() {
+    public UserProfileOtherThing() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_other_thing, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile_other_thing, container, false);
         ImageView graph = (ImageView)view.findViewById(R.id.graphView);
         graph.setImageResource(R.drawable.graph);
         return view;
