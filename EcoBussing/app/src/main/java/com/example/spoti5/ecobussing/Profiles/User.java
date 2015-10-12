@@ -277,7 +277,7 @@ public class User implements IUser{
     }
 
     public String getCo2Json() {
-        Gson gson = new GsonBuilder().disableInnerClassSerialization().create();
+        Gson gson = new Gson();
         System.out.println(co2SavedMap.toString());
         String json =  gson.toJson(co2SavedMap);
         return json;

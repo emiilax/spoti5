@@ -51,6 +51,8 @@ public class Database implements IDatabase{
         firebaseRef = new Firebase(FIREBASE);
         generateUserList();
         generateToplistAll();
+        generateToplistMonth();
+        generateToplistYear();
     }
 
     private void generateToplistAll() {
@@ -305,10 +307,10 @@ public class Database implements IDatabase{
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                topListAll.clear();
+                topListYear.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User u = snapshot.getValue(User.class);
-                    topListAll.add(u);
+                    topListYear.add(u);
                 }
             }
 
