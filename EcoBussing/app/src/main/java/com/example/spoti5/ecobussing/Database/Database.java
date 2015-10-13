@@ -304,10 +304,15 @@ public class Database implements IDatabase{
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                clearListCompany(listValue);
-                for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
-                    IProfile company = companySnapshots.getValue(Company.class);
-                    addCompanyToList(listValue, company);
+                try {
+                    clearListCompany(listValue);
+                    for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
+                        IProfile company = companySnapshots.getValue(Company.class);
+                        addCompanyToList(listValue, company);
+                    }
+                } catch(FirebaseException e){
+                    allGenerated = false;
+                    System.out.println(e.getMessage());
                 }
             }
 
