@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.EditProfile;
+package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Profiles.IUser;

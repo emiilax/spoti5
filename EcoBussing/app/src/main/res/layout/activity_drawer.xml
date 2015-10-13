@@ -36,23 +36,17 @@
 
         </FrameLayout>
 
-        <EditText
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_above="@+id/container"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="46dp"
-            android:layout_marginEnd="46dp" />
 
         <ImageView
             android:layout_width="@dimen/small_image"
             android:layout_height="@dimen/small_image"
             android:id="@+id/search_icon"
-            android:layout_alignTop="@+id/editText"
-            android:layout_alignRight="@+id/editText"
-            android:layout_alignEnd="@+id/editText"
+            android:layout_above="@+id/container"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:src="@drawable/searchicon"
             />
 
@@ -78,5 +72,22 @@
         android:background="#FFFFFF"/>
         //android:name="com.example.spoti5.ecobussing.NavigationDrawerFragment"
         //tools:layout="@layout/fragment_navigation_drawer" />
+
+    <FrameLayout
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="280dp"
+        android:layout_gravity="end"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:dividerHeight="0dp"
+        android:background="@color/clear_white"
+        android:id="@+id/right_drawer"
+
+        >
+
+
+    </FrameLayout>
+
+
 
 </android.support.v4.widget.DrawerLayout>

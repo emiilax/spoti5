@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -14,8 +14,10 @@ import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 /**
@@ -23,18 +25,21 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  */
 public class CreateCompanyFragment extends Fragment implements IDatabaseConnected{
 
-    TextView header;
-    EditText nameTextField;
-    EditText passwordTextField;
-    Button saveButton;
+    private TextView header;
+    private EditText nameTextField;
+    private EditText nbrEmployeesTextField;
+    private EditText passwordTextField;
+    private EditText password2TextField;
+    private Button saveButton;
 
-    String name;
-    String password;
-    Company newCompany;
+    private String name;
+    private String password;
+    private Company newCompany;
+    private int nbrEmployees;
 
-    IUser currentUser;
+    private IUser currentUser;
 
-    IDatabase database;
+    private IDatabase database;
 
     public CreateCompanyFragment(){
 
@@ -59,7 +64,9 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         header = (TextView)view.findViewById(R.id.headerTextView);
         nameTextField = (EditText)view.findViewById(R.id.editTextCompName);
+        nbrEmployeesTextField = (EditText)view.findViewById(R.id.editTextEmployees);
         passwordTextField = (EditText)view.findViewById(R.id.editTextPassword);
+        password2TextField = (EditText)view.findViewById(R.id.editTextPassword2);
         saveButton = (Button)view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
@@ -70,15 +77,25 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         @Override
         public void onClick(View v) {
-            registerCompany();
+            if(checkPassword()) {
+                registerCompany();
+            }else{
+                System.out.println("Lösenorder matchar inte");
+            }
         }
     };
+
+    private boolean checkPassword(){
+        //Ska vi ha fler krav på företagslösen?
+        return passwordTextField.getText().toString().equals(password2TextField.getText().toString());
+
+    }
 
 
     private void registerCompany(){
         initStrings();
-
-        newCompany = new Company(name, (User)currentUser);
+        System.out.println("In registerCompany()");
+        newCompany = new Company(name, (User)currentUser, password, nbrEmployees);
         database.addCompany(name, newCompany, this);
 
     }
@@ -87,12 +104,13 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private void initStrings(){
         name = nameTextField.getText().toString();
         password = passwordTextField.getText().toString();
+        nbrEmployees = Integer.parseInt(nbrEmployeesTextField.getText().toString());
     }
 
 
     @Override
     public void addingFinished() {
-        System.out.println(newCompany.getMembers(true).get(0).getEmail());
+       // System.out.println(newCompany.getMembers(true).get(0).getEmail());
     }
 
     @Override

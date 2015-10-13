@@ -82,6 +82,15 @@ public class Database implements IDatabase{
         return null;
     }
 
+    public IProfile getCompany(String name){
+        for(IProfile c: getCompanies()){
+            if(c.getName().equals(name)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void updateUser(IUser user) {
         if(user != null) {
