@@ -1,5 +1,7 @@
 package com.example.spoti5.ecobussing.Database;
 
+import android.provider.ContactsContract;
+
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
@@ -372,42 +374,50 @@ public class Database implements IDatabase{
 
     @Override
     public List<IUser> getUsers() {
+        generateUserList(Database.allValue);
         return allUsers;
     }
 
     @Override
     public List<IUser> getUserToplistAll() {
+        generateUserList(Database.topListAllValue, "co2Tot");
         return topListAll;
     }
 
     @Override
     public List<IProfile> getCompanies(){
+        generateCompaniesList(Database.allValue);
         return allCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistAll() {
+        generateCompaniesList(Database.topListAllValue, "co2Tot");
         return topListAllCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistMonth() {
+        generateCompaniesList(Database.topListMonthValue, "co2CurrentMonth");
         return topListMonthCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistYear() {
+        generateCompaniesList(Database.topListYearValue, "co2CurrentYear");
         return topListYearCompanies;
     }
 
     @Override
     public List<IUser> getUserToplistMonth() {
+        generateUserList(Database.topListMonthValue, "co2CurrentMonth");
         return topListMonth;
     }
 
 
     @Override
     public List<IUser> getUserToplistYear() {
+        generateUserList(Database.topListYearValue, "co2CurrentYear");
         return topListYear;
     }
 
