@@ -57,6 +57,11 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
         database = DatabaseHolder.getDatabase();
 
+        List<IUser> users = database.getUserToplistMonth();
+
+        for(IUser u: users){
+            System.out.println(u.getCo2CurrentMonth());
+        }
 
     }
 
