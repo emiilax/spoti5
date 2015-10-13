@@ -1,0 +1,51 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.spoti5.ecobussing.Profiles.UserProfileInfo">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_column="1"
+        android:layout_gravity="left"
+        >
+
+        <ImageView
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
+            android:id="@+id/profile_pic"
+            android:src="@drawable/empty_profile"
+          />
+
+
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:text="Large Text"
+                    android:textSize="@dimen/navigation_text_size_biggest"
+                    android:id="@+id/nameView"
+                    android:layout_column="1" />
+            </TableRow>
+
+
+        </TableLayout>
+    </LinearLayout>
+</FrameLayout>
