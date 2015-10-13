@@ -40,9 +40,8 @@ public class OverviewActivity extends ActivityController {
         overViewTextView3 = (TextView) findViewById(R.id.overviewtextview3);
         overViewTextView4 = (TextView) findViewById(R.id.overviewtextview4);
 
-        CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
+        CO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
         currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
-        totalDistance = SaveHandler.getCurrentUser().getDistance();
 
         if (currentDistance > 0) {
             setOverviewText1();
@@ -54,20 +53,20 @@ public class OverviewActivity extends ActivityController {
     }
 
     private void updateSaveHandler() {
-        SaveHandler.getCurrentUser().incCO2Saved(Calculator.getCalculator().getCurrentCarbonSaved());
-        SaveHandler.getCurrentUser().incMoneySaved(Calculator.getCalculator().getCurrentMoneySaved());
-        SaveHandler.getCurrentUser().updateDistance();
-        SaveHandler.getCurrentUser().resetCurrentDistance();
+       // SaveHandler.getCurrentUser().incCO2Saved(Calculator.getCalculator().getCurrentCarbonSaved());
+       // SaveHandler.getCurrentUser().incMoneySaved(Calculator.getCalculator().getCurrentMoneySaved());
+       // SaveHandler.getCurrentUser().updateDistance();
+       // SaveHandler.getCurrentUser().resetCurrentDistance();
     }
 
     private void setOverviewText1() {
-        double CO2Saved = Calculator.getCalculator().getCurrentCarbonSaved();
+        double CO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
         overviewTextView1.setText("Du har åkt " + Double.toString(currentDistance) + " km kollektivt");
         overViewTextView4.setText("Genom att göra det har du sparat " + carbonSaved + " mg koldioxid!");
     }
 
     private void setOverviewText2() {
-        double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
+        double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
 
        // overviewTextView1.setVisibility(View.INVISIBLE);
         animateTextView((int) totCO2Saved, (int) (CO2Saved + totCO2Saved), overViewTextView3);

@@ -31,7 +31,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView emailField;
     TextView passwordField;
     IDatabase database;
-    TextView error;
     TextView register;
 
     IUser user;
@@ -49,14 +48,18 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
-        error = (TextView) findViewById(R.id.login_error);
         register = (TextView) findViewById(R.id.register_label);
 
         register.setOnClickListener(registerListener);
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
-        
+
+        List<IUser> users = database.getUserToplistMonth();
+
+        for(IUser u: users){
+            System.out.println(u.getCo2CurrentMonth());
+        }
 
     }
 
@@ -117,7 +120,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     };
 
     @Override
-    public void addingUserFinished() {
+    public void addingFinished() {
         //never used here
     }
 
@@ -128,8 +131,10 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         CharSequence text;
         Toast toast;
         switch (database.getErrorCode()){
-            case ErrorCodes.NO_ERROR: startOverviewActivity();
+            case ErrorCodes.NO_ERROR:
                 SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
+                startOverviewActivity();
+
                 break;
             case ErrorCodes.BAD_EMAIL: text = "Ogiltig email";
                 toast = Toast.makeText(context, text, duration);

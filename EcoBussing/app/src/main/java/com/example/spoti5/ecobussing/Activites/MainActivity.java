@@ -6,13 +6,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +19,14 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
-import com.example.spoti5.ecobussing.CreateCompanyFragment;
+import com.example.spoti5.ecobussing.CompanySwipe.CreateCompanyFragment;
+import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
-import com.example.spoti5.ecobussing.ProfileFragment;
+import com.example.spoti5.ecobussing.Profiles.UserProfileView;
+
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
-
-import java.util.Calendar;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -149,9 +147,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 0:
                 getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getName());
                 view.setBackgroundResource(R.color.clicked);
-                ProfileFragment profileFragment = new ProfileFragment();
+                UserProfileView userProfileView = new UserProfileView();
 
-                fragmentTransaction.replace(R.id.container, profileFragment);
+                fragmentTransaction.replace(R.id.container, userProfileView);
 
                 break;
             case 1:
@@ -162,7 +160,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
-                getSupportActionBar().setTitle("Topplista");
+                getSupportActionBar().setTitle("Topplistor");
                 view.setBackgroundResource(R.color.third);
 
                 SwipeFragments test = new SwipeFragments();
@@ -185,17 +183,16 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 break;
             case 4:
-                getSupportActionBar().setTitle("Redigera profil");
+                getSupportActionBar().setTitle("Företagsinställningar");
                 view.setBackgroundResource(R.color.clicked);
-                EditInfoFragment fragment = new EditInfoFragment();
+                CompanySwipeFragment fragment = new CompanySwipeFragment();
                 fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:
-                getSupportActionBar().setTitle("Skapa företagsprofil");
+                getSupportActionBar().setTitle("Redigera profil");
                 view.setBackgroundResource(R.color.clicked);
-                CreateCompanyFragment companyFragment = new CreateCompanyFragment();
-                System.out.println("Create company");
-                fragmentTransaction.replace(R.id.container, companyFragment);
+                EditInfoFragment editInfoFragment = new EditInfoFragment();
+                fragmentTransaction.replace(R.id.container, editInfoFragment);
                 break;
             case 6:
                 logout();

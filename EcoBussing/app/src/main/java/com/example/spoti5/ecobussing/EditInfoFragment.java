@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Profiles.IUser;
@@ -61,7 +60,6 @@ public class EditInfoFragment extends Fragment {
 
     private void initFields(){
         nameField.setText(currentUser.getName());
-        ageField.setText(currentUser.getAge());
     }
 
 
@@ -74,7 +72,6 @@ public class EditInfoFragment extends Fragment {
 
     private void changeUser(){
         currentUser.setName(nameField.getText().toString());
-        currentUser.setAge(Integer.parseInt(ageField.getText().toString()));
         SaveHandler.changeUser(currentUser);
         DatabaseHolder.getDatabase().updateUser(currentUser);
     }

@@ -1,9 +1,8 @@
 package com.example.spoti5.ecobussing;
 
 import android.test.AndroidTestCase;
-import android.util.Log;
 
-import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.User;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by hilden on 2015-09-30.
  */
-public class BusinessProfileTest extends AndroidTestCase {
+public class CompanyTest extends AndroidTestCase {
 
     private User bert;
     private User tomas;
@@ -20,10 +19,10 @@ public class BusinessProfileTest extends AndroidTestCase {
     private User sara;
     private User lovisa;
 
-    private BusinessProfile mcDonalds;
-    private BusinessProfile burgerKing;
-    private BusinessProfile max;
-    private BusinessProfile pizzaHut;
+    private Company mcDonalds;
+    private Company burgerKing;
+    private Company max;
+    private Company pizzaHut;
 
     private ArrayList<String> answers1;
     private ArrayList<String> answers2;
@@ -31,7 +30,7 @@ public class BusinessProfileTest extends AndroidTestCase {
     private ArrayList<String> answers4;
 
 
-    public BusinessProfileTest() {
+    public CompanyTest() {
         lovisa = new User("f@gmail.com", "Lovisa");
         sara = new User("e@gmail.com", "Sara");
         anna = new User("d@gmail.com", "Anna");
@@ -39,10 +38,10 @@ public class BusinessProfileTest extends AndroidTestCase {
         tomas = new User("b@gmail.com", "Tomas");
         bert = new User("a@gmail.com", "Bert");
 
-        mcDonalds = new BusinessProfile("MC Donalds", bert);
-        burgerKing = new BusinessProfile("Burger King", bert);
-        max = new BusinessProfile("MAX", bert);
-        pizzaHut = new BusinessProfile("Pizza Hut", bert);
+        mcDonalds = new Company("MC Donalds", bert);
+        burgerKing = new Company("Burger King", bert);
+        max = new Company("MAX", bert);
+        pizzaHut = new Company("Pizza Hut", bert);
 
         test1(mcDonalds);
         test2(burgerKing);
@@ -50,7 +49,7 @@ public class BusinessProfileTest extends AndroidTestCase {
         test4(pizzaHut);
     }
 
-    private void test1(BusinessProfile testBusiness) {
+    private void test1(Company testBusiness) {
         testBusiness.addMember(lars);
         testBusiness.addMember(anna);
         testBusiness.addMember(tomas);
@@ -67,7 +66,7 @@ public class BusinessProfileTest extends AndroidTestCase {
         printTestResults(testBusiness, answers1, "TEST 1");
       }
 
-    private void test2(BusinessProfile testBusiness) {
+    private void test2(Company testBusiness) {
         testBusiness.addMember(lars);
         testBusiness.addMember(anna);
         testBusiness.addMember(tomas);
@@ -91,7 +90,7 @@ public class BusinessProfileTest extends AndroidTestCase {
         printTestResults(testBusiness, answers2, "TEST 2");
     }
 
-    private void test3(BusinessProfile testBusiness) {
+    private void test3(Company testBusiness) {
         testBusiness.addMember(lars);
         testBusiness.addMember(anna);
         testBusiness.addMember(tomas);
@@ -112,7 +111,7 @@ public class BusinessProfileTest extends AndroidTestCase {
         printTestResults(testBusiness, answers3, "TEST 3");
     }
 
-    private void test4(BusinessProfile testBusiness) {
+    private void test4(Company testBusiness) {
         testBusiness.addMember(lars);
         testBusiness.addMember(anna);
         testBusiness.addMember(tomas);
@@ -139,20 +138,20 @@ public class BusinessProfileTest extends AndroidTestCase {
         printTestResults(testBusiness, answers4, "TEST 4");
     }
 
-    private void printTestResults(BusinessProfile testBusiness, ArrayList<String> answers, String testName) {
+    private void printTestResults(Company testBusiness, ArrayList<String> answers, String testName) {
         String members = "";
         String moderatorMembers = "";
         System.out.println(testName + " RESULTS ----------------------------------------------------");
-        System.out.println("The creator of '" + testBusiness.getName() + "' is: " + testBusiness.getCreatorMember().getName());
+        System.out.println("The creator of '" + testBusiness.getName() + "' is: " + testBusiness.getCreatorMember());
         System.out.print("The members of '" + testBusiness.getName() + "' are: ");
-        for (int i = 0; i < testBusiness.getMembers().size(); i++) {
-            members = members + testBusiness.getMembers().get(i).getName() + ",";
+        for (int i = 0; i < testBusiness.getMembers(true).size(); i++) {
+            members = members + testBusiness.getMembers(true).get(i).getName() + ",";
         }
         System.out.print(members);
         System.out.println("");
         System.out.print("The moderator members of '" + testBusiness.getName() + "' are: ");
-        for (int i = 0; i < testBusiness.getModeratorMembers().size(); i++) {
-            moderatorMembers = moderatorMembers + testBusiness.getModeratorMembers().get(i).getName() + ",";
+        for (int i = 0; i < testBusiness.getModeratorMembers(true).size(); i++) {
+            moderatorMembers = moderatorMembers + testBusiness.getModeratorMembers(true).get(i).getName() + ",";
         }
         System.out.println(moderatorMembers);
 
@@ -162,7 +161,7 @@ public class BusinessProfileTest extends AndroidTestCase {
         System.out.println("The moderator members of '" + testBusiness.getName() + "' should be: " + answers.get(2));
 
         System.out.println(testName + " SUMMARY:");
-        if (testBusiness.getCreatorMember().getName() == answers.get(0)) {
+        if (testBusiness.getCreatorMember() == answers.get(0)) {
             System.out.println("CORRECT: The business creators match");
         } else {
             System.out.println("WRONG: The business creator does not match");

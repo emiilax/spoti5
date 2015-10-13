@@ -42,8 +42,8 @@ public class CalculatorTest {
             testUser.incCurrentDistance(distances.get(i));
             System.out.println("-------------------------------------------");
             System.out.println("Testcase: " + Integer.toString(i+1) + ", " + Double.toString(distances.get(i)));
-            System.out.println("Currently saved CO2: " + Double.toString(calculator.getCurrentCarbonSaved()));
-            System.out.println("Currently saved $$$: " + Double.toString(calculator.getCurrentMoneySaved()));
+      //      System.out.println("Currently saved CO2: " + Double.toString(calculator.getCurrentCarbonSaved()));
+      //      System.out.println("Currently saved $$$: " + Double.toString(calculator.getCurrentMoneySaved()));
             System.out.println("-------------------------------------------");
         }
 
