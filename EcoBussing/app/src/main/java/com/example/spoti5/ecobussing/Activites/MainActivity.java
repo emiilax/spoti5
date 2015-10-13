@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
+import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -29,6 +30,9 @@ import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by emilaxelsson on 16/09/15.
  */
@@ -43,10 +47,16 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private DrawerListAdapter listAdapter;
 
+    private List<String> fragmentsVisitedName;
+    private List<? super Fragment> fragmentsVisited;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fragmentsVisited = new ArrayList<>();
+        fragmentsVisitedName = new ArrayList<>();
 
         setContentView(R.layout.activity_drawer);
 
@@ -139,42 +149,53 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     Boolean wifi = false;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        String title;
         if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch(position){
             case 0:
-                getSupportActionBar().setTitle(SaveHandler.getCurrentUser().getName());
+                title = SaveHandler.getCurrentUser().getName();
+                getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 UserProfileView userProfileView = new UserProfileView();
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(userProfileView);
 
                 fragmentTransaction.replace(R.id.container, userProfileView);
 
                 break;
             case 1:
-                getSupportActionBar().setTitle("Fragment 2");
+                title = "fragment 2";
+                getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 BusinessFragment businessFragment = new BusinessFragment();
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(businessFragment);
 
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
             case 2:
-                getSupportActionBar().setTitle("Topplistor");
+                title = "Topplistor";
+                getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.third);
 
                 SwipeFragments test = new SwipeFragments();
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(test);
 
                 fragmentTransaction.replace(R.id.container, test);
                 break;
 
             case 3:
-                getSupportActionBar().setTitle("Fragment 4");
+                title = "fragment 4";
+                getSupportActionBar().setTitle(title);
+
 
                 /*
                 WifiDetect wifiDetect = new WifiDetect();
-                 
+
                 wifi = true;
                 fragmentTransaction.replace(R.id.container, wifiDetect);
                 if(wifiReciever.getBssid() != null){
@@ -184,15 +205,21 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 break;
             case 4:
-                getSupportActionBar().setTitle("Företagsinställningar");
+                title = "Företagsinställningar";
+                getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 CompanySwipeFragment fragment = new CompanySwipeFragment();
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(fragment);
                 fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:
-                getSupportActionBar().setTitle("Redigera profil");
+                title = "Redigera profil";
+                getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 EditInfoFragment editInfoFragment = new EditInfoFragment();
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(editInfoFragment);
                 fragmentTransaction.replace(R.id.container, editInfoFragment);
                 break;
             case 6:
@@ -209,6 +236,22 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerLayout.closeDrawer(drawerList);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
+/*
+    @Override
+    public void onBackPressed(){
+        if(fragmentsVisited.size() > 0 && fragmentsVisitedName.size() > 0 && fragmentsVisited.size() == fragmentsVisitedName.size()){
+            int last = fragmentsVisitedName.size() - 1;
+            getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
+            fragmentTransaction.replace(R.id.container, (Fragment) fragmentsVisited.get(last));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            fragmentsVisited.remove(last);
+            fragmentsVisitedName.remove(last);
+        } else {
+            super.onBackPressed();
+        }
+
+    }*/
 
     /*
     public void setConnected(String bssid){

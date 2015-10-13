@@ -26,7 +26,7 @@ public class DrawerListAdapter extends BaseAdapter {
     DrawerListAdapter(Context context){
         listItems = new ArrayList<>();
         this.context = context;
-        
+
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
             if(item.equals("Profile")){
