@@ -26,6 +26,8 @@ public class Company implements IProfile {
     private String companyInfo;
     private String password;
 
+    private int nbrEmployees;
+
     /**
      * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
      */
@@ -39,7 +41,7 @@ public class Company implements IProfile {
     private String oldMomMemberJson;
     private String oldMemberJson;
 
-    public Company(String businessName, User creatorMember) {
+    public Company(String businessName, User creatorMember, String password, int nbrEmployees) {
         companyName = businessName;
         this.creatorMember = creatorMember.getEmail();
 
@@ -52,6 +54,9 @@ public class Company implements IProfile {
         co2CurrentMonth = 0;
         co2CurrentYear = 0;
         co2Tot = 0;
+
+        this.password = password;
+        this.nbrEmployees = nbrEmployees;
 
         database = DatabaseHolder.getDatabase();
     }
@@ -261,6 +266,10 @@ public class Company implements IProfile {
         return co2Tot;
     }
 
+    public int getNbrEmployees() {
+        return nbrEmployees;
+    }
+
     public double getCo2CurrentYear() {
         return co2CurrentYear;
     }
@@ -292,7 +301,7 @@ public class Company implements IProfile {
                 "password='" + password + '\'' +
                 ", co2CurrentMonth=" + co2CurrentMonth +
                 ", co2CurrentYear=" + co2CurrentYear +
-                ", co2Tot=" + co2Tot +
+                ", co2Tot=" + co2Tot + ", nbrEmployees="+ nbrEmployees +
                 ", companyInfo='" + companyInfo + '\'' +
                 ", creatorMember='" + creatorMember + '\'' +
                 ", modMemberJson='" + modMemberJson + '\'' +
