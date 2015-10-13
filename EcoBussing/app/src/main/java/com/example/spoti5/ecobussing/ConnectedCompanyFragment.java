@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
@@ -60,7 +62,7 @@ public class ConnectedCompanyFragment extends Fragment {
         viewCompanyButton.setOnClickListener(viewCompany);
         disconnectCompany.setOnClickListener(disconnectFromComp);
 
-        companyName.setText(database.getCompany(currentUser.getCompany()).toString());
+        companyName.setText(currentUser.getCompany());
 
         return view;
     }
@@ -68,14 +70,14 @@ public class ConnectedCompanyFragment extends Fragment {
     private View.OnClickListener viewCompany = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            System.out.println("Visa företagsprofil");
         }
     };
 
     private View.OnClickListener disconnectFromComp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            System.out.println("Disconnecta företag");
         }
     };
 
