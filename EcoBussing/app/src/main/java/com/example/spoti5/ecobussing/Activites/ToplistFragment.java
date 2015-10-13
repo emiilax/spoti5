@@ -25,35 +25,43 @@ import org.w3c.dom.Text;
 public class ToplistFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private ToplistAdapter listAdapter;
+    private View view;
 
     public ToplistFragment() {
         // Required empty public constructor
     }
 
+    private String range;
+    private boolean isCompany;
+    /*public ToplistFragment(String range, boolean company) {
+        this.range = range;
+        this.company = company;
+    }*/
+
+    public void setisCompany(boolean truFal){
+        isCompany = truFal;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_toplist, container, false);
+        view = inflater.inflate(R.layout.fragment_toplist, container, false);
 
         ListView drawerList= (ListView) view.findViewById(R.id.toplistListView);
 
-
-        // Set the adapter for the list view
-        //drawerList.setAdapter(new ArrayAdapter<String>(this,
-        //        R.layout.drawer_list_item, planetTitles));
-        ToplistAdapter listAdapter = new ToplistAdapter(view.getContext());
+        listAdapter = new ToplistAdapter(view.getContext(), "month", isCompany);
         drawerList.setAdapter(listAdapter);
 
-        //drawerList.setOnItemClickListener((MainActivity)view.getContext());
-        //TextView tv = (TextView)view.findViewById(R.id.textviewTest);
-        //tv.setText("Test");
-        //TextView tv = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
-        //tv.setText("New Tab Text");
         return view;
 
+    }
+
+    public void setRange(String range){
+        this.range = range;
+        listAdapter = new ToplistAdapter(ActivityController.getContext(), range, isCompany);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

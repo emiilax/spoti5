@@ -5,9 +5,11 @@
     android:layout_height="48dp"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:weightSum="1"
     android:paddingLeft="12dp"
     >
+
 
     <ImageView
         android:layout_width="48dp"

@@ -31,13 +31,13 @@ public class SimpelSearch {
     public List<IProfile> search(String name){
         results.clear();
         for(IUser user: database.getUsers()){
-            if((user.getName().toLowerCase()).equals(name.toLowerCase())){
+            if((user.getName().toLowerCase()).contains(name.toLowerCase())){
                 results.add(user);
             }
         }
 
         for (IProfile company: database.getCompanies()){
-            if((company.getName().toLowerCase()).equals(name.toLowerCase())){
+            if((company.getName().toLowerCase()).contains(name.toLowerCase())){
                 results.add(company);
             }
         }

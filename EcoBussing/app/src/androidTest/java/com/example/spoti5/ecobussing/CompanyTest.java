@@ -38,11 +38,11 @@ public class CompanyTest extends AndroidTestCase {
         tomas = new User("b@gmail.com", "Tomas");
         bert = new User("a@gmail.com", "Bert");
 
-        mcDonalds = new Company("MC Donalds", bert);
+/*        mcDonalds = new Company("MC Donalds", bert);
         burgerKing = new Company("Burger King", bert);
         max = new Company("MAX", bert);
         pizzaHut = new Company("Pizza Hut", bert);
-
+*/
         test1(mcDonalds);
         test2(burgerKing);
         test3(max);

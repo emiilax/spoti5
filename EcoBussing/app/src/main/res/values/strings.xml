@@ -24,7 +24,7 @@
     <string name="register_button">Registrera</string>
     <string name="logIn"><u>Logga in</u></string>
 
-    <string name="search_hint">Namn på företag eller person</string>
+    <string name="search_hint">Företag eller person</string>
 
     <string name="profile_name"> Namn: </string>
     <string name="profile_email"> Email: </string>
@@ -44,7 +44,7 @@
         <item>Min profil</item>
         <item>Fragment 2</item>
         <item>Topplistor</item>
-        <item>Fragment 4</item>
+        <item>Wifi-detect</item>
         <item>Företagsinställningar</item>
         <item>Redigera profil</item>
         <item>Log out</item>

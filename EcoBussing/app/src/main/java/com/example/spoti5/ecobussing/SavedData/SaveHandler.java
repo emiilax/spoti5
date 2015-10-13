@@ -51,6 +51,7 @@ public class SaveHandler {
     }
 
     public static void changeUser(IUser newUser) {
+        Context context = ActivityController.getContext();
         currentUser = newUser;
         database.updateUser(newUser);
         SaveUser();
