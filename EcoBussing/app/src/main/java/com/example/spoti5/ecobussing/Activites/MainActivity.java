@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
@@ -36,7 +37,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
-    //private ActionBar actionBar;
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
@@ -75,6 +75,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 

@@ -35,6 +35,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private String name;
     private String password;
     private Company newCompany;
+    private int nbrEmployees;
 
     private IUser currentUser;
 
@@ -79,22 +80,22 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
             if(checkPassword()) {
                 registerCompany();
             }else{
-                //Error lösen matchar inte
+                System.out.println("Lösenorder matchar inte");
             }
         }
     };
 
     private boolean checkPassword(){
         //Ska vi ha fler krav på företagslösen?
-        return passwordTextField.getText() == password2TextField.getText();
+        return passwordTextField.getText().toString().equals(password2TextField.getText().toString());
 
     }
 
 
     private void registerCompany(){
         initStrings();
-
-        newCompany = new Company(name, (User)currentUser);
+        System.out.println("In registerCompany()");
+        newCompany = new Company(name, (User)currentUser, password, nbrEmployees);
         database.addCompany(name, newCompany, this);
 
     }
@@ -103,6 +104,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private void initStrings(){
         name = nameTextField.getText().toString();
         password = passwordTextField.getText().toString();
+        nbrEmployees = Integer.parseInt(nbrEmployeesTextField.getText().toString());
     }
 
 

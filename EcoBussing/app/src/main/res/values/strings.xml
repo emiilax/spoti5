@@ -24,6 +24,8 @@
     <string name="register_button">Registrera</string>
     <string name="logIn"><u>Logga in</u></string>
 
+    <string name="search_hint">Namn på företag eller person</string>
+
     <string name="profile_name"> Namn: </string>
     <string name="profile_email"> Email: </string>
     <string name="profile_age"> år </string>
