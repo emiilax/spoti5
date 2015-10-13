@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 
 /**
@@ -40,36 +39,51 @@ public class Calculator {
     }
 
     /**
-     * @param originLat
-     * @param originLng
-     * @param destinationLat
-     * @param destinationLng
-     * @return The distance for driving from the start position to the end position
+     * @param originLat must be >= -90.0 and <= 90.0
+     * @param originLng must be >= -180.0 and <= 180.0
+     * @param destinationLat must be >= -90.0 and <= 90.0
+     * @param destinationLng must be >= -180.0 and <= 180.0
+     * @return The distance for driving from the start position to the end position. Returns -1 if
+     * any exception has been encountered.
+     *
+     * This method uses Google Maps Directions API to calculate the distance you whould have to drive
+     * to get from one point to another.
      */
     public int calculateDistance(double originLat, double originLng, double destinationLat,
                                  double destinationLng) {
         int dist = 0;
 
-        // Creates the complete URL used to get Json from Googles Diractions API. Consists of the
+        // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
         String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
                 destinationLat + "," + destinationLng +"&key=AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
 
-        try{
-            String jsonString = readUrl(completeURL);
-            Gson gson = new Gson();
-            Directions directions = gson.fromJson(jsonString, Directions.class);
-            dist = directions.routes.get(0).legs.get(0).distance.value;
-        }catch(IOException e){
-            System.out.println(e);
-        }catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
+        if (correctFormatLat(originLat) && correctFormatLng(originLng) && correctFormatLat(destinationLat) &&
+                correctFormatLng(destinationLng)) {
+            try {
+                String jsonString = readUrl(completeURL);
+                Gson gson = new Gson();
+                Directions directions = gson.fromJson(jsonString, Directions.class);
+                dist = directions.routes.get(0).legs.get(0).distance.value;
+
+            } catch (IndexOutOfBoundsException e) {
+                dist = -1;
+                System.out.println(e);
+            } catch (IOException e) {
+                dist = -1;
+                System.out.println(e);
+            } catch (Exception e) {
+                dist = -1;
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        }else{
+                throw new IllegalArgumentException("Latitude or longitude values are too big or too small");
+            }
+
 
         return dist;
     }
-
 
     private static String readUrl(String urlString) throws Exception {
         BufferedReader reader = null;
@@ -106,5 +120,25 @@ public class Calculator {
     public double getCurrentCarbonSaved() {
         return (SaveHandler.getCurrentUser().getCurrentDistance()/10)*SaveHandler.getCurrentUser().getCarPetrolConsumption()
                 *carbondioxideEmittedPerLiter*1000;
+    }
+
+    /**
+     *
+     * @param lat is the double value that is checked.
+     * @return True if the value is within the limits of a latitude. That is if it's greater than
+     * -90 and smaller than 90.
+     */
+    private boolean correctFormatLat(double lat){
+        return (lat >= -90 && lat <= 90);
+    }
+
+    /**
+     *
+     * @param lng is the double value that is checked.
+     * @return True if the value is within the limits of a latitude. That is if it's greater than
+     * -180 and smaller than 180.
+     */
+    private boolean correctFormatLng(double lng){
+        return (lng >= -180 && lng <= 180);
     }
 }
