@@ -299,7 +299,7 @@ public class Database implements IDatabase{
     }
 
     private void generateCompaniesList(final int listValue, String sorter) {
-        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+        final Query queryRef = firebaseRef.child(companiesString).orderByChild(sorter);
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

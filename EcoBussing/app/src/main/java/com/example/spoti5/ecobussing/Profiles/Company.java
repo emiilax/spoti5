@@ -153,6 +153,7 @@ public class Company implements IProfile {
     public void addMember(User user) {
         updateMembersFromJson();
         if (!userIsMember(user)) {
+            user.setCompany(companyName);
             members.add(user);
         }
     }
@@ -182,9 +183,11 @@ public class Company implements IProfile {
             if (userIsModerator(user)) {
                 moderatorMembers.remove(user);
                 members.remove(user);
+                user.setCompany("");
             } else {
                 if (userIsMember(user)) {
                     members.remove(user);
+                    user.setCompany("");
                 }
             }
         }
@@ -284,7 +287,7 @@ public class Company implements IProfile {
     public String toString() {
         return "Company{" +
                 "companyName='" + companyName + '\'' +
-                "password='" + password +
+                "password='" + password + '\'' +
                 ", co2CurrentMonth=" + co2CurrentMonth +
                 ", co2CurrentYear=" + co2CurrentYear +
                 ", co2Tot=" + co2Tot +
