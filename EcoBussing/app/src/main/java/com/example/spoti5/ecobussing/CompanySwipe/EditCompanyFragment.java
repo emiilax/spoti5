@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.app.Activity;
 import android.os.Bundle;

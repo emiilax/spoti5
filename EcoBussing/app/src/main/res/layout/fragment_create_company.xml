@@ -32,27 +32,49 @@
             android:textSize="20dp" />
 
         <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:hint="Antal anställda"
+            android:ems="10"
+            android:id="@+id/editTextEmployees"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"/>
+
+        <EditText
             android:layout_width="@dimen/centered_field_size"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:hint="Lösenord"
             android:ems="10"
             android:id="@+id/editTextPassword"
             android:textSize="20dp" />
+
+        <EditText
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="text"
+            android:hint="Lösenord igen"
+            android:id="@+id/editTextPassword2"
+            android:ems="10"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"/>
 
         <Button
             android:layout_width="154dp"
             android:layout_height="wrap_content"
             android:text="Skapa"
             android:id="@+id/saveCompButton"
-            android:layout_gravity="center_horizontal"
             android:layout_weight="0.04"
             android:padding="10dp"
             style="?android:attr/borderlessButtonStyle"
             android:textSize="30dp"
-            android:textColor="@color/nice_green" />
+            android:textColor="@color/nice_green"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 </LinearLayout>

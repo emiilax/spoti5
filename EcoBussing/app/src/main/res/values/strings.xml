@@ -39,14 +39,13 @@
 
 
     <string-array name="drawer_array">
-        <item>Profile</item>
+        <item>Min profil</item>
         <item>Fragment 2</item>
-        <item>Fragment 3</item>
+        <item>Topplistor</item>
         <item>Fragment 4</item>
+        <item>Företagsinställningar</item>
         <item>Redigera profil</item>
-        <item>Skapa företag</item>
         <item>Log out</item>
-
     </string-array>
 
     <string-array name="anders_array">
