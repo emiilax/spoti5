@@ -48,6 +48,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_drawer);
+        System.out.println("Start activity");
 
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         //registerReceiver(wifiReciever, intentFilter);

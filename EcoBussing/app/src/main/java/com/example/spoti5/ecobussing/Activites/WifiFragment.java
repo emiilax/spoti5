@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.WifiReciever;
+import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -52,7 +52,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener {
         mac = (TextView) view.findViewById(R.id.mac);
         onBus = (TextView) view.findViewById(R.id.onbus);
 
-        WifiReciever wifiReciever = WifiReciever.getInstance();
+        NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();
         wifiReciever.addPropertyChangeListener(this);
 
         if(wifiReciever.isConnectedToWifi()){

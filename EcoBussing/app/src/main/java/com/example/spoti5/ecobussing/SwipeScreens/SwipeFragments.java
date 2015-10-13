@@ -1,21 +1,17 @@
 package com.example.spoti5.ecobussing.SwipeScreens;
 
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.spoti5.ecobussing.BusConnection;
+import com.example.spoti5.ecobussing.APIRequest.BusConnection;
 import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.R;
 
@@ -97,7 +93,7 @@ public class SwipeFragments extends Fragment implements View.OnClickListener {
         if(v == btnYear){
             btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
             try {
-                busC.endJourney(Busses.simulated);
+                busC.endJourney();
             } catch (IOException e) {
                 e.printStackTrace();
             }

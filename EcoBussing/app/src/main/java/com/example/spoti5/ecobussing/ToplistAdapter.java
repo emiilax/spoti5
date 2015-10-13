@@ -69,7 +69,7 @@ public class ToplistAdapter extends BaseAdapter {
 
         name.setText((position + 1) + ". " + listItems.get(position).getName());
         //System.out.println(listItems.size());
-        //co2.setText(Double.toString(listItems.get(position).getCO2Saved()));
+        co2.setText(Double.toString(listItems.get(position).getMoneySavedPast7Days(true)));
 
         return row;
     }

@@ -4,25 +4,33 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.StrictMode;
 
+import com.example.spoti5.ecobussing.APIRequest.BusConnection;
+import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Busses;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 /**
  * Created by emilaxelsson on 30/09/15.
+ *
+ * Singelton class. As
  */
 
-public class WifiReciever extends BroadcastReceiver {
+public class NetworkStateChangeReciever extends BroadcastReceiver implements Runnable {
 
-    private static WifiReciever theReciver = null;
+    private static NetworkStateChangeReciever theReciver = null;
     private String bssid;
     private Bus theBus;
     private BusConnection busConnection;
@@ -31,27 +39,95 @@ public class WifiReciever extends BroadcastReceiver {
     private Activity activity;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    private boolean netwCon = false;
 
-    private WifiReciever(){
+    private NetworkStateChangeReciever(){
         busConnection = new BusConnection();
+        this.addPropertyChangeListener(busConnection);
 
+        netwCon = hasActiveInternetConnection(ActivityController.context);
+        System.out.println("Connected to network: " + netwCon);
     }
 
-    public static WifiReciever getInstance(){
+
+
+    public static NetworkStateChangeReciever getInstance(){
 
         if(theReciver == null){
-            theReciver = new WifiReciever();
+            theReciver = new NetworkStateChangeReciever();
         }
 
         return theReciver;
 
     }
 
+
+    public boolean hasActiveInternetConnection(Context context){
+
+        try {
+
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+
+            HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+            urlc.setRequestProperty("User-Agent", "Test");
+            urlc.setRequestProperty("Connection", "close");
+            urlc.setConnectTimeout(1500);
+            urlc.connect();
+            System.out.println(urlc.getResponseCode());
+            return (urlc.getResponseCode() == 200);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
+    }
+
+    public void setNetwCon(boolean truFal){
+        netwCon = truFal;
+        if(netwCon) pcs.firePropertyChange("netwConnected", null, null);
+    }
+
+    public boolean isNetwConnected(){
+        return netwCon;
+    }
+
+    Thread getConnectionThread = null;
+    private boolean stopThread;
+    public void updateConnect(Intent intent, Context context){
+        NetworkInfo in = (NetworkInfo)intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+
+        System.out.println("State: " + in.getState());
+
+        if(in!=null && in.getState() == NetworkInfo.State.CONNECTED) {
+
+            setNetwCon(hasActiveInternetConnection(context));
+
+            if(!netwCon){
+                stopThread = false;
+                new Thread(this).start();
+            }
+        }else{
+            stopThread = true;
+            netwCon = false;
+        }
+
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         //System.out.println(" internet event");
+
+
+        updateConnect(intent, context);
+        System.out.println("Connected to network: " + netwCon);
+
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-        if(info != null) {
+        if(info != null ) {
+
             if(info.isConnected()) {
                 // Do your work.
 
@@ -60,7 +136,7 @@ public class WifiReciever extends BroadcastReceiver {
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 if(wifiInfo.getBSSID() != null){
                     bssid = wifiInfo.getBSSID().replace(":", "");
-                    System.out.println("Connected");
+                    //System.out.println("Connected");
                     this.pcs.firePropertyChange("connected", null, bssid);
 
 
@@ -125,5 +201,22 @@ public class WifiReciever extends BroadcastReceiver {
 
     public boolean isConnectedToWifi(){
         return connectedToWifi;
+    }
+
+    @Override
+    public void run() {
+
+        while(!netwCon && !stopThread){
+            setNetwCon(hasActiveInternetConnection(ActivityController.context));
+            System.out.println("Connected: " + netwCon);
+
+            synchronized (this){
+                try {
+                    wait(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

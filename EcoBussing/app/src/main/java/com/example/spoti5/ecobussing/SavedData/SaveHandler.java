@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.SavedData;
 import android.content.Context;
 
+import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.Activites.StartActivites;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
@@ -51,7 +52,7 @@ public class SaveHandler {
     }
 
     public static void changeUser(IUser newUser) {
-        Context context = StartActivites.getContext();
+        Context context = ActivityController.context;
         currentUser = newUser;
         SaveUser(context);
         database.updateUser(newUser);
