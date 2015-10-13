@@ -22,6 +22,7 @@ public class Company implements IProfile {
     private String companyName;
     private double co2CurrentMonth;
     private double co2CurrentYear;
+
     private double co2Tot;
     private String companyInfo;
     private String password;
@@ -269,6 +270,11 @@ public class Company implements IProfile {
     public int getNbrEmployees() {
         return nbrEmployees;
     }
+
+    public double getCo2Tot() {
+        return co2Tot;
+    }
+
 
     public double getCo2CurrentYear() {
         return co2CurrentYear;
