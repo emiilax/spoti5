@@ -128,7 +128,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
@@ -142,6 +142,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             return true;
         }else if(id == android.R.id.home){
             drawerLayout.openDrawer(drawerListLeft);
+        }else if(id == R.id.action_search){
+            drawerLayout.openDrawer(drawerListRight);
         }
         return super.onOptionsItemSelected(item);
     }
