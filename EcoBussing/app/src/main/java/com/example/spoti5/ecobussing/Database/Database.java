@@ -9,6 +9,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
@@ -47,14 +48,14 @@ public class Database implements IDatabase{
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
         generateUserList(allValue);
-        generateUserList(topListAllValue);
-        generateUserList(topListMonthValue);
-        generateUserList(topListYearValue);
+        generateUserList(topListAllValue, "co2Tot");
+        generateUserList(topListMonthValue, "co2CurrentMonth");
+        generateUserList(topListYearValue, "co2CurrentYear");
 
         generateCompaniesList(allValue);
-        generateCompaniesList(topListAllValue);
-        generateCompaniesList(topListMonthValue);
-        generateCompaniesList(topListYearValue);
+        generateCompaniesList(topListAllValue, "co2Tot");
+        generateCompaniesList(topListMonthValue, "co2CurrentMonth");
+        generateCompaniesList(topListYearValue, "co2CurrentYear");
     }
 
     @Override
@@ -230,7 +231,27 @@ public class Database implements IDatabase{
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed " + firebaseError.getMessage());
+                allGenerated = false;
+            }
+        });
+    }
 
+    private void generateUserList(final int listValue, String sorter) {
+        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clearListUser(listValue);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User u = snapshot.getValue(User.class);
+                    addUserToList(listValue, u);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
             }
         });
     }
@@ -276,6 +297,26 @@ public class Database implements IDatabase{
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed " + firebaseError.getMessage());
 
+            }
+        });
+    }
+
+    private void generateCompaniesList(final int listValue, String sorter) {
+        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clearListCompany(listValue);
+                for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
+                    IProfile company = companySnapshots.getValue(Company.class);
+                    addCompanyToList(listValue, company);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
             }
         });
     }

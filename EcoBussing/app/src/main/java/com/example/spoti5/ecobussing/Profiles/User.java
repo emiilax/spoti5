@@ -265,19 +265,19 @@ public class User implements IUser{
         return timeStampInMillis;
     }
 
-    public Integer getStampedMonth() {
+    public Integer getStampedMonth(boolean avoidDatabaseUpload) {
         return stampedMonth;
     }
 
-    public Integer getStampedYear() {
+    public Integer getStampedYear(boolean avoidDatabaseUpload) {
         return stampedYear;
     }
 
-    public Integer getSavedMonth() {
+    public Integer getSavedMonth(boolean avoidDatabaseUpload) {
         return savedMonth;
     }
 
-    public Integer getSavedYear() {
+    public Integer getSavedYear(boolean avoidDatabaseUpload) {
         return savedYear;
     }
 
