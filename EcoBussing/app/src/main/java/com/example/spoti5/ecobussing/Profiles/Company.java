@@ -9,7 +9,11 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,6 +46,9 @@ public class Company implements IProfile {
     private String oldMomMemberJson;
     private String oldMemberJson;
 
+    private HashMap userConnectionDates;
+    private String usersConnectedJson;
+
     public Company(String businessName, User creatorMember, String password, int nbrEmployees) {
         companyName = businessName;
         this.creatorMember = creatorMember.getEmail();
@@ -58,6 +65,8 @@ public class Company implements IProfile {
 
         this.password = password;
         this.nbrEmployees = nbrEmployees;
+
+        userConnectionDates = new HashMap();
 
         database = DatabaseHolder.getDatabase();
     }
@@ -163,6 +172,11 @@ public class Company implements IProfile {
             user.setCompany(companyName);
             SaveHandler.changeUser(user);
             members.add(user);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date dateTime = new Date();
+            String str = dateFormat.format(dateTime);
+            String[] date = str.split(" ");
+            userConnectionDates.put(user, date[0]);
         }
     }
 
@@ -223,6 +237,12 @@ public class Company implements IProfile {
                 }
             }
         }
+    }
+
+    public String getUsersConnectedJson() {
+        Gson gson = new Gson();
+        usersConnectedJson =  gson.toJson(userConnectionDates);
+        return usersConnectedJson;
     }
 
 
