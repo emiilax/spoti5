@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
+import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
@@ -184,15 +185,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 4:
                 getSupportActionBar().setTitle("Företagsinställningar");
                 view.setBackgroundResource(R.color.clicked);
-                CreateCompanyFragment companyFragment = new CreateCompanyFragment();
-                System.out.println("Create company");
-                fragmentTransaction.replace(R.id.container, companyFragment);
+                CompanySwipeFragment fragment = new CompanySwipeFragment();
+                fragmentTransaction.replace(R.id.container, fragment);
                 break;
             case 5:
                 getSupportActionBar().setTitle("Redigera profil");
                 view.setBackgroundResource(R.color.clicked);
-                CompanySwipeFragment fragment = new CompanySwipeFragment();
-                fragmentTransaction.replace(R.id.container, fragment);
+                EditInfoFragment editInfoFragment = new EditInfoFragment();
+                fragmentTransaction.replace(R.id.container, editInfoFragment);
                 break;
             case 6:
                 logout();

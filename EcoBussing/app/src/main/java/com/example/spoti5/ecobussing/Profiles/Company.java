@@ -106,7 +106,7 @@ public class Company implements IProfile {
     }
 
 
-    public boolean userIsCreator(User user) {
+    public boolean userIsCreator(IUser user) {
         if (creatorMember == user.getEmail()) {
             return true;
         } else {
@@ -114,7 +114,7 @@ public class Company implements IProfile {
         }
     }
 
-    public boolean userIsModerator(User user) {
+    public boolean userIsModerator(IUser user) {
         updateModMembersFromJson();
         for (int i = 0; i < moderatorMembers.size(); i++) {
             if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
@@ -124,7 +124,7 @@ public class Company implements IProfile {
         return false;
     }
 
-    public boolean userIsMember(User user) {
+    public boolean userIsMember(IUser user) {
         updateMembersFromJson();
         for (int i = 0; i < members.size(); i++) {
             if (members.get(i).getEmail() == user.getEmail()) {

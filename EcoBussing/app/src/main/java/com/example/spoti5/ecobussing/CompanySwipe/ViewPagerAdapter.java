@@ -11,40 +11,61 @@ import com.example.spoti5.ecobussing.TestSwipe;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
-    private CharSequence titles;
+    private CharSequence titles[];
     private int nbrTabs;
     private int tabGroup;
 
 
     public ViewPagerAdapter(FragmentManager fm, CharSequence titles[], int nbrTabs, int tabGroup){
         super(fm);
+        this.titles = titles;
+        this.nbrTabs = nbrTabs;
+        this.tabGroup = tabGroup;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if(position == 0){
-            TestSwipe editInfo = new TestSwipe();
-            return editInfo;
+
+        Fragment fragment;
+
+        if(tabGroup == 0) {
+            if (position == 0) {
+                fragment = new TestSwipe();
+            } else {
+                fragment = new ConnectCompanyFragmant();
+            }
+        }else if(tabGroup == 1){
+            fragment = new EditCompanyFragment();
         }else{
-            ConnectCompanyFragmant connectCompany = new ConnectCompanyFragmant();
-            return connectCompany;
+            fragment = new EditCompanyFragment();
         }
+
+        return fragment;
     }
 
     public CharSequence getPageTitle(int position) {
 
         CharSequence tabTitle = "";
-        switch(position){
-            case 0: tabTitle = "Redigera profil";
-                break;
-            case 1: tabTitle = "Anslut till företag";
-                break;
+
+        if(tabGroup == 0) {
+            switch (position) {
+                case 0:
+                    tabTitle = titles[0];
+                    break;
+                case 1:
+                    tabTitle = titles[1];
+                    break;
+            }
+        }else if(tabGroup == 1){
+            tabTitle = titles[0];
+        }else{
+            tabTitle = titles[0];
         }
         return tabTitle;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return nbrTabs;
     }
 }

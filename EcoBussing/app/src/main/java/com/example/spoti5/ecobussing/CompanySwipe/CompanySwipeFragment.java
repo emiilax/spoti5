@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
@@ -36,6 +37,7 @@ public class CompanySwipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         view = inflater.inflate(R.layout.profile_swipe, container, false);
+        titles = new CharSequence[2];
 
         initTabInfo();
 
@@ -54,18 +56,25 @@ public class CompanySwipeFragment extends Fragment {
 
     private void initTabInfo(){
         IUser tmpUser = SaveHandler.getCurrentUser();
-        if(tmpUser.getCompany()== ""){
+        System.out.println(tmpUser.getName());
+        if(tmpUser.getCompany().equals("")|| tmpUser.getCompany() == null){
             //Skapa företag och Koppla till företag
-            tabGroup = 1;
+            tabGroup = 0;
             nbrTabs = 2;
             titles[0] = "Anslut till företag";
             titles[1] = "Skapa företag";
         }else{
-            IProfile company = database.getCompany(tmpUser.getCompany());
-            if(company == null){
-
+            Company company = (Company)database.getCompany(tmpUser.getCompany());
+            if(company.userIsModerator(tmpUser) && company.userIsMember(tmpUser)){
+                tabGroup = 1;
+                nbrTabs = 1;
+                titles[0] = "Redigera Företag";
+            }else{
+                tabGroup = 2;
+                nbrTabs = 1;
+                titles[0] = "Redigera företag";
             }
-            tabGroup = 2;
+
             //Redigera företag om admin annars gå ur företag?
         }
     }
