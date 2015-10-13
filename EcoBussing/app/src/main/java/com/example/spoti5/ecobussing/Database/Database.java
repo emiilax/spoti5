@@ -1,30 +1,19 @@
 package com.example.spoti5.ecobussing.Database;
 
-import android.provider.ContactsContract;
-import android.widget.ArrayAdapter;
-
-import com.example.spoti5.ecobussing.JsonClasses.Directions.Directions;
-import com.example.spoti5.ecobussing.Profiles.BusinessProfile;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.firebase.client.AuthData;
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
-import com.google.gson.Gson;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by matildahorppu on 30/09/15.
@@ -32,48 +21,41 @@ import java.util.Observer;
 public class Database implements IDatabase{
 
     private int errorCode;
+    private String userString = "users";
+    private String companiesString = "companies";
 
     //Database setup
-    public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/users/";
+    public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
     private Firebase firebaseRef;
-    private List<IProfile> allCompanies;
 
     private List<IUser> allUsers = new ArrayList<>();
     private List<IUser> topListAll = new ArrayList<>();
     private List<IUser> topListMonth = new ArrayList<>();
     private List<IUser> topListYear = new ArrayList<>();
 
+    private List<IProfile> allCompanies = new ArrayList<>();
+    private List<IProfile> topListAllCompanies = new ArrayList<>();
+    private List<IProfile> topListMonthCompanies = new ArrayList<>();
+    private List<IProfile> topListYearCompanies = new ArrayList<>();
+
+    private static final int allValue = 100, topListAllValue = 101, topListMonthValue = 102, topListYearValue = 103;
 
 
-    private boolean allGenerated;
+    private boolean allGenerated = true;
 
 
     public Database() {
         //Initializing firebase ref
         firebaseRef = new Firebase(FIREBASE);
-        generateUserList();
-        generateToplistAll();
-    }
+        generateUserList(allValue);
+        generateUserList(topListAllValue, "co2Tot");
+        generateUserList(topListMonthValue, "co2CurrentMonth");
+        generateUserList(topListYearValue, "co2CurrentYear");
 
-    private void generateToplistAll() {
-        final Query queryRef = firebaseRef.orderByChild("co2Tot");
-
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                topListAll.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User u = snapshot.getValue(User.class);
-                    topListAll.add(u);
-                    allGenerated = true;
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                allGenerated = false;
-            }
-        });
+        generateCompaniesList(allValue);
+        generateCompaniesList(topListAllValue, "co2Tot");
+        generateCompaniesList(topListMonthValue, "co2CurrentMonth");
+        generateCompaniesList(topListYearValue, "co2CurrentYear");
     }
 
     @Override
@@ -101,9 +83,15 @@ public class Database implements IDatabase{
     @Override
     public void updateUser(IUser user) {
         if(user != null) {
-            Firebase ref = firebaseRef.child(editEmail(user.getEmail()));
+            Firebase ref = firebaseRef.child(userString).child(editEmail(user.getEmail()));
             ref.setValue(user);
         }
+    }
+
+    @Override
+    public void updateCompany(IProfile company) {
+        Firebase ref = firebaseRef.child(companiesString).child(company.getName());
+        ref.setValue(company);
     }
 
 
@@ -124,16 +112,16 @@ public class Database implements IDatabase{
     @Override
     public void addUser(String email, String password, final User theUser, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("users").createUser(email, password, new Firebase.ResultHandler() {
+        firebaseRef.child(userString).createUser(email, password, new Firebase.ResultHandler() {
 
             @Override
             public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child(editEmail(theUser.getEmail()));
+                Firebase tmpRef = firebaseRef.child(userString).child(editEmail(theUser.getEmail()));
                 tmpRef.setValue(theUser, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         errorCode = ErrorCodes.NO_ERROR;
-                        connection.addingUserFinished();
+                        connection.addingFinished();
                     }
                 });
             }
@@ -142,7 +130,7 @@ public class Database implements IDatabase{
             public void onError(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
                 setErrorCode(firebaseError);
-                connection.addingUserFinished();
+                connection.addingFinished();
             }
         });
     }
@@ -161,32 +149,29 @@ public class Database implements IDatabase{
     }
 
     @Override
-    public void addCompany(final String name, String password, final BusinessProfile company, final IDatabaseConnected connection) {
+    public void addCompany(final String name, final Company company, final IDatabaseConnected connection) {
 
-        //key kan kanske vara lösenordet för att ansluta till företaget?
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("companies").createUser(name, password, new Firebase.ResultHandler() {
-
+        final Firebase tmpRef = firebaseRef.child(companiesString);
+        tmpRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess() {
-                Firebase tmpRef = firebaseRef.child(name);
-                tmpRef.setValue(company, new Firebase.CompletionListener() {
-                    @Override
-                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                        errorCode = ErrorCodes.NO_ERROR;
-                        connection.addingUserFinished();
-                    }
-                });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.hasChild(name)) {
+                    tmpRef.child(name).setValue(company);
+                    errorCode = ErrorCodes.NO_ERROR;
+                } else {
+                    errorCode = ErrorCodes.COMPANY_ALREADY_EXISTS;
+                }
+                connection.addingFinished();
+
             }
 
             @Override
-            public void onError(FirebaseError firebaseError) {
+            public void onCancelled(FirebaseError firebaseError) {
                 System.out.println(firebaseError.getMessage());
-                connection.addingUserFinished();
+                setErrorCode(firebaseError);
             }
         });
-
-
     }
 
     /**
@@ -204,7 +189,7 @@ public class Database implements IDatabase{
     @Override
     public void loginUser(String email, String password, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child("users").authWithPassword(email, password, new Firebase.AuthResultHandler() {
+        firebaseRef.child(userString).authWithPassword(email, password, new Firebase.AuthResultHandler() {
 
             @Override
             public void onAuthenticated(AuthData authData) {
@@ -222,22 +207,89 @@ public class Database implements IDatabase{
         });
     }
 
-    private void generateUserList(){
+    private void generateUserList(final int listValue){
 
-        firebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseRef.child(userString).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 try {
-                    allUsers.clear();
+                    clearListUser(listValue);
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
-                        User user = userSnapshots.getValue(User.class);
-                        allUsers.add(user);
+                        IUser user = userSnapshots.getValue(User.class);
+                        addUserToList(listValue, user);
+                        //System.out.println(user.getEmail());
 
                     }
                 } catch (FirebaseException var4) {
+                    allGenerated = false;
                     System.out.println(var4.getMessage());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed " + firebaseError.getMessage());
+                allGenerated = false;
+            }
+        });
+    }
+
+    private void generateUserList(final int listValue, String sorter) {
+        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clearListUser(listValue);
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    User u = snapshot.getValue(User.class);
+                    addUserToList(listValue, u);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
+            }
+        });
+    }
+
+    private void clearListUser(int listValue){
+            switch(listValue) {
+                case Database.allValue:
+                    allUsers.clear();
+                    break;
+                case Database.topListAllValue:
+                    topListAll.clear();
+                    break;
+                case Database.topListMonthValue:
+                    topListMonth.clear();
+                    break;
+                case Database.topListYearValue:
+                    topListYear.clear();
+                    break;
+            }
+        }
+
+    private void generateCompaniesList(final int listValue){
+
+        firebaseRef.child(companiesString).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                try {
+                    clearListCompany(listValue);
+                    for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
+                        IProfile company = companySnapshots.getValue(Company.class);
+                        addCompanyToList(listValue, company);
+                        System.out.println(company.getName());
+
+                    }
+                } catch (FirebaseException var4) {
+                    allGenerated = false;
                 }
             }
 
@@ -249,16 +301,79 @@ public class Database implements IDatabase{
         });
     }
 
+    private void generateCompaniesList(final int listValue, String sorter) {
+        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clearListCompany(listValue);
+                for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
+                    IProfile company = companySnapshots.getValue(Company.class);
+                    addCompanyToList(listValue, company);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                allGenerated = false;
+            }
+        });
+    }
+
+    private void addUserToList(int listValue, IUser user){
+            switch(listValue){
+                case Database.allValue: allUsers.add(user);
+                    break;
+                case Database.topListAllValue: topListAll.add(user);
+                    break;
+                case Database.topListMonthValue: topListMonth.add(user);
+                    break;
+                case Database.topListYearValue: topListYear.add(user);
+                    break;
+            }
+        }
+
+    private void clearListCompany(int listValue){
+        switch (listValue){
+            case Database.allValue: allCompanies.clear();
+                break;
+            case Database.topListAllValue: topListAllCompanies.clear();
+                break;
+            case Database.topListMonthValue: topListMonthCompanies.clear();
+                break;
+            case Database.topListYearValue: topListYearCompanies.clear();
+                break;
+        }
+    }
+
+    private void addCompanyToList(int listValue, IProfile company){
+        switch (listValue) {
+            case Database.allValue:
+                allCompanies.clear();
+                break;
+            case Database.topListAllValue:
+                topListAllCompanies.clear();
+                break;
+            case Database.topListMonthValue:
+                topListMonthCompanies.clear();
+                break;
+            case Database.topListYearValue:
+                topListYearCompanies.clear();
+                break;
+        }
+    }
+
     private List<IProfile> generateCompanyList(){
         return null;
     }
 
     @Override
     public List<IUser> getUsers() {
-        if(allUsers.size() == 0){
+        if(allUsers.size() != 0){
             return allUsers;
         } else {
-            generateUserList();
+            generateUserList(0);
             return allUsers;
         }
     }
@@ -277,50 +392,11 @@ public class Database implements IDatabase{
         }
     }
 
-    private void generateToplistMonth() {
-        final Query queryRef = firebaseRef.orderByChild("co2CurrentMonth");
-
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                topListMonth.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User u = snapshot.getValue(User.class);
-                    topListMonth.add(u);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                allGenerated = false;
-            }
-        });
-    }
-
     @Override
     public List<IUser> getUserToplistMonth() {
         return getUserToplistMonth();
     }
 
-    private void generateToplistYear() {
-        final Query queryRef = firebaseRef.orderByChild("co2CurrentYear");
-
-        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                topListAll.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User u = snapshot.getValue(User.class);
-                    topListAll.add(u);
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                allGenerated = false;
-            }
-        });
-    }
 
     @Override
     public List<IUser> getUserToplistYear() {

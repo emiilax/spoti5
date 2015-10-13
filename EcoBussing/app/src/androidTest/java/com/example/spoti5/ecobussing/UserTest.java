@@ -13,15 +13,20 @@ public class UserTest extends AndroidTestCase {
 
     public UserTest() {
         testUser = new User("test", "abc");
+
     }
 
     public void test() {
         testUser.incCO2Saved(1.0);
         testUser.incCO2Saved(1.0);
+        testUser.incCO2Saved(1.0);
+        testUser.incCO2Saved(1.0);
         System.out.println("-------------------------- TEST ------------------------------");
-        System.out.println(Double.toString(testUser.getCO2Saved()));
+        System.out.println(Double.toString(testUser.getCO2Saved(true)));
         System.out.println(Double.toString(testUser.getCo2Tot()));
+        System.out.println(Double.toString(testUser.getCO2SavedYear(2015)));
         System.out.println(Double.toString(testUser.getCo2CurrentYear()));
+        System.out.println(Double.toString(testUser.getCO2SavedMonth(2015, 10)));
         System.out.println(Double.toString(testUser.getCo2CurrentMonth()));
     }
 }

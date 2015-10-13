@@ -18,14 +18,12 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  */
 public class StartActivites extends ActivityController{
 
-    private static Context context;
     private IUser loggedUser;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         loggedUser = SaveHandler.getCurrentUser();
 
         if(playerIsLogged()){
@@ -40,8 +38,4 @@ public class StartActivites extends ActivityController{
     }
 
 
-    public static Context getContext(){
-
-        return context;
-    }
 }
