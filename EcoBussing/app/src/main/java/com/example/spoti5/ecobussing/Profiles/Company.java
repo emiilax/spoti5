@@ -23,6 +23,7 @@ public class Company implements IProfile {
     private double co2CurrentYear;
     private double co2Tot;
     private String companyInfo;
+    private String password;
 
     /**
      * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
@@ -80,6 +81,7 @@ public class Company implements IProfile {
                 oldMemberJson = memberJson;
             }
         }
+        updateMembers();
     }
 
     private void updateModMembersFromJson(){
@@ -189,6 +191,9 @@ public class Company implements IProfile {
         }
     }
 
+    /**
+     * Updates the company's member lists with the current information of each member from the database
+     */
     public void updateMembers(){
         updateMembersFromJson();
         updateModMembersFromJson();
@@ -213,12 +218,7 @@ public class Company implements IProfile {
 
     @Override
     public Double getDistanceTraveled() {
-        return null;
-    }
-
-
-    @Override
-    public Double getCO2Saved(boolean avoidDatabaseUpload) {
+        //co2Tot/co2 saved per km?
         return null;
     }
 
@@ -243,8 +243,18 @@ public class Company implements IProfile {
     }
 
     @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
     public void incCO2Saved(double distance) {
 
+    }
+
+    @Override
+    public Double getCO2Saved(boolean avoidDatabaseUpload) {
+        return co2Tot;
     }
 
     public double getCo2CurrentYear() {
@@ -253,10 +263,6 @@ public class Company implements IProfile {
 
     public double getCo2CurrentMonth() {
         return co2CurrentMonth;
-    }
-
-    public double getCo2Tot() {
-        return co2Tot;
     }
 
     public String getCompanyInfo() {

@@ -53,6 +53,7 @@ public class SaveHandler {
     public static void changeUser(IUser newUser) {
         currentUser = newUser;
         database.updateUser(newUser);
+        SaveUser();
     }
 
     public static void SaveUser() {
