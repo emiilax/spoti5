@@ -117,7 +117,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     };
 
     @Override
-    public void addingUserFinished() {
+    public void addingFinished() {
         //never used here
     }
 
@@ -128,8 +128,10 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         CharSequence text;
         Toast toast;
         switch (database.getErrorCode()){
-            case ErrorCodes.NO_ERROR: startOverviewActivity();
+            case ErrorCodes.NO_ERROR:
                 SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
+                startOverviewActivity();
+
                 break;
             case ErrorCodes.BAD_EMAIL: text = "Ogiltig email";
                 toast = Toast.makeText(context, text, duration);

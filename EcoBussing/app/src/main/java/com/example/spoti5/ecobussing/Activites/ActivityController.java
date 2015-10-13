@@ -19,8 +19,11 @@ public abstract class ActivityController extends AppCompatActivity {
     // The variables used to react when connected to wifi
     protected NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();;
     protected IntentFilter intentFilter = new IntentFilter();;
+    private static Context context;
 
-    public static Context context;
+    public static Context getContext() {
+        return context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public abstract class ActivityController extends AppCompatActivity {
 
         addWifiChangeHandler();
         context = this;
+
     }
 
     /**

@@ -25,6 +25,7 @@ public class SaveHandler {
     private static String filename = "ecoTravel.ser";
     private static IDatabase database = DatabaseHolder.getDatabase();
     private static IUser currentUser;
+    private static Context context = ActivityController.getContext();
 
     /**
      * Loads user from local harddrive. If not user exists this will return null
@@ -33,7 +34,6 @@ public class SaveHandler {
     public static IUser getCurrentUser() {
         if(currentUser == null){
             try {
-                Context context = StartActivites.getContext();
                 FileInputStream fileInputStream = context.openFileInput(filename);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                 currentUser = (IUser) objectInputStream.readObject();
@@ -43,8 +43,7 @@ public class SaveHandler {
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
-
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
@@ -52,13 +51,13 @@ public class SaveHandler {
     }
 
     public static void changeUser(IUser newUser) {
-        Context context = ActivityController.context;
+        Context context = ActivityController.getContext();
         currentUser = newUser;
-        SaveUser(context);
         database.updateUser(newUser);
+        SaveUser();
     }
 
-    public static void SaveUser(Context context) {
+    public static void SaveUser() {
         try {
             FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

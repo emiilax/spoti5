@@ -45,7 +45,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         busConnection = new BusConnection();
         this.addPropertyChangeListener(busConnection);
 
-        netwCon = hasActiveInternetConnection(ActivityController.context);
+        netwCon = hasActiveInternetConnection(ActivityController.getContext());
         System.out.println("Connected to network: " + netwCon);
     }
 
@@ -207,7 +207,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
     public void run() {
 
         while(!netwCon && !stopThread){
-            setNetwCon(hasActiveInternetConnection(ActivityController.context));
+            setNetwCon(hasActiveInternetConnection(ActivityController.getContext()));
             System.out.println("Connected: " + netwCon);
 
             synchronized (this){

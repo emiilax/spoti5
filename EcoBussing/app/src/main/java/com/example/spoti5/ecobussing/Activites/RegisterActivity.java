@@ -170,7 +170,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     };
 
     @Override
-    public void addingUserFinished() {
+    public void addingFinished() {
         System.out.println(database.getErrorCode());
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);

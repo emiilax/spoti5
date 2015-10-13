@@ -56,7 +56,7 @@ public class VATApi {
         String response = "";
 
 
-        if(ActivityController.context != null){
+        if(ActivityController.getContext() != null){
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
 
