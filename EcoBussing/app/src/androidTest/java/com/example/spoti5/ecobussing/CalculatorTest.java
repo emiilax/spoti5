@@ -57,8 +57,7 @@ public class CalculatorTest {
         double endLat = 57.7081038;
         double endLng = 11.9380502;
         int distance;
-        distance = calculator.calculateDistance(startLat, startLng, endLat, endLng,
-                "AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg" );
+        distance = calculator.calculateDistance(startLat, startLng, endLat, endLng);
         System.out.println("Distance should be 9666 m.");
         System.out.println("Distance is: " + distance + " m.");
     }
