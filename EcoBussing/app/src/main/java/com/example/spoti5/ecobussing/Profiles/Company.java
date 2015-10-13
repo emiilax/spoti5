@@ -3,6 +3,7 @@ package com.example.spoti5.ecobussing.Profiles;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -154,6 +155,7 @@ public class Company implements IProfile {
         updateMembersFromJson();
         if (!userIsMember(user)) {
             user.setCompany(companyName);
+            SaveHandler.changeUser(user);
             members.add(user);
         }
     }
@@ -183,13 +185,13 @@ public class Company implements IProfile {
             if (userIsModerator(user)) {
                 moderatorMembers.remove(user);
                 members.remove(user);
-                user.setCompany("");
             } else {
                 if (userIsMember(user)) {
                     members.remove(user);
-                    user.setCompany("");
                 }
             }
+            user.setCompany("");
+            SaveHandler.changeUser(user);
         }
     }
 

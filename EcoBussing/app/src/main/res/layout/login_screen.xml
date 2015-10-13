@@ -22,13 +22,6 @@
             android:src="@drawable/logotype"
             android:padding="20dp" />
 
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/error_text_red"
-            android:text=""
-            android:id="@+id/login_error" />
-
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
