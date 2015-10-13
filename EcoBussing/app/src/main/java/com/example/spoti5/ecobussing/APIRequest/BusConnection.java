@@ -114,9 +114,9 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
             System.out.println("Startloc finished");
 
-            if(!hasStarted){
-                new Thread(this).start();
-            }
+            new Thread(this).start();
+            hasEnded = false;
+
         }
 
 
@@ -151,13 +151,17 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 System.out.println(distance);
 
                 // Update current user
+
                 IUser usr = SaveHandler.getCurrentUser();
+                System.out.println(usr.getCo2CurrentMonth());
                 usr.incCO2Saved(distance);
 
                 SaveHandler.changeUser(usr);
+                System.out.println(usr.getCo2CurrentMonth());
             }else{
                 storeJourney(startLoc, endLoc);
             }
+            hasStarted = false;
 
         }
         
@@ -221,7 +225,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
         System.out.println("Run");
 
-        while(NetworkStateChangeReciever.getInstance().isConnectedToWifi() && stillConnected){
+        while(/*NetworkStateChangeReciever.getInstance().isConnectedToWifi() &&*/ stillConnected){
 
             List<EARespond> gpsInfo = null;
             try {

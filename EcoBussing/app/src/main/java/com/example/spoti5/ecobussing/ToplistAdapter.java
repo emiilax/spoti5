@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -24,12 +26,20 @@ public class ToplistAdapter extends BaseAdapter {
 
     private List<IUser> listItems;
     private Context context;
+    private IDatabase database;
+
     public ToplistAdapter(Context context){
         listItems = new ArrayList<IUser>();
         this.context = context;
+        database = DatabaseHolder.getDatabase();
 
         System.out.println("Listitems");
-        listItems = DatabaseHolder.getDatabase().getUserToplistMonth();
+        int size = database.getUserToplistMonth().size();
+
+        for(int i = size-1; i>=0; i--){
+
+            listItems.add(database.getUserToplistMonth().get(i));
+        };
 
 
 
@@ -72,9 +82,9 @@ public class ToplistAdapter extends BaseAdapter {
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
 
-        //name.setText((position + 1) + ". " + listItems.get(position).getName());
+        name.setText((position + 1) + ". " + listItems.get(position).getName());
         //System.out.println(listItems.size());
-        //co2.setText(Double.toString(((User)listItems.get(position)).getCo2CurrentMonth()));
+        co2.setText(Double.toString(listItems.get(position).getCo2CurrentMonth()));
 
         return row;
     }
