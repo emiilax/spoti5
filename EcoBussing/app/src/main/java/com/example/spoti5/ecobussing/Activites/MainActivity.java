@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,16 +12,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
-import com.example.spoti5.ecobussing.CompanySwipe.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
@@ -36,7 +38,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
-    private ListView drawerList;
+    private ListView drawerListLeft;
+    private FrameLayout drawerListRight;
+
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
@@ -61,16 +65,21 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         //planetTitles = getResources().getStringArray(R.array.planets_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
+        drawerListLeft = (ListView) findViewById(R.id.left_drawer);
+        drawerListRight = (FrameLayout) findViewById(R.id.right_drawer);
+
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout myView = (LinearLayout) inflater.inflate(R.layout.search_view, null);
 
 
-        // Set the adapter for the list view
-        //drawerList.setAdapter(new ArrayAdapter<String>(this,
-        //        R.layout.drawer_list_item, planetTitles));
+        drawerListRight.addView(myView);
 
-        drawerList.setAdapter(listAdapter);
 
-        drawerList.setOnItemClickListener(this);
+        drawerListLeft.setAdapter(listAdapter);
+
+        drawerListLeft.setOnItemClickListener(this);
+
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,7 +115,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     private void loadSelection(int i){
-        drawerList.setItemChecked(i, true);
+        drawerListLeft.setItemChecked(i, true);
     }
 
 
@@ -132,7 +141,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         if (id == R.id.action_settings) {
             return true;
         }else if(id == android.R.id.home){
-            drawerLayout.openDrawer(drawerList);
+            drawerLayout.openDrawer(drawerListLeft);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -212,7 +221,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         prevView = view;
-        drawerLayout.closeDrawer(drawerList);
+        drawerLayout.closeDrawer(drawerListLeft);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
 
