@@ -31,7 +31,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     TextView emailField;
     TextView passwordField;
     IDatabase database;
-    TextView error;
     TextView register;
 
     IUser user;
@@ -49,7 +48,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
-        error = (TextView) findViewById(R.id.login_error);
         register = (TextView) findViewById(R.id.register_label);
 
         register.setOnClickListener(registerListener);
