@@ -14,6 +14,7 @@ import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
@@ -31,15 +32,9 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private EditText password2TextField;
     private Button saveButton;
 
-<<<<<<< HEAD:EcoBussing/app/src/main/java/com/example/spoti5/ecobussing/CompanySwipe/CreateCompanyFragment.java
     private String name;
     private String password;
-    private BusinessProfile newCompany;
-=======
-    String name;
-    String password;
-    Company newCompany;
->>>>>>> master:EcoBussing/app/src/main/java/com/example/spoti5/ecobussing/CreateCompanyFragment.java
+    private Company newCompany;
 
     private IUser currentUser;
 
@@ -113,7 +108,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     @Override
     public void addingFinished() {
-        System.out.println(newCompany.getMembers(true).get(0).getEmail());
+       // System.out.println(newCompany.getMembers(true).get(0).getEmail());
     }
 
     @Override

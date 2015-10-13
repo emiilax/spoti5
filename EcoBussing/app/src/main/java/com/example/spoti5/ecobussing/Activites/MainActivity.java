@@ -19,15 +19,10 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
-<<<<<<< HEAD
 import com.example.spoti5.ecobussing.CompanySwipe.CreateCompanyFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
-import com.example.spoti5.ecobussing.ProfileFragment;
-=======
-import com.example.spoti5.ecobussing.CreateCompanyFragment;
-import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
->>>>>>> master
+
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
