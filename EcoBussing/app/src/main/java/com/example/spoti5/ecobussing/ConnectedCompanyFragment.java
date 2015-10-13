@@ -8,12 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by matildahorppu on 10/10/15.
+ * Created by matildahorppu on 13/10/15.
  */
-public class TestSwipe extends Fragment {
+public class ConnectedCompanyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.test_swipe,container,false);
+        View v =inflater.inflate(R.layout.fragment_connected_company,container,false);
         return v;
     }
+
 }
