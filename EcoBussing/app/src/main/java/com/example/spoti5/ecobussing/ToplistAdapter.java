@@ -9,13 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Activites.ToplistFragment;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,37 +27,76 @@ import java.util.List;
  */
 public class ToplistAdapter extends BaseAdapter {
 
-    private List<IUser> listItems;
+    private List<IProfile> companyList;
+    private List<IUser> personList;
     private Context context;
     private IDatabase database;
+    private boolean company;
 
-    public ToplistAdapter(Context context){
-        listItems = new ArrayList<IUser>();
+    public ToplistAdapter(Context context, String range, boolean company){
+
         this.context = context;
         database = DatabaseHolder.getDatabase();
+        int size = 0;
 
-        System.out.println("Listitems");
-        int size = database.getUserToplistMonth().size();
+        if(company){
+            this.company = true;
+            companyList = new ArrayList<>();
+            //Used because the list is back-to-front
+            List<IProfile> tempList = new ArrayList<IProfile>();
+            if(range.equals("month") || range == null){
+                size = database.getCompaniesToplistMonth().size();
+                tempList = database.getCompaniesToplistMonth();
+            }else if(range.equals("year")){
+                size = database.getCompaniesToplistYear().size();
+                tempList = database.getCompaniesToplistYear();
+            }else if(range.equals("total")){
+                size = database.getCompaniesToplistAll().size();
+                tempList = database.getCompaniesToplistAll();
+            }
 
-        for(int i = size-1; i>=0; i--){
+            for(int i = size-1; i>=0; i--){
 
-            listItems.add(database.getUserToplistMonth().get(i));
-        };
+                companyList.add(tempList.get(i));
+            };
+        }else{
+            this.company = false;
+            personList = new ArrayList<>();
+            //Used because the list is back-to-front
+            List<IUser> tempList = new ArrayList<>();
+            if(range.equals("month") || range == null){
+                size = database.getUserToplistMonth().size();
+                tempList = database.getUserToplistMonth();
+            }else if(range.equals("year")){
+                size = database.getUserToplistYear().size();
+                tempList = database.getUserToplistYear();
+            }else if(range.equals("total")){
+                size = database.getUserToplistYear().size();
+                tempList = database.getUserToplistYear();
+            }
 
+            for(int i = size-1; i>=0; i--){
 
-
-        System.out.println("Size:" + listItems.size());
+                personList.add(tempList.get(i));
+            };
+        }
 
     }
 
     @Override
     public int getCount() {
-        return listItems.size();
+        if(company){
+            return companyList.size();
+        }
+        return personList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listItems.get(position);
+        if(company){
+            return companyList.get(position);
+        }
+        return personList.get(position);
     }
 
     @Override
@@ -81,10 +123,18 @@ public class ToplistAdapter extends BaseAdapter {
 
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
-
-        name.setText((position + 1) + ". " + listItems.get(position).getName());
+        if(company){
+            name.setText((position + 1) + ". " + companyList.get(position).getName());
+        }else{
+            name.setText((position + 1) + ". " + personList.get(position).getName());
+            DecimalFormat df = new DecimalFormat("####0.00");
+            String value = df.format(personList.get(position).getCo2CurrentMonth()/1000);
+            co2.setText(value + " kgCO2");
+        }
         //System.out.println(listItems.size());
-        co2.setText(Double.toString(listItems.get(position).getCo2CurrentMonth()));
+
+
+
 
         return row;
     }

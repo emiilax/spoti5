@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Created by emilaxelsson on 28/09/15.
+ *
+ * A class that contains all the busses. This makes it very easy to access the buses
  */
 public final class Busses {
 
@@ -26,8 +28,8 @@ public final class Busses {
     public static Bus eog631 = new Bus("Ericsson$171329", "YV3T1U225F1171329", "EOG631", "001395143bf2");
     public static Bus eog634 = new Bus("Ericsson$171330", "YV3T1U223F1171330", "EOG634", "04f0211009b7");
 
-
-    public static Bus simulated = new Bus("Ericsson$Vin_Num_001", "001", "EOG634", "001395135f20");
+    // The simulated bus
+    public static Bus simulated = new Bus("Ericsson$Vin_Num_001", "", "", "");
 
 
     // List of the busses

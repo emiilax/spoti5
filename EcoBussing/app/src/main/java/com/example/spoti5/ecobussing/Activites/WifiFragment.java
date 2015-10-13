@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.APIRequest.BusConnection;
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.R;
@@ -17,6 +19,7 @@ import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +27,7 @@ import java.beans.PropertyChangeListener;
  * {@link WifiFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class WifiFragment extends Fragment implements PropertyChangeListener {
+public class WifiFragment extends Fragment implements PropertyChangeListener, View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     private TextView con;
@@ -33,6 +36,13 @@ public class WifiFragment extends Fragment implements PropertyChangeListener {
     private TextView regnr;
     private TextView mac;
     private TextView onBus;
+
+    private Button startStop;
+    private TextView start;
+    private TextView stop;
+    private TextView status;
+    private TextView distance;
+    private BusConnection busC = new BusConnection();
 
     public WifiFragment() {
         // Required empty public constructor
@@ -51,6 +61,14 @@ public class WifiFragment extends Fragment implements PropertyChangeListener {
         regnr = (TextView) view.findViewById(R.id.regnr);
         mac = (TextView) view.findViewById(R.id.mac);
         onBus = (TextView) view.findViewById(R.id.onbus);
+
+        startStop = (Button)view.findViewById(R.id.btnStartStop);
+        start = (TextView) view.findViewById(R.id.txtvStart);
+        stop = (TextView) view.findViewById(R.id.txtvStop);
+        status = (TextView) view.findViewById(R.id.txtvStatus);
+        distance = (TextView) view.findViewById(R.id.txtvDistance);
+
+        startStop.setOnClickListener(this);
 
         NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();
         wifiReciever.addPropertyChangeListener(this);
@@ -131,6 +149,43 @@ public class WifiFragment extends Fragment implements PropertyChangeListener {
         con.setText("Disconnected");
         con.setTextColor(Color.RED);
 
+    }
+    boolean hasStarted;
+
+
+    @Override
+    public void onClick(View v) {
+        if(v == startStop){
+            if(!hasStarted){
+                hasStarted = true;
+                start.setText("not set");
+                stop.setText("not set");
+                status.setText("not set");
+                distance.setText("not set");
+                try {
+                    busC.beginJourey(Busses.simulated);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                startStop.setText("Stop");
+                start.setText(busC.getStartLoc());
+                status.setText("Journey start");
+
+            }else{
+                hasStarted = false;
+                try {
+                    busC.endJourney();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                startStop.setText("Start");
+                stop.setText(busC.getEndLoc());
+                status.setText("Journey end");
+                distance.setText(Double.toString(busC.getDistance()));
+
+
+            }
+        }
     }
 
     /**

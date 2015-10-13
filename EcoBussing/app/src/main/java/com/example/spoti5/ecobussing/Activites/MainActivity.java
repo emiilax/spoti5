@@ -24,7 +24,7 @@ import com.example.spoti5.ecobussing.EditProfile.ProfileSwipeFragment;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.example.spoti5.ecobussing.SwipeScreens.SwipeFragments;
+import com.example.spoti5.ecobussing.SwipeScreens.ToplistSwiper;
 
 /**
  * Created by emilaxelsson on 16/09/15.
@@ -162,13 +162,13 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 getSupportActionBar().setTitle("Topplista");
                 view.setBackgroundResource(R.color.third);
 
-                SwipeFragments test = new SwipeFragments();
+                ToplistSwiper test = new ToplistSwiper();
 
                 fragmentTransaction.replace(R.id.container, test);
                 break;
 
             case 3:
-                getSupportActionBar().setTitle("Fragment 4");
+                getSupportActionBar().setTitle("Wifi-detect");
 
 
                 WifiFragment wfrag = new WifiFragment();

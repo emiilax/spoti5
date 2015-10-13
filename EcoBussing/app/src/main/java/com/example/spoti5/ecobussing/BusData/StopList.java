@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Created by emilaxelsson on 07/10/15.
+ *
+ * Class that contains a Stoplocation list. Used i Busses55Stops.
  */
 public class StopList {
 
@@ -16,8 +18,5 @@ public class StopList {
         StopLocation = stopLocation;
     }
 
-    public List<StopLocation> getStopLocation() {
-
-        return StopLocation;
-    }
+    public List<StopLocation> getStopLocation() { return StopLocation; }
 }

@@ -11,11 +11,16 @@ import java.util.List;
 
 /**
  * Created by emilaxelsson on 07/10/15.
+ *
+ * Class that contains the busstops for busline nr55.
+ *
+ * This solution has been made because there
+ * are no simple way to get all of a bus-lines stations/stops.
+ *
+ * This is only a temporary class
+ *
  */
 public class Bus55Stops {
-
-
-
      private static final String bus55Json =
             "{\"StopLocation\":[{\n" +
             "\"name\":\"Sven Hultins plats, Göteborg\",\n" +
@@ -97,18 +102,13 @@ public class Bus55Stops {
             "\"track\":\"A\"\n" +
             "}]}";
 
-    /*public static Type listOfTestObject = new TypeToken<List<StopLocation>>(){}.getType();
 
-    public static List<StopLocation> stops = Collections.synchronizedList(
-            (List<StopLocation>) new Gson().fromJson(bus55Json, listOfTestObject));*/
+       // Instanciate the class stoplist
+       private static StopList stopList = new Gson().fromJson(bus55Json, StopList.class);
 
-    private static StopList stopList = new Gson().fromJson(bus55Json, StopList.class);
+       // The list containing all the stops;
+       public static List<StopLocation> stops = stopList.getStopLocation();
 
-    public static List<StopLocation> stops = stopList.getStopLocation();
 
-    /*
-    public static void main(String []args){
-        System.out.println(bus55Stops.getStopLocation().get(1).getName());
-    }
-    */
+
 }

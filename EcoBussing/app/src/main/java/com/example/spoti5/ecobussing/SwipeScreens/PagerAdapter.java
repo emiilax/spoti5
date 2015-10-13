@@ -17,6 +17,12 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
+    public void setRange(String range){
+
+        ((ToplistFragment)this.getItem(0)).setRange(range);
+        ((ToplistFragment)this.getItem(1)).setRange(range);
+
+    }
 
     @Override
     public Fragment getItem(int i) {
@@ -24,10 +30,12 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         switch(i){
             case 0:
                 fragment = new ToplistFragment();
+                ((ToplistFragment)fragment).setisCompany(false);
                 break;
 
             case 1:
                 fragment = new ToplistFragment();
+                ((ToplistFragment)fragment).setisCompany(true);
                 break;
         }
         System.out.println("get item called");
