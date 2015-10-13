@@ -16,17 +16,20 @@ public interface IDatabase {
     public List<IUser> getUserToplistMonth();
     public List<IUser> getUserToplistYear();
 
+    public List<IProfile> getCompanies();
+    public List<IProfile> getCompaniesToplistAll();
+    public List<IProfile> getCompaniesToplistMonth();
+    public List<IProfile> getCompaniesToplistYear();
+
     public List<IUser> getCompTopList();
     public void addUser(String email, String password, final User user, IDatabaseConnected connection);
     public void addCompany(String name, final Company company, IDatabaseConnected connection);
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
     public IUser getUser(String email);
-    public List<IProfile> getCompanies();
     public void updateUser(IUser user);
     public void updateCompany(IProfile company);
-    //Kanske behöver finnas med
-    public List getCompanyMembers(String companyKey);
+
 }
 
 

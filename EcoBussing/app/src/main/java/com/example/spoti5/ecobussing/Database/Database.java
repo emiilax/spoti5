@@ -90,15 +90,12 @@ public class Database implements IDatabase{
 
     @Override
     public void updateCompany(IProfile company) {
-        Firebase ref = firebaseRef.child(companiesString).child(company.getName());
-        ref.setValue(company);
+        if(company != null) {
+            Firebase ref = firebaseRef.child(companiesString).child(company.getName());
+            ref.setValue(company);
+        }
     }
 
-
-    @Override
-    public List getCompanyMembers(String companyKey) {
-        return null;
-    }
 
     /**
      * Adds user to database. This takes time and onSuccess is called if the connection and
@@ -302,7 +299,7 @@ public class Database implements IDatabase{
     }
 
     private void generateCompaniesList(final int listValue, String sorter) {
-        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+        final Query queryRef = firebaseRef.child(companiesString).orderByChild(sorter);
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -375,12 +372,7 @@ public class Database implements IDatabase{
 
     @Override
     public List<IUser> getUsers() {
-        if(allUsers.size() != 0){
-            return allUsers;
-        } else {
-            generateUserList(0);
-            return allUsers;
-        }
+        return allUsers;
     }
 
     @Override
@@ -390,16 +382,27 @@ public class Database implements IDatabase{
 
     @Override
     public List<IProfile> getCompanies(){
-        if(allCompanies != null){
-            return allCompanies;
-        }else{
-            return generateCompanyList();
-        }
+        return allCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistAll() {
+        return topListAllCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistMonth() {
+        return topListMonthCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistYear() {
+        return topListYearCompanies;
     }
 
     @Override
     public List<IUser> getUserToplistMonth() {
-        return getUserToplistMonth();
+        return topListMonth;
     }
 
 
@@ -407,6 +410,7 @@ public class Database implements IDatabase{
     public List<IUser> getUserToplistYear() {
         return topListYear;
     }
+
 
     public boolean isAllGenerated() {
         return allGenerated;
