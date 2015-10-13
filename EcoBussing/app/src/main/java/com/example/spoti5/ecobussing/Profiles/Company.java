@@ -76,8 +76,7 @@ public class Company implements IProfile {
         if(oldMemberJson != memberJson) {
             if (!memberJson.equals(null)) {
                 Gson gson = new Gson();
-                ArrayList obj = gson.fromJson(memberJson, new TypeToken<List<IUser>>(){}.getType());
-                members = obj;
+                members= gson.fromJson(memberJson, new TypeToken<List<IUser>>(){}.getType());
                 oldMemberJson = memberJson;
             }
         }

@@ -92,7 +92,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     @Override
     public void addingFinished() {
-       
+
     }
 
     @Override
