@@ -1,5 +1,6 @@
 package com.example.spoti5.ecobussing.Activites;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
@@ -18,13 +19,18 @@ public abstract class ActivityController extends AppCompatActivity {
     // The variables used to react when connected to wifi
     protected WifiReciever wifiReciever = WifiReciever.getInstance(this);;
     protected IntentFilter intentFilter = new IntentFilter();;
+    private static Context context;
 
+    public static Context getContext() {
+        return context;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addWifiChangeHandler();
+        context = this;
 
     }
 

@@ -1,4 +1,6 @@
-package com.example.spoti5.ecobussing.Database;
+package com.example.spoti5.ecobussing;
+
+import android.test.AndroidTestCase;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
@@ -13,7 +15,7 @@ import java.util.List;
 /**
  * Created by Erik on 2015-10-07.
  */
-public class DatabaseTest implements IDatabaseConnected{
+public class DatabaseTest extends AndroidTestCase implements IDatabaseConnected {
     private User user;
     private User user2;
     private User user3;
@@ -50,7 +52,7 @@ public class DatabaseTest implements IDatabaseConnected{
 
     int numberOfUsers = 0;
     @Override
-    public void addingUserFinished() {
+    public void addingFinished() {
         int error = database.getErrorCode();
         if(error == ErrorCodes.NO_ERROR){
             System.out.println("----------------------");

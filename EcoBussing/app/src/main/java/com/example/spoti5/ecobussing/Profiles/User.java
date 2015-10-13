@@ -32,8 +32,10 @@ public class User implements IUser{
     private double co2Tot;
 
     private String co2Json;
-
     private String moneyJson;
+
+    private String oldCo2Json;
+    private String oldMoneyJson;
 
     private DeepMap<Integer, Integer, Integer, Double> co2SavedMap  = new DeepMap<>();
     private DeepMap<Integer, Integer, Integer, Double> moneySavedMap  = new DeepMap<>();
@@ -54,7 +56,6 @@ public class User implements IUser{
         this.firstUse = true;
 
         this.connectedCompany = "";
-        this.co2Json = getCo2Json();
     }
 
     public User(String email, String name){
@@ -110,6 +111,7 @@ public class User implements IUser{
      */
     @Override
     public void incCO2Saved(double distance) {
+        updateCo2Map();
         double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
         co2SavedMap.addToCurrentDate(co2Saved);
         this.incCurrentDistance(distance);
@@ -118,26 +120,31 @@ public class User implements IUser{
 
     @Override
     public Double getCO2Saved(boolean avoidDatabaseUpload) {
+        updateCo2Map();
         return co2SavedMap.getSumOfAllDates();
     }
 
     @Override
     public Double getCO2SavedYear(Integer year) {
+        updateCo2Map();
         return co2SavedMap.getSumOfOneYear(year);
     }
 
     @Override
     public Double getCO2SavedMonth(Integer year, Integer month) {
+        updateCo2Map();
         return co2SavedMap.getSumOfOneMonth(year, month);
     }
 
     @Override
     public Double getCO2SavedDate(Integer year, Integer month, Integer day) {
+        updateCo2Map();
         return co2SavedMap.getSpecificDate(year, month, day);
     }
 
     @Override
     public Double getCO2SavedPast7Days(boolean avoidDatabaseUpload) {
+        updateCo2Map();
         return co2SavedMap.getSumOfPastSevenDays();
     }
 
@@ -192,32 +199,38 @@ public class User implements IUser{
      */
     @Override
     public void incMoneySaved(double distance) {
+        updateMoneyMap();
         double moneySaved = Calculator.getCalculator().calculateMoneySaved(distance);
         moneySavedMap.addToCurrentDate(moneySaved);
     }
 
     @Override
     public Double getMoneySaved(boolean avoidDatabaseUpload) {
+        updateMoneyMap();
         return moneySavedMap.getSumOfAllDates();
     }
 
     @Override
     public Double getMoneySavedYear(Integer year) {
+        updateMoneyMap();
         return moneySavedMap.getSumOfOneYear(year);
     }
 
     @Override
     public Double getMoneySavedMonth(Integer year, Integer month) {
+        updateMoneyMap();
         return moneySavedMap.getSumOfOneMonth(year, month);
     }
 
     @Override
     public Double getMoneySavedDate(Integer year, Integer month, Integer day) {
+        updateMoneyMap();
         return moneySavedMap.getSpecificDate(year, month, day);
     }
 
     @Override
     public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload) {
+        updateMoneyMap();
         return moneySavedMap.getSumOfPastSevenDays();
     }
 
@@ -252,19 +265,19 @@ public class User implements IUser{
         return timeStampInMillis;
     }
 
-    public Integer getStampedMonth() {
+    public Integer getStampedMonth(boolean avoidDatabaseUpload) {
         return stampedMonth;
     }
 
-    public Integer getStampedYear() {
+    public Integer getStampedYear(boolean avoidDatabaseUpload) {
         return stampedYear;
     }
 
-    public Integer getSavedMonth() {
+    public Integer getSavedMonth(boolean avoidDatabaseUpload) {
         return savedMonth;
     }
 
-    public Integer getSavedYear() {
+    public Integer getSavedYear(boolean avoidDatabaseUpload) {
         return savedYear;
     }
 
@@ -274,12 +287,35 @@ public class User implements IUser{
 
     public String getCo2Json() {
         Gson gson = new Gson();
-        String json =  gson.toJson(co2SavedMap);
-        return json;
+        co2Json =  gson.toJson(co2SavedMap);
+        return co2Json;
     }
 
     public String getMoneyJson() {
         Gson gson = new Gson();
-        return gson.toJson(moneySavedMap);
+        moneyJson =  gson.toJson(moneySavedMap);
+        updateMoneyMap();
+        return moneyJson;
     }
+
+    private void updateMoneyMap(){
+        if(oldMoneyJson != moneyJson){
+            Gson gson = new Gson();
+            moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
+            oldMoneyJson = moneyJson;
+        }
+
+    }
+
+    private void updateCo2Map(){
+        if(oldCo2Json != co2Json) {
+            Gson gson = new Gson();
+            co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
+            oldCo2Json = co2Json;
+        }
+    }
+
+
+    @Override
+    public String getPassword(){return null;};
 }
