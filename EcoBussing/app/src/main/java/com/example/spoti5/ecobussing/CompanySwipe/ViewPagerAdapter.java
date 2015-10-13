@@ -30,9 +30,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter{
 
         if(tabGroup == 0) {
             if (position == 0) {
-                fragment = new TestSwipe();
-            } else {
                 fragment = new ConnectCompanyFragmant();
+            } else {
+                fragment = new CreateCompanyFragment();
             }
         }else if(tabGroup == 1){
             fragment = new EditCompanyFragment();

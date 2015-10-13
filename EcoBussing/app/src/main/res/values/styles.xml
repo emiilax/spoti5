@@ -8,7 +8,7 @@
         <!-- colorPrimary is used for the default action bar background -->
         <item name="android:colorPrimary" tools:targetApi="lollipop">@color/primary</item>
         <!-- colorPrimaryDark is used for the status bar -->
-        <item name="android:colorPrimaryDark" tools:targetApi="lollipop">#61BC4E</item>
+        <item name="android:colorPrimaryDark" tools:targetApi="lollipop">#77d264</item>
         <!-- colorAccent is used as the default value for colorControlActivated
              which is used to tint widgets -->
         <item name="android:colorAccent" tools:targetApi="lollipop">#FF4081</item>

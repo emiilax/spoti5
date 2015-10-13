@@ -7,7 +7,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.spoti5.ecobussing.WifiReciever;
+import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 
 /**
  * Created by Erik on 2015-09-27.
@@ -17,9 +17,9 @@ public abstract class ActivityController extends AppCompatActivity {
 
 
     // The variables used to react when connected to wifi
-    protected WifiReciever wifiReciever = WifiReciever.getInstance(this);;
+    protected NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();;
     protected IntentFilter intentFilter = new IntentFilter();;
-    private static Context context;
+    protected static Context context;
 
     public static Context getContext() {
         return context;

@@ -2,12 +2,21 @@ package com.example.spoti5.ecobussing.BusData;
 
 /**
  * Created by emilaxelsson on 28/09/15.
+ *
+ * Class used to create busses.
  */
 public class Bus {
 
+    /** The bus dwg-number */
     private String dwg;
+
+    /** The bus vin-number */
     private String VIN;
+
+    /** The bus registration-number */
     private String regNr;
+
+    /** The bus mac-adress */
     private String macAdress;
 
     public Bus(String dwg, String VIN, String regNr, String macAdress){

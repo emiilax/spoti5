@@ -5,7 +5,7 @@ package com.example.spoti5.ecobussing.JsonClasses.VA;
  */
 public class VANearbyStops {
 
-    private LocationList LocationList;
+    private com.example.spoti5.ecobussing.JsonClasses.VA.LocationList LocationList;
 
 
 
@@ -15,5 +15,9 @@ public class VANearbyStops {
 
     public void setLocationList(LocationList locationlist) {
         LocationList = locationlist;
+    }
+
+    public StopLocation getStopLocation(int i){
+        return LocationList.getStopLocation().get(i);
     }
 }
