@@ -10,5 +10,5 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({CalculatorTestJUnit.class})
-public class AllTests {
+public class AllJUnitTests {
 }
