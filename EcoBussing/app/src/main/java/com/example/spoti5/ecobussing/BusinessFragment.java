@@ -7,11 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.example.spoti5.ecobussing.Profiles.User;
-import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 
 /**
@@ -41,7 +36,7 @@ public class BusinessFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_user_profile_info, container, false);
     }
 
     @Override

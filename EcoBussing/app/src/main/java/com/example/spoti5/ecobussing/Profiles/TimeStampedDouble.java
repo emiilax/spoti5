@@ -53,4 +53,16 @@ public class TimeStampedDouble {
     public int getStampedDay() {
         return stampedDay;
     }
+
+    @Override
+    public String toString() {
+        return "TimeStampedDouble{" +
+                "value=" + value +
+                ", stampedDateInMillis=" + stampedDateInMillis +
+                ", stampedYear=" + stampedYear +
+                ", stampedMonth=" + stampedMonth +
+                ", stampedDay=" + stampedDay +
+                ", calendar=" + calendar +
+                '}';
+    }
 }

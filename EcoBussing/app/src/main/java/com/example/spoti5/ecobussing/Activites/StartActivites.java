@@ -41,6 +41,7 @@ public class StartActivites extends ActivityController{
 
 
     public static Context getContext(){
+
         return context;
     }
 }
