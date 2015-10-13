@@ -284,6 +284,7 @@ public class Company implements IProfile {
     public String toString() {
         return "Company{" +
                 "companyName='" + companyName + '\'' +
+                "password='" + password +
                 ", co2CurrentMonth=" + co2CurrentMonth +
                 ", co2CurrentYear=" + co2CurrentYear +
                 ", co2Tot=" + co2Tot +
