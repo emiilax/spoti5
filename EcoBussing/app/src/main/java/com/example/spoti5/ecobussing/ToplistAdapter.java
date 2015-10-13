@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
@@ -27,8 +28,12 @@ public class ToplistAdapter extends BaseAdapter {
         listItems = new ArrayList<IUser>();
         this.context = context;
 
-        listItems = DatabaseHolder.getDatabase().getUsers();
-        System.out.println(listItems.size());
+        System.out.println("Listitems");
+        listItems = DatabaseHolder.getDatabase().getUserToplistMonth();
+
+
+
+        System.out.println("Size:" + listItems.size());
 
     }
 
@@ -67,9 +72,9 @@ public class ToplistAdapter extends BaseAdapter {
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
 
-        name.setText((position + 1) + ". " + listItems.get(position).getName());
+        //name.setText((position + 1) + ". " + listItems.get(position).getName());
         //System.out.println(listItems.size());
-        co2.setText(Double.toString(listItems.get(position).getMoneySavedPast7Days(true)));
+        //co2.setText(Double.toString(((User)listItems.get(position)).getCo2CurrentMonth()));
 
         return row;
     }
