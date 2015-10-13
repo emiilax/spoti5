@@ -143,7 +143,6 @@ public class Company implements IProfile {
         updateModMembersFromJson();
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
             moderatorMembers.add(user);
-            getModMemberJson();
         }
     }
 
