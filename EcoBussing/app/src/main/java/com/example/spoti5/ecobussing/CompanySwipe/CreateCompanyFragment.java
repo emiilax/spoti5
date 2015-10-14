@@ -67,6 +67,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         View view = inflater.inflate(R.layout.fragment_create_company, container, false);
 
         compImage = (ImageView)view.findViewById(R.id.imageViewComp);
+        compImage.setOnClickListener(setImage);
         nameTextField = (EditText) view.findViewById(R.id.editTextCompName);
         nbrEmployeesTextField = (EditText) view.findViewById(R.id.editTextEmployees);
         compInfoTextField = (EditText)view.findViewById(R.id.editTextCompInfo);
@@ -76,6 +77,16 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         return view;
     }
+
+    private View.OnClickListener setImage = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Context context = getActivity().getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            CharSequence text = "Bilden kan inte ändras just nu";
+            Toast toast = Toast.makeText(context, text, duration);
+        }
+    };
 
     private View.OnClickListener save = new View.OnClickListener() {
 
