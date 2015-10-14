@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
@@ -77,7 +78,8 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         @Override
         public void onClick(View v) {
-            if(checkPassword()) {
+            if(passwordTextField.getText().toString().equals(password2TextField.getText().toString())) {
+                CheckUserInput.checkPassword(passwordTextField.getText().toString());
                 registerCompany();
             }else{
                 System.out.println("Lösenorder matchar inte");
@@ -85,11 +87,6 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         }
     };
 
-    private boolean checkPassword(){
-        //Ska vi ha fler krav på företagslösen?
-        return passwordTextField.getText().toString().equals(password2TextField.getText().toString());
-
-    }
 
 
     private void registerCompany(){

@@ -29,7 +29,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
+import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
@@ -65,10 +67,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private List<String> fragmentsVisitedName;
     private List<? super Fragment> fragmentsVisited;
 
+    private IUser currentUser;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        currentUser = SaveHandler.getCurrentUser();
 
         fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
@@ -252,10 +258,19 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 title = "Företagsinställningar";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                CompanySwipeFragment fragment = new CompanySwipeFragment();
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(fragment);
-                fragmentTransaction.replace(R.id.container, fragment);
+                if(currentUser.getCompany().equals("") || currentUser.getCompany().equals(null)) {
+                    //Om man inte är connctad till ett företag
+                    CompanySwipeFragment fragment = new CompanySwipeFragment();
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(fragment);
+                    fragmentTransaction.replace(R.id.container, fragment);
+                }else{
+                    //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
+                    ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(connectedCompanyFragment);
+                    fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
+                }
                 break;
             case 5:
                 title = "Redigera profil";

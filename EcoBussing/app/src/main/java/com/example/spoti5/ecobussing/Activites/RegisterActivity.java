@@ -13,7 +13,7 @@ import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
-import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
+import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
 import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -85,7 +85,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
         if(valuesIsOk()){
 
-            boolean emailIsOk = CheckCreateUserInput.checkEmail(email);
+            boolean emailIsOk = CheckUserInput.checkEmail(email);
 
             if(!emailIsOk){
                 toastText = "Ogiltig email";
@@ -126,7 +126,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             showToast();
             return false;
         } else {
-            int index = CheckCreateUserInput.checkPassword(password);
+            int index = CheckUserInput.checkPassword(password);
             switch (index){
                 case -1:
                         return true;
