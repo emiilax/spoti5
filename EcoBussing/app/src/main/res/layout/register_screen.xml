@@ -19,15 +19,6 @@
             android:src="@drawable/logotype"
             android:padding="20dp" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="280dp"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:textColor="@color/error_text_red"
-            android:layout_gravity="center_horizontal"
-            android:gravity="bottom"
-            android:id="@+id/input_error" />
-
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
@@ -43,15 +34,6 @@
             android:hint="@string/email_hint"
             android:id="@+id/email"
             android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/error_text_red"
-            android:layout_gravity="center_horizontal"
-            android:gravity="bottom"
-            android:id="@+id/password_error" />
 
         <EditText
             android:layout_width="280dp"
@@ -83,7 +65,7 @@
             <Button
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="67dp"
                 android:text="@string/register_button"
                 android:id="@+id/button_register"
                 android:textColor="@color/nice_green"
@@ -97,7 +79,9 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/logIn"
             android:id="@+id/logInString"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            />
 
     </LinearLayout>
 </LinearLayout>

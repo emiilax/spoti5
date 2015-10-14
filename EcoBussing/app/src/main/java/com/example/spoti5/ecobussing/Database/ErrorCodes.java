@@ -9,5 +9,6 @@ public class ErrorCodes {
     public static final int NO_CONNECTION = 1001;
     public static final int WRONG_CREDENTIALS = 1002;
     public static final int COMPANY_ALREADY_EXISTS = 1003;
-    public static final int UNKNOWN_ERROR = 1004;
+    public static final int EMAIL_ALREADY_EXISTS = 1004;
+    public static final int UNKNOWN_ERROR = 1005;
 }

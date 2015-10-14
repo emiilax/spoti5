@@ -81,7 +81,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         //addWifiChangeHandler();
 
         listAdapter = new DrawerListAdapter(this);
-        searchAdapter = new SearchAdapter(this, "");
+        searchAdapter = new SearchAdapter(this, "---");
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -130,9 +130,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         loadSelection(0);
     }
 
-    protected void setUpDrawer(){
-
-    }
 
     private Drawable rezizedDrawable(){
         Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
