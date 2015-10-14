@@ -234,15 +234,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
-
-                title = "fragment 4";
-                getSupportActionBar().setTitle(title);
-
-
-                /*
-                WifiDetect wifiDetect = new WifiDetect();
-
-=======
                 getSupportActionBar().setTitle("Wifi-detect");
 
 
@@ -250,16 +241,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 fragmentTransaction.replace(R.id.container, wfrag);
 
-                /*
 
-                 
->>>>>>> fb4311943d89d84bb2afb9a756a5f23b7452587f
-                wifi = true;
-                fragmentTransaction.replace(R.id.container, wifiDetect);
-                if(wifiReciever.getBssid() != null){
-                    setConnected(wifiReciever.getBssid());
-                }
-                */
 
                 break;
             case 4:
