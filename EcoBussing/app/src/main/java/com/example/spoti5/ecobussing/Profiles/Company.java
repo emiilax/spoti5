@@ -48,6 +48,7 @@ public class Company implements IProfile {
 
     private HashMap userConnectionDates;
     private String usersConnectedJson;
+    private String oldUserConnectedJson;
 
     public Company(String businessName, User creatorMember, String password, int nbrEmployees) {
         companyName = businessName;
@@ -106,6 +107,16 @@ public class Company implements IProfile {
                 Gson gson = new Gson();
                 moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<IUser>>(){}.getType());
                 oldMomMemberJson = modMemberJson;
+            }
+        }
+    }
+
+    private void updateUserConnectionDates(){
+        if(oldUserConnectedJson != usersConnectedJson){
+            if(!usersConnectedJson.equals(null)){
+                Gson gson = new Gson();
+                userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
+                oldUserConnectedJson = usersConnectedJson;
             }
         }
     }
@@ -331,7 +342,7 @@ public class Company implements IProfile {
                 ", companyInfo='" + companyInfo + '\'' +
                 ", creatorMember='" + creatorMember + '\'' +
                 ", modMemberJson='" + modMemberJson + '\'' +
-                ", memberJson='" + memberJson + '\'' +
+                ", memberJson='" + memberJson + '\'' + 
                 '}';
     }
 
