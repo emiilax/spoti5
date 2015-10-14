@@ -25,7 +25,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/swipe_btnWeek"
+            android:id="@+id/swipe_btnMonth"
             android:background="@color/third"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,10 +33,10 @@
             android:layout_marginRight="-1dp"
             android:layout_marginLeft="-1dp"
             android:layout_weight="1"
-            android:text="Vecka"/>
+            android:text="Månad"/>
 
         <Button
-            android:id="@+id/swipe_btnMonth"
+            android:id="@+id/swipe_btnYear"
             android:layout_width="0dp"
             android:background="@color/third"
             android:layout_height="wrap_content"
@@ -44,9 +44,9 @@
             android:layout_marginLeft="-1dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Månad"/>
+            android:text="År"/>
         <Button
-            android:id="@+id/swipe_btnYear"
+            android:id="@+id/swipe_btnTotal"
             android:layout_width="0dp"
             android:background="@color/third"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_marginLeft="-1dp"
             android:layout_marginRight="-1dp"
             android:layout_weight="1"
-            android:text="År"/>
+            android:text="Totalt"/>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

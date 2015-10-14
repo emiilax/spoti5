@@ -1,5 +1,7 @@
 package com.example.spoti5.ecobussing.Database;
 
+import android.provider.ContactsContract;
+
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
@@ -80,6 +82,15 @@ public class Database implements IDatabase{
         return null;
     }
 
+    public IProfile getCompany(String name){
+        for(IProfile c: getCompanies()){
+            if(c.getName().equals(name)){
+                return c;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void updateUser(IUser user) {
         if(user != null) {
@@ -90,15 +101,12 @@ public class Database implements IDatabase{
 
     @Override
     public void updateCompany(IProfile company) {
-        Firebase ref = firebaseRef.child(companiesString).child(company.getName());
-        ref.setValue(company);
+        if(company != null) {
+            Firebase ref = firebaseRef.child(companiesString).child(company.getName());
+            ref.setValue(company);
+        }
     }
 
-
-    @Override
-    public List getCompanyMembers(String companyKey) {
-        return null;
-    }
 
     /**
      * Adds user to database. This takes time and onSuccess is called if the connection and
@@ -135,14 +143,16 @@ public class Database implements IDatabase{
         });
     }
 
-    private void setErrorCode(FirebaseError error){
+    private void setErrorCode(FirebaseError error) {
         int tmpError = error.getCode();
         if (tmpError == FirebaseError.INVALID_CREDENTIALS) {
             errorCode = ErrorCodes.WRONG_CREDENTIALS;
         } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
             errorCode = ErrorCodes.NO_CONNECTION;
-        } else if (tmpError == FirebaseError.INVALID_EMAIL || tmpError == FirebaseError.EMAIL_TAKEN) {
+        } else if (tmpError == FirebaseError.INVALID_EMAIL) {
             errorCode = ErrorCodes.BAD_EMAIL;
+        } else if (tmpError == FirebaseError.EMAIL_TAKEN){
+            errorCode = ErrorCodes.EMAIL_ALREADY_EXISTS;
         } else {
             errorCode = ErrorCodes.UNKNOWN_ERROR;
         }
@@ -285,7 +295,7 @@ public class Database implements IDatabase{
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
                         IProfile company = companySnapshots.getValue(Company.class);
                         addCompanyToList(listValue, company);
-                        System.out.println(company.getName());
+                        System.out.println("company name "+company.getName());
 
                     }
                 } catch (FirebaseException var4) {
@@ -302,7 +312,7 @@ public class Database implements IDatabase{
     }
 
     private void generateCompaniesList(final int listValue, String sorter) {
-        final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
+        final Query queryRef = firebaseRef.child(companiesString).orderByChild(sorter);
 
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -355,16 +365,16 @@ public class Database implements IDatabase{
     private void addCompanyToList(int listValue, IProfile company){
         switch (listValue) {
             case Database.allValue:
-                allCompanies.clear();
+                allCompanies.add(company);
                 break;
             case Database.topListAllValue:
-                topListAllCompanies.clear();
+                topListAllCompanies.add(company);
                 break;
             case Database.topListMonthValue:
-                topListMonthCompanies.clear();
+                topListMonthCompanies.add(company);
                 break;
             case Database.topListYearValue:
-                topListYearCompanies.clear();
+                topListYearCompanies.add(company);
                 break;
         }
     }
@@ -375,38 +385,53 @@ public class Database implements IDatabase{
 
     @Override
     public List<IUser> getUsers() {
-        if(allUsers.size() != 0){
-            return allUsers;
-        } else {
-            generateUserList(0);
-            return allUsers;
-        }
+        generateUserList(Database.allValue);
+        return allUsers;
     }
 
     @Override
     public List<IUser> getUserToplistAll() {
+        generateUserList(Database.topListAllValue, "co2Tot");
         return topListAll;
     }
 
     @Override
     public List<IProfile> getCompanies(){
-        if(allCompanies != null){
-            return allCompanies;
-        }else{
-            return generateCompanyList();
-        }
+        generateCompaniesList(Database.allValue);
+        return allCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistAll() {
+        generateCompaniesList(Database.topListAllValue, "co2Tot");
+        return topListAllCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistMonth() {
+        generateCompaniesList(Database.topListMonthValue, "co2CurrentMonth");
+        return topListMonthCompanies;
+    }
+
+    @Override
+    public List<IProfile> getCompaniesToplistYear() {
+        generateCompaniesList(Database.topListYearValue, "co2CurrentYear");
+        return topListYearCompanies;
     }
 
     @Override
     public List<IUser> getUserToplistMonth() {
-        return getUserToplistMonth();
+        generateUserList(Database.topListMonthValue, "co2CurrentMonth");
+        return topListMonth;
     }
 
 
     @Override
     public List<IUser> getUserToplistYear() {
+        generateUserList(Database.topListYearValue, "co2CurrentYear");
         return topListYear;
     }
+
 
     public boolean isAllGenerated() {
         return allGenerated;

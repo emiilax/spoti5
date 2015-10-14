@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.EditProfile;
+package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

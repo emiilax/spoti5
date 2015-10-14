@@ -22,7 +22,9 @@
     <string name="redo_password_hint">Lösenord igen</string>
     <string name="Name_hint">Namn</string>
     <string name="register_button">Registrera</string>
-    <string name="logIn"><u>Logga in</u></string>
+    <string name="logIn"><u>Redan medlem? Logga in här</u></string>
+
+    <string name="search_hint">Företag eller person</string>
 
     <string name="profile_name"> Namn: </string>
     <string name="profile_email"> Email: </string>
@@ -39,14 +41,13 @@
 
 
     <string-array name="drawer_array">
-        <item>Profile</item>
+        <item>Min profil</item>
         <item>Fragment 2</item>
-        <item>Fragment 3</item>
-        <item>Fragment 4</item>
+        <item>Topplistor</item>
+        <item>Wifi-detect</item>
+        <item>Företagsinställningar</item>
         <item>Redigera profil</item>
-        <item>Skapa företag</item>
         <item>Log out</item>
-
     </string-array>
 
     <string-array name="anders_array">
