@@ -314,8 +314,5 @@ public class User implements IUser{
             oldCo2Json = co2Json;
         }
     }
-
-
-    @Override
-    public String getPassword(){return null;};
+    
 }
