@@ -1,11 +1,13 @@
 package com.example.spoti5.ecobussing.Activites;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.ErrorCodes;
@@ -28,14 +30,17 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     EditText emailView;
     EditText passwordView;
     EditText secondPasswordView;
-    TextView passwordError;
-    TextView inputError;
     TextView login;
 
     String name;
     String email;
     String password;
     String secondPassword;
+
+    private Context context;
+    private int duration = Toast.LENGTH_SHORT;
+    private CharSequence toastText;
+    private Toast toast;
 
     IDatabase database;
     User newUser;
@@ -50,16 +55,13 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
         passwordView = (EditText) findViewById(R.id.first_password);
         secondPasswordView = (EditText) findViewById(R.id.second_password);
-
-        passwordError = (TextView) findViewById(R.id.password_error);
-        inputError = (TextView) findViewById(R.id.input_error);
         login = (TextView) findViewById(R.id.logInString);
 
         login.setOnClickListener(goToLogin);
         register_button.setOnClickListener(register);
 
         secondPasswordView.setOnKeyListener(autoReg);
-
+        context = getApplicationContext();
     }
 
     View.OnClickListener goToLogin = new View.OnClickListener() {
@@ -86,10 +88,10 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             boolean emailIsOk = CheckUserInput.checkEmail(email);
 
             if(!emailIsOk){
-                inputError.setText("Ogiltig email");
-            } else {
-                inputError.setText("");
+                toastText = "Ogiltig email";
+                showToast();
             }
+
             if(passIsCorrect && emailIsOk){
                 newUser = new User(email, name);
                 database.addUser(email, password, newUser, this);
@@ -99,10 +101,10 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     private boolean valuesIsOk(){
         if(name.equals("") || email.equals("")){
-            inputError.setText("Alla fält måste fyllas i");
+            toastText = "Alla fält måste fyllas i";
+            showToast();
             return false;
         } else {
-            inputError.setText("");
             return true;
         }
     }
@@ -120,20 +122,25 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     private boolean checkPasswords(){
         if(!password.equals(secondPassword)){
-            passwordError.setText("Lösenorden måste matcha");
+            toastText = "Lösenorden måste matcha";
+            showToast();
             return false;
         } else {
             int index = CheckUserInput.checkPassword(password);
             switch (index){
-                case -1: passwordError.setText("");
+                case -1:
                         return true;
-                case 0: passwordError.setText("Lösenordet är för kort");
+                case 0: toastText = "Lösenordet är för kort";
+                    showToast();
                         return false;
-                case 1: passwordError.setText("Lösenordet måste innehålla en stor bokstav");
+                case 1: toastText = "Lösenordet måste innehålla en stor bokstav";
+                    showToast();
                         return false;
-                case 2: passwordError.setText("Lösenordet måste innehålla en liten bokstav");
+                case 2: toastText = "Lösenordet måste innehålla en liten bokstav";
+                    showToast();
                         return false;
-                case 3: passwordError.setText("Lösenordet måste innehålla en siffra");
+                case 3: toastText = "Lösenordet måste innehålla en siffra";
+                    showToast();
                         return false;
             }
             return false;
@@ -170,16 +177,23 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     @Override
     public void addingFinished() {
-        System.out.println(database.getErrorCode());
+
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);
                 SaveHandler.changeUser(newUser);
                 break;
-            case ErrorCodes.BAD_EMAIL: inputError.setText("Mailen är upptagen");
+            case ErrorCodes.BAD_EMAIL: toastText ="Mailen är ogiltig";
+                showToast();
                 break;
-            case ErrorCodes.NO_CONNECTION: inputError.setText("Ingen uppkoppling");
+            case ErrorCodes.EMAIL_ALREADY_EXISTS: toastText = "Mailen finns redan";
+                showToast();
                 break;
-            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel");
+            case ErrorCodes.NO_CONNECTION: toastText = "Ingen uppkoppling";
+                showToast();
+                break;
+            case ErrorCodes.UNKNOWN_ERROR: toastText = "något gick fel";
+                showToast();
+                break;
         }
     }
 
@@ -189,10 +203,17 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             case ErrorCodes.NO_ERROR: startOverviewActivity();
                 SaveHandler.changeUser(newUser);
                 break;
-            case ErrorCodes.NO_CONNECTION: inputError.setText("Registrering lyckades, men uppkopplingen försvann. Försök logga in.");
+            case ErrorCodes.NO_CONNECTION: toastText = "Registrering lyckades, men uppkopplingen försvann. Försök logga in.";
+                showToast();
                 break;
-            case ErrorCodes.UNKNOWN_ERROR: inputError.setText("Något gick fel.");
+            case ErrorCodes.UNKNOWN_ERROR: toastText = "Något gick fel.";
+                showToast();
                 break;
         }
+    }
+
+    private void showToast(){
+        toast = Toast.makeText(context,toastText, duration);
+        toast.show();
     }
 }

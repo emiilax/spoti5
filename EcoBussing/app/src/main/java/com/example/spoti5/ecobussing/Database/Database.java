@@ -143,14 +143,16 @@ public class Database implements IDatabase{
         });
     }
 
-    private void setErrorCode(FirebaseError error){
+    private void setErrorCode(FirebaseError error) {
         int tmpError = error.getCode();
         if (tmpError == FirebaseError.INVALID_CREDENTIALS) {
             errorCode = ErrorCodes.WRONG_CREDENTIALS;
         } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
             errorCode = ErrorCodes.NO_CONNECTION;
-        } else if (tmpError == FirebaseError.INVALID_EMAIL || tmpError == FirebaseError.EMAIL_TAKEN) {
+        } else if (tmpError == FirebaseError.INVALID_EMAIL) {
             errorCode = ErrorCodes.BAD_EMAIL;
+        } else if (tmpError == FirebaseError.EMAIL_TAKEN){
+            errorCode = ErrorCodes.EMAIL_ALREADY_EXISTS;
         } else {
             errorCode = ErrorCodes.UNKNOWN_ERROR;
         }
