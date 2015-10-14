@@ -310,7 +310,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             drawerLayout.closeDrawer(drawerListLeft);
         } else if(drawerLayout.isDrawerOpen(drawerListRight)){
             drawerLayout.closeDrawer(drawerListRight);
-        } else if(fragmentsVisitedName.size() > 0){
+        } else if(fragmentsVisitedName.size() > 2){
             int last = fragmentsVisitedName.size() - 2;
             getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
             fragmentsVisitedName.remove(last + 1);
