@@ -29,12 +29,9 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private TextView header;
     private EditText nameTextField;
     private EditText nbrEmployeesTextField;
-    private EditText passwordTextField;
-    private EditText password2TextField;
     private Button saveButton;
 
     private String name;
-    private String password;
     private Company newCompany;
     private int nbrEmployees;
 
@@ -66,8 +63,6 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         header = (TextView)view.findViewById(R.id.headerTextView);
         nameTextField = (EditText)view.findViewById(R.id.editTextCompName);
         nbrEmployeesTextField = (EditText)view.findViewById(R.id.editTextEmployees);
-        passwordTextField = (EditText)view.findViewById(R.id.editTextPassword);
-        password2TextField = (EditText)view.findViewById(R.id.editTextPassword2);
         saveButton = (Button)view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
@@ -78,12 +73,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         @Override
         public void onClick(View v) {
-            if(passwordTextField.getText().toString().equals(password2TextField.getText().toString())) {
-                CheckUserInput.checkPassword(passwordTextField.getText().toString());
                 registerCompany();
-            }else{
-                System.out.println("Lösenorder matchar inte");
-            }
         }
     };
 
@@ -92,7 +82,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private void registerCompany(){
         initStrings();
         System.out.println("In registerCompany()");
-        newCompany = new Company(name, (User)currentUser, password, nbrEmployees);
+        newCompany = new Company(name, (User)currentUser, nbrEmployees);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
         database.updateUser(currentUser);
@@ -102,7 +92,6 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     private void initStrings(){
         name = nameTextField.getText().toString();
-        password = passwordTextField.getText().toString();
         nbrEmployees = Integer.parseInt(nbrEmployeesTextField.getText().toString());
     }
 

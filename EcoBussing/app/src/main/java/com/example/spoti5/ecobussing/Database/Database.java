@@ -295,7 +295,7 @@ public class Database implements IDatabase{
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
                         IProfile company = companySnapshots.getValue(Company.class);
                         addCompanyToList(listValue, company);
-                        System.out.println(company.getName());
+                        System.out.println("company name "+company.getName());
 
                     }
                 } catch (FirebaseException var4) {
@@ -365,16 +365,16 @@ public class Database implements IDatabase{
     private void addCompanyToList(int listValue, IProfile company){
         switch (listValue) {
             case Database.allValue:
-                allCompanies.clear();
+                allCompanies.add(company);
                 break;
             case Database.topListAllValue:
-                topListAllCompanies.clear();
+                topListAllCompanies.add(company);
                 break;
             case Database.topListMonthValue:
-                topListMonthCompanies.clear();
+                topListMonthCompanies.add(company);
                 break;
             case Database.topListYearValue:
-                topListYearCompanies.clear();
+                topListYearCompanies.add(company);
                 break;
         }
     }
