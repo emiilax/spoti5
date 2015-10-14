@@ -31,8 +31,9 @@ public class SearchAdapter extends BaseAdapter {
 
     public SearchAdapter(Context context, String searchWord){
         this.context = context;
-        searchResults = simpelSearch.search(searchWord);
-
+        if(!searchWord.equals("")) {
+            searchResults = simpelSearch.search(searchWord);
+        }
     }
 
     @Override
