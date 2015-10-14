@@ -23,13 +23,11 @@ public class Company implements IProfile {
 
     private IDatabase database;
 
-    private String companyName;
-    private double co2CurrentMonth;
-    private double co2CurrentYear;
-    private double co2Tot;
+    private String name;
+    private double pointCurrentMonth;
+    private double pointCurrentYear;
+    private double pointTot;
     private String companyInfo;
-    private String password;
-
     private int nbrEmployees;
 
     /**
@@ -49,8 +47,10 @@ public class Company implements IProfile {
     private String usersConnectedJson;
     private String oldUserConnectedJson;
 
-    public Company(String businessName, User creatorMember, String password, int nbrEmployees) {
-        companyName = businessName;
+    public Company(){}
+
+    public Company(String businessName, User creatorMember, int nbrEmployees) {
+        name = businessName;
         this.creatorMember = creatorMember.getEmail();
 
         moderatorMembers = new ArrayList<IUser>();
@@ -59,11 +59,11 @@ public class Company implements IProfile {
         moderatorMembers.add(creatorMember);
         members.add(creatorMember);
 
-        co2CurrentMonth = 0;
-        co2CurrentYear = 0;
-        co2Tot = 0;
+        pointCurrentMonth = 0;
+        pointCurrentYear = 0;
+        pointTot = 0;
+        companyInfo = "";
 
-        this.password = password;
         this.nbrEmployees = nbrEmployees;
 
         userConnectionDates = new HashMap();
@@ -73,12 +73,12 @@ public class Company implements IProfile {
 
     @Override
     public String getName() {
-        return companyName;
+        return name;
     }
 
     @Override
     public void setName(String name) {
-        companyName = name;
+        this.name = name;
     }
 
     public void setCompanyInfo(String info){
@@ -179,7 +179,7 @@ public class Company implements IProfile {
     public void addMember(User user) {
         updateMembersFromJson();
         if (!userIsMember(user)) {
-            user.setCompany(companyName);
+            user.setCompany(name);
             SaveHandler.changeUser(user);
             members.add(user);
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -283,35 +283,30 @@ public class Company implements IProfile {
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public void incCO2Saved(double distance) {
 
     }
 
     @Override
     public Double getCO2Saved(boolean avoidDatabaseUpload) {
-        return co2Tot;
+        return pointTot;
     }
 
     public int getNbrEmployees() {
         return nbrEmployees;
     }
 
-    public double getCo2Tot() {
-        return co2Tot;
+    public double getpointTot() {
+        return pointTot;
     }
 
 
-    public double getCo2CurrentYear() {
-        return co2CurrentYear;
+    public double getpointCurrentYear() {
+        return pointCurrentYear;
     }
 
-    public double getCo2CurrentMonth() {
-        return co2CurrentMonth;
+    public double getpointCurrentMonth() {
+        return  pointCurrentMonth;
     }
 
     public String getCompanyInfo() {
@@ -333,11 +328,11 @@ public class Company implements IProfile {
     @Override
     public String toString() {
         return "Company{" +
-                "companyName='" + companyName + '\'' +
-                "password='" + password + '\'' +
-                ", co2CurrentMonth=" + co2CurrentMonth +
-                ", co2CurrentYear=" + co2CurrentYear +
-                ", co2Tot=" + co2Tot + ", nbrEmployees="+ nbrEmployees +
+                "name='" + name + '\'' +
+                ", pointCurrentMonth=" +  pointCurrentMonth +
+                ", pointCurrentYear=" + pointCurrentYear +
+                ", pointTot=" + pointTot + ", " +
+                "nbrEmployees="+ nbrEmployees +
                 ", companyInfo='" + companyInfo + '\'' +
                 ", creatorMember='" + creatorMember + '\'' +
                 ", modMemberJson='" + modMemberJson + '\'' +
