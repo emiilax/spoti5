@@ -26,7 +26,6 @@ public class Company implements IProfile {
     private String companyName;
     private double co2CurrentMonth;
     private double co2CurrentYear;
-
     private double co2Tot;
     private String companyInfo;
     private String password;
@@ -342,7 +341,8 @@ public class Company implements IProfile {
                 ", companyInfo='" + companyInfo + '\'' +
                 ", creatorMember='" + creatorMember + '\'' +
                 ", modMemberJson='" + modMemberJson + '\'' +
-                ", memberJson='" + memberJson + '\'' + 
+                ", memberJson='" + memberJson + '\'' +
+                ", userConnectedJson=" + usersConnectedJson +
                 '}';
     }
 
