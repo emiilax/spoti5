@@ -1,6 +1,7 @@
 package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
@@ -66,6 +68,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         saveButton = (Button)view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
+
         return view;
     }
 
@@ -81,7 +84,6 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     private void registerCompany(){
         initStrings();
-        System.out.println("In registerCompany()");
         newCompany = new Company(name, (User)currentUser, nbrEmployees);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
@@ -98,7 +100,11 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     @Override
     public void addingFinished() {
-       // System.out.println(newCompany.getMembers(true).get(0).getEmail());
+        Context context = getActivity().getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence text = "Företaget skapades";
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     @Override
