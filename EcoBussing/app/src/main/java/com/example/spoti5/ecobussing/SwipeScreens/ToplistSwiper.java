@@ -43,7 +43,7 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         //piece fragment
         mPagerAdapter =
                 new PagerAdapter(
-                        getActivity().getSupportFragmentManager());
+                        getActivity().getSupportFragmentManager(), "month");
         mViewPager = (ViewPager)view.findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
         
@@ -82,8 +82,9 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         if(v == btnMonth){
             btnMonth.setBackgroundColor(getResources().getColor(R.color.secondary));
 
-            ((PagerAdapter)mPagerAdapter).setRange("month");
+            //((PagerAdapter)mPagerAdapter).setRange("month");
 
+            mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "month");
             /*try {
                 busC.beginJourey(Busses.simulated);
             } catch (IOException e) {
@@ -93,7 +94,9 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         if(v == btnYear){
             btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
 
-            ((PagerAdapter)mPagerAdapter).setRange("month");
+            mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "year");
+
+            //((PagerAdapter)mPagerAdapter).setRange("month");
 
             /*
             try {
@@ -104,10 +107,12 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         }
 
         if(v == btnTotal){
-            ((PagerAdapter)mPagerAdapter).setRange("total");
+            mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "total");
+            //((PagerAdapter)mPagerAdapter).setRange("total");
             btnTotal.setBackgroundColor(getResources().getColor(R.color.secondary));
 
         }
+        mViewPager.setAdapter(mPagerAdapter);
 
     }
 }

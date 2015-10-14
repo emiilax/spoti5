@@ -88,7 +88,11 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     public void setNetwCon(boolean truFal){
         netwCon = truFal;
-        if(netwCon) pcs.firePropertyChange("netwConnected", null, null);
+
+        if(netwCon) {
+            startJourney();
+            pcs.firePropertyChange("netwConnected", null, null);
+        }
     }
 
     public boolean isNetwConnected(){
@@ -97,7 +101,9 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     Thread getConnectionThread = null;
     private boolean stopThread;
+
     public void updateConnect(Intent intent, Context context){
+
         NetworkInfo in = (NetworkInfo)intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
 
         System.out.println("State: " + in.getState());
@@ -110,6 +116,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
                 stopThread = false;
                 new Thread(this).start();
             }
+
         }else{
             stopThread = true;
             netwCon = false;
@@ -123,14 +130,14 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
 
         updateConnect(intent, context);
-        System.out.println("Connected to network: " + netwCon);
+        //System.out.println("Connected to network: " + netwCon);
 
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if(info != null ) {
 
             if(info.isConnected()) {
                 // Do your work.
-
+                connectedToWifi = true;
                 // e.g. To check the Network Name or other info:
                 WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
@@ -141,8 +148,9 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
 
                     for(Bus b: Busses.theBusses){
-                        if(bssid.equals(b.getMacAdress())){
+                        if(bssid.equals(b.getMacAdress()) && netwCon){
                             onBus = true;
+                            System.out.println("on bus");
                             try {
                                 busConnection.beginJourey(b);
                             } catch (IOException e) {
@@ -152,12 +160,10 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
                         }
                     }
-
-
                 }
-                connectedToWifi = true;
 
-            } else{
+
+            } else {
                 connectedToWifi = false;
                 this.pcs.firePropertyChange("disconnected", null, null);
 
@@ -173,19 +179,25 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         }
     }
 
-    public boolean onTheBus(){
-        List<Bus> busses = Busses.theBusses;
+    public void startJourney(){
+        if(!onBus && connectedToWifi){
+            for(Bus b: Busses.theBusses){
+                if(bssid.equals(b.getMacAdress()) && netwCon){
+                    onBus = true;
+                    System.out.println("on bus");
+                    try {
+                        busConnection.beginJourey(b);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
-        for(Bus b: busses){
-            if(b.getMacAdress().equals(bssid)){
-                theBus = b;
-                return true;
+                }
             }
         }
-        return false;
-
-
     }
+
+
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
@@ -205,8 +217,10 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     @Override
     public void run() {
+        int i = 0;
 
-        while(!netwCon && !stopThread){
+        while(!netwCon && !stopThread && i < 10 ){
+
             setNetwCon(hasActiveInternetConnection(ActivityController.getContext()));
             System.out.println("Connected: " + netwCon);
 
@@ -217,6 +231,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
                     e.printStackTrace();
                 }
             }
+            i++;
         }
     }
 }

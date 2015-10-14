@@ -66,6 +66,7 @@ public class ECIApi {
         long t1 = t2 - (30 * 1000);
 
         String url = getRequsetUrl(true, GPS2, dwgNr, t1, t2);
+        System.out.println(url);
 
         String response = getEAResponse(url);
 
@@ -138,10 +139,12 @@ public class ECIApi {
 
 
         if(ActivityController.getContext() != null){
+
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
 
             StrictMode.setThreadPolicy(policy);
+
         }
 
 

@@ -35,7 +35,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
         BusConnection demo = new BusConnection();
 
-        demo.beginJourey(Busses.simulated);
+        demo.beginJourey(Busses.eog604);
 
 
     }
@@ -78,6 +78,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
         if(!hasStarted){
             currentBus = bus;
             String dwgNr = bus.getDwg();
+            System.out.println(bus.getDwg());
 
             System.out.println("Journey begin");
 
@@ -245,7 +246,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
         System.out.println("Run");
 
-        while(/*NetworkStateChangeReciever.getInstance().isConnectedToWifi() &&*/ stillConnected){
+        while(NetworkStateChangeReciever.getInstance().isNetwConnected() && stillConnected){
 
             List<EARespond> gpsInfo = null;
             try {
@@ -267,7 +268,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 try {
                     lastLocations = vatApi.getNearbyStops(lon, lat, 20);
                     //stopL = lastLocations.getStopLocation(0);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
