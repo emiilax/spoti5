@@ -71,7 +71,7 @@
                     <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp"
-                        android:src="@drawable/placeholder_cloud"
+                        android:src="@drawable/bus"
                         android:id="@+id/imageCo2" />
 
                     <TextView
@@ -80,7 +80,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="32dp"
                         android:textColor="@color/nice_green"
-                        android:text="58 kg"
+                        android:text="321 km"
                         android:id="@+id/textCo2"
                         android:layout_gravity="center_vertical|right"
                         android:layout_centerVertical="true"
@@ -97,7 +97,7 @@
                     <ImageView
                         android:layout_width="96dp"
                         android:layout_height="96dp"
-                        android:src="@drawable/placeholder_distance"
+                        android:src="@drawable/co2"
                         android:id="@+id/imageDistance" />
 
                     <TextView
@@ -106,7 +106,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="32dp"
                         android:textColor="@color/nice_green"
-                        android:text="321 km"
+                        android:text="58 kg"
                         android:id="@+id/textDistance"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
