@@ -67,7 +67,7 @@
             <Button
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="67dp"
                 android:text="@string/register_button"
                 android:id="@+id/button_register"
                 android:textColor="@color/nice_green"
