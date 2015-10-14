@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -31,26 +32,27 @@
                 android:layout_gravity="left" />
 
             <TextView
+                android:id="@+id/textViewEmployees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:text="New Text"
-                android:id="@+id/textView"
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/textViewCo2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:text="New Text"
-                android:id="@+id/textView2"
                 android:textSize="20dp" />
         </LinearLayout>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -58,19 +60,23 @@
         android:layout_marginTop="8dp"
         android:text="Anslutna användare"
         android:textSize="20dp"
-        android:id="@+id/textView13" />
+        />
 
-    <ScrollView
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
+        android:layout_height="285dp"
+        android:scrollbars="vertical"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_height="315dp"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_weight="0.42" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:text="Gå ur företag"
         android:id="@+id/buttonDisconnect"
         style="?android:attr/borderlessButtonStyle"
