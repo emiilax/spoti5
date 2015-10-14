@@ -45,12 +45,11 @@
             android:padding="10dp" />
 
         <Button
-            android:layout_width="190dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:text="Logga in"
             android:id="@+id/loginButton"
-            android:layout_weight="0.33"
             android:padding="10dp"
             android:background="@color/clear_white"
             android:layout_gravity="center_horizontal"
@@ -61,7 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:text="@string/register_label"
             android:id="@+id/register_label"
             android:textSize="15dp"
