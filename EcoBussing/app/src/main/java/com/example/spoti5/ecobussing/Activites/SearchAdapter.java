@@ -31,8 +31,9 @@ public class SearchAdapter extends BaseAdapter {
 
     public SearchAdapter(Context context, String searchWord){
         this.context = context;
-        searchResults = simpelSearch.search(searchWord);
-
+        if(!searchWord.equals("")) {
+            searchResults = simpelSearch.search(searchWord);
+        }
     }
 
     @Override
@@ -73,9 +74,9 @@ public class SearchAdapter extends BaseAdapter {
         nameLabel.setText(profile.getName());
         if(profile instanceof IUser){
             IUser user = (IUser) profile;
-            subtitleLabel.setText(Double.toString(user.getCo2Tot()));
+            subtitleLabel.setText("Användare");
         } else {
-            subtitleLabel.setText("Business");
+            subtitleLabel.setText("Företag");
         }
 
         return row;

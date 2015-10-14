@@ -168,7 +168,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
                     timerRunning = false;
                     t.cancel();
                 }
-            }, 5000);
+            }, 1000);
 
 
         return true;

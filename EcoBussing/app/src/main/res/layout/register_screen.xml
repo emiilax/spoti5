@@ -26,6 +26,7 @@
             android:inputType="textPersonName"
             android:id="@+id/name"
             android:layout_gravity="center_horizontal"
+            android:autoText="false" />
            />
 
         <EditText
@@ -54,7 +55,6 @@
             android:ems="10"
             android:id="@+id/second_password"
             android:layout_gravity="center_horizontal"
-
             />
 
 
@@ -62,14 +62,12 @@
             android:orientation="horizontal"
             android:layout_width="280dp"
             android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-
-            >
+            android:layout_gravity="center_horizontal">
 
             <Button
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="67dp"
                 android:text="@string/register_button"
                 android:id="@+id/button_register"
                 android:textColor="@color/nice_green"

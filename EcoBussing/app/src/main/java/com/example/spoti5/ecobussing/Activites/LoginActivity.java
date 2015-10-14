@@ -105,7 +105,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
                     timerRunning = false;
                     t.cancel();
                 }
-            }, 5000);
+            }, 1000);
 
             /*
             WifiManager wifiMan = (WifiManager) getSystemService(

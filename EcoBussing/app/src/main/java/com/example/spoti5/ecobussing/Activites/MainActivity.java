@@ -89,8 +89,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         listAdapter = new DrawerListAdapter(this);
         searchAdapter = new SearchAdapter(this, "---");
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         //planetTitles = getResources().getStringArray(R.array.planets_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerListLeft = (ListView) findViewById(R.id.left_drawer);
@@ -134,6 +132,19 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         loadSelection(0);
+
+        startFirstFragemnt();
+    }
+
+    private void startFirstFragemnt(){
+        String title = SaveHandler.getCurrentUser().getName();
+        getSupportActionBar().setTitle(title);
+        UserProfileView userProfileView = new UserProfileView();
+        fragmentsVisitedName.add(title);
+        fragmentsVisited.add(userProfileView);
+        fragmentTransaction.replace(R.id.container, userProfileView);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 
@@ -142,9 +153,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         Bitmap mp = ((BitmapDrawable)logo).getBitmap();
         Drawable smallLogo = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
         return smallLogo;
-        /*Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
-        logo.setBounds(0,0,16,16);
-        return logo;*/
     }
 
     private void loadSelection(int i){
@@ -295,22 +303,23 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerLayout.closeDrawer(drawerListLeft);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
-/*
+
     @Override
     public void onBackPressed(){
-        if(fragmentsVisited.size() > 0 && fragmentsVisitedName.size() > 0 && fragmentsVisited.size() == fragmentsVisitedName.size()){
-            int last = fragmentsVisitedName.size() - 1;
+        if(drawerLayout.isDrawerOpen(drawerListLeft)){
+            drawerLayout.closeDrawer(drawerListLeft);
+        } else if(drawerLayout.isDrawerOpen(drawerListRight)){
+            drawerLayout.closeDrawer(drawerListRight);
+        } else if(fragmentsVisitedName.size() > 2){
+            int last = fragmentsVisitedName.size() - 2;
             getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
-            fragmentTransaction.replace(R.id.container, (Fragment) fragmentsVisited.get(last));
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-            fragmentsVisited.remove(last);
-            fragmentsVisitedName.remove(last);
+            fragmentsVisitedName.remove(last + 1);
+            super.onBackPressed();
         } else {
             super.onBackPressed();
         }
 
-    }*/
+    }
 
     /*
     public void setConnected(String bssid){
@@ -391,7 +400,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     timerRunning = false;
                     t.cancel();
                 }
-            }, 5000);
+            }, 1000);
 
             return true;
         }
