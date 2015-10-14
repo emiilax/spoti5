@@ -34,7 +34,8 @@
             android:hint="@string/Name_hint"
             android:inputType="textPersonName"
             android:id="@+id/name"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:autoText="false" />
 
         <EditText
             android:layout_width="280dp"
