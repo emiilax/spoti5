@@ -3,6 +3,8 @@ package com.example.spoti5.ecobussing.APIRequest;
 import android.os.StrictMode;
 
 import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.BusData.Bus;
+import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.JsonClasses.EA.EARespond;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,9 +28,20 @@ public class ECIApi {
 
     private final String EAkey = "Z3JwMjY6REhrdUFQRlZuIw==";
 
-
+    // Requests
     private final String GPS2 = "Ericsson$GPS2";
+    private List<String> requsts;
 
+
+    private List<String> bussesDwg = new ArrayList<>();
+
+    public ECIApi() {
+
+        for (Bus b : Busses.theBusses) {
+            bussesDwg.add(b.getDwg());
+        }
+
+    }
 
     /**
      * Used to get a specific value from the array of o
@@ -61,11 +75,12 @@ public class ECIApi {
      *          Latitude, Longitude, Speed, Course, Altitude.
      *
      */
-    public List<EARespond> getGPSInfo(String dwgNr) throws IOException {
+    public List<EARespond> getGPSInfo(String dwgNr) throws IOException, IllegalArgumentException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (30 * 1000);
 
-        String url = getRequsetUrl(true, GPS2, dwgNr, t1, t2);
+        String url = getRequestUrl(true, GPS2, dwgNr, t1, t2);
+
         System.out.println(url);
 
         String response = getEAResponse(url);
@@ -111,10 +126,16 @@ public class ECIApi {
      *
      * @return the request-url
      */
-    public String getRequsetUrl(boolean isSensor, String requestName,
-                                          String dwgNr, long t1, long t2){
+    public String getRequestUrl(boolean isSensor, String requestName,
+                                String dwgNr, long t1, long t2) throws IllegalArgumentException{
 
         String url = "";
+
+
+
+        if(!bussesDwg.contains(dwgNr)) throw new IllegalArgumentException();
+
+
         if(isSensor){
             url = "https://ece01.ericsson.net:4443/ecity?dgw=" + dwgNr +
                     "&sensorSpec=" + requestName + "&t1=" +  t1 + "&t2=" + t2;
@@ -125,6 +146,7 @@ public class ECIApi {
 
         return url;
     }
+
 
     /**
      * Gets the information that were requested from the Electricity API
@@ -147,38 +169,44 @@ public class ECIApi {
 
         }
 
+        try{
+            URL requestURL = new URL(url);
+
+            // Connect to the resource
+            HttpsURLConnection con = (HttpsURLConnection) requestURL
+                    .openConnection();
+
+            con.setConnectTimeout(5000);
+            con.setReadTimeout(5000);
+            // Get info from the resource (POST if you want to send anything)
+            con.setRequestMethod("GET");
+
+            // Get access
+            con.setRequestProperty("Authorization", "Basic " + EAkey);
+
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+
+            // Read the response
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+
+
+            // Put all the text into a String
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+
+                response += inputLine;
+            }
+            in.close();
+
+        } catch (SocketTimeoutException e){
+            e.printStackTrace();
+        }
 
         // Used to point out the "resource" on internet
-        URL requestURL = new URL(url);
 
-        // Connect to the resource
-        HttpsURLConnection con = (HttpsURLConnection) requestURL
-                .openConnection();
-
-        // Get info from the resource (POST if you want to send anything)
-        con.setRequestMethod("GET");
-
-        // Get access
-        con.setRequestProperty("Authorization", "Basic " + EAkey);
-
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        // Read the response
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                con.getInputStream()));
-
-
-        // Put all the text into a String
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-
-            response += inputLine;
-        }
-        in.close();
-
-        //System.out.println(response);
 
         return response;
     }

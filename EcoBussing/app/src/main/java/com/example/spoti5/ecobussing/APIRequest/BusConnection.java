@@ -33,9 +33,21 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
     public static void main(String[] args) throws IOException {
 
-        BusConnection demo = new BusConnection();
+        List<String> busdwg = new ArrayList<>();
 
-        demo.beginJourey(Busses.eog604);
+        for (Bus b : Busses.theBusses) {
+            busdwg.add(b.getDwg());
+        }
+
+        for(String s: busdwg){
+            System.out.println(s);
+            System.out.println(s.equals(Busses.simulated.getDwg()));
+        }
+        // System.out.println(busdwg.contains(Busses.simulated.getDwg()));
+
+        //BusConnection demo = new BusConnection();
+
+        //demo.beginJourey(Busses.eog604);
 
 
     }
