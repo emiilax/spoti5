@@ -80,6 +80,7 @@
         android:text="Gå ur företag"
         android:id="@+id/buttonDisconnect"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:textColor="@color/nice_green" />
 
 </LinearLayout>

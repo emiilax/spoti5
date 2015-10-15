@@ -45,6 +45,17 @@ public class SimpelSearch {
         return results;
     }
 
+    public List<IProfile> companySearch(String name){
+        results.clear();
+
+        for (IProfile company: database.getCompanies()){
+            if((company.getName().toLowerCase()).contains(name.toLowerCase())){
+                results.add(company);
+            }
+        }
+        return results;
+    }
+
     public List<IProfile> oldResults(){
         return results;
     }
