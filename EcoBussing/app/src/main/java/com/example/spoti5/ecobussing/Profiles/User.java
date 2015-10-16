@@ -312,13 +312,7 @@ public class User implements IUser{
     }
 
     private void updateMoneyMap(){
-        if(moneySavedMap == null){
-
-            Gson gson = new Gson();
-            moneySavedMap = gson.fromJson(this.getMoneyJson(), DeepMap.class);
-            oldMoneyJson = this.getMoneyJson();
-        }
-        if(oldMoneyJson != moneyJson){
+        if(moneySavedMap == null || !oldMoneyJson.equals(moneyJson)){
 
             Gson gson = new Gson();
             moneySavedMap = gson.fromJson(this.getMoneyJson(), DeepMap.class);
@@ -328,15 +322,7 @@ public class User implements IUser{
     }
 
     private void updateCo2Map(){
-        if(co2SavedMap == null){
-            Gson gson = new Gson();
-            System.out.println(this.getCo2Json());
-            co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
-            System.out.println(co2SavedMap);
-            oldCo2Json = this.getCo2Json();
-        }
-        if(oldCo2Json != co2Json) {
-            System.out.println("hej2");
+        if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();
