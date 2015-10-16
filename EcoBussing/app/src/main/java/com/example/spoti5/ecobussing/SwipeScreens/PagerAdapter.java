@@ -12,8 +12,12 @@ import com.example.spoti5.ecobussing.Activites.ToplistFragment;
  */
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    public PagerAdapter(FragmentManager fragment) {
+    private String range;
+
+    public PagerAdapter(FragmentManager fragment, String range) {
         super(fragment);
+
+        this.range = range;
     }
 
 
@@ -30,11 +34,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         switch(i){
             case 0:
                 fragment = new ToplistFragment();
+                ((ToplistFragment)fragment).setRange(range);
                 ((ToplistFragment)fragment).setisCompany(false);
                 break;
 
             case 1:
                 fragment = new ToplistFragment();
+                ((ToplistFragment)fragment).setRange(range);
                 ((ToplistFragment)fragment).setisCompany(true);
                 break;
         }

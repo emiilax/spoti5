@@ -33,9 +33,21 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
     public static void main(String[] args) throws IOException {
 
-        BusConnection demo = new BusConnection();
+        List<String> busdwg = new ArrayList<>();
 
-        demo.beginJourey(Busses.simulated);
+        for (Bus b : Busses.theBusses) {
+            busdwg.add(b.getDwg());
+        }
+
+        for(String s: busdwg){
+            System.out.println(s);
+            System.out.println(s.equals(Busses.simulated.getDwg()));
+        }
+        // System.out.println(busdwg.contains(Busses.simulated.getDwg()));
+
+        //BusConnection demo = new BusConnection();
+
+        //demo.beginJourey(Busses.eog604);
 
 
     }
@@ -78,10 +90,17 @@ public class BusConnection implements Runnable, PropertyChangeListener{
         if(!hasStarted){
             currentBus = bus;
             String dwgNr = bus.getDwg();
+            System.out.println(bus.getDwg());
 
+
+
+            List<EARespond> gpsInfo = null;
+            try {
+                gpsInfo = eciApi.getGPSInfo(dwgNr);
+            } catch(IllegalArgumentException e){
+                return;
+            }
             System.out.println("Journey begin");
-
-            List<EARespond> gpsInfo = eciApi.getGPSInfo(dwgNr);
 
             for(EARespond rsp: gpsInfo){
                 System.out.println(rsp);
@@ -113,11 +132,11 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
             new Thread(this).start();
             hasEnded = false;
-
+            hasStarted = true;
         }
 
 
-        hasStarted = true;
+
 
     }
 
@@ -130,7 +149,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      */
     public void endJourney() throws IOException {
 
-        if(!hasEnded){
+        if(!hasEnded && hasStarted){
             // Stops the thread
             stillConnected = false;
 
@@ -245,7 +264,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
         System.out.println("Run");
 
-        while(/*NetworkStateChangeReciever.getInstance().isConnectedToWifi() &&*/ stillConnected){
+        while(NetworkStateChangeReciever.getInstance().isNetwConnected() && stillConnected){
 
             List<EARespond> gpsInfo = null;
             try {
@@ -267,7 +286,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 try {
                     lastLocations = vatApi.getNearbyStops(lon, lat, 20);
                     //stopL = lastLocations.getStopLocation(0);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

@@ -31,6 +31,7 @@ import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
+import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
@@ -234,13 +235,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
-                getSupportActionBar().setTitle("Wifi-detect");
+                title = "WiFi Detect";
+
+                getSupportActionBar().setTitle(title);
 
 
                 WifiFragment wfrag = new WifiFragment();
 
                 fragmentTransaction.replace(R.id.container, wfrag);
-
 
 
                 break;
@@ -303,49 +305,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     }
 
-    /*
-    public void setConnected(String bssid){
-        if(wifi){
-            TextView con = (TextView) findViewById(R.id.connected);
-            TextView dwg = (TextView) findViewById(R.id.dwg);
-            TextView vinnr = (TextView) findViewById(R.id.vinnr);
-            TextView regnr = (TextView) findViewById(R.id.regnr);
-            TextView mac = (TextView) findViewById(R.id.mac);
-            for(Bus b: Busses.theBusses){
-                if(bssid.equals(b.getMacAdress())){
-                    dwg.setText(b.getDwg());
-                    vinnr.setText(b.getVIN());
-                    regnr.setText(b.getRegNr());
-                    mac.setText(b.getMacAdress());
-                }
-            }
-            mac.setText(bssid);
-
-            con.setText("Connected");
-        }
-
-    }
-    public void setDisconnected(){
-        if(wifi){
-            TextView con = (TextView) findViewById(R.id.connected);
-            TextView dwg = (TextView) findViewById(R.id.dwg);
-            TextView vinnr = (TextView) findViewById(R.id.vinnr);
-            TextView regnr = (TextView) findViewById(R.id.regnr);
-            TextView mac = (TextView) findViewById(R.id.mac);
-
-            dwg.setText("");
-            vinnr.setText("");
-            regnr.setText("");
-            mac.setText("");
-            con.setText("Disconnected");
-        }
-
-    }
-
-    */
-
 
     private void logout() {
+        NetworkStateChangeReciever.getInstance().endJourney();
         startRegisterActivity();
         SaveHandler.changeUser(null);
     }
