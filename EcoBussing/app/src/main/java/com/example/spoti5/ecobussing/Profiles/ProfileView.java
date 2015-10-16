@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.R;
 
@@ -22,11 +23,19 @@ import com.example.spoti5.ecobussing.R;
 public class ProfileView extends Fragment implements ViewPager.OnPageChangeListener{
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
-    private View view;
+    private static View view;
     private ImageView dot1, dot2;
+    private static IProfile thisProfile;
 
     public ProfileView() {
         // Required empty public constructor
+    }
+
+    public static final ProfileView newInstance(IProfile ip)
+    {
+        ProfileView f = new ProfileView();
+        f.setThisProfile(ip);
+        return f;
     }
 
     @Override
@@ -44,7 +53,24 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
         dot1 = (ImageView) view.findViewById(R.id.img_dot1);
         dot2 = (ImageView) view.findViewById(R.id.img_dot2);
 
+        setDataStrings(view);
+
         return view;
+    }
+
+    public static void setDataStrings(View view) {
+        TextView nameView = (TextView)view.findViewById(R.id.profile_name);
+        nameView.setText(thisProfile.getName());
+        TextView companyNameView = (TextView)view.findViewById(R.id.user_company);
+        if(thisProfile instanceof IUser){
+            if(((IUser) thisProfile).getCompany() != null) {
+                companyNameView.setText(((IUser) thisProfile).getCompany());
+            }else{
+                companyNameView.setText("Den här användaren har inte anslutit sig till något företag");
+            }
+        }else{
+            companyNameView.setText(null);
+        }
     }
 
     @Override
@@ -69,6 +95,10 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
     private void setSmallDot (ImageView dot){
         dot.setImageResource(R.drawable.dot_grey_small);
         dot.setAlpha(0.7f);
+    }
+
+    public void setThisProfile(IProfile ip){
+        thisProfile = ip;
     }
 
     public interface OnFragmentInteractionListener {public void onFragmentInteraction(Uri uri);}

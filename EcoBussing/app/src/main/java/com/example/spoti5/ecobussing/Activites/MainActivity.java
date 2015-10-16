@@ -32,6 +32,7 @@ import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.ProfileView;
 
@@ -140,7 +141,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private void startFirstFragemnt(){
         String title = SaveHandler.getCurrentUser().getName();
         getSupportActionBar().setTitle(title);
-        ProfileView profileView = new ProfileView();
+        ProfileView profileView = ProfileView.newInstance(SaveHandler.getCurrentUser());
         fragmentsVisitedName.add(title);
         fragmentsVisited.add(profileView);
         fragmentTransaction.replace(R.id.container, profileView);
@@ -201,13 +202,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                title = SaveHandler.getCurrentUser().getName();
+                IUser user = SaveHandler.getCurrentUser();
+                title = user.getName();
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                ProfileView profileView = new ProfileView();
+                ProfileView profileView = ProfileView.newInstance(user);
+                System.out.println("and in main activity " + user);
                 fragmentsVisitedName.add(title);
                 fragmentsVisited.add(profileView);
-
                 fragmentTransaction.replace(R.id.container, profileView);
 
                 break;
