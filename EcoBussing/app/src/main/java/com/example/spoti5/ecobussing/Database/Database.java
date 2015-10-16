@@ -85,8 +85,8 @@ public class Database implements IDatabase{
     @Override
     public int getPosition(IUser user) {
         int index = 0;
-        if(allUsers.contains(user)){
-             index = allUsers.indexOf(user);
+        if(topListAll.contains(user)){
+             index = topListAll.indexOf(user);
         }
         return index;
     }
