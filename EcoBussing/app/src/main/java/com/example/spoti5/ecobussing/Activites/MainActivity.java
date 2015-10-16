@@ -132,6 +132,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, profileView);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                drawerLayout.closeDrawer(drawerListRight);
 
             }
 
