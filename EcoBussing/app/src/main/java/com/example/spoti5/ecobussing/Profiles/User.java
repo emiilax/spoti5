@@ -37,8 +37,8 @@ public class User implements IUser{
     private String oldCo2Json;
     private String oldMoneyJson;
 
-    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap  = new DeepMap<>();
-    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap  = new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap;
+    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;
 
     public User(){}
 
@@ -54,6 +54,10 @@ public class User implements IUser{
         this.co2CurrentYear = 0;
         this.co2Tot = 30;
         this.firstUse = true;
+        co2SavedMap = new DeepMap<>();
+        moneySavedMap = new DeepMap<>();
+        updateCo2Json();
+        updateMoneyJson();
 
         this.connectedCompany = "";
     }
@@ -116,6 +120,7 @@ public class User implements IUser{
         co2SavedMap.addToCurrentDate(co2Saved);
         this.incCurrentDistance(distance);
         this.addToCurrentCO2Saved(co2Saved);
+        updateCo2Json();
     }
 
     @Override
@@ -202,6 +207,7 @@ public class User implements IUser{
         updateMoneyMap();
         double moneySaved = Calculator.getCalculator().calculateMoneySaved(distance);
         moneySavedMap.addToCurrentDate(moneySaved);
+        updateMoneyJson();
     }
 
     @Override
@@ -286,32 +292,40 @@ public class User implements IUser{
     }
 
     public String getCo2Json() {
-        Gson gson = new Gson();
-        co2Json =  gson.toJson(co2SavedMap);
         return co2Json;
     }
 
-    public String getMoneyJson() {
+    private void updateCo2Json(){
         Gson gson = new Gson();
-        moneyJson =  gson.toJson(moneySavedMap);
-        updateMoneyMap();
+        co2Json =  gson.toJson(co2SavedMap);
+        updateCo2Map();
+    }
+
+    public String getMoneyJson() {
         return moneyJson;
     }
 
+    private void updateMoneyJson(){
+        Gson gson = new Gson();
+        moneyJson =  gson.toJson(moneySavedMap);
+        updateMoneyMap();
+    }
+
     private void updateMoneyMap(){
-        if(oldMoneyJson != moneyJson){
+        if(moneySavedMap == null || !oldMoneyJson.equals(moneyJson)){
+
             Gson gson = new Gson();
-            moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
-            oldMoneyJson = moneyJson;
+            moneySavedMap = gson.fromJson(this.getMoneyJson(), DeepMap.class);
+            oldMoneyJson = this.getMoneyJson();
         }
 
     }
 
     private void updateCo2Map(){
-        if(oldCo2Json != co2Json) {
+        if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
             Gson gson = new Gson();
-            co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
-            oldCo2Json = co2Json;
+            co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
+            oldCo2Json = this.getCo2Json();
         }
     }
     
