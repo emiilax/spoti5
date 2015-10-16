@@ -30,9 +30,19 @@
         <EditText
             android:layout_width="@dimen/centered_field_size"
             android:layout_height="wrap_content"
-            android:id="@+id/password1"
-            android:inputType="numberPassword"
+            android:id="@+id/current_password"
+            android:inputType="textPassword"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/current_pass_hint"
+            />
+
+
+        <EditText
+            android:layout_width="@dimen/centered_field_size"
+            android:layout_height="wrap_content"
+            android:id="@+id/password1"
+            android:inputType="textPassword"
             android:layout_gravity="center_horizontal"
             android:hint="@string/new_pass_hint"
             />
@@ -41,7 +51,7 @@
             android:layout_width="@dimen/centered_field_size"
             android:layout_height="wrap_content"
             android:id="@+id/password2"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:layout_gravity="center_horizontal"
             android:hint="@string/new_pass_hint2"
             />
@@ -60,8 +70,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/edit_profile_button"
                 android:id="@+id/save_button"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_gravity="center"
-                android:textSize="30dp"
+                android:textSize="20dp"
                  />
         </FrameLayout>
     </LinearLayout>

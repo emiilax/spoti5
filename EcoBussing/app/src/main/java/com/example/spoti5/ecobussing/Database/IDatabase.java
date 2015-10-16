@@ -27,6 +27,9 @@ public interface IDatabase {
     public void loginUser(String email, String password, IDatabaseConnected connection);
     public int getErrorCode();
     public IUser getUser(String email);
+    public void changePassword(String email, String oldPassword, String newPassword,  IDatabaseConnected connection);
+
+    public int getPosition(IUser user);
 
     public IProfile getCompany(String name);
 
