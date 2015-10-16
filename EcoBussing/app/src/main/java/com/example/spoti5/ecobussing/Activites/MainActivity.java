@@ -27,14 +27,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
-import com.example.spoti5.ecobussing.BarDiagram;
+import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
