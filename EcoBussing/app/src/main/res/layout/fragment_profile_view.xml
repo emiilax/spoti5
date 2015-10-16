@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.spoti5.ecobussing.profile.ProfileView">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_top_layout">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/user"
+                android:id="@+id/profile_pic"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_toRightOf="@id/profile_pic"
+                android:text="Name here"
+                android:id="@+id/profile_name"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_alignStart="@id/profile_name"
+                android:layout_below="@id/profile_name"
+                android:text="Company if available"
+                android:id="@+id/user_company" />
+        </RelativeLayout>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_share_row"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:src="@drawable/fb_share"
+                android:id="@+id/imageView7"
+                android:layout_marginLeft="16dp" />
+        </TableRow>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_above="@id/profile_share_row"
+            android:gravity="center_horizontal"
+            android:id="@+id/dot_row">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:id="@+id/img_dot1"
+                android:src="@drawable/dot_grey_big"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:id="@+id/img_dot2"
+                android:src="@drawable/dot_grey_small"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <!--
+        This is right now not done correct, the layout_height in profile_pager should not be set, it
+        should just take up all left over height, will have to fix.
+        -->
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profile_top_layout"
+            android:layout_above="@id/dot_row"
+            android:id="@+id/profile_pager"
+
+            xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
+

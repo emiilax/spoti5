@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.example.spoti5.ecobussing.R;
 
 /**
- * Fragment shown in the ViewPager in UserProfileView. This Fragment contains a graph atm.
+ * Fragment shown in the ViewPager in ProfileView. This Fragment contains a graph atm.
  * UserProfileOtherThing should be renamed at some point.
  */
 public class UserProfileOtherThing extends Fragment {

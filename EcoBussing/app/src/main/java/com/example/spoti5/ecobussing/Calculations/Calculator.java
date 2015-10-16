@@ -63,7 +63,7 @@ public class Calculator {
         // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
         String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
-                destinationLat + "," + destinationLng +"&key=AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
+                destinationLat + "," + destinationLng +"&key=" + key;
 
         if (correctFormatLat(originLat) && correctFormatLng(originLng) && correctFormatLat(destinationLat) &&
                 correctFormatLng(destinationLng)) {
@@ -124,6 +124,18 @@ public class Calculator {
         return (distance/10000)*avgCarPetrolConsumption*carbondioxideEmittedPerLiter;
     }
 
+
+    /**
+     * Calculates the distance a user has traveled based on the stored co2 of the user.
+     *
+     * OBS! This method most likely needs an update when the rest of the Calculator methods get fixed
+     * @param co2
+     * @return the distance, based on the parameter co2
+     */
+    public double calculateDistanceFromCO2(double co2) {
+        return (co2*10)/(avgCarPetrolConsumption*carbondioxideEmittedPerLiter*1000);
+    }
+
     /**
      *
      * @param lat is the double value that is checked.
@@ -143,4 +155,5 @@ public class Calculator {
     private boolean correctFormatLng(double lng){
         return (lng >= -180 && lng <= 180);
     }
+
 }

@@ -12,7 +12,7 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 
 /**
- * Fragment shown in the ViewPager in UserProfileView. This Fragment contains some user info and
+ * Fragment shown in the ViewPager in ProfileView. This Fragment contains some user info and
  * a profile picture.
  */
 public class UserProfileInfo extends Fragment {
