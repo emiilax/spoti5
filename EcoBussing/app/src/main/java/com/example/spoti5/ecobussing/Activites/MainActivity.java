@@ -145,7 +145,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void startFirstFragemnt(){
         IUser user = SaveHandler.getCurrentUser();
-        //IUser user = database.getUsers().get(0);
         String title = user.getName();
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
@@ -209,8 +208,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                //IUser user = SaveHandler.getCurrentUser();
-                IUser user = database.getUsers().get(0);
+                IUser user = SaveHandler.getCurrentUser();
                 title = user.getName();
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
