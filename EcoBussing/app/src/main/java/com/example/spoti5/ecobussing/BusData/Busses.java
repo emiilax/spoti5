@@ -34,7 +34,7 @@ public final class Busses {
 
     // List of the busses
     public static List<Bus> theBusses = new ArrayList<Bus>(Arrays.asList(epo131, epo136, epo143,
-            eog604, eog606, eog616, eog622, eog627, eog631, eog634));
+            eog604, eog606, eog616, eog622, eog627, eog631, eog634, simulated));
 
 
 

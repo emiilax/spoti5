@@ -37,8 +37,11 @@ public class Calculator {
     public int calculateDistance(StopLocation origin, StopLocation destination){
         double originLat = Double.parseDouble(origin.getLat());
         double originLng = Double.parseDouble(origin.getLon());
+
+        System.out.println("startLat: " + originLat + ", startLong: " + originLng);
         double destinationLat = Double.parseDouble(destination.getLat());
         double destinationLng = Double.parseDouble(destination.getLon());
+        System.out.println("endLat: " + destinationLat + ", endLong: " + destinationLng);
         return calculateDistance(originLat, originLng, destinationLat, destinationLng);
     }
 
