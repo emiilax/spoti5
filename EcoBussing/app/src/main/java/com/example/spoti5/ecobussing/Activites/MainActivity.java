@@ -29,7 +29,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
@@ -124,20 +126,37 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
             @Override
             public void onItemClick(AdapterView<?>adapter,View view, int position, long id){
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence text;
+
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 Object item = searchAdapter.getItem(position);
-                IUser user = (IUser)item;
-                String title = user.getName();
-                getSupportActionBar().setTitle(title);
-                ProfileView profileView = ProfileView.newInstance(user);
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(profileView);
-                fragmentTransaction.replace(R.id.container, profileView);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                drawerLayout.closeDrawer(drawerListRight);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                if(!(item instanceof Company)){
+                    IUser user = (IUser) item;
+                    try {
+                        String title = user.getName();
+                        getSupportActionBar().setTitle(title);
+                        ProfileView profileView = ProfileView.newInstance(user);
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(profileView);
+                        fragmentTransaction.replace(R.id.container, profileView);
+                    } catch (IndexOutOfBoundsException e) {
+                        text = "Ingen kontakt med databasen, försök igen";
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    drawerLayout.closeDrawer(drawerListRight);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                }else{
+                    text = "nja, vi har ju inte implementerat detta för företag än";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
 
             }
 
