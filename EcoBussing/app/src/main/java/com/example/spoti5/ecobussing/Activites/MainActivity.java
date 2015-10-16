@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
+import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
@@ -272,6 +273,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
 
     private void logout() {
+        NetworkStateChangeReciever.getInstance().endJourney();
         startRegisterActivity();
         SaveHandler.changeUser(null);
     }

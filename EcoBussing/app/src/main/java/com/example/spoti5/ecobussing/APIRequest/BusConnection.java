@@ -92,9 +92,15 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             String dwgNr = bus.getDwg();
             System.out.println(bus.getDwg());
 
-            System.out.println("Journey begin");
 
-            List<EARespond> gpsInfo = eciApi.getGPSInfo(dwgNr);
+
+            List<EARespond> gpsInfo = null;
+            try {
+                gpsInfo = eciApi.getGPSInfo(dwgNr);
+            } catch(IllegalArgumentException e){
+                return;
+            }
+            System.out.println("Journey begin");
 
             for(EARespond rsp: gpsInfo){
                 System.out.println(rsp);
@@ -126,11 +132,11 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
             new Thread(this).start();
             hasEnded = false;
-
+            hasStarted = true;
         }
 
 
-        hasStarted = true;
+
 
     }
 
@@ -143,7 +149,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      */
     public void endJourney() throws IOException {
 
-        if(!hasEnded){
+        if(!hasEnded && hasStarted){
             // Stops the thread
             stillConnected = false;
 

@@ -179,6 +179,16 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         }
     }
 
+    public void endJourney(){
+        if(onBus){
+            try{
+                busConnection.endJourney();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void startJourney(){
         if(!onBus && connectedToWifi){
             for(Bus b: Busses.theBusses){
