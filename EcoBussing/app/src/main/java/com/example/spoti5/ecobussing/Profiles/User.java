@@ -288,6 +288,7 @@ public class User implements IUser{
     public String getCo2Json() {
         Gson gson = new Gson();
         co2Json =  gson.toJson(co2SavedMap);
+        updateCo2Map();
         return co2Json;
     }
 

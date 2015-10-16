@@ -34,9 +34,6 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * Inits tempmaps and underlying map, has to be done in order to be created as a Json object
      */
     public DeepMap() {
-        tempMap2.put(0,0.0);
-        tempMap1.put(0, tempMap2);
-        underlyingMap.put(0, tempMap1);
 
     }
 
