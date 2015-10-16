@@ -45,7 +45,10 @@ public class SaveHandler {
                 e.printStackTrace();
             } catch (IOException e){
                 e.printStackTrace();
+            } catch(NullPointerException e){
+
             }
+
         }
         return currentUser;
     }
