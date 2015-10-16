@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
@@ -33,7 +35,8 @@ import java.util.ListIterator;
 public class ConnectCompanyFragment extends Fragment {
 
     private IDatabase database;
-    private IUser currentUser;
+    private User currentUser;
+    private Company company;
 
     private AutoCompleteTextView autoCompleteTextView;
     private ImageView searchButton;
@@ -48,8 +51,6 @@ public class ConnectCompanyFragment extends Fragment {
     private ArrayAdapter arrayAdapter;
     private String[] companies;
 
-    private IProfile company;
-
     public ConnectCompanyFragment(){
     }
 
@@ -62,7 +63,7 @@ public class ConnectCompanyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         database = DatabaseHolder.getDatabase();
-        currentUser = SaveHandler.getCurrentUser();
+        currentUser = (User)SaveHandler.getCurrentUser();
     }
 
 
@@ -72,8 +73,7 @@ public class ConnectCompanyFragment extends Fragment {
 
         autoCompleteTextView = (AutoCompleteTextView)view.findViewById(R.id.autoCompleteTextView);
         searchButton = (ImageView)view.findViewById(R.id.searchButton);
-        compImage = (ImageView)view.findViewById(R.id.imageViewComp);
-        compImage.setVisibility(View.INVISIBLE);
+        compImage = (ImageView)view.findViewById(R.id.imageView7);
         compName = (TextView)view.findViewById(R.id.textViewCompName);
         nbrEmployees = (TextView)view.findViewById(R.id.textViewNbrEmployees);
         nbrConnected = (TextView)view.findViewById(R.id.textViewNbrConnected);
@@ -110,17 +110,28 @@ public class ConnectCompanyFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            company = database.getCompany(autoCompleteTextView.getText().toString());
+            company = (Company)database.getCompany(autoCompleteTextView.getText().toString());
             compImage.setVisibility(View.VISIBLE);
-            //connectButton.setVisibility(View.VISIBLE);
+            connectButton.setVisibility(View.VISIBLE);
+
             compName.setText(company.getName());
+            nbrEmployees.setText(Integer.toString(company.getNbrEmployees()));
+            nbrConnected.setText(Integer.toString(company.getMembers(true).size()));
             co2Company.setText(company.getCO2Saved(false).toString());
+
+            if(!company.getCompanyInfo().equals("")){
+                compInfo.setVisibility(View.VISIBLE);
+                compInfo.setText(company.getCompanyInfo());
+            }
+
         }
     };
 
     private View.OnClickListener connectToCompany = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            currentUser.setCompany(autoCompleteTextView.getText().toString());
+            company.addMember(currentUser);
 
         }
     };
