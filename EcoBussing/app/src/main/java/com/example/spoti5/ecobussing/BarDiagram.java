@@ -83,17 +83,6 @@ public class BarDiagram extends Fragment {
         yAxis.setValueFormatter(new YAxisFormatter());
         //yAxis.setLabelCount(6, false);
 
-
-
-
-        //YAxis rightAxis = chart.getAxisRight();
-        //YAxis leftAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
-
-
-
-
-
-
         return view;
     }
 
