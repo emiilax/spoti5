@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -133,6 +134,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
                 drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
 
             }
 
@@ -219,6 +222,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             drawerLayout.openDrawer(drawerListLeft);
         }else if(id == R.id.action_search){
             drawerLayout.openDrawer(drawerListRight);
+            drawerLayout.clearFocus();
+            searchText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
         }
         return super.onOptionsItemSelected(item);
     }
