@@ -19,13 +19,13 @@ import com.example.spoti5.ecobussing.R;
  *
  *  Created by Hampus on 2015-10-12.
  */
-public class UserProfileView extends Fragment implements ViewPager.OnPageChangeListener{
+public class ProfileView extends Fragment implements ViewPager.OnPageChangeListener{
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private View view;
     private ImageView dot1, dot2;
 
-    public UserProfileView() {
+    public ProfileView() {
         // Required empty public constructor
     }
 
@@ -33,7 +33,7 @@ public class UserProfileView extends Fragment implements ViewPager.OnPageChangeL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_user_profile_view, container, false);
+        view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
         mPagerAdapter = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
 

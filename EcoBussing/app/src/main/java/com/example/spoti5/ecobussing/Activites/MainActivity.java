@@ -33,7 +33,7 @@ import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.UserProfileView;
+import com.example.spoti5.ecobussing.Profiles.ProfileView;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -140,10 +140,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private void startFirstFragemnt(){
         String title = SaveHandler.getCurrentUser().getName();
         getSupportActionBar().setTitle(title);
-        UserProfileView userProfileView = new UserProfileView();
+        ProfileView profileView = new ProfileView();
         fragmentsVisitedName.add(title);
-        fragmentsVisited.add(userProfileView);
-        fragmentTransaction.replace(R.id.container, userProfileView);
+        fragmentsVisited.add(profileView);
+        fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -204,11 +204,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 title = SaveHandler.getCurrentUser().getName();
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                UserProfileView userProfileView = new UserProfileView();
+                ProfileView profileView = new ProfileView();
                 fragmentsVisitedName.add(title);
-                fragmentsVisited.add(userProfileView);
+                fragmentsVisited.add(profileView);
 
-                fragmentTransaction.replace(R.id.container, userProfileView);
+                fragmentTransaction.replace(R.id.container, profileView);
 
                 break;
             case 1:

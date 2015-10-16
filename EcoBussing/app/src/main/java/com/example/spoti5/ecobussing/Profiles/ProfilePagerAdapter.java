@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
- * This is the pager adapter for the ViewPager in UserProfileView. New fragments are added in getItem().
- * When this is done there also need to be more cases added in onPageSelected() in UserProfileView.
+ * This is the pager adapter for the ViewPager in ProfileView. New fragments are added in getItem().
+ * When this is done there also need to be more cases added in onPageSelected() in ProfileView.
  * Also getCount needs a change.
  *
  * Created by Hampus on 2015-10-12.
