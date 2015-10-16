@@ -18,10 +18,10 @@
         <ImageView
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_width="168dp"
-            android:layout_height="168dp"
+            android:layout_width="@dimen/big_image"
+            android:layout_height="@dimen/big_image"
             android:id="@+id/profile_pic"
-            android:src="@drawable/empty_profile"
+            android:src="@drawable/user"
           />
 
 

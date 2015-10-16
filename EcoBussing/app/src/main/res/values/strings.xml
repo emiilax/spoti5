@@ -22,7 +22,7 @@
     <string name="redo_password_hint">Lösenord igen</string>
     <string name="Name_hint">Namn</string>
     <string name="register_button">Registrera</string>
-    <string name="logIn"><u>Logga in</u></string>
+    <string name="logIn"><u>Redan medlem? Logga in här</u></string>
 
     <string name="search_hint">Företag eller person</string>
 
@@ -39,6 +39,9 @@
 
     <string name="add_company_text">Här kan du registrera ditt företag så att du och dina anställda kan spara koldioxid tillsammans!</string>
 
+    <string name="current_pass_hint">Nuvarande lösenord</string>
+    <string name="new_pass_hint">Nytt lösenord</string>
+    <string name="new_pass_hint2">Nytt lösenord igen</string>
 
     <string-array name="drawer_array">
         <item>Min profil</item>

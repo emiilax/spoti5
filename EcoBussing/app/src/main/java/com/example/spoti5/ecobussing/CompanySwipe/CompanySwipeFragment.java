@@ -30,19 +30,18 @@ public class CompanySwipeFragment extends Fragment {
 
     private CharSequence titles[];
     private int nbrTabs;
-    private int tabGroup;
 
     private IDatabase database = DatabaseHolder.getDatabase();
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.profile_swipe, container, false);
         titles = new CharSequence[2];
 
         initTabInfo();
 
-        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), titles, nbrTabs, tabGroup);
-        pager = (ViewPager)view.findViewById(R.id.profilePager);
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), titles, nbrTabs);
+        pager = (ViewPager) view.findViewById(R.id.profilePager);
         pager.setAdapter(adapter);
 
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
@@ -54,29 +53,11 @@ public class CompanySwipeFragment extends Fragment {
 
     }
 
-    private void initTabInfo(){
-        IUser tmpUser = SaveHandler.getCurrentUser();
-        System.out.println(tmpUser.getName());
-        if(tmpUser.getCompany().equals("")|| tmpUser.getCompany() == null){
-            //Skapa företag och Koppla till företag
-            tabGroup = 0;
-            nbrTabs = 2;
-            titles[0] = "Anslut till företag";
-            titles[1] = "Skapa företag";
-        }else{
-            Company company = (Company)database.getCompany(tmpUser.getCompany());
-            if(company.userIsModerator(tmpUser) && company.userIsMember(tmpUser)){
-                tabGroup = 1;
-                nbrTabs = 1;
-                titles[0] = "Redigera Företag";
-            }else{
-                tabGroup = 2;
-                nbrTabs = 1;
-                titles[0] = "Redigera företag";
-            }
+    private void initTabInfo() {
+        nbrTabs = 2;
+        titles[0] = "Anslut till företag";
+        titles[1] = "Skapa företag";
 
-            //Redigera företag om admin annars gå ur företag?
-        }
     }
 
 }

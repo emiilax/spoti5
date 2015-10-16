@@ -29,7 +29,10 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
+import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
+import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
@@ -65,10 +68,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private List<String> fragmentsVisitedName;
     private List<? super Fragment> fragmentsVisited;
 
+    private IUser currentUser;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        currentUser = SaveHandler.getCurrentUser();
 
         fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
@@ -81,9 +88,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         //addWifiChangeHandler();
 
         listAdapter = new DrawerListAdapter(this);
-        searchAdapter = new SearchAdapter(this, "");
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        searchAdapter = new SearchAdapter(this, "---");
 
         //planetTitles = getResources().getStringArray(R.array.planets_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -128,20 +133,27 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         loadSelection(0);
+
+        startFirstFragemnt();
     }
 
-    protected void setUpDrawer(){
-
+    private void startFirstFragemnt(){
+        String title = SaveHandler.getCurrentUser().getName();
+        getSupportActionBar().setTitle(title);
+        UserProfileView userProfileView = new UserProfileView();
+        fragmentsVisitedName.add(title);
+        fragmentsVisited.add(userProfileView);
+        fragmentTransaction.replace(R.id.container, userProfileView);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
+
 
     private Drawable rezizedDrawable(){
         Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
         Bitmap mp = ((BitmapDrawable)logo).getBitmap();
         Drawable smallLogo = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
         return smallLogo;
-        /*Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
-        logo.setBounds(0,0,16,16);
-        return logo;*/
     }
 
     private void loadSelection(int i){
@@ -223,42 +235,34 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
+                title = "WiFi Detect";
 
-                title = "fragment 4";
                 getSupportActionBar().setTitle(title);
-
-
-                /*
-                WifiDetect wifiDetect = new WifiDetect();
-
-=======
-                getSupportActionBar().setTitle("Wifi-detect");
 
 
                 WifiFragment wfrag = new WifiFragment();
 
                 fragmentTransaction.replace(R.id.container, wfrag);
 
-                /*
-
-                 
->>>>>>> fb4311943d89d84bb2afb9a756a5f23b7452587f
-                wifi = true;
-                fragmentTransaction.replace(R.id.container, wifiDetect);
-                if(wifiReciever.getBssid() != null){
-                    setConnected(wifiReciever.getBssid());
-                }
-                */
 
                 break;
             case 4:
                 title = "Företagsinställningar";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                CompanySwipeFragment fragment = new CompanySwipeFragment();
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(fragment);
-                fragmentTransaction.replace(R.id.container, fragment);
+                if(currentUser.getCompany().equals("") || currentUser.getCompany().equals(null)) {
+                    //Om man inte är connctad till ett företag
+                    CompanySwipeFragment fragment = new CompanySwipeFragment();
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(fragment);
+                    fragmentTransaction.replace(R.id.container, fragment);
+                }else{
+                    //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
+                    ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(connectedCompanyFragment);
+                    fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
+                }
                 break;
             case 5:
                 title = "Redigera profil";
@@ -283,66 +287,27 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerLayout.closeDrawer(drawerListLeft);
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
-/*
+
     @Override
     public void onBackPressed(){
-        if(fragmentsVisited.size() > 0 && fragmentsVisitedName.size() > 0 && fragmentsVisited.size() == fragmentsVisitedName.size()){
-            int last = fragmentsVisitedName.size() - 1;
+        if(drawerLayout.isDrawerOpen(drawerListLeft)){
+            drawerLayout.closeDrawer(drawerListLeft);
+        } else if(drawerLayout.isDrawerOpen(drawerListRight)){
+            drawerLayout.closeDrawer(drawerListRight);
+        } else if(fragmentsVisitedName.size() > 2){
+            int last = fragmentsVisitedName.size() - 2;
             getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
-            fragmentTransaction.replace(R.id.container, (Fragment) fragmentsVisited.get(last));
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-            fragmentsVisited.remove(last);
-            fragmentsVisitedName.remove(last);
+            fragmentsVisitedName.remove(last + 1);
+            super.onBackPressed();
         } else {
             super.onBackPressed();
         }
 
-    }*/
-
-    /*
-    public void setConnected(String bssid){
-        if(wifi){
-            TextView con = (TextView) findViewById(R.id.connected);
-            TextView dwg = (TextView) findViewById(R.id.dwg);
-            TextView vinnr = (TextView) findViewById(R.id.vinnr);
-            TextView regnr = (TextView) findViewById(R.id.regnr);
-            TextView mac = (TextView) findViewById(R.id.mac);
-            for(Bus b: Busses.theBusses){
-                if(bssid.equals(b.getMacAdress())){
-                    dwg.setText(b.getDwg());
-                    vinnr.setText(b.getVIN());
-                    regnr.setText(b.getRegNr());
-                    mac.setText(b.getMacAdress());
-                }
-            }
-            mac.setText(bssid);
-
-            con.setText("Connected");
-        }
-
     }
-    public void setDisconnected(){
-        if(wifi){
-            TextView con = (TextView) findViewById(R.id.connected);
-            TextView dwg = (TextView) findViewById(R.id.dwg);
-            TextView vinnr = (TextView) findViewById(R.id.vinnr);
-            TextView regnr = (TextView) findViewById(R.id.regnr);
-            TextView mac = (TextView) findViewById(R.id.mac);
-
-            dwg.setText("");
-            vinnr.setText("");
-            regnr.setText("");
-            mac.setText("");
-            con.setText("Disconnected");
-        }
-
-    }
-
-    */
 
 
     private void logout() {
+        NetworkStateChangeReciever.getInstance().endJourney();
         startRegisterActivity();
         SaveHandler.changeUser(null);
     }
@@ -379,7 +344,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     timerRunning = false;
                     t.cancel();
                 }
-            }, 5000);
+            }, 1000);
 
             return true;
         }

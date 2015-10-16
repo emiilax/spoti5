@@ -11,5 +11,6 @@
     <dimen name="navigation_text_size_biggest">25dp</dimen>
     <dimen name="centered_field_size">280dp</dimen>
     <dimen name="small_image">30dp</dimen>
+    <dimen name="big_image">168dp</dimen>
 
 </resources>

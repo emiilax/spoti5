@@ -9,7 +9,11 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,13 +23,11 @@ public class Company implements IProfile {
 
     private IDatabase database;
 
-    private String companyName;
-    private double co2CurrentMonth;
-    private double co2CurrentYear;
-    private double co2Tot;
+    private String name;
+    private double pointCurrentMonth;
+    private double pointCurrentYear;
+    private double pointTot;
     private String companyInfo;
-    private String password;
-
     private int nbrEmployees;
 
     /**
@@ -41,8 +43,14 @@ public class Company implements IProfile {
     private String oldMomMemberJson;
     private String oldMemberJson;
 
-    public Company(String businessName, User creatorMember, String password, int nbrEmployees) {
-        companyName = businessName;
+    private HashMap userConnectionDates;
+    private String usersConnectedJson;
+    private String oldUserConnectedJson;
+
+    public Company(){}
+
+    public Company(String businessName, User creatorMember, int nbrEmployees) {
+        name = businessName;
         this.creatorMember = creatorMember.getEmail();
 
         moderatorMembers = new ArrayList<IUser>();
@@ -51,24 +59,26 @@ public class Company implements IProfile {
         moderatorMembers.add(creatorMember);
         members.add(creatorMember);
 
-        co2CurrentMonth = 0;
-        co2CurrentYear = 0;
-        co2Tot = 0;
+        pointCurrentMonth = 0;
+        pointCurrentYear = 0;
+        pointTot = 0;
+        companyInfo = "";
 
-        this.password = password;
         this.nbrEmployees = nbrEmployees;
+
+        userConnectionDates = new HashMap();
 
         database = DatabaseHolder.getDatabase();
     }
 
     @Override
     public String getName() {
-        return companyName;
+        return name;
     }
 
     @Override
     public void setName(String name) {
-        companyName = name;
+        this.name = name;
     }
 
     public void setCompanyInfo(String info){
@@ -96,6 +106,16 @@ public class Company implements IProfile {
                 Gson gson = new Gson();
                 moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<IUser>>(){}.getType());
                 oldMomMemberJson = modMemberJson;
+            }
+        }
+    }
+
+    private void updateUserConnectionDates(){
+        if(oldUserConnectedJson != usersConnectedJson){
+            if(!usersConnectedJson.equals(null)){
+                Gson gson = new Gson();
+                userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
+                oldUserConnectedJson = usersConnectedJson;
             }
         }
     }
@@ -159,9 +179,14 @@ public class Company implements IProfile {
     public void addMember(User user) {
         updateMembersFromJson();
         if (!userIsMember(user)) {
-            user.setCompany(companyName);
+            user.setCompany(name);
             SaveHandler.changeUser(user);
             members.add(user);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date dateTime = new Date();
+            String str = dateFormat.format(dateTime);
+            String[] date = str.split(" ");
+            userConnectionDates.put(user, date[0]);
         }
     }
 
@@ -224,6 +249,12 @@ public class Company implements IProfile {
         }
     }
 
+    public String getUsersConnectedJson() {
+        Gson gson = new Gson();
+        usersConnectedJson =  gson.toJson(userConnectionDates);
+        return usersConnectedJson;
+    }
+
 
     @Override
     public Double getDistanceTraveled() {
@@ -252,30 +283,30 @@ public class Company implements IProfile {
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public void incCO2Saved(double distance) {
 
     }
 
     @Override
     public Double getCO2Saved(boolean avoidDatabaseUpload) {
-        return co2Tot;
+        return pointTot;
     }
 
     public int getNbrEmployees() {
         return nbrEmployees;
     }
 
-    public double getCo2CurrentYear() {
-        return co2CurrentYear;
+    public double getpointTot() {
+        return pointTot;
     }
 
-    public double getCo2CurrentMonth() {
-        return co2CurrentMonth;
+
+    public double getpointCurrentYear() {
+        return pointCurrentYear;
+    }
+
+    public double getpointCurrentMonth() {
+        return  pointCurrentMonth;
     }
 
     public String getCompanyInfo() {
@@ -297,15 +328,16 @@ public class Company implements IProfile {
     @Override
     public String toString() {
         return "Company{" +
-                "companyName='" + companyName + '\'' +
-                "password='" + password + '\'' +
-                ", co2CurrentMonth=" + co2CurrentMonth +
-                ", co2CurrentYear=" + co2CurrentYear +
-                ", co2Tot=" + co2Tot + ", nbrEmployees="+ nbrEmployees +
+                "name='" + name + '\'' +
+                ", pointCurrentMonth=" +  pointCurrentMonth +
+                ", pointCurrentYear=" + pointCurrentYear +
+                ", pointTot=" + pointTot + ", " +
+                "nbrEmployees="+ nbrEmployees +
                 ", companyInfo='" + companyInfo + '\'' +
                 ", creatorMember='" + creatorMember + '\'' +
                 ", modMemberJson='" + modMemberJson + '\'' +
                 ", memberJson='" + memberJson + '\'' +
+                ", userConnectedJson=" + usersConnectedJson +
                 '}';
     }
 
