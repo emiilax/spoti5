@@ -302,6 +302,11 @@ public class User implements IUser{
     }
 
     private void updateMoneyMap(){
+        if(moneySavedMap == null){
+            Gson gson = new Gson();
+            moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
+            oldMoneyJson = moneyJson;
+        }
         if(oldMoneyJson != moneyJson){
             Gson gson = new Gson();
             moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
@@ -311,6 +316,11 @@ public class User implements IUser{
     }
 
     private void updateCo2Map(){
+        if(co2SavedMap == null){
+            Gson gson = new Gson();
+            co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
+            oldCo2Json = co2Json;
+        }
         if(oldCo2Json != co2Json) {
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
