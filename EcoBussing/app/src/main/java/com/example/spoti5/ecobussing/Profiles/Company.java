@@ -191,11 +191,14 @@ public class Company implements IProfile {
             user.setCompany(name);
             SaveHandler.changeUser(user);
             members.add(user);
+
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date dateTime = new Date();
             String str = dateFormat.format(dateTime);
-            String[] date = str.split(" ");
-            userConnectionDates.put(user, date[0]);
+            //String[] date = str.split(" ");
+
+            userConnectionDates.put(user, str);
+
             updateMemberJson();
         }
     }

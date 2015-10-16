@@ -130,7 +130,7 @@ public class ConnectCompanyFragment extends Fragment {
     private View.OnClickListener connectToCompany = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            currentUser.setCompany(autoCompleteTextView.getText().toString());
+            currentUser.setCompany(company.getName());
             company.addMember(currentUser);
 
         }
