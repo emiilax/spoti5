@@ -27,16 +27,17 @@ android {
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
-
 }
 
+
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile files('dependencies/gson-2.3.1.jar')
     testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.9.5"
+    testCompile 'org.mockito:mockito-core:1.9.5'
     compile 'com.firebase:firebase-client-android:2.3.1+'
     compile 'com.android.support:design:23.0.0'
-
+    compile files('dependencies/mpandroidchartlibrary-2-1-5.jar')
 }

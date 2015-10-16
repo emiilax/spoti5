@@ -19,6 +19,7 @@ public interface IUser extends IProfile {
     public double getCo2CurrentMonth();
     public double getCo2Tot();
 
+
     /**
      *
      * @param avoidDatabaseUpload doesn't matter if true or false, this avoids MoneySaved to be stored in the database.
