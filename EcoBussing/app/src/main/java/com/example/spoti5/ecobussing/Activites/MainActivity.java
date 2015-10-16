@@ -30,6 +30,8 @@ import android.support.v7.widget.Toolbar;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
@@ -59,6 +61,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private ImageView searchImage;
     private EditText searchText;
 
+    private IDatabase database;
+
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
@@ -77,6 +81,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         currentUser = SaveHandler.getCurrentUser();
+        database = DatabaseHolder.getDatabase();
 
         fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
@@ -139,9 +144,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     private void startFirstFragemnt(){
-        String title = SaveHandler.getCurrentUser().getName();
+        IUser user = SaveHandler.getCurrentUser();
+        //IUser user = database.getUsers().get(0);
+        String title = user.getName();
         getSupportActionBar().setTitle(title);
-        ProfileView profileView = ProfileView.newInstance(SaveHandler.getCurrentUser());
+        ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
         fragmentsVisited.add(profileView);
         fragmentTransaction.replace(R.id.container, profileView);
@@ -202,7 +209,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                IUser user = SaveHandler.getCurrentUser();
+                //IUser user = SaveHandler.getCurrentUser();
+                IUser user = database.getUsers().get(0);
                 title = user.getName();
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
@@ -214,6 +222,17 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 break;
             case 1:
+                IProfile company = database.getCompanies().get(0);
+                title = company.getName();
+                getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                ProfileView companyView = ProfileView.newInstance(company);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(companyView);
+                fragmentTransaction.replace(R.id.container, companyView);
+
+                break;
+           /* case 1:
                 title = "fragment 2";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
@@ -223,6 +242,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
+                */
             case 2:
                 title = "Topplistor";
                 getSupportActionBar().setTitle(title);

@@ -44,11 +44,8 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
 
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
-        mPagerAdapter = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+        setMPagerAdapter();
 
-        mViewPager = (ViewPager)view.findViewById(R.id.profile_pager);
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
 
         dot1 = (ImageView) view.findViewById(R.id.img_dot1);
         dot2 = (ImageView) view.findViewById(R.id.img_dot2);
@@ -58,12 +55,28 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
         return view;
     }
 
+    private void setMPagerAdapter() {
+        if(thisProfile instanceof IUser) {
+            mPagerAdapter = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+        }else {
+            mPagerAdapter = new CompanyPagerAdapter(getActivity().getSupportFragmentManager());
+        }
+        mViewPager = (ViewPager)view.findViewById(R.id.profile_pager);
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.addOnPageChangeListener(this);
+    }
+
     public static void setDataStrings(View view) {
         TextView nameView = (TextView)view.findViewById(R.id.profile_name);
         nameView.setText(thisProfile.getName());
         TextView companyNameView = (TextView)view.findViewById(R.id.user_company);
+
+        /**
+         * there is a better way of doing this w/o using instanceof, I don't remember how, but I remeber
+         * you should stay away from using instanceof in this manner, so this should be fixed.
+         */
         if(thisProfile instanceof IUser){
-            if(((IUser) thisProfile).getCompany() != null) {
+            if(((IUser) thisProfile).getCompany().length() > 0) {
                 companyNameView.setText(((IUser) thisProfile).getCompany());
             }else{
                 companyNameView.setText("Den här användaren har inte anslutit sig till något företag");
