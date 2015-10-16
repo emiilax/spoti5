@@ -2,6 +2,8 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -113,6 +115,28 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         searchListView = (ListView) myView.findViewById(R.id.search_result_list);
         searchListView.setAdapter(searchAdapter);
+        searchListView.setOnItemClickListener(this);
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?>adapter,View view, int position, long id){
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                Object item = searchAdapter.getItem(position);
+                IUser user = (IUser)item;
+                String title = user.getName();
+                getSupportActionBar().setTitle(title);
+                ProfileView profileView = ProfileView.newInstance(user);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(profileView);
+                fragmentTransaction.replace(R.id.container, profileView);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+            }
+
+
+        });
 
         drawerListRight.addView(myView);
 
@@ -120,6 +144,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerListLeft.setAdapter(listAdapter);
 
         drawerListLeft.setOnItemClickListener(this);
+
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -213,7 +238,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView profileView = ProfileView.newInstance(user);
-                System.out.println("and in main activity " + user);
                 fragmentsVisitedName.add(title);
                 fragmentsVisited.add(profileView);
                 fragmentTransaction.replace(R.id.container, profileView);
