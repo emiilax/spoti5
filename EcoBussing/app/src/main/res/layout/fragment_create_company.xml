@@ -10,17 +10,15 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/headerTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="@string/add_company_text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="20dp"
+        <ImageView
+            android:layout_width="168dp"
+            android:layout_height="168dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:id="@+id/imageView4"
             android:layout_gravity="center_horizontal"
-            android:padding="20dp"
-            android:textAlignment="center" />
+            android:src="@drawable/user"
+            android:layout_weight="0.07"
+            android:clickable="true" />
 
         <EditText
             android:layout_width="@dimen/centered_field_size"
@@ -36,33 +34,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:inputType="number"
-            android:hint="Antal anställda"
+            android:hint="Antal anställda(t.ex 10)"
             android:ems="10"
             android:id="@+id/editTextEmployees"
             android:layout_gravity="center_horizontal"
             android:textSize="20dp"/>
 
         <EditText
-            android:layout_width="@dimen/centered_field_size"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:hint="Lösenord"
-            android:ems="10"
-            android:id="@+id/editTextPassword"
-            android:textSize="20dp" />
-
-        <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:inputType="text"
-            android:hint="Lösenord igen"
-            android:id="@+id/editTextPassword2"
+            android:inputType="textMultiLine"
             android:ems="10"
+            android:id="@+id/editTextCompInfo"
             android:layout_gravity="center_horizontal"
-            android:textSize="20dp"/>
+            android:layout_weight="0.27"
+            android:lines="3"/>
 
         <Button
             android:layout_width="154dp"

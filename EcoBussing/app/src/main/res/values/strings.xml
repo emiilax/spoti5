@@ -39,6 +39,7 @@
 
     <string name="add_company_text">Här kan du registrera ditt företag så att du och dina anställda kan spara koldioxid tillsammans!</string>
 
+    <string name="current_pass_hint">Nuvarande lösenord</string>
     <string name="new_pass_hint">Nytt lösenord</string>
     <string name="new_pass_hint2">Nytt lösenord igen</string>
 

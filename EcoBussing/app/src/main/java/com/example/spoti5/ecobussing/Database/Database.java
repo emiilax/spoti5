@@ -82,6 +82,15 @@ public class Database implements IDatabase{
         return null;
     }
 
+    @Override
+    public int getPosition(IUser user) {
+        int index = 0;
+        if(allUsers.contains(user)){
+             index = allUsers.indexOf(user);
+        }
+        return index;
+    }
+
     public IProfile getCompany(String name){
         for(IProfile c: getCompanies()){
             if(c.getName().equals(name)){
@@ -143,9 +152,30 @@ public class Database implements IDatabase{
         });
     }
 
+    @Override
+    public void changePassword(String email, String oldPassword, String newPassword, final IDatabaseConnected connection) {
+        errorCode = ErrorCodes.NO_ERROR;
+        firebaseRef.child(userString).changePassword(email, oldPassword, newPassword ,new Firebase.ResultHandler() {
+            @Override
+            public void onSuccess() {
+                errorCode = ErrorCodes.NO_ERROR;
+                connection.loginFinished();
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                setErrorCode(firebaseError);
+                System.out.println(firebaseError.getMessage());
+                connection.loginFinished();
+            }
+        });
+    }
+
+
+
     private void setErrorCode(FirebaseError error) {
         int tmpError = error.getCode();
-        if (tmpError == FirebaseError.INVALID_CREDENTIALS) {
+        if (tmpError == FirebaseError.INVALID_CREDENTIALS || tmpError == FirebaseError.INVALID_PASSWORD) {
             errorCode = ErrorCodes.WRONG_CREDENTIALS;
         } else if (tmpError == FirebaseError.DISCONNECTED || tmpError == FirebaseError.NETWORK_ERROR) {
             errorCode = ErrorCodes.NO_CONNECTION;
@@ -203,7 +233,6 @@ public class Database implements IDatabase{
 
             @Override
             public void onAuthenticated(AuthData authData) {
-                System.out.println("Database logged in");
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
             }
@@ -295,7 +324,6 @@ public class Database implements IDatabase{
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
                         IProfile company = companySnapshots.getValue(Company.class);
                         addCompanyToList(listValue, company);
-                        System.out.println("company name "+company.getName());
 
                     }
                 } catch (FirebaseException var4) {

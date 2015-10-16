@@ -34,11 +34,11 @@ public class User implements IUser{
     private String co2Json;
     private String moneyJson;
 
-    private String oldCo2Json;
-    private String oldMoneyJson;
+    private String oldCo2Json   = "";
+    private String oldMoneyJson = "";
 
-    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap  = new DeepMap<>();
-    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap  = new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap; //= new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;// = new DeepMap<>();
 
     public User(){}
 
@@ -54,9 +54,13 @@ public class User implements IUser{
         this.co2CurrentYear = 0;
         this.co2Tot = 30;
         this.firstUse = true;
+        co2SavedMap = new DeepMap<>();
+        moneySavedMap = new DeepMap<>();
 
         this.connectedCompany = "";
     }
+
+
 
     public User(String email, String name){
         this(email);
@@ -289,6 +293,7 @@ public class User implements IUser{
     public String getCo2Json() {
         Gson gson = new Gson();
         co2Json =  gson.toJson(co2SavedMap);
+        updateCo2Map();
         return co2Json;
     }
 
@@ -300,8 +305,10 @@ public class User implements IUser{
     }
 
     private void updateMoneyMap(){
-        if(oldMoneyJson != moneyJson){
+        System.out.println("JsonMoney: " + moneyJson);
+        if(!oldMoneyJson.equals(moneyJson)){
             Gson gson = new Gson();
+
             moneySavedMap = gson.fromJson(moneyJson, DeepMap.class);
             oldMoneyJson = moneyJson;
         }
@@ -309,8 +316,10 @@ public class User implements IUser{
     }
 
     private void updateCo2Map(){
-        if(oldCo2Json != co2Json) {
+        System.out.println("JsonCO2: " + co2Json);
+        if(!oldCo2Json.equals(co2Json)) {
             Gson gson = new Gson();
+
             co2SavedMap = gson.fromJson(co2Json, DeepMap.class);
             oldCo2Json = co2Json;
         }
