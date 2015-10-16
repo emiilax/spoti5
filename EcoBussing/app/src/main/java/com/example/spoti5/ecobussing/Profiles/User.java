@@ -58,6 +58,8 @@ public class User implements IUser{
         moneySavedMap = new DeepMap<>();
         updateCo2Json();
         updateMoneyJson();
+        oldCo2Json = "";
+        oldMoneyJson = "";
 
         this.connectedCompany = "";
     }
@@ -298,7 +300,7 @@ public class User implements IUser{
     private void updateCo2Json(){
         Gson gson = new Gson();
         co2Json =  gson.toJson(co2SavedMap);
-        updateCo2Map();
+        //updateCo2Map();
     }
 
     public String getMoneyJson() {
@@ -308,7 +310,7 @@ public class User implements IUser{
     private void updateMoneyJson(){
         Gson gson = new Gson();
         moneyJson =  gson.toJson(moneySavedMap);
-        updateMoneyMap();
+        //updateMoneyMap();
     }
 
     private void updateMoneyMap(){
