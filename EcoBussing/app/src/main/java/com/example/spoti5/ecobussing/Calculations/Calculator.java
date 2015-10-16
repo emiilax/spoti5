@@ -63,7 +63,7 @@ public class Calculator {
         // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
         String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
-                destinationLat + "," + destinationLng +"&key=AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
+                destinationLat + "," + destinationLng +"&key=" + key;
 
         if (correctFormatLat(originLat) && correctFormatLng(originLng) && correctFormatLat(destinationLat) &&
                 correctFormatLng(destinationLng)) {
