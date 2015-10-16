@@ -6,59 +6,86 @@
     android:onClick="onScreenTouch"
     android:weightSum="1">
 
-    <Space
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Overview"
-        android:id="@+id/overviewtextviewheadline"
-        android:layout_marginTop="40dp"
-        android:textSize="50dp"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="CO2 SPARAT"
-        android:id="@+id/overviewtextview1"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="CO2 SPARAT"
-        android:id="@+id/overviewtextview4"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Totalt"
-        android:id="@+id/overviewtextview5"
-        android:textSize="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="D"
-        android:id="@+id/overviewtextview2"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="80dp"
-        android:layout_gravity="center_horizontal" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="D"
-        android:id="@+id/overviewtextview3"
-        android:layout_marginTop="-31dp"
-        android:layout_marginRight="85dp"
-        android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bus"
+                android:adjustViewBounds="true"
+                android:maxWidth="120dp"
+                android:id="@+id/imageView4"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/co2"
+                android:adjustViewBounds="true"
+                android:maxWidth="120dp"
+                android:id="@+id/imageView5"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bus"
+                android:adjustViewBounds="true"
+                android:maxWidth="120dp"
+                android:id="@+id/imageView6"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/centered_field_size"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="4.3 km"
+                android:id="@+id/distanceTraveled"
+                android:textSize="30dp"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/centered_field_size"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="234 mg"
+                android:textSize="30dp"
+                android:id="@+id/carbonSaved"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/centered_field_size"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="3.24 kg"
+                android:textSize="30dp"
+                android:id="@+id/totalCarbon"
+                android:layout_weight="1"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

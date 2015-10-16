@@ -52,7 +52,7 @@ public class User implements IUser{
         this.currentDistance = 0;
         this.co2CurrentMonth = 0;
         this.co2CurrentYear = 0;
-        this.co2Tot = 0;
+        this.co2Tot = 30;
         this.firstUse = true;
 
         this.connectedCompany = "";
@@ -314,8 +314,5 @@ public class User implements IUser{
             oldCo2Json = co2Json;
         }
     }
-
-
-    @Override
-    public String getPassword(){return null;};
+    
 }

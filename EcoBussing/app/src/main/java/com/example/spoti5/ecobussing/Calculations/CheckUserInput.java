@@ -3,7 +3,7 @@ package com.example.spoti5.ecobussing.Calculations;
 /**
  * Created by erikk on 2015-09-16.
  */
-public class CheckCreateUserInput {
+public class CheckUserInput {
 
 
     /**

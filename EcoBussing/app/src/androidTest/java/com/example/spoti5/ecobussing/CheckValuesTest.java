@@ -3,7 +3,7 @@ package com.example.spoti5.ecobussing;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.spoti5.ecobussing.Calculations.CheckCreateUserInput;
+import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
 
 /**
  * Created by erikk on 2015-09-16.
@@ -39,7 +39,7 @@ public class CheckValuesTest {
 
     private void checkPasswords(){
         for(String s: passwords){
-            int value = CheckCreateUserInput.checkPassword(s);
+            int value = CheckUserInput.checkPassword(s);
             if(value == -1) {
                 System.out.println(s + " is a correct password");
             } else {
@@ -60,7 +60,7 @@ public class CheckValuesTest {
 
     private void checkEmails(){
         for(String s: emails){
-            if(CheckCreateUserInput.checkEmail(s)){
+            if(CheckUserInput.checkEmail(s)){
                 System.out.println(s + " is a correct email");
             } else {
                 System.out.println(s + " is not a correct email");

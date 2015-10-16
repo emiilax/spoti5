@@ -9,6 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
         android:layout_weight="0.50">
 
         <LinearLayout
@@ -18,19 +21,19 @@
             android:gravity="left">
 
             <EditText
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="@string/search_hint"
                 android:imeOptions="actionGo"
                 android:ems="10"
-                android:id="@+id/editText"
+                android:id="@+id/searchText"
                 android:layout_gravity="center_horizontal" />
 
             <ImageView
-                android:layout_width="@dimen/small_image"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/small_image"
-                android:id="@+id/search_button"
+                android:id="@+id/button_search"
                 android:layout_gravity="right"
                 android:src="@drawable/searchicon"
                 />
@@ -39,7 +42,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:id="@+id/listView"
+            android:id="@+id/search_result_list"
             android:layout_gravity="center_horizontal"
             android:choiceMode="singleChoice"
             />

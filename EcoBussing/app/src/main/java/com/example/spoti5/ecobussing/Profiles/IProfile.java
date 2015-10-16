@@ -8,7 +8,6 @@ import java.io.Serializable;
 public interface IProfile extends Serializable {
 
     public String getName();
-    public String getPassword();
 
     public Double getDistanceTraveled();
 
