@@ -25,7 +25,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment;
 
         if (position == 0) {
-            fragment = new ConnectCompanyFragmant();
+            fragment = new ConnectCompanyFragment();
         } else {
             fragment = new CreateCompanyFragment();
         }
