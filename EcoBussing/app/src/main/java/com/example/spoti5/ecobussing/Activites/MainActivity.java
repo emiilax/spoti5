@@ -278,6 +278,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     fragmentTransaction.replace(R.id.container, fragment);
                 }else{
                     //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
+                    //if()
                     ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
                     fragmentsVisitedName.add(title);
                     fragmentsVisited.add(connectedCompanyFragment);
