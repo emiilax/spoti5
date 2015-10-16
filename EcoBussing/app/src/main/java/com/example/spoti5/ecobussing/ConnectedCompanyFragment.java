@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
@@ -18,6 +20,9 @@ import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by matildahorppu on 13/10/15.
  */
@@ -26,11 +31,15 @@ public class ConnectedCompanyFragment extends Fragment {
     private IDatabase database;
     private IUser currentUser;
 
-    private TextView infoText;
     private ImageView companyImage;
     private TextView companyName;
-    private Button viewCompanyButton;
+    private TextView employees;
+    private TextView co2Saved;
+    private TextView connectedUsersText;
+    private ListView userList;
     private Button disconnectCompany;
+
+    private List<String> usersConnected;
 
     public ConnectedCompanyFragment(){
     }
@@ -53,18 +62,37 @@ public class ConnectedCompanyFragment extends Fragment {
 
         View view =inflater.inflate(R.layout.fragment_connected_company,container,false);
 
-        infoText = (TextView)view.findViewById(R.id.textViewInfoText);
         companyImage = (ImageView)view.findViewById(R.id.imageViewComp);
         companyName = (TextView)view.findViewById(R.id.textViewCompanyName);
-        viewCompanyButton = (Button)view.findViewById(R.id.buttonShowProfile);
+        employees = (TextView)view.findViewById(R.id.textViewEmployees);
+        co2Saved = (TextView)view.findViewById(R.id.textViewCo2);
+        connectedUsersText = (TextView)view.findViewById(R.id.textView13);
+        userList = (ListView)view.findViewById(R.id.listView);
         disconnectCompany = (Button)view.findViewById(R.id.buttonDisconnect);
 
-        viewCompanyButton.setOnClickListener(viewCompany);
         disconnectCompany.setOnClickListener(disconnectFromComp);
-
         companyName.setText(currentUser.getCompany());
 
+        usersConnected = new ArrayList<>();
+
+        createListView();
+
         return view;
+    }
+
+    private void createListView(){
+        List<IUser> tmpList = database.getUsers();
+        String company = currentUser.getCompany();
+
+        for(IUser user: tmpList){
+            if(user.getCompany().equals(company)){
+                usersConnected.add(user.getName());
+            }
+        }
+
+        userList.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, usersConnected));
+
+
     }
 
     private View.OnClickListener viewCompany = new View.OnClickListener() {
@@ -77,6 +105,8 @@ public class ConnectedCompanyFragment extends Fragment {
     private View.OnClickListener disconnectFromComp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //Ta bort från members i företaget
+            //Ta bort företag från user
             System.out.println("Disconnecta företag");
         }
     };

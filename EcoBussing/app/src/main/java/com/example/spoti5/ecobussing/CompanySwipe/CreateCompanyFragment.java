@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +30,15 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
  */
 public class CreateCompanyFragment extends Fragment implements IDatabaseConnected {
 
-    private TextView header;
+    private ImageView compImage;
     private EditText nameTextField;
     private EditText nbrEmployeesTextField;
+    private EditText compInfoTextField;
     private Button saveButton;
 
     private String name;
     private Company newCompany;
+    private String compInfo;
     private int nbrEmployees;
 
     private IUser currentUser;
@@ -63,9 +66,11 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         View view = inflater.inflate(R.layout.fragment_create_company, container, false);
 
-        header = (TextView) view.findViewById(R.id.headerTextView);
+        compImage = (ImageView)view.findViewById(R.id.imageViewComp);
+        //compImage.setOnClickListener(setImage);
         nameTextField = (EditText) view.findViewById(R.id.editTextCompName);
         nbrEmployeesTextField = (EditText) view.findViewById(R.id.editTextEmployees);
+        compInfoTextField = (EditText)view.findViewById(R.id.editTextCompInfo);
         saveButton = (Button) view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
@@ -73,11 +78,39 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         return view;
     }
 
+//    private View.OnClickListener setImage = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            Context context = getActivity().getApplicationContext();
+//            int duration = Toast.LENGTH_SHORT;
+//            CharSequence text = "Bilden kan inte ändras just nu";
+//            Toast toast = Toast.makeText(context, text, duration);
+//        }
+//    };
+
     private View.OnClickListener save = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            registerCompany();
+            Context context = getActivity().getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            CharSequence text;
+            Toast toast;
+            if(nameTextField.getText() == null && nbrEmployeesTextField.getText() == null){
+                text = "Namn och antal anställda måste anges";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }else if(nameTextField.getText() == null){
+                text = "Namn måste fyllas i";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }else if(nbrEmployeesTextField.getText() == null){
+                text = "Antal anställda måste fyllas i";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }else {
+                registerCompany();
+            }
         }
     };
 
@@ -85,6 +118,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
     private void registerCompany() {
         initStrings();
         newCompany = new Company(name, (User) currentUser, nbrEmployees);
+        newCompany.setCompanyInfo(compInfo);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
         database.updateUser(currentUser);
@@ -93,6 +127,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     private void initStrings() {
         name = nameTextField.getText().toString();
+        compInfo = compInfoTextField.getText().toString();
         try {
             if (nbrEmployeesTextField.getText() != null) {
                 nbrEmployees = Integer.parseInt(nbrEmployeesTextField.getText().toString());

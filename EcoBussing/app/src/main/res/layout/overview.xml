@@ -32,7 +32,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/co2"
+                android:src="@drawable/co2small"
                 android:adjustViewBounds="true"
                 android:maxWidth="120dp"
                 android:id="@+id/imageView5"
@@ -42,7 +42,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bus"
+                android:src="@drawable/co2"
                 android:adjustViewBounds="true"
                 android:maxWidth="120dp"
                 android:id="@+id/imageView6"
