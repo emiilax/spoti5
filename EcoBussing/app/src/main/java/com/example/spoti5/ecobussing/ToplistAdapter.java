@@ -128,7 +128,7 @@ public class ToplistAdapter extends BaseAdapter {
         }else{
             name.setText((position + 1) + ". " + personList.get(position).getName());
             DecimalFormat df = new DecimalFormat("####0.00");
-            String value = df.format(personList.get(position).getCo2CurrentMonth()/1000);
+            String value = df.format(personList.get(position).getCo2CurrentMonth());
             co2.setText(value + " kgCO2");
         }
         //System.out.println(listItems.size());

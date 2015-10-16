@@ -193,6 +193,7 @@ public class User implements IUser{
         return co2Tot;
     }
 
+
     /**
      * Calculates the money saved from the distance and adds it into the current dates position in the DeepHashmap.
      * @param distance the distance to be calculated into money saved and added.

@@ -27,12 +27,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
+import com.example.spoti5.ecobussing.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.Profiles.UserProfileView;
 
 import com.example.spoti5.ecobussing.R;
@@ -82,6 +84,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         setContentView(R.layout.activity_drawer);
         System.out.println("Start activity");
+
 
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         //registerReceiver(wifiReciever, intentFilter);
@@ -277,6 +280,15 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 6:
                 logout();
                 break;
+
+            case 7:
+                title = "Diagram";
+                getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                BarDiagram bd = new BarDiagram();
+                fragmentTransaction.replace(R.id.container, bd);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(bd);
 
         }
 
