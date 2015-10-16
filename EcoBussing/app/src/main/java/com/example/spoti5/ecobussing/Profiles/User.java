@@ -37,8 +37,8 @@ public class User implements IUser{
     private String oldCo2Json;
     private String oldMoneyJson;
 
-    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap  = new DeepMap<>();
-    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap  = new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap;
+    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;
 
     public User(){}
 
@@ -54,6 +54,8 @@ public class User implements IUser{
         this.co2CurrentYear = 0;
         this.co2Tot = 30;
         this.firstUse = true;
+        co2SavedMap = new DeepMap<>();
+        moneySavedMap = new DeepMap<>();
 
         this.connectedCompany = "";
     }

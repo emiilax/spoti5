@@ -17,11 +17,11 @@ import java.util.Set;
 public class DeepMap<K1, K2, K3, V> implements Serializable{
 
 
-    private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap = new HashMap<>();
+    private Map<Integer, Map<Integer, Map<Integer, Double>>> underlyingMap;
 
-    private Map<Integer, Map<Integer, Double>> tempMap1 = new HashMap<>();
+    private Map<Integer, Map<Integer, Double>> tempMap1;
 
-    private Map<Integer, Double> tempMap2 = new HashMap<>();
+    private Map<Integer, Double> tempMap2;
 
     private Calendar calendar = Calendar.getInstance();
     private long timeStampInMillis = 0;
@@ -34,7 +34,9 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * Inits tempmaps and underlying map, has to be done in order to be created as a Json object
      */
     public DeepMap() {
-
+        underlyingMap = new HashMap<>();
+        tempMap1 = new HashMap<>();
+        tempMap2 = new HashMap<>();
     }
 
     /**
