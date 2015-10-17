@@ -108,20 +108,29 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         String pass1 = password1.getText().toString();
         String pass2 = password2.getText().toString();
         String currentPass = currentPassword.getText().toString();
-        if(pass1.equals(pass2)){
-            int errorValue = CheckUserInput.checkPassword(pass1);
-            switch (errorValue){
-                case -1: database.changePassword(currentUser.getEmail(), currentPass, pass1, this);
-                    break;
-                case 0: showToast("Lösenordet är för kort");
-                    break;
-                case 1: showToast("Det nya lösenordet måste innehålla en stor bokstav");
-                    break;
-                case 2: showToast("Det nya lösenordet måste innehålla en liten bokstav");
-                    break;
+        if(!pass1.equals("")) {
+            if (pass1.equals(pass2)) {
+                int errorValue = CheckUserInput.checkPassword(pass1);
+                switch (errorValue) {
+                    case -1:
+                        database.changePassword(currentUser.getEmail(), currentPass, pass1, this);
+                        changeUser();
+                        break;
+                    case 0:
+                        showToast("Lösenordet är för kort");
+                        break;
+                    case 1:
+                        showToast("Det nya lösenordet måste innehålla en stor bokstav");
+                        break;
+                    case 2:
+                        showToast("Det nya lösenordet måste innehålla en liten bokstav");
+                        break;
+                }
+            } else {
+                showToast("Det nya lösenordet matchar inte");
             }
         } else {
-            showToast("Det nya lösenordet matchar inte");
+            changeUser();
         }
     }
 
@@ -129,6 +138,9 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         currentUser.setName(nameField.getText().toString());
         SaveHandler.changeUser(currentUser);
         DatabaseHolder.getDatabase().updateUser(currentUser);
+
+        CharSequence text = "Profilen är uppdaterad.";
+        showToast(text);
     }
 
     @Override
@@ -149,7 +161,6 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         } else if(error == ErrorCodes.NO_ERROR){
             text = "Profilen är uppdaterad.";
             showToast(text);
-            changeUser();
         }
     }
 
