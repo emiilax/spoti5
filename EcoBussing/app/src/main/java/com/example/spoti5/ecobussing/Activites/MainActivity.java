@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.MedalFragment;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
@@ -308,15 +309,21 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
-                title = "WiFi Detect";
-
+                title = "Medaljer";
                 getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                MedalFragment medalFragment = new MedalFragment();
+                fragmentsVisited.add(medalFragment);
+                fragmentsVisitedName.add(title);
 
+                fragmentTransaction.replace(R.id.container, medalFragment);
 
+                /*
+                title = "WiFi Detect";
+                getSupportActionBar().setTitle(title);
                 WifiFragment wfrag = new WifiFragment();
-
                 fragmentTransaction.replace(R.id.container, wfrag);
-
+*/
 
                 break;
             case 4:

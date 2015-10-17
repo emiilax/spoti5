@@ -43,11 +43,14 @@
     <string name="new_pass_hint">Nytt lösenord</string>
     <string name="new_pass_hint2">Nytt lösenord igen</string>
 
+    <string name="medal_co2_tot">Spara tillsammans!</string>
+    <string name="medal_people">Alla bör åka kollektivt!</string>
+
     <string-array name="drawer_array">
         <item>Min profil</item>
-        <item>Medaljer</item>
+        <item>Mitt företag</item>
         <item>Topplistor</item>
-        <item>Wifi-detect</item>
+        <item>Medaljer</item>
         <item>Företagsinställningar</item>
         <item>Redigera profil</item>
         <item>Log out</item>

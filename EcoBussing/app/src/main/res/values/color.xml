@@ -9,4 +9,5 @@
     <color name="error_text_red">#ff0100</color>
     <color name="nice_green">#85c869</color>
     <color name="diagram_lines">#E0E0E0</color>
+    <color name="black">#000000</color>
 </resources>
