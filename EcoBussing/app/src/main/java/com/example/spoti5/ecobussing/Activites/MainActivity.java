@@ -2,6 +2,8 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,7 +29,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.MedalFragment;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
@@ -115,6 +121,48 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         searchListView = (ListView) myView.findViewById(R.id.search_result_list);
         searchListView.setAdapter(searchAdapter);
+        searchListView.setOnItemClickListener(this);
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?>adapter,View view, int position, long id){
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence text;
+
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                Object item = searchAdapter.getItem(position);
+                if(!(item instanceof Company)){
+                    IUser user = (IUser) item;
+                    try {
+                        String title = user.getName();
+                        getSupportActionBar().setTitle(title);
+                        ProfileView profileView = ProfileView.newInstance(user);
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(profileView);
+                        fragmentTransaction.replace(R.id.container, profileView);
+                    } catch (IndexOutOfBoundsException e) {
+                        text = "Ingen kontakt med databasen, försök igen";
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    drawerLayout.closeDrawer(drawerListRight);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                }else{
+                    text = "nja, vi har ju inte implementerat detta för företag än";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+
+            }
+
+
+        });
 
         drawerListRight.addView(myView);
 
@@ -122,6 +170,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerListLeft.setAdapter(listAdapter);
 
         drawerListLeft.setOnItemClickListener(this);
+
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -195,6 +244,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             drawerLayout.openDrawer(drawerListLeft);
         }else if(id == R.id.action_search){
             drawerLayout.openDrawer(drawerListRight);
+            drawerLayout.clearFocus();
+            searchText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -215,7 +268,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView profileView = ProfileView.newInstance(user);
-                System.out.println("and in main activity " + user);
                 fragmentsVisitedName.add(title);
                 fragmentsVisited.add(profileView);
                 fragmentTransaction.replace(R.id.container, profileView);
@@ -257,15 +309,21 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
-                title = "WiFi Detect";
-
+                title = "Medaljer";
                 getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                MedalFragment medalFragment = new MedalFragment();
+                fragmentsVisited.add(medalFragment);
+                fragmentsVisitedName.add(title);
 
+                fragmentTransaction.replace(R.id.container, medalFragment);
 
+                /*
+                title = "WiFi Detect";
+                getSupportActionBar().setTitle(title);
                 WifiFragment wfrag = new WifiFragment();
-
                 fragmentTransaction.replace(R.id.container, wfrag);
-
+*/
 
                 break;
             case 4:
