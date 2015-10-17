@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing;
 
 import android.content.Context;
 import android.provider.Settings;

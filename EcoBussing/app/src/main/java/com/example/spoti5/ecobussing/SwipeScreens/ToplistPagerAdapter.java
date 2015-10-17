@@ -10,12 +10,12 @@ import com.example.spoti5.ecobussing.Activites.ToplistFragment;
 /**
  * Created by emilaxelsson on 03/10/15.
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
 
     private String range;
     private ToplistFragment theFragment;
 
-    public PagerAdapter(FragmentManager fragment, String range) {
+    public ToplistPagerAdapter(FragmentManager fragment, String range) {
         super(fragment);
 
         this.range = range;

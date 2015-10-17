@@ -12,11 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.spoti5.ecobussing.APIRequest.BusConnection;
-import com.example.spoti5.ecobussing.Activites.ToplistFragment;
-import com.example.spoti5.ecobussing.BusData.Busses;
 import com.example.spoti5.ecobussing.R;
-
-import java.io.IOException;
 
 /**
  * Created by emilaxelsson on 03/10/15.
@@ -35,17 +31,16 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
 
     private BusConnection busC = new BusConnection();
 
-    //@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        view = inflater.inflate(R.layout.fragment_swipe, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_toplist_swipe, container, false);
         System.out.println("Create");
         //this will be our swipe/tab view populated with each checkout
         //piece fragment
         mPagerAdapter =
-                new PagerAdapter(
+                new ToplistPagerAdapter(
                         getActivity().getSupportFragmentManager(), "month");
-        mViewPager = (ViewPager)view.findViewById(R.id.pager);
+        mViewPager = (ViewPager)view.findViewById(R.id.pager_toplist);
         mViewPager.setAdapter(mPagerAdapter);
         
         fixTabLayout();
@@ -66,7 +61,7 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
     }
     
     public void fixTabLayout(){
-        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
+        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs_toplist);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorHeight(3);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));
@@ -83,10 +78,10 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         if(v == btnMonth){
             btnMonth.setBackgroundColor(getResources().getColor(R.color.secondary));
 
-            //((PagerAdapter)mPagerAdapter).setRange("month");
+            //((ToplistPagerAdapter)mPagerAdapter).setRange("month");
 
-            ((PagerAdapter)mPagerAdapter).setRange("month");
-            //mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "month");
+            ((ToplistPagerAdapter)mPagerAdapter).setRange("month");
+            //mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "month");
             /*try {
                 busC.beginJourey(Busses.simulated);
             } catch (IOException e) {
@@ -96,11 +91,11 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         if(v == btnYear){
             btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
 
-            ((PagerAdapter)mPagerAdapter).setRange("year");
+            ((ToplistPagerAdapter)mPagerAdapter).setRange("year");
 
-            //mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "year");
+            //mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "year");
 
-            //((PagerAdapter)mPagerAdapter).setRange("month");
+            //((ToplistPagerAdapter)mPagerAdapter).setRange("month");
 
             /*
             try {
@@ -111,8 +106,8 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         }
 
         if(v == btnTotal){
-            mPagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), "total");
-            //((PagerAdapter)mPagerAdapter).setRange("total");
+            mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "total");
+            //((ToplistPagerAdapter)mPagerAdapter).setRange("total");
             btnTotal.setBackgroundColor(getResources().getColor(R.color.secondary));
 
         }

@@ -38,18 +38,20 @@ public class BarDiagram extends Fragment {
     private IProfile profile;
     private boolean isCompany;
 
-    public static int LAST_SEVEN_DAYS = 0;
+    public final static int LAST_SEVEN_DAYS = 0;
     //public static int LAST_SEVEN_WEEKS = 1;
-    public static int LAST_SEVEN_MONTHS = 2;
+    public final static int LAST_SEVEN_MONTHS = 2;
 
     public BarDiagram() {
         // Required empty public constructor
     }
 
-    public void newInstance(IProfile profile, int range){
+    public final static BarDiagram newInstance(IProfile profile, int range){
+        BarDiagram bd = new BarDiagram();
 
-        setProfile(profile);
-        setChartBarData(range);
+        bd.setProfile(profile);
+        bd.setChartBarData(range);
+        return bd;
 
     }
 

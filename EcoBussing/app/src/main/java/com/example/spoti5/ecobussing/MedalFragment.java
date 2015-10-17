@@ -1,21 +1,13 @@
 package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.example.spoti5.ecobussing.Activites.GlobalMedalAdapter;
-
-import java.text.DecimalFormat;
 
 /**
  * Created by Erik on 2015-10-17.
@@ -23,10 +15,24 @@ import java.text.DecimalFormat;
 public class MedalFragment extends Fragment {
     private Activity currentActivity;
     private View view;
-    private ListView globalList;
+    private ListView listView;
+    private int medalType;
+    private ListAdapter listAdapter;
+
+    public static final int USER_MEDALS = 0;
+    public static final int COMPANY_MEDALS = 1;
+    public static final int GLOBAL_MEDALS = 2;
 
     public MedalFragment() {
 
+    }
+
+    public static final MedalFragment getInstance(int medalType){
+        MedalFragment mf = new MedalFragment();
+
+        mf.setMedalType(medalType);
+
+        return mf;
     }
 
     @Override
@@ -47,12 +53,26 @@ public class MedalFragment extends Fragment {
         view = inflater.inflate(R.layout.medal_list, container, false);
 
         currentActivity = getActivity();
-        globalList = (ListView)view.findViewById(R.id.medalList);
-        GlobalMedalAdapter globalAdapter = new GlobalMedalAdapter(currentActivity);
-        globalList.setAdapter(globalAdapter);
+        listView = (ListView)view.findViewById(R.id.medalList);
+
+        if(this.medalType == USER_MEDALS){
+            listAdapter = new UserMedalAdapter();
+        }else if(this.medalType == COMPANY_MEDALS){
+            listAdapter = new CompanyMedalAdapter();
+        }else if(this.medalType == GLOBAL_MEDALS){
+            listAdapter = new GlobalMedalAdapter(getActivity());
+        }
+
+        listView.setAdapter(listAdapter);
+
 
         return view;
     }
 
 
+    public void setMedalType(int medalType) {
+        this.medalType = medalType;
+
+
+    }
 }
