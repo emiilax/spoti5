@@ -58,6 +58,11 @@
 
     </string-array>
 
+    <string-array name="global_medals">
+        <item>Spara tillsammans!</item>
+        <item>Alla bör åka kollektivt!</item>
+    </string-array>
+
     <string-array name="anders_array">
         <item>Anders Andersson</item>
         <item>Anders Andersson</item>

@@ -27,7 +27,7 @@ public class Database implements IDatabase{
     private String companiesString = "companies";
 
     //Database setup
-    public static final String FIREBASE = "https://boiling-heat-4034.firebaseio.com/";
+    public static final String FIREBASE = "https://ecotravel.firebaseio.com/";
     private Firebase firebaseRef;
 
     private List<IUser> allUsers = new ArrayList<>();
