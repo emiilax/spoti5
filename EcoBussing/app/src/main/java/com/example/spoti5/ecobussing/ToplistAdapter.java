@@ -33,11 +33,14 @@ public class ToplistAdapter extends BaseAdapter {
     private IDatabase database;
     private boolean company;
 
+    private String range;
+
     public ToplistAdapter(Context context, String range, boolean company){
 
         this.context = context;
         database = DatabaseHolder.getDatabase();
         int size = 0;
+        this.range = range;
 
         if(company){
             this.company = true;
@@ -78,6 +81,7 @@ public class ToplistAdapter extends BaseAdapter {
             for(int i = size-1; i>=0; i--){
 
                 personList.add(tempList.get(i));
+
             };
         }
 
@@ -128,7 +132,17 @@ public class ToplistAdapter extends BaseAdapter {
         }else{
             name.setText((position + 1) + ". " + personList.get(position).getName());
             DecimalFormat df = new DecimalFormat("####0.00");
-            String value = df.format(personList.get(position).getCo2CurrentMonth()/1000);
+
+
+            String value = "";
+            if(range.equals("month")){
+                value = df.format(personList.get(position).getCo2CurrentMonth());
+            }else if(range.equals("year")){
+                value = df.format(personList.get(position).getCo2CurrentYear());
+            }else if(range.equals("total")){
+                value = df.format(personList.get(position).getCo2Tot());
+            }
+
             co2.setText(value + " kgCO2");
         }
         //System.out.println(listItems.size());

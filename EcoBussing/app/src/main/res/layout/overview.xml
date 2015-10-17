@@ -4,13 +4,19 @@
     android:layout_height="match_parent"
     android:id="@+id/overviewBackground"
     android:onClick="onScreenTouch"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@drawable/simplebackground"
+    >
+
+
 
     <LinearLayout
         android:orientation="horizontal"
         android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
 
         <LinearLayout
             android:orientation="vertical"
@@ -22,10 +28,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bus"
+                android:src="@drawable/co2"
                 android:adjustViewBounds="true"
                 android:maxWidth="120dp"
-                android:id="@+id/imageView4"
+                android:id="@+id/imageView6"
                 android:layout_weight="1"
                 android:layout_gravity="center"/>
 
@@ -39,15 +45,19 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"/>
 
+
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/co2"
+                android:src="@drawable/bus"
                 android:adjustViewBounds="true"
                 android:maxWidth="120dp"
-                android:id="@+id/imageView6"
+                android:id="@+id/imageView4"
                 android:layout_weight="1"
                 android:layout_gravity="center"/>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -61,9 +71,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/centered_field_size"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="4.3 km"
-                android:id="@+id/distanceTraveled"
+                android:text="3.24 kg"
                 android:textSize="30dp"
+                android:id="@+id/totalCarbon"
                 android:layout_weight="1"
                 android:gravity="center"/>
 
@@ -81,11 +91,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/centered_field_size"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="3.24 kg"
+                android:text="4.3 km"
+                android:id="@+id/distanceTraveled"
                 android:textSize="30dp"
-                android:id="@+id/totalCarbon"
                 android:layout_weight="1"
                 android:gravity="center"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
