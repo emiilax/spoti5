@@ -67,7 +67,8 @@ public class BarDiagram extends Fragment {
 
         chart.setDescription("");
 
-        chart.setData(getBarDataLastSevenDays());
+        //chart.setData(getBarDataLastSevenDays());
+        chart.setData(getBarDataLastSevenMonths());
 
 
         // X-axis
@@ -119,6 +120,8 @@ public class BarDiagram extends Fragment {
         IUser currentUser = SaveHandler.getCurrentUser();
         ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
 
+        System.out.println(currentUser);
+
         calendar.add(Calendar.DAY_OF_MONTH, + 1);
 
         highestValue = 0;
@@ -163,6 +166,97 @@ public class BarDiagram extends Fragment {
 
     }
 
+    public BarData getBarDataLastSevenMonths(){
+        Calendar calendar = Calendar.getInstance();
+
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        IUser currentUser = SaveHandler.getCurrentUser();
+        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+
+        highestValue = 0;
+
+        calendar.add(Calendar.MONTH, + 1);
+
+        for(int i = 0; i < 7; i++){
+
+            calendar.add(Calendar.MONTH, -1);
+            int year = calendar.get(Calendar.YEAR);
+            int month = 1 + calendar.get(Calendar.MONTH);
+
+            double value = 0;
+            try{
+                value = currentUser.getCO2SavedMonth(year, month);
+            } catch (Exception e){
+                value = 0;
+            }
+
+            xVals.add(0, getMonthName(month));
+
+            if(value > highestValue) highestValue = value;
+
+            barEntryList.add(new BarEntry((float) value, 6-i));
+
+        }
+
+        BarDataSet bds = new BarDataSet(barEntryList, "");
+        bds.setColor(getResources().getColor(R.color.secondary));
+        dataSets.add(bds);
+
+        return new BarData(xVals, dataSets);
+
+    }
+
+
+    public String getMonthName(int month){
+
+        String monthName = "";
+
+        switch (month-1){
+            case Calendar.JANUARY:
+                monthName = "Ja";
+                break;
+            case Calendar.FEBRUARY:
+                monthName = "Fe";
+                break;
+            case Calendar.MARCH:
+                monthName = "Ma";
+                break;
+            case Calendar.APRIL:
+                monthName = "Ap";
+                break;
+            case Calendar.MAY:
+                monthName = "Ma";
+                break;
+            case Calendar.JUNE:
+                monthName = "Ju";
+                break;
+            case Calendar.JULY:
+                monthName = "Ju";
+                break;
+            case Calendar.AUGUST:
+                monthName = "Au";
+                break;
+            case Calendar.SEPTEMBER:
+                monthName = "Se";
+                break;
+            case Calendar.OCTOBER:
+                monthName = "Oc";
+                break;
+            case Calendar.NOVEMBER:
+                monthName = "No";
+                break;
+            case Calendar.DECEMBER:
+                monthName = "De";
+                break;
+
+        }
+
+        return monthName;
+    }
+
+
     public String getWeekDayName(int weekDay){
         String dayName = "";
 
@@ -191,6 +285,8 @@ public class BarDiagram extends Fragment {
         }
         return dayName;
     }
+
+
 
 
 }
