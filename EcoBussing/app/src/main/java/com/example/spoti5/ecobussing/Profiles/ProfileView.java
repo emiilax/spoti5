@@ -72,9 +72,20 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
     }
 
     public static void setDataStrings(View view) {
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        DecimalFormat df0 = new DecimalFormat("#");
+
         TextView nameView = (TextView)view.findViewById(R.id.profile_name);
-        nameView.setText(thisProfile.getName());
         TextView companyNameView = (TextView)view.findViewById(R.id.user_company);
+        TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
+        TextView co2View = (TextView)view.findViewById(R.id.textCo2);
+        TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
+
+        double co2;
+        double distance;
+        double money = 0;
+
+        nameView.setText(thisProfile.getName());
 
         /**
          * there is a better way of doing this w/o using instanceof, I don't remember how, but I remeber
@@ -82,38 +93,41 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
          */
         if(thisProfile instanceof IUser){
             IUser currentUser = (IUser) thisProfile;
-            double co2 = currentUser.getCo2Tot();
-            double distance = calc.calculateDistanceFromCO2(co2);
-
-            TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
-            TextView co2View = (TextView)view.findViewById(R.id.textCo2);
-
-            DecimalFormat df = new DecimalFormat("#.00");
-            String co2s = df.format(co2);
-
-            co2View.setText(co2s + " kg");
-
-            if(distance > 1000){
-                distance = distance/1000;
-                DecimalFormat dfd = new DecimalFormat("#.00");
-                String distances = dfd.format(distance);
-                distanceView.setText(distances + " km");
-            }else {
-                String d = new DecimalFormat("#").format(distance);
-                distanceView.setText(d + " m");
-            }
-
-            TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
-            moneyView.setText(Double.toString(currentUser.getMoneySaved(true)) + " kr");
+            co2 = currentUser.getCO2Saved(true);
+            distance = calc.calculateDistanceFromCO2(co2);
+            money = currentUser.getMoneySaved(true);
 
             if(((IUser) thisProfile).getCompany().length() > 0) {
                 companyNameView.setText(((IUser) thisProfile).getCompany());
             }else{
-                companyNameView.setText("Den här användaren har inte anslutit sig till något företag");
+                companyNameView.setText("Ej ansluten till något företag");
             }
         }else{
+            Company currentCompany = (Company)thisProfile;
+            co2 = currentCompany.getCO2Saved(true);
+            distance = calc.calculateDistanceFromCO2(co2);
+            //Maybe money shouldn't be displayed in a company profile? Then there should only be 2
+            //fields visible there.
+            money = 23475;
             companyNameView.setText(null);
         }
+
+
+        if(distance > 1000){
+            distance = distance/1000;
+            String distanceS = df2.format(distance);
+            distanceView.setText(distanceS + " km");
+        }else {
+            String d = df0.format(distance);
+            distanceView.setText(d + " m");
+        }
+
+
+        String co2S = df2.format(co2);
+        co2View.setText(co2S + " kg");
+
+        String moneyS = df0.format(money);
+        moneyView.setText(moneyS + " kr");
     }
 
     @Override
