@@ -23,11 +23,10 @@ import java.text.DecimalFormat;
  *
  *  Created by Hampus on 2015-10-12.
  */
-public class ProfileView extends Fragment implements ViewPager.OnPageChangeListener{
+public class ProfileView extends Fragment{
     private FragmentStatePagerAdapter pagerAdapter1, pagerAdapter2;
     private ViewPager viewPager1, viewPager2;
     private static View view;
-    private ImageView dot1_1, dot2_1, dot3_1, dot1_2, dot2_2, dot3_2;
     private static IProfile thisProfile;
     private static Calculator calc = Calculator.getCalculator();
 
@@ -49,14 +48,6 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
         view = setMPagerAdapter(view);
-
-
-        dot1_1 = (ImageView) view.findViewById(R.id.imgDot1_1);
-        dot2_1 = (ImageView) view.findViewById(R.id.imgDot2_1);
-        dot3_1 = (ImageView) view.findViewById(R.id.imgDot3_1);
-        dot1_2 = (ImageView) view.findViewById(R.id.imgDot1_2);
-        dot2_2 = (ImageView) view.findViewById(R.id.imgDot2_2);
-        dot3_2 = (ImageView) view.findViewById(R.id.imgDot3_2);
 
         setDataStrings(view);
 
@@ -138,28 +129,6 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
         moneyView.setText(moneyS + " kr");
     }
 
-    @Override
-    public void onPageSelected(int position) {
-        switch(position){
-            case 0:
-                setBigDot(dot1_1);
-                setSmallDot(dot2_1);
-                setSmallDot(dot3_1);
-                break;
-
-            case 1:
-                setSmallDot(dot1_1);
-                setBigDot(dot2_1);
-                setSmallDot(dot3_1);
-                break;
-            case 2:
-                setSmallDot(dot1_1);
-                setSmallDot(dot2_1);
-                setBigDot(dot3_1);
-                break;
-        }
-    }
-
     private void setBigDot (ImageView dot){
         dot.setImageResource(R.drawable.dot_grey_big);
         dot.setAlpha(1f);
@@ -173,14 +142,5 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
     public void setThisProfile(IProfile ip){
         thisProfile = ip;
     }
-
-    public interface OnFragmentInteractionListener {public void onFragmentInteraction(Uri uri);}
-
-    // Theses methods are not used but needed because of the OnPageChangeListener implementation
-    @Override
-    public void onPageScrollStateChanged(int state) {}
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
 }
 
