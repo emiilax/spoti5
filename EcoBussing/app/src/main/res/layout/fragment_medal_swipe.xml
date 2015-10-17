@@ -15,9 +15,8 @@
         android:id="@+id/pager_medal_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/sliding_tabs_toplist"
-
         xmlns:android="http://schemas.android.com/apk/res/android">
+        !android:layout_below="@id/sliding_tabs_toplist"
 
     </android.support.v4.view.ViewPager>
 

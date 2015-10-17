@@ -264,7 +264,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         switch(position){
             case 0:
                 IUser user = SaveHandler.getCurrentUser();
-                title = user.getName();
+                title ="Min profil";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView profileView = ProfileView.newInstance(user);
@@ -275,7 +275,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
             case 1:
                 IProfile company = database.getCompanies().get(0);
-                title = company.getName();
+                title = "Mitt företag";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView companyView = ProfileView.newInstance(company);

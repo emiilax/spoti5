@@ -145,13 +145,13 @@ public class CompanyTest extends AndroidTestCase {
         System.out.println("The creator of '" + testBusiness.getName() + "' is: " + testBusiness.getCreatorMember());
         System.out.print("The members of '" + testBusiness.getName() + "' are: ");
         for (int i = 0; i < testBusiness.getMembers(true).size(); i++) {
-            members = members + testBusiness.getMembers(true).get(i).getName() + ",";
+            //members = members + testBusiness.getMembers(true).get(i).getName() + ",";
         }
         System.out.print(members);
         System.out.println("");
         System.out.print("The moderator members of '" + testBusiness.getName() + "' are: ");
         for (int i = 0; i < testBusiness.getModeratorMembers(true).size(); i++) {
-            moderatorMembers = moderatorMembers + testBusiness.getModeratorMembers(true).get(i).getName() + ",";
+           // moderatorMembers = moderatorMembers + testBusiness.getModeratorMembers(true).get(i).getName() + ",";
         }
         System.out.println(moderatorMembers);
 
