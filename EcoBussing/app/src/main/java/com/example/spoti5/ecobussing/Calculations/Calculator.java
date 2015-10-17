@@ -19,7 +19,7 @@ public class Calculator {
     private static Calculator calculator;
 
     private double petrolPrice = 14.32;
-    private double carbondioxideEmittedPerLiter = 2.348; //Currently measured in grams.
+    private double carbondioxideEmittedPerLiter = 2.348; //Currently measured in kg.
     private double avgCarPetrolConsumption = 0.7;
 
 
@@ -63,7 +63,7 @@ public class Calculator {
         // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
         String completeURL = baseURL + "origin=" + originLat + "," + originLng + "&destination=" +
-                destinationLat + "," + destinationLng +"&key=AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
+                destinationLat + "," + destinationLng +"&key=" + key;
 
         if (correctFormatLat(originLat) && correctFormatLng(originLng) && correctFormatLat(destinationLat) &&
                 correctFormatLng(destinationLng)) {
@@ -114,14 +114,26 @@ public class Calculator {
      * @returns the amount of money in KR saved from the distance given.
      */
     public double calculateMoneySaved(Double distance) {
-        return (distance/10)*petrolPrice* avgCarPetrolConsumption;
+        return (distance/10000)*petrolPrice*avgCarPetrolConsumption;
     }
 
     /**
      * @returns the amount of carbondioxide in milligrams saved from the distance given.
      */
     public double calculateCarbonSaved(Double distance) {
-        return (distance/10)*avgCarPetrolConsumption*carbondioxideEmittedPerLiter*1000;
+        return (distance/10000)*avgCarPetrolConsumption*carbondioxideEmittedPerLiter;
+    }
+
+
+    /**
+     * Calculates the distance a user has traveled based on the stored co2 of the user.
+     *
+     * OBS! This method most likely needs an update when the rest of the Calculator methods get fixed
+     * @param co2
+     * @return the distance, based on the parameter co2
+     */
+    public double calculateDistanceFromCO2(double co2) {
+        return (co2*10)/(avgCarPetrolConsumption*carbondioxideEmittedPerLiter*1000);
     }
 
     /**
@@ -143,4 +155,5 @@ public class Calculator {
     private boolean correctFormatLng(double lng){
         return (lng >= -180 && lng <= 180);
     }
+
 }

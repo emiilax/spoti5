@@ -34,11 +34,11 @@ public class User implements IUser{
     private String co2Json;
     private String moneyJson;
 
-    private String oldCo2Json;
-    private String oldMoneyJson;
+    private String oldCo2Json   = "";
+    private String oldMoneyJson = "";
 
-    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap;
-    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;
+    private DeepMap<Integer, Integer, Integer, Double> co2SavedMap; //= new DeepMap<>();
+    private DeepMap<Integer, Integer, Integer, Double> moneySavedMap;// = new DeepMap<>();
 
     public User(){}
 
@@ -58,9 +58,13 @@ public class User implements IUser{
         moneySavedMap = new DeepMap<>();
         updateCo2Json();
         updateMoneyJson();
+        oldCo2Json = "";
+        oldMoneyJson = "";
 
         this.connectedCompany = "";
     }
+
+
 
     public User(String email, String name){
         this(email);
@@ -198,6 +202,7 @@ public class User implements IUser{
         return co2Tot;
     }
 
+
     /**
      * Calculates the money saved from the distance and adds it into the current dates position in the DeepHashmap.
      * @param distance the distance to be calculated into money saved and added.
@@ -298,7 +303,7 @@ public class User implements IUser{
     private void updateCo2Json(){
         Gson gson = new Gson();
         co2Json =  gson.toJson(co2SavedMap);
-        updateCo2Map();
+        //updateCo2Map();
     }
 
     public String getMoneyJson() {
@@ -308,7 +313,7 @@ public class User implements IUser{
     private void updateMoneyJson(){
         Gson gson = new Gson();
         moneyJson =  gson.toJson(moneySavedMap);
-        updateMoneyMap();
+        //updateMoneyMap();
     }
 
     private void updateMoneyMap(){
@@ -317,6 +322,7 @@ public class User implements IUser{
             Gson gson = new Gson();
             moneySavedMap = gson.fromJson(this.getMoneyJson(), DeepMap.class);
             oldMoneyJson = this.getMoneyJson();
+
         }
 
     }

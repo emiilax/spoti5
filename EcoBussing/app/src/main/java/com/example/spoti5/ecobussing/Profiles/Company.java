@@ -64,6 +64,12 @@ public class Company implements IProfile {
         pointTot = 0;
         companyInfo = "";
 
+        oldMemberJson="";
+        oldMomMemberJson="";
+
+        modMemberJson = "";
+        memberJson = "";
+
         this.nbrEmployees = nbrEmployees;
 
         userConnectionDates = new HashMap();
@@ -93,7 +99,9 @@ public class Company implements IProfile {
     }
 
     private void updateMembersFromJson(){
-        if(!oldMemberJson.equals(memberJson) || members == null) {
+        System.out.println(memberJson);
+        System.out.println(oldMemberJson);
+        if(oldMemberJson == null || members == null) {
             if (!memberJson.equals(null)) {
                 Gson gson = new Gson();
                 members= gson.fromJson(memberJson, new TypeToken<List<IUser>>(){}.getType());
@@ -103,7 +111,7 @@ public class Company implements IProfile {
     }
 
     private void updateModMembersFromJson(){
-        if(!oldMomMemberJson.equals(modMemberJson) || moderatorMembers == null) {
+        if(oldMomMemberJson==null || moderatorMembers == null) {
             if (!modMemberJson.equals(null)) {
                 Gson gson = new Gson();
                 moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<IUser>>(){}.getType());
@@ -113,7 +121,7 @@ public class Company implements IProfile {
     }
 
     private void updateUserConnectionDates(){
-        if(!oldUserConnectedJson.equals(usersConnectedJson) || userConnectionDates == null){
+        if(oldUserConnectedJson == null || userConnectionDates == null){
             if(!usersConnectedJson.equals(null)){
                 Gson gson = new Gson();
                 userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
@@ -168,7 +176,6 @@ public class Company implements IProfile {
      * @param user
      */
     public void addModeratorMember(User creator, User user) {
-        updateModMembersFromJson();
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
             moderatorMembers.add(user);
             updateModMemberJson();
@@ -180,7 +187,6 @@ public class Company implements IProfile {
      * @param user
      */
     public void addMember(User user) {
-        updateMembersFromJson();
         if (!userIsMember(user)) {
             user.setCompany(name);
             SaveHandler.changeUser(user);
@@ -201,7 +207,6 @@ public class Company implements IProfile {
      * @param user
      */
     public void removeModeratorMember(User creator, User user) {
-        updateModMembersFromJson();
         if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
             moderatorMembers.remove(user);
             updateModMemberJson();
@@ -214,8 +219,6 @@ public class Company implements IProfile {
      * @param user
      */
     public void removeMember(User user) {
-        updateMembersFromJson();
-        updateModMembersFromJson();
         if (!userIsCreator(user)) {
             if (userIsModerator(user)) {
                 moderatorMembers.remove(user);

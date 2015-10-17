@@ -2,6 +2,8 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,14 +29,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.EditInfoFragment;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.UserProfileView;
+import com.example.spoti5.ecobussing.Profiles.ProfileView;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
@@ -58,6 +67,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private ImageView searchImage;
     private EditText searchText;
 
+    private IDatabase database;
+
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private FragmentTransaction fragmentTransaction;
@@ -76,12 +87,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         currentUser = SaveHandler.getCurrentUser();
+        database = DatabaseHolder.getDatabase();
 
         fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
 
         setContentView(R.layout.activity_drawer);
         System.out.println("Start activity");
+
 
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         //registerReceiver(wifiReciever, intentFilter);
@@ -107,6 +120,48 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         searchListView = (ListView) myView.findViewById(R.id.search_result_list);
         searchListView.setAdapter(searchAdapter);
+        searchListView.setOnItemClickListener(this);
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?>adapter,View view, int position, long id){
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence text;
+
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                Object item = searchAdapter.getItem(position);
+                if(!(item instanceof Company)){
+                    IUser user = (IUser) item;
+                    try {
+                        String title = user.getName();
+                        getSupportActionBar().setTitle(title);
+                        ProfileView profileView = ProfileView.newInstance(user);
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(profileView);
+                        fragmentTransaction.replace(R.id.container, profileView);
+                    } catch (IndexOutOfBoundsException e) {
+                        text = "Ingen kontakt med databasen, försök igen";
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    drawerLayout.closeDrawer(drawerListRight);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                }else{
+                    text = "nja, vi har ju inte implementerat detta för företag än";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+
+
+            }
+
+
+        });
 
         drawerListRight.addView(myView);
 
@@ -114,6 +169,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerListLeft.setAdapter(listAdapter);
 
         drawerListLeft.setOnItemClickListener(this);
+
 
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
@@ -138,12 +194,13 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     private void startFirstFragemnt(){
-        String title = SaveHandler.getCurrentUser().getName();
+        IUser user = SaveHandler.getCurrentUser();
+        String title = user.getName();
         getSupportActionBar().setTitle(title);
-        UserProfileView userProfileView = new UserProfileView();
+        ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
-        fragmentsVisited.add(userProfileView);
-        fragmentTransaction.replace(R.id.container, userProfileView);
+        fragmentsVisited.add(profileView);
+        fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -186,6 +243,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             drawerLayout.openDrawer(drawerListLeft);
         }else if(id == R.id.action_search){
             drawerLayout.openDrawer(drawerListRight);
+            drawerLayout.clearFocus();
+            searchText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -201,17 +262,28 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         switch(position){
             case 0:
-                title = SaveHandler.getCurrentUser().getName();
+                IUser user = SaveHandler.getCurrentUser();
+                title = user.getName();
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                UserProfileView userProfileView = new UserProfileView();
+                ProfileView profileView = ProfileView.newInstance(user);
                 fragmentsVisitedName.add(title);
-                fragmentsVisited.add(userProfileView);
-
-                fragmentTransaction.replace(R.id.container, userProfileView);
+                fragmentsVisited.add(profileView);
+                fragmentTransaction.replace(R.id.container, profileView);
 
                 break;
             case 1:
+                IProfile company = database.getCompanies().get(0);
+                title = company.getName();
+                getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                ProfileView companyView = ProfileView.newInstance(company);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(companyView);
+                fragmentTransaction.replace(R.id.container, companyView);
+
+                break;
+           /* case 1:
                 title = "fragment 2";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
@@ -221,6 +293,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 fragmentTransaction.replace(R.id.container, businessFragment);
                 break;
+                */
             case 2:
                 title = "Topplistor";
                 getSupportActionBar().setTitle(title);
@@ -258,6 +331,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     fragmentTransaction.replace(R.id.container, fragment);
                 }else{
                     //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
+                    //if()
                     ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
                     fragmentsVisitedName.add(title);
                     fragmentsVisited.add(connectedCompanyFragment);
@@ -276,6 +350,15 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             case 6:
                 logout();
                 break;
+
+            case 7:
+                title = "Diagram";
+                getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                BarDiagram bd = new BarDiagram();
+                fragmentTransaction.replace(R.id.container, bd);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(bd);
 
         }
 

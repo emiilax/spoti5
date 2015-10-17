@@ -51,6 +51,8 @@
         <item>Företagsinställningar</item>
         <item>Redigera profil</item>
         <item>Log out</item>
+        <item>Diagram</item>
+
     </string-array>
 
     <string-array name="anders_array">
