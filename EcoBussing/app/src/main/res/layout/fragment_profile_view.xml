@@ -178,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="165dp"
                     android:layout_below="@id/dividerSaved"
-                    android:id="@+id/profile_pager"
+                    android:id="@+id/profilePager"
 
                     xmlns:android="http://schemas.android.com/apk/res/android"/>
 
@@ -187,14 +187,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:layout_below="@id/profile_pager"
+                    android:layout_below="@id/profilePager"
                     android:id="@+id/dotRow1">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:id="@+id/img_dot1"
+                        android:id="@+id/imgDot1_1"
                         android:src="@drawable/dot_grey_big"
                         android:layout_gravity="center_vertical" />
 
@@ -202,7 +202,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:id="@+id/img_dot2"
+                        android:id="@+id/imgDot2_1"
                         android:src="@drawable/dot_grey_small"
                         android:layout_gravity="center_vertical" />
 
@@ -210,7 +210,49 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:id="@+id/img_dot3"
+                        android:id="@+id/imgDot3_1"
+                        android:src="@drawable/dot_grey_small"
+                        android:layout_gravity="center_vertical" />
+
+                </LinearLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp"
+                    android:layout_below="@id/dotRow1"
+                    android:id="@+id/profilePager2"
+
+                    xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/profilePager2"
+                    android:id="@+id/dotRow2">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/imgDot1_2"
+                        android:src="@drawable/dot_grey_big"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/imgDot2_2"
+                        android:src="@drawable/dot_grey_small"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/imgDot3_2"
                         android:src="@drawable/dot_grey_small"
                         android:layout_gravity="center_vertical" />
 

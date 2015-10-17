@@ -24,10 +24,10 @@ import java.text.DecimalFormat;
  *  Created by Hampus on 2015-10-12.
  */
 public class ProfileView extends Fragment implements ViewPager.OnPageChangeListener{
-    private FragmentStatePagerAdapter mPagerAdapter;
-    private ViewPager mViewPager;
+    private FragmentStatePagerAdapter pagerAdapter1, pagerAdapter2;
+    private ViewPager viewPager1, viewPager2;
     private static View view;
-    private ImageView dot1, dot2, dot3;
+    private ImageView dot1_1, dot2_1, dot3_1, dot1_2, dot2_2, dot3_2;
     private static IProfile thisProfile;
     private static Calculator calc = Calculator.getCalculator();
 
@@ -48,27 +48,35 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
 
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
-        setMPagerAdapter();
+        view = setMPagerAdapter(view);
 
 
-        dot1 = (ImageView) view.findViewById(R.id.img_dot1);
-        dot2 = (ImageView) view.findViewById(R.id.img_dot2);
-        dot3 = (ImageView) view.findViewById(R.id.img_dot3);
+        dot1_1 = (ImageView) view.findViewById(R.id.imgDot1_1);
+        dot2_1 = (ImageView) view.findViewById(R.id.imgDot2_1);
+        dot3_1 = (ImageView) view.findViewById(R.id.imgDot3_1);
+        dot1_2 = (ImageView) view.findViewById(R.id.imgDot1_2);
+        dot2_2 = (ImageView) view.findViewById(R.id.imgDot2_2);
+        dot3_2 = (ImageView) view.findViewById(R.id.imgDot3_2);
 
         setDataStrings(view);
 
         return view;
     }
 
-    private void setMPagerAdapter() {
+    private View setMPagerAdapter(View viewen) {
         if(thisProfile instanceof IUser) {
-            mPagerAdapter = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
         }else {
-            mPagerAdapter = new CompanyPagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new CompanyPagerAdapter(getActivity().getSupportFragmentManager());
         }
-        mViewPager = (ViewPager)view.findViewById(R.id.profile_pager);
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
+        viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
+        viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+        viewPager1.setAdapter(pagerAdapter1);
+        viewPager2.setAdapter(pagerAdapter2);
+        viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
+        viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
+        return viewen;
     }
 
     public static void setDataStrings(View view) {
@@ -83,7 +91,7 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
 
         double co2;
         double distance;
-        double money = 0;
+        double money;
 
         nameView.setText(thisProfile.getName());
 
@@ -134,20 +142,20 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
     public void onPageSelected(int position) {
         switch(position){
             case 0:
-                setBigDot(dot1);
-                setSmallDot(dot2);
-                setSmallDot(dot3);
+                setBigDot(dot1_1);
+                setSmallDot(dot2_1);
+                setSmallDot(dot3_1);
                 break;
 
             case 1:
-                setSmallDot(dot1);
-                setBigDot(dot2);
-                setSmallDot(dot3);
+                setSmallDot(dot1_1);
+                setBigDot(dot2_1);
+                setSmallDot(dot3_1);
                 break;
             case 2:
-                setSmallDot(dot1);
-                setSmallDot(dot2);
-                setBigDot(dot3);
+                setSmallDot(dot1_1);
+                setSmallDot(dot2_1);
+                setBigDot(dot3_1);
                 break;
         }
     }
