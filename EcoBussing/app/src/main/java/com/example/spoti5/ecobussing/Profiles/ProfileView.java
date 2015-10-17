@@ -83,16 +83,25 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
         if(thisProfile instanceof IUser){
             IUser currentUser = (IUser) thisProfile;
             double co2 = currentUser.getCo2Tot();
-            int distance = (int)calc.calculateDistanceFromCO2(co2);
+            double distance = calc.calculateDistanceFromCO2(co2);
+
+            TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
+            TextView co2View = (TextView)view.findViewById(R.id.textCo2);
 
             DecimalFormat df = new DecimalFormat("#.00");
             String co2s = df.format(co2);
 
-            TextView co2View = (TextView)view.findViewById(R.id.textCo2);
             co2View.setText(co2s + " kg");
 
-            TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
-            distanceView.setText(Integer.toString(distance) + " m");
+            if(distance > 1000){
+                distance = distance/1000;
+                DecimalFormat dfd = new DecimalFormat("#.00");
+                String distances = dfd.format(distance);
+                distanceView.setText(distances + " km");
+            }else {
+                String d = new DecimalFormat("#").format(distance);
+                distanceView.setText(d + " m");
+            }
 
             TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
             moneyView.setText(Double.toString(currentUser.getMoneySaved(true)) + " kr");
