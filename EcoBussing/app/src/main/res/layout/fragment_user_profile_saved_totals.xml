@@ -19,7 +19,7 @@
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/bus"
+                android:src="@drawable/co2"
                 android:id="@+id/imageCo2" />
 
             <TextView
@@ -28,7 +28,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16dp"
                 android:textColor="@color/nice_green"
-                android:text="321 km"
+                android:text="58 kg"
                 android:id="@+id/textCo2"
                 android:layout_below="@id/imageCo2"
                 android:layout_centerHorizontal="true"/>
@@ -37,7 +37,7 @@
 
         <View style="@style/Divider_Vertical"
             android:layout_toRightOf="@id/layoutCo2"
-            android:layout_height="100"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
             android:id="@+id/dividerCo2"/>
 
@@ -50,7 +50,7 @@
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/co2"
+                android:src="@drawable/bus"
                 android:id="@+id/imageDistance" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16dp"
                 android:textColor="@color/nice_green"
-                android:text="58 kg"
+                android:text="321 km"
                 android:id="@+id/textDistance"
                 android:layout_below="@id/imageDistance"
                 android:layout_centerHorizontal="true"/>
@@ -67,7 +67,7 @@
 
         <View style="@style/Divider_Vertical"
             android:layout_toRightOf="@id/layoutDistance"
-            android:layout_height="100"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
             android:id="@+id/dividerDistance"/>
 

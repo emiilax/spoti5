@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_alignStart="@id/profile_name"
+                android:layout_alignLeft="@id/profile_name"
                 android:layout_below="@id/profile_name"
                 android:text="Company if available"
                 android:id="@+id/user_company" />
@@ -56,46 +57,167 @@
                 android:layout_marginLeft="16dp" />
         </TableRow>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_above="@id/profile_share_row"
-            android:gravity="center_horizontal"
-            android:id="@+id/dot_row">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:id="@+id/img_dot1"
-                android:src="@drawable/dot_grey_big"
-                android:layout_gravity="center_vertical" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:id="@+id/img_dot2"
-                android:src="@drawable/dot_grey_small"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
-
         <!--
         This is right now not done correct, the layout_height in profile_pager should not be set, it
         should just take up all left over height, will have to fix.
         -->
 
-        <android.support.v4.view.ViewPager
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView"
             android:layout_below="@id/profile_top_layout"
-            android:layout_above="@id/dot_row"
-            android:id="@+id/profile_pager"
+            android:layout_above="@id/profile_share_row">
 
-            xmlns:android="http://schemas.android.com/apk/res/android"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:id="@+id/layoutSaved">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/layoutCo2"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true">
+
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/co2"
+                            android:id="@+id/imageCo2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="16dp"
+                            android:textColor="@color/nice_green"
+                            android:text="58 kg"
+                            android:id="@+id/textCo2"
+                            android:layout_below="@id/imageCo2"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+                    <View style="@style/Divider_Vertical"
+                        android:layout_toRightOf="@id/layoutCo2"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/dividerCo2"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/layoutDistance"
+                        android:layout_centerInParent="true">
+
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/bus"
+                            android:id="@+id/imageDistance" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="16dp"
+                            android:textColor="@color/nice_green"
+                            android:text="321 km"
+                            android:id="@+id/textDistance"
+                            android:layout_below="@id/imageDistance"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+
+                    <View style="@style/Divider_Vertical"
+                        android:layout_toRightOf="@id/layoutDistance"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/dividerDistance"/>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/layoutMoney"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/placeholder_dollah_dollah_bill"
+                            android:id="@+id/imageMoney" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="16dp"
+                            android:textColor="@color/nice_green"
+                            android:text="12 000 kr!"
+                            android:id="@+id/textMoney"
+                            android:layout_below="@id/imageMoney"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View style="@style/Divider_Horizontal"
+                    android:layout_below="@id/layoutSaved"
+                    android:id="@+id/dividerSaved"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp" />
+
+                <android.support.v4.view.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="165dp"
+                    android:layout_below="@id/dividerSaved"
+                    android:id="@+id/profile_pager"
+
+                    xmlns:android="http://schemas.android.com/apk/res/android"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@id/profile_pager"
+                    android:id="@+id/dotRow1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/img_dot1"
+                        android:src="@drawable/dot_grey_big"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/img_dot2"
+                        android:src="@drawable/dot_grey_small"
+                        android:layout_gravity="center_vertical" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:id="@+id/img_dot3"
+                        android:src="@drawable/dot_grey_small"
+                        android:layout_gravity="center_vertical" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
 
     </RelativeLayout>
 

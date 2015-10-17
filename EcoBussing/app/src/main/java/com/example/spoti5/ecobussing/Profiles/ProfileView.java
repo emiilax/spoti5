@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Calculations.Calculator;
 import com.example.spoti5.ecobussing.R;
+
+import java.text.DecimalFormat;
 
 /**
  * This is the view for the user profile. It contains a ViewPager. The ViewPager can show different
@@ -24,8 +27,9 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private static View view;
-    private ImageView dot1, dot2;
+    private ImageView dot1, dot2, dot3;
     private static IProfile thisProfile;
+    private static Calculator calc = Calculator.getCalculator();
 
     public ProfileView() {
         // Required empty public constructor
@@ -49,6 +53,7 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
 
         dot1 = (ImageView) view.findViewById(R.id.img_dot1);
         dot2 = (ImageView) view.findViewById(R.id.img_dot2);
+        dot3 = (ImageView) view.findViewById(R.id.img_dot3);
 
         setDataStrings(view);
 
@@ -76,6 +81,22 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
          * you should stay away from using instanceof in this manner, so this should be fixed.
          */
         if(thisProfile instanceof IUser){
+            IUser currentUser = (IUser) thisProfile;
+            double co2 = currentUser.getCo2Tot();
+            int distance = (int)calc.calculateDistanceFromCO2(co2);
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            String co2s = df.format(co2);
+
+            TextView co2View = (TextView)view.findViewById(R.id.textCo2);
+            co2View.setText(co2s + " kg");
+
+            TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
+            distanceView.setText(Integer.toString(distance) + " m");
+
+            TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
+            moneyView.setText(Double.toString(currentUser.getMoneySaved(true)) + " kr");
+
             if(((IUser) thisProfile).getCompany().length() > 0) {
                 companyNameView.setText(((IUser) thisProfile).getCompany());
             }else{
@@ -92,11 +113,19 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
             case 0:
                 setBigDot(dot1);
                 setSmallDot(dot2);
+                setSmallDot(dot3);
                 break;
 
             case 1:
                 setSmallDot(dot1);
                 setBigDot(dot2);
+                setSmallDot(dot3);
+                break;
+            case 2:
+                setSmallDot(dot1);
+                setSmallDot(dot2);
+                setBigDot(dot3);
+                break;
         }
     }
 

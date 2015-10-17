@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.spoti5.ecobussing.diagram.BarDiagram;
+
 /**
  * This is the pager adapter for the ViewPager in ProfileView. New fragments are added in getItem().
  * When this is done there also need to be more cases added in onPageSelected() in ProfileView.
@@ -22,11 +24,13 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new UserProfileOtherThing();
+                fragment = new BarDiagram();
                 break;
-
             case 1:
-                fragment = new UserProfileSavedTotals();
+                fragment = new BarDiagram();
+                break;
+            case 2:
+                fragment = new BarDiagram();
                 break;
         }
 
@@ -35,7 +39,7 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }
 
