@@ -204,6 +204,38 @@ public class BarDiagram extends Fragment {
 
     }
 
+    public BarData getBarDataLastSevenWeeks(){
+        Calendar calendar = Calendar.getInstance();
+
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        IUser currentUser = SaveHandler.getCurrentUser();
+        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+
+        highestValue = 0;
+
+        int startWeeknumber = calendar.get(Calendar.WEEK_OF_YEAR);
+        calendar.add(Calendar.DAY_OF_MONTH, + 1);
+
+        for(int i = 0; i < 7 ; i++){
+
+            for(int j = 0; j < calendar.get(Calendar.W)){
+                
+            }
+
+            calendar.add(Calendar.DAY_OF_MONTH, + 1);
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = 1 + calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            xVals.add(0, getWeekDayName(dayOfWeek));
+
+        }
+
+    }
+
 
 
 
