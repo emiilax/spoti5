@@ -57,6 +57,9 @@ import java.util.TimerTask;
  */
 public class MainActivity extends ActivityController implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    //is it okay to use a static like this?
+    public static MainActivity main;
+
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
     private ListView drawerListLeft;
@@ -86,6 +89,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        main = this;
 
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
