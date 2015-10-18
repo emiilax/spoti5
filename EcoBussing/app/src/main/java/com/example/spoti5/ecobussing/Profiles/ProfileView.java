@@ -11,7 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.R;
+
+import java.text.DecimalFormat;
 
 /**
  * This is the view for the user profile. It contains a ViewPager. The ViewPager can show different
@@ -20,12 +26,13 @@ import com.example.spoti5.ecobussing.R;
  *
  *  Created by Hampus on 2015-10-12.
  */
-public class ProfileView extends Fragment implements ViewPager.OnPageChangeListener{
-    private FragmentStatePagerAdapter mPagerAdapter;
-    private ViewPager mViewPager;
+public class ProfileView extends Fragment{
+    private FragmentStatePagerAdapter pagerAdapter1, pagerAdapter2;
+    private ViewPager viewPager1, viewPager2;
     private static View view;
-    private ImageView dot1, dot2;
     private static IProfile thisProfile;
+    private static Calculator calc = Calculator.getCalculator();
+    private static IDatabase db;
 
     public ProfileView() {
         // Required empty public constructor
@@ -44,83 +51,113 @@ public class ProfileView extends Fragment implements ViewPager.OnPageChangeListe
 
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
-        setMPagerAdapter();
-
-
-        dot1 = (ImageView) view.findViewById(R.id.img_dot1);
-        dot2 = (ImageView) view.findViewById(R.id.img_dot2);
+        view = setMPagerAdapter(view);
 
         setDataStrings(view);
 
         return view;
     }
 
-    private void setMPagerAdapter() {
+    //This should be changed a bit to look better, Hampus fix
+    private View setMPagerAdapter(View viewen) {
         if(thisProfile instanceof IUser) {
-            mPagerAdapter = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
+            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
         }else {
-            mPagerAdapter = new CompanyPagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new CompanyPagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
         }
-        mViewPager = (ViewPager)view.findViewById(R.id.profile_pager);
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
+        viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
+        viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+        viewPager1.setAdapter(pagerAdapter1);
+        viewPager2.setAdapter(pagerAdapter2);
+        viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
+        viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
+        return viewen;
     }
 
     public static void setDataStrings(View view) {
-        TextView nameView = (TextView)view.findViewById(R.id.profile_name);
-        nameView.setText(thisProfile.getName());
-        TextView companyNameView = (TextView)view.findViewById(R.id.user_company);
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        DecimalFormat df0 = new DecimalFormat("#");
 
-        /**
-         * there is a better way of doing this w/o using instanceof, I don't remember how, but I remeber
-         * you should stay away from using instanceof in this manner, so this should be fixed.
-         */
+        TextView nameView = (TextView)view.findViewById(R.id.profile_name);
+        TextView companyNameView = (TextView)view.findViewById(R.id.user_company);
+        TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
+        TextView co2View = (TextView)view.findViewById(R.id.textCo2);
+        TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
+        TextView topListPosView = (TextView)view.findViewById(R.id.positionOrEmployedNbr);
+
+        db = DatabaseHolder.getDatabase();
+
+        double co2;
+        double distance;
+        double money;
+        int position;
+
+        nameView.setText(thisProfile.getName());
+
+        //Does stuff if the profile is for a user
         if(thisProfile instanceof IUser){
+            IUser currentUser = (IUser) thisProfile;
+            co2 = currentUser.getCO2Saved(true);
+            distance = calc.calculateDistanceFromCO2(co2);
+            money = currentUser.getMoneySaved(true);
+            position = db.getPosition(currentUser);
+
+            String moneyS = df0.format(money);
+            moneyView.setText(moneyS + " kr");
+
+            if(distance > 1000){
+                distance = distance/1000;
+                String distanceS = df2.format(distance);
+                distanceView.setText(distanceS + " km");
+            }else {
+                String d = df0.format(distance);
+                distanceView.setText(d + " m");
+            }
+
             if(((IUser) thisProfile).getCompany().length() > 0) {
                 companyNameView.setText(((IUser) thisProfile).getCompany());
             }else{
-                companyNameView.setText("Den här användaren har inte anslutit sig till något företag");
+                companyNameView.setText("Ej ansluten till något företag");
             }
-        }else{
+        }
+        //Does other stuff if the profile is for a company
+        else{
+            Company currentCompany = (Company)thisProfile;
+            co2 = currentCompany.getCO2Saved(true);
+
+            //There's no intrest in showing a company's traveled distance, so here we show number of
+            //employees instead.
+            distance = currentCompany.getNbrEmployees();
+            String distanceS = df0.format(distance);
+            distanceView.setText(distanceS + " anställda");
+
+            //A company doesn't have any money saved so points will be displayed instead.
+            money = currentCompany.getpointTot();
+            String moneyS = df0.format(money);
+            moneyView.setText(moneyS + " pt");
+
+            position = db.getPosition(currentCompany);
+
             companyNameView.setText(null);
+
+            view.findViewById(R.id.profilePager2).setVisibility(view.INVISIBLE);
+            view.findViewById(R.id.dotRow2).setVisibility(view.INVISIBLE);
+            view.findViewById(R.id.dividerGraph1).setVisibility(view.INVISIBLE);
         }
-    }
 
-    @Override
-    public void onPageSelected(int position) {
-        switch(position){
-            case 0:
-                setBigDot(dot1);
-                setSmallDot(dot2);
-                break;
 
-            case 1:
-                setSmallDot(dot1);
-                setBigDot(dot2);
-        }
-    }
+        String pos = Integer.toString(position);
+        topListPosView.setText("#" + pos);
 
-    private void setBigDot (ImageView dot){
-        dot.setImageResource(R.drawable.dot_grey_big);
-        dot.setAlpha(1f);
-    }
+        String co2S = df2.format(co2);
+        co2View.setText(co2S + " kg");
 
-    private void setSmallDot (ImageView dot){
-        dot.setImageResource(R.drawable.dot_grey_small);
-        dot.setAlpha(0.7f);
+
     }
 
     public void setThisProfile(IProfile ip){
         thisProfile = ip;
     }
-
-    public interface OnFragmentInteractionListener {public void onFragmentInteraction(Uri uri);}
-
-    // Theses methods are not used but needed because of the OnPageChangeListener implementation
-    @Override
-    public void onPageScrollStateChanged(int state) {}
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
 }
 

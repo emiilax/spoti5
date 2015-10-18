@@ -14,6 +14,7 @@ import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class CompanyMedalAdapter extends BaseAdapter {
     private List<String> medalNames;
-    private GlobalMedal global;
+    private CompanyMedal companyMedal;
     private TextView title;
     private TextView currentText;
     private TextView maxText;
@@ -34,8 +35,10 @@ public class CompanyMedalAdapter extends BaseAdapter {
     public CompanyMedalAdapter(Context context) {
         this.context = context;
         medalNames = new ArrayList<>();
-        global = GlobalMedal.getInstance();
         currentUser = SaveHandler.getCurrentUser();
+        if(!currentUser.getCompany().equals("")) {
+            companyMedal = new CompanyMedal(currentUser.getCompany());
+        }
 
         for (String item : context.getResources().getStringArray(R.array.company_medals)) {
             medalNames.add(item);
@@ -105,10 +108,38 @@ public class CompanyMedalAdapter extends BaseAdapter {
 
 
     private View saveTogheterMedal(View row) {
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        String current = df.format(companyMedal.getCurrentPointTotal()) + " poäng";
+        String full = df.format(companyMedal.getMaxPointTotal())  + " poäng";
+
+        currentText.setText(current);
+        maxText.setText(full);
+
+        int progPer = companyMedal.getPointPercentage();
+        progBar.setProgress(progPer);
+
+        if(progPer > 100){
+            //new image
+        }
         return row;
     }
 
     private View peopleMedal(View row) {
+
+        String current = Integer.toString(companyMedal.getEmployeesCurrent()) + " anställda åker kollektivt av " + Integer.toString(companyMedal.getEmployeesMax()) + "st";
+        String max ="";
+
+        currentText.setText(current);
+        maxText.setText(max);
+
+        int progPer = companyMedal.getEmployeesPercantage();
+        progBar.setProgress(progPer);
+
+        if(progPer > 100){
+            //new image
+        }
+
         return row;
     }
 

@@ -133,7 +133,7 @@ public class Calculator {
      * @return the distance, based on the parameter co2
      */
     public double calculateDistanceFromCO2(double co2) {
-        return (co2*10)/(avgCarPetrolConsumption*carbondioxideEmittedPerLiter*1000);
+        return (co2*10000)/(avgCarPetrolConsumption*carbondioxideEmittedPerLiter);
     }
 
     /**

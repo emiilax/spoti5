@@ -95,6 +95,15 @@ public class Database implements IDatabase{
         return index;
     }
 
+    @Override
+    public int getPosition(Company comp){
+        int index = 0;
+        if(topListAllCompanies.contains(comp)){
+            index = topListAllCompanies.indexOf(comp);
+        }
+        return index;
+    }
+
     public IProfile getCompany(String name){
         for(IProfile c: getCompanies()){
             if(c.getName().equals(name)){
