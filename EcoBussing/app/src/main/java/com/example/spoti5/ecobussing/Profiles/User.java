@@ -1,6 +1,8 @@
 package com.example.spoti5.ecobussing.Profiles;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -52,7 +54,7 @@ public class User implements IUser{
         this.currentDistance = 0;
         this.co2CurrentMonth = 0;
         this.co2CurrentYear = 0;
-        this.co2Tot = 30;
+        this.co2Tot = 0;
         this.firstUse = true;
         co2SavedMap = new DeepMap<>();
         moneySavedMap = new DeepMap<>();
@@ -121,10 +123,21 @@ public class User implements IUser{
     public void incCO2Saved(double distance) {
         updateCo2Map();
         double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
+
+        if(!connectedCompany.equals("") || connectedCompany != null){
+            updateCompany(co2Saved);
+        }
+
         co2SavedMap.addToCurrentDate(co2Saved);
         this.incCurrentDistance(distance);
         this.addToCurrentCO2Saved(co2Saved);
         updateCo2Json();
+    }
+
+    public void updateCompany(double distance){
+        Company company = (Company)DatabaseHolder.getDatabase().getCompany(connectedCompany);
+        company.incCO2Saved(distance);
+
     }
 
     @Override

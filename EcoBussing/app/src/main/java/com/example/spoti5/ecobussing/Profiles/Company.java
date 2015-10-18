@@ -237,6 +237,15 @@ public class Company implements IProfile {
         }
     }
 
+    public void incPoints(double co2Saved){
+
+        pointCurrentMonth  += (2+(10*co2Saved)) / (100+nbrEmployees);
+        pointCurrentYear   += (2+(10*co2Saved)) / (100+nbrEmployees);
+        pointTot           += (2+(10*co2Saved)) / (100+nbrEmployees);
+
+
+    }
+
     /**
      * Updates the company's member lists with the current information of each member from the database, not needed?
      */
@@ -300,9 +309,7 @@ public class Company implements IProfile {
     }
 
     @Override
-    public void incCO2Saved(double distance) {
-
-    }
+    public void incCO2Saved(double distance) {}
 
     @Override
     public Double getCO2Saved(boolean avoidDatabaseUpload) {
