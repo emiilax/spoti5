@@ -194,7 +194,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void startFirstFragemnt(){
         IUser user = SaveHandler.getCurrentUser();
-        String title = user.getName();
+        String title = "Min profil";
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
