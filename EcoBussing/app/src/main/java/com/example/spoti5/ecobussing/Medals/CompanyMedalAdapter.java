@@ -110,12 +110,36 @@ public class CompanyMedalAdapter extends BaseAdapter {
     private View saveTogheterMedal(View row) {
         DecimalFormat df = new DecimalFormat("#.00");
 
-        String current = df.format(companyMedal.getPointPercentage());
+        String current = df.format(companyMedal.getCurrentPointTotal()) + " poäng";
+        String full = df.format(companyMedal.getMaxPointTotal())  + " poäng";
 
+        currentText.setText(current);
+        maxText.setText(full);
+
+        int progPer = companyMedal.getPointPercentage();
+        progBar.setProgress(progPer);
+
+        if(progPer > 100){
+            //new image
+        }
         return row;
     }
 
     private View peopleMedal(View row) {
+
+        String current = Integer.toString(companyMedal.getEmployeesCurrent()) + " anställda åker kollektivt av " + Integer.toString(companyMedal.getEmployeesMax()) + "st";
+        String max ="";
+
+        currentText.setText(current);
+        maxText.setText(max);
+
+        int progPer = companyMedal.getEmployeesPercantage();
+        progBar.setProgress(progPer);
+
+        if(progPer > 100){
+            //new image
+        }
+
         return row;
     }
 
