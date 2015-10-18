@@ -131,30 +131,25 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 Object item = searchAdapter.getItem(position);
-                if (!(item instanceof Company)) {
-                    IUser user = (IUser) item;
-                    try {
-                        String title = user.getName();
-                        getSupportActionBar().setTitle(title);
-                        ProfileView profileView = ProfileView.newInstance(user);
-                        fragmentsVisitedName.add(title);
-                        fragmentsVisited.add(profileView);
-                        fragmentTransaction.replace(R.id.container, profileView);
-                    } catch (IndexOutOfBoundsException e) {
-                        text = "Ingen kontakt med databasen, försök igen";
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    drawerLayout.closeDrawer(drawerListRight);
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
-                } else {
-                    text = "nja, vi har ju inte implementerat detta för företag än";
+                IProfile profile = (IProfile) item;
+                try {
+                    String title = profile.getName();
+                    getSupportActionBar().setTitle(title);
+                    ProfileView profileView = ProfileView.newInstance(profile);
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(profileView);
+                    fragmentTransaction.replace(R.id.container, profileView);
+                } catch (IndexOutOfBoundsException e) {
+                    text = "Ingen kontakt med databasen, försök igen";
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+
 
 
             }
