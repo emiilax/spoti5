@@ -82,7 +82,7 @@ public class EditCompanyFragment extends Fragment {
         companyEmployees.setText(Integer.toString(usersCompany.getNbrEmployees()));
         companyInfo.setText(usersCompany.getCompanyInfo());
 
-        prepareListData();
+        //prepareListData();
 
         adapter = new ExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
         userList.setAdapter(adapter);
@@ -100,7 +100,7 @@ public class EditCompanyFragment extends Fragment {
         }
     };
 
-    private void prepareListData(){
+    /*private void prepareListData(){
 
         listDataHeader = new ArrayList();
         listDataChild = new HashMap<IProfile, String>();
@@ -115,6 +115,6 @@ public class EditCompanyFragment extends Fragment {
             listDataChild.put(listDataHeader.get(i), "HEjhej");
         }
 
-    }
+    }*/
 
 }
