@@ -1,7 +1,6 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Medals;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Database.SimpelSearch;
-import com.example.spoti5.ecobussing.GlobalMedal;
-import com.example.spoti5.ecobussing.Profiles.IProfile;
-import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

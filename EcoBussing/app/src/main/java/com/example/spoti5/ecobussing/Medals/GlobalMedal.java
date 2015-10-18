@@ -1,6 +1,4 @@
-package com.example.spoti5.ecobussing;
-
-import android.provider.Settings;
+package com.example.spoti5.ecobussing.Medals;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;

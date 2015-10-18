@@ -1,18 +1,16 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Medals;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.example.spoti5.ecobussing.SwipeScreens.ToplistPagerAdapter;
+import com.example.spoti5.ecobussing.R;
 
 /**
  * Created by emilaxelsson on 17/10/15.

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Medals;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.example.spoti5.ecobussing.R;
 
 /**
  * Created by Erik on 2015-10-17.
@@ -56,11 +58,11 @@ public class MedalFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.medalList);
 
         if(this.medalType == USER_MEDALS){
-            listAdapter = new UserMedalAdapter();
+            listAdapter = new UserMedalAdapter(currentActivity);
         }else if(this.medalType == COMPANY_MEDALS){
-            listAdapter = new CompanyMedalAdapter();
+            listAdapter = new CompanyMedalAdapter(currentActivity);
         }else if(this.medalType == GLOBAL_MEDALS){
-            listAdapter = new GlobalMedalAdapter(getActivity());
+            listAdapter = new GlobalMedalAdapter(currentActivity);
         }
 
         listView.setAdapter(listAdapter);

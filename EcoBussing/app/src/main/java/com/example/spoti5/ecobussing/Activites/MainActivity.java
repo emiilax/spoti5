@@ -2,8 +2,6 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,10 +29,10 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.example.spoti5.ecobussing.MedalFragment;
+import com.example.spoti5.ecobussing.Medals.MedalFragment;
+import com.example.spoti5.ecobussing.Medals.MedalViewSwiper;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
-import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
@@ -312,7 +310,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 title = "Medaljer";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                MedalFragment medalFragment = new MedalFragment();
+                MedalViewSwiper medalFragment = new MedalViewSwiper();
                 fragmentsVisited.add(medalFragment);
                 fragmentsVisitedName.add(title);
 
