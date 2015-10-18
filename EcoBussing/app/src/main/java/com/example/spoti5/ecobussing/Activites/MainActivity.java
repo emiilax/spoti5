@@ -272,14 +272,29 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
                 break;
             case 1:
-                IProfile company = database.getCompanies().get(0);
-                title = "Mitt företag";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                ProfileView companyView = ProfileView.newInstance(company);
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(companyView);
-                fragmentTransaction.replace(R.id.container, companyView);
+                //IProfile company = database.getCompanies().get(0);
+                IProfile company;
+                String com = currentUser.getCompany();
+                if (com.length() > 0) {
+                    company = database.getCompany(com);
+                    title = "Mitt företag";
+                    getSupportActionBar().setTitle(title);
+                    view.setBackgroundResource(R.color.clicked);
+                    ProfileView companyView = ProfileView.newInstance(company);
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(companyView);
+                    fragmentTransaction.replace(R.id.container, companyView);
+                }else{
+                    //temp, for when you are not connected to a company, shows this view instead,
+                    //where you can search for a company
+                    title = "Företagsinställningar";
+                    getSupportActionBar().setTitle(title);
+                    view.setBackgroundResource(R.color.clicked);
+                    CompanySwipeFragment fragment = new CompanySwipeFragment();
+                    fragmentsVisitedName.add(title);
+                    fragmentsVisited.add(fragment);
+                    fragmentTransaction.replace(R.id.container, fragment);
+                }
 
                 break;
            /* case 1:

@@ -21,8 +21,6 @@ import java.util.List;
  */
 public class Company implements IProfile {
 
-    private IDatabase database;
-
     private String name;
     private double pointCurrentMonth;
     private double pointCurrentYear;
@@ -74,8 +72,6 @@ public class Company implements IProfile {
         this.nbrEmployees = nbrEmployees;
 
         userConnectionDates = new HashMap();
-
-        database = DatabaseHolder.getDatabase();
 
         updateMemberJson();
         updateModMemberJson();

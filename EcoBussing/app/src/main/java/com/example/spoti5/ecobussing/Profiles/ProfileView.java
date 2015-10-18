@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.R;
 
 import java.text.DecimalFormat;
@@ -29,6 +32,7 @@ public class ProfileView extends Fragment{
     private static View view;
     private static IProfile thisProfile;
     private static Calculator calc = Calculator.getCalculator();
+    private static IDatabase db;
 
     public ProfileView() {
         // Required empty public constructor
@@ -54,6 +58,7 @@ public class ProfileView extends Fragment{
         return view;
     }
 
+    //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
         if(thisProfile instanceof IUser) {
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
@@ -79,64 +84,76 @@ public class ProfileView extends Fragment{
         TextView distanceView = (TextView) view.findViewById(R.id.textDistance);
         TextView co2View = (TextView)view.findViewById(R.id.textCo2);
         TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
+        TextView topListPosView = (TextView)view.findViewById(R.id.positionOrEmployedNbr);
+
+        db = DatabaseHolder.getDatabase();
 
         double co2;
         double distance;
         double money;
+        int position;
 
         nameView.setText(thisProfile.getName());
 
-        /**
-         * there is a better way of doing this w/o using instanceof, I don't remember how, but I remeber
-         * you should stay away from using instanceof in this manner, so this should be fixed.
-         */
+        //Does stuff if the profile is for a user
         if(thisProfile instanceof IUser){
             IUser currentUser = (IUser) thisProfile;
             co2 = currentUser.getCO2Saved(true);
             distance = calc.calculateDistanceFromCO2(co2);
             money = currentUser.getMoneySaved(true);
+            position = db.getPosition(currentUser);
+
+            String moneyS = df0.format(money);
+            moneyView.setText(moneyS + " kr");
+
+            if(distance > 1000){
+                distance = distance/1000;
+                String distanceS = df2.format(distance);
+                distanceView.setText(distanceS + " km");
+            }else {
+                String d = df0.format(distance);
+                distanceView.setText(d + " m");
+            }
 
             if(((IUser) thisProfile).getCompany().length() > 0) {
                 companyNameView.setText(((IUser) thisProfile).getCompany());
             }else{
                 companyNameView.setText("Ej ansluten till något företag");
             }
-        }else{
+        }
+        //Does other stuff if the profile is for a company
+        else{
             Company currentCompany = (Company)thisProfile;
             co2 = currentCompany.getCO2Saved(true);
-            distance = calc.calculateDistanceFromCO2(co2);
-            //Maybe money shouldn't be displayed in a company profile? Then there should only be 2
-            //fields visible there.
-            money = 23475;
+
+            //There's no intrest in showing a company's traveled distance, so here we show number of
+            //employees instead.
+            distance = currentCompany.getNbrEmployees();
+            String distanceS = df0.format(distance);
+            distanceView.setText(distanceS + " anställda");
+
+            //A company doesn't have any money saved so points will be displayed instead.
+            money = currentCompany.getpointTot();
+            String moneyS = df0.format(money);
+            moneyView.setText(moneyS + " pt");
+
+            position = db.getPosition(currentCompany);
+
             companyNameView.setText(null);
+
+            view.findViewById(R.id.profilePager2).setVisibility(view.INVISIBLE);
+            view.findViewById(R.id.dotRow2).setVisibility(view.INVISIBLE);
+            view.findViewById(R.id.dividerGraph1).setVisibility(view.INVISIBLE);
         }
 
 
-        if(distance > 1000){
-            distance = distance/1000;
-            String distanceS = df2.format(distance);
-            distanceView.setText(distanceS + " km");
-        }else {
-            String d = df0.format(distance);
-            distanceView.setText(d + " m");
-        }
-
+        String pos = Integer.toString(position);
+        topListPosView.setText("#" + pos);
 
         String co2S = df2.format(co2);
         co2View.setText(co2S + " kg");
 
-        String moneyS = df0.format(money);
-        moneyView.setText(moneyS + " kr");
-    }
 
-    private void setBigDot (ImageView dot){
-        dot.setImageResource(R.drawable.dot_grey_big);
-        dot.setAlpha(1f);
-    }
-
-    private void setSmallDot (ImageView dot){
-        dot.setImageResource(R.drawable.dot_grey_small);
-        dot.setAlpha(0.7f);
     }
 
     public void setThisProfile(IProfile ip){
