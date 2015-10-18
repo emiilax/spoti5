@@ -40,7 +40,7 @@ public class MedalViewSwiper extends Fragment{
     }
 
     public void fixTabLayout(){
-        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs_toplist);
+        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs_medal_view);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorHeight(3);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));

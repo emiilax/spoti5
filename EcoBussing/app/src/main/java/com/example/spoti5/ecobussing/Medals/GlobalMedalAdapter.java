@@ -114,7 +114,7 @@ public class GlobalMedalAdapter extends BaseAdapter {
         if(peoplePer>=100){
             medalImage.setImageResource(R.drawable.peoplemedal);
         }else {
-            medalImage.setImageResource(R.drawable.peoplemedalgrey);
+            medalImage.setImageResource(R.drawable.peoplemedalgreysmall);
         }
         progBar.setProgress(peoplePer);
 
