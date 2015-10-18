@@ -246,6 +246,12 @@ public class User implements IUser{
     }
 
     @Override
+    public int getTotaltTimesTraveled(boolean avoidDatabaseUpload) {
+        updateCo2Map();
+        return co2SavedMap.getTotaltTimesTraveled();
+    }
+
+    @Override
     public Double getDistanceTraveled() {
         return null;
     }

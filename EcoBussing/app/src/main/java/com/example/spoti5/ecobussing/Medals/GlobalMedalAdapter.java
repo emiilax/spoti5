@@ -87,8 +87,9 @@ public class GlobalMedalAdapter extends BaseAdapter {
 
         DecimalFormat df = new DecimalFormat("#.00");
 
-        String current = df.format(global.getCurrentCO2Value()/1000000) + "kg CO2";
-        String full = df.format(global.getFullCO2Value()/1000000) + "kg CO2";
+        String current = df.format(global.getCurrentCO2Value()) + "kg CO2";
+        df.setMinimumFractionDigits(0);
+        String full = df.format(global.getFullCO2Value()/10) + "ton CO2";
 
         currentText.setText(current);
         maxText.setText(full);
