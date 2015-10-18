@@ -220,13 +220,13 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (prevView != null) prevView.setBackgroundResource(R.color.clear_white);
+        if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        switch (parent.getId()) {
+        switch(parent.getId()){
             case R.id.left_drawer:
-                switch (position) {
+                switch(position){
                     case 0:
                         IProfile user = SaveHandler.getCurrentUser();
                         changeFragment(user, "Min profil");
@@ -241,6 +241,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                             changeFragment(company, "Mitt företag");
                             view.setBackgroundResource(R.color.clicked);
                         } else {
+
                             //temp, for when you are not connected to a company, shows this view instead,
                             //where you can search for a company
                             title = "Företagsinställningar";
@@ -299,6 +300,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                         title = "Företagsinställningar";
                         getSupportActionBar().setTitle(title);
                         view.setBackgroundResource(R.color.clicked);
+
                         fragmentsVisitedName.add(title);
                         Company usersCompany = (Company) database.getCompany(currentUser.getCompany());
                         if (currentUser.getCompany().equals("")) {
@@ -360,8 +362,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                         fragmentTransaction.commit();
                         break;
 
+                }
+                prevView = view;
+                drawerLayout.closeDrawer(drawerListLeft);
+                break;
 
-                    case R.id.search_result_list:
+            case R.id.search_result_list:
                 /*Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence text;
@@ -384,24 +390,27 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 drawerLayout.closeDrawer(drawerListRight);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);*/
-                        Object item = searchAdapter.getItem(position);
-                        IProfile profile = (IProfile) item;
-                        changeFragment(profile, profile.getName());
-                        drawerLayout.closeDrawer(drawerListRight);
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
-                        break;
-                }
+                Object item = searchAdapter.getItem(position);
+                IProfile profile = (IProfile) item;
+                changeFragment(profile, profile.getName());
+                drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                break;
+        }
 
 
-
+        /*fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
+        //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+    }
 
 
 
         /*fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();*/
                 //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
-        }}
+        
 
 /*    @Override
     public void onBackPressed(){
@@ -428,7 +437,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         SaveHandler.changeUser(null);
     }
 
-    public void changeFragment(IProfile p, String t) {
+    public void changeFragment(IProfile p, String t){
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
