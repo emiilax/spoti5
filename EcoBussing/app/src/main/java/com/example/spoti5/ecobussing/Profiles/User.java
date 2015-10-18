@@ -248,6 +248,7 @@ public class User implements IUser{
     @Override
     public int getTotaltTimesTraveled(boolean avoidDatabaseUpload) {
         updateCo2Map();
+        System.out.println(co2SavedMap.toString());
         return co2SavedMap.getTotaltTimesTraveled();
     }
 
@@ -335,6 +336,7 @@ public class User implements IUser{
 
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
+            System.out.println("hej");
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();

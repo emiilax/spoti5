@@ -14,7 +14,7 @@ public class CompanyMedal {
     private double currentPointTotal;
 
     private int employeesMax;
-    private int employeesMin;
+    private int employeesCurrent;
 
     private Company company;
     private IDatabase database;
@@ -24,6 +24,7 @@ public class CompanyMedal {
         this.company = (Company)database.getCompany(company);
 
         pointMedal();
+        employeesMedal();
     }
 
     private void pointMedal() {
@@ -47,12 +48,21 @@ public class CompanyMedal {
         this.maxPointTotal = maxPointTotal;
     }
 
+    private void employeesMedal(){
+        employeesMax = company.getNbrEmployees();
+        employeesCurrent = company.getMembers(true).size();
+    }
+
+    public int getEmployeesPercantage(){
+        return (employeesCurrent/employeesMax)*100;
+    }
+
     public int getEmployeesMax() {
         return employeesMax;
     }
 
-    public int getEmployeesMin() {
-        return employeesMin;
+    public int getEmployeesCurrent() {
+        return employeesCurrent;
     }
 
     public void setEmployeesMax(int employeesMax) {
