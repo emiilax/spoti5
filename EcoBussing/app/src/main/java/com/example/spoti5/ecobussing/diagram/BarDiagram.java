@@ -38,6 +38,8 @@ public class BarDiagram extends Fragment {
     private IProfile profile;
     private boolean isCompany;
 
+    private int range;
+
     public final static int LAST_SEVEN_DAYS = 0;
     //public static int LAST_SEVEN_WEEKS = 1;
     public final static int LAST_SEVEN_MONTHS = 2;
@@ -46,11 +48,11 @@ public class BarDiagram extends Fragment {
         // Required empty public constructor
     }
 
-    public final static BarDiagram newInstance(IProfile profile, int range){
+    public final static BarDiagram newInstance(IProfile p, int r){
         BarDiagram bd = new BarDiagram();
 
-        bd.setProfile(profile);
-        bd.setChartBarData(range);
+        bd.setProfile(p);
+        bd.setRange(r);
         return bd;
 
     }
@@ -66,6 +68,9 @@ public class BarDiagram extends Fragment {
         }
     }
 
+    public void setRange (int r){
+        range = r;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,8 +126,8 @@ public class BarDiagram extends Fragment {
         yAxis.setValueFormatter(new YAxisFormatter());
         yAxis.setLabelCount(3, true);
 
-        setProfile(SaveHandler.getCurrentUser());
-        setChartBarData(LAST_SEVEN_DAYS);
+        //setProfile(SaveHandler.getCurrentUser());
+        setChartBarData(range);
 
         return view;
     }
@@ -194,7 +199,7 @@ public class BarDiagram extends Fragment {
 
         }
         BarDataSet bds = new BarDataSet(barEntryList, "");
-        bds.setColor(getResources().getColor(R.color.secondary));
+        //bds.setColor(getResources().getColor(R.color.secondary));
         dataSets.add(bds);
 
         setMaxYAxis();

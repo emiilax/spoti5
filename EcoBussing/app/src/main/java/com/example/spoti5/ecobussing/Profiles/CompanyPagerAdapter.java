@@ -11,8 +11,11 @@ import com.example.spoti5.ecobussing.diagram.BarDiagram;
  */
 public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
 
-    public CompanyPagerAdapter(FragmentManager fragment) {
+    private IProfile thisProfile;
+
+    public CompanyPagerAdapter(FragmentManager fragment, IProfile profile) {
         super(fragment);
+        thisProfile = profile;
     }
 
     @Override
@@ -20,13 +23,13 @@ public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, 0);
                 break;
             case 1:
                 fragment = new BarDiagram();
                 break;
             case 2:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, 2);
                 break;
         }
 

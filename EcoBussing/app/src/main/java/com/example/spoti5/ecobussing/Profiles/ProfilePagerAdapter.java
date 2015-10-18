@@ -1,5 +1,6 @@
 package com.example.spoti5.ecobussing.Profiles;
 
+import android.net.IpPrefix;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,8 +16,11 @@ import com.example.spoti5.ecobussing.diagram.BarDiagram;
  */
 public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
 
-    public ProfilePagerAdapter(FragmentManager fragment) {
+    private IProfile thisProfile;
+
+    public ProfilePagerAdapter(FragmentManager fragment, IProfile profile) {
         super(fragment);
+        thisProfile = profile;
     }
 
     @Override
@@ -24,13 +28,13 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, 0);
                 break;
             case 1:
                 fragment = new BarDiagram();
                 break;
             case 2:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, 2);
                 break;
         }
 

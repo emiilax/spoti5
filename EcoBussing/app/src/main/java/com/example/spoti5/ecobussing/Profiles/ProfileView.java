@@ -56,10 +56,10 @@ public class ProfileView extends Fragment{
 
     private View setMPagerAdapter(View viewen) {
         if(thisProfile instanceof IUser) {
-            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
-            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
+            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
         }else {
-            pagerAdapter1 = new CompanyPagerAdapter(getActivity().getSupportFragmentManager());
+            pagerAdapter1 = new CompanyPagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
         }
         viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
         viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
