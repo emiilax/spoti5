@@ -39,7 +39,7 @@ public class BarDiagram extends Fragment {
     private boolean isCompany;
 
     public final static int LAST_SEVEN_DAYS = 0;
-    //public static int LAST_SEVEN_WEEKS = 1;
+    public final static int LAST_SEVEN_WEEKS = 1;
     public final static int LAST_SEVEN_MONTHS = 2;
 
     public BarDiagram() {
@@ -96,9 +96,10 @@ public class BarDiagram extends Fragment {
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setDrawLimitLinesBehindData(false);
         chart.setDescription("");
+        chart.setDrawValueAboveBar(false);
 
         //chart.setData(getBarDataLastSevenDays());
-        chart.setData(getBarDataLastSevenMonths());
+        //chart.setData(getBarDataLastSevenMonths());
 
 
         // X-axis
@@ -108,6 +109,8 @@ public class BarDiagram extends Fragment {
         xAxis.setTextColor(Color.BLACK);
         xAxis.setDrawAxisLine(true);
         xAxis.setAxisLineColor(getResources().getColor(R.color.diagram_lines));
+        //xAxis.setDrawLabels(false);
+        xAxis.setEnabled(true);
         xAxis.setValueFormatter(new XAxisFormatter());
 
 
@@ -123,7 +126,7 @@ public class BarDiagram extends Fragment {
         yAxis.setLabelCount(3, true);
 
         setProfile(SaveHandler.getCurrentUser());
-        setChartBarData(LAST_SEVEN_DAYS);
+        setChartBarData(LAST_SEVEN_WEEKS);
 
         return view;
     }
@@ -134,7 +137,9 @@ public class BarDiagram extends Fragment {
 
         if(range == LAST_SEVEN_DAYS){
             chart.setData(getBarDataLastSevenDays());
-        } else if(range == LAST_SEVEN_MONTHS){
+        } else if(range == LAST_SEVEN_WEEKS){
+            chart.setData(getBarDataLastSevenWeeks());
+        }else if(range == LAST_SEVEN_MONTHS){
             chart.setData(getBarDataLastSevenMonths());
         }
 
@@ -216,23 +221,58 @@ public class BarDiagram extends Fragment {
         highestValue = 0;
 
         int startWeeknumber = calendar.get(Calendar.WEEK_OF_YEAR);
-        calendar.add(Calendar.DAY_OF_MONTH, + 1);
-
-        for(int i = 0; i < 7 ; i++){
-
-            for(int j = 0; j < calendar.get(Calendar.W)){
-                
-            }
-
-            calendar.add(Calendar.DAY_OF_MONTH, + 1);
-
+        System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
+        double value = 0;
+        boolean firstWeek = true;
+        int i = startWeeknumber;
+        while(i > startWeeknumber - 7 ){
+            int place = 0;
+            int weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
             int year = calendar.get(Calendar.YEAR);
             int month = 1 + calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            xVals.add(0, getWeekDayName(dayOfWeek));
+            System.out.println(weekNumber);
+            System.out.println(month);
+            System.out.println(day);
+            if(calendar.get(Calendar.DAY_OF_MONTH) == 6){
+                xVals.add(0, Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR)));
+                barEntryList.add(new BarEntry((float) value, 6-place));
+                System.out.println(value);
+                value = 0;
+                firstWeek = false;
+                place++;
+                i--;
+            }
+
+
+            try{
+                if(isCompany){
+                    value += ((Company)profile).getCO2SavedDate(year, month, day);
+                }else{
+                    value += ((IUser)profile).getCO2SavedDate(year, month, day);
+                }
+
+            }catch (Exception e){
+                value += 0;
+            }
+
+            if(value > highestValue) highestValue = value;
+
+            //barEntryList.add(new BarEntry((float) value, 6-Math.abs(i)));
+
+
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
 
         }
+
+        BarDataSet bds = new BarDataSet(barEntryList, "");
+        bds.setColor(getResources().getColor(R.color.secondary));
+        dataSets.add(bds);
+
+        setMaxYAxis();
+
+        return new BarData(xVals, dataSets);
 
     }
 
