@@ -36,6 +36,7 @@ public interface IUser extends IProfile {
      * @return total money saved
      */
     public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
+    public int getTotaltTimesTraveled(boolean avoidDatabaseUpload);
 
     public String getCompany();
 
