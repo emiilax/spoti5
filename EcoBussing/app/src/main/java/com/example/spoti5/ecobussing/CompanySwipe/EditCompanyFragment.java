@@ -15,9 +15,14 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by matildahorppu on 12/10/15.
@@ -36,6 +41,11 @@ public class EditCompanyFragment extends Fragment {
     private TextView connectedUsersText;
     private ExpandableListView userList;
     private Button saveButton;
+
+    private List<IProfile> listDataHeader;
+    private HashMap<IProfile, String> listDataChild;
+
+    private ExpandableListAdapter adapter;
 
     public EditCompanyFragment(){
 
@@ -72,6 +82,11 @@ public class EditCompanyFragment extends Fragment {
         companyEmployees.setText(Integer.toString(usersCompany.getNbrEmployees()));
         companyInfo.setText(usersCompany.getCompanyInfo());
 
+        prepareListData();
+
+        adapter = new ExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
+        userList.setAdapter(adapter);
+
         saveButton.setOnClickListener(saveCompanyChanges);
 
         return view;
@@ -84,5 +99,22 @@ public class EditCompanyFragment extends Fragment {
             database.updateCompany(usersCompany);
         }
     };
+
+    private void prepareListData(){
+
+        listDataHeader = new ArrayList();
+        listDataChild = new HashMap<IProfile, String>();
+
+        ArrayList<String> members = (ArrayList)usersCompany.getMembers(true);
+
+        for(int i = 0; i< members.size(); i++){
+            listDataHeader.add(database.getUser(members.get(i)));
+        }
+
+        for(int i = 0; i < listDataHeader.size(); i++) {
+            listDataChild.put(listDataHeader.get(i), "HEjhej");
+        }
+
+    }
 
 }

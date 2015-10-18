@@ -410,7 +410,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         /*fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();*/
                 //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
-        
+
 
 /*    @Override
     public void onBackPressed(){

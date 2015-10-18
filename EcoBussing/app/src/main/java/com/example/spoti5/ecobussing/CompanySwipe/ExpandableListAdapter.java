@@ -1,11 +1,15 @@
 package com.example.spoti5.ecobussing.CompanySwipe;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
+import com.example.spoti5.ecobussing.R;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,46 +20,44 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<IProfile> users;
-    private HashMap<IProfile, String> map;
+    private List<IProfile> listDataHeader;
+    private HashMap<IProfile, String> listDataChild;
 
-    public ExpandableListAdapter(Context context, List<IProfile> users, String text){
+    public ExpandableListAdapter(Context context, List<IProfile> users, HashMap<IProfile, String> map){
         this.context = context;
-        this.users = users;
-        
+        this.listDataHeader = users;
+        this.listDataChild = map;
     }
-
-
 
 
    // @Override
     public int getGroupCount() {
-        return 0;
+        return this.listDataHeader.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 0;
+        return 1;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return null;
+        return this.listDataHeader.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return null;
+        return this.listDataChild.get(this.listDataHeader.get(groupPosition));
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -65,16 +67,49 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        return null;
+
+        String headerTitle = getGroup(groupPosition).getClass().getName();
+
+        if(convertView == null){
+            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView =infalInflater.inflate(R.layout.toplist_item, null);
+        }
+
+        TextView ett = (TextView)convertView.findViewById(R.id.toplistItem_name);
+        TextView tva = (TextView)convertView.findViewById(R.id.toplistItem_subtitle);
+
+        ett.setText(headerTitle);
+        tva.setText("");
+
+        return convertView;
+
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return null;
+
+        final String childText = (String)getChild(groupPosition, childPosition);
+
+        if(convertView == null){
+            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.list_item_child, null);
+        }
+
+        TextView textListChild = (TextView)convertView.findViewById(R.id.textView15);
+
+        textListChild.setText(childText);
+        textListChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Ta bort användaren från företaget
+            }
+        });
+
+        return convertView;
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }
