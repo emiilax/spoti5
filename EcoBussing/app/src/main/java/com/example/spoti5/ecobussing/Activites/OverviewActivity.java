@@ -10,6 +10,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
@@ -32,6 +34,11 @@ public class OverviewActivity extends ActivityController {
         textViewDistance = (TextView) findViewById(R.id.distanceTraveled);
         textViewCarbon = (TextView) findViewById(R.id.carbonSaved);
         textViewTotal = (TextView) findViewById(R.id.totalCarbon);
+
+        /*
+            Just to pre-init the database
+         */
+        DatabaseHolder.getDatabase();
 
         SaveHandler.getCurrentUser().resetCurrentDistance();
         SaveHandler.getCurrentUser().incCurrentDistance(2);

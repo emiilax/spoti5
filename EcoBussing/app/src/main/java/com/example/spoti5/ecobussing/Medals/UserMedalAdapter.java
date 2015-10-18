@@ -98,9 +98,10 @@ public class UserMedalAdapter extends BaseAdapter {
         progBar.setProgress(perDone);
 
         if(perDone > 100){
-            //new image
+            medalImage.setImageResource(R.drawable.star);
+        }else {
+            medalImage.setImageResource(R.drawable.stargrey);
         }
-
         return row;
     }
 
@@ -115,8 +116,10 @@ public class UserMedalAdapter extends BaseAdapter {
         int perDone = userMedal.getTravelMorePercantage();
         progBar.setProgress(perDone);
 
-        if(perDone > 100){
-            //new image
+        if(perDone > 100) {
+            medalImage.setImageResource(R.drawable.bus);
+        }else {
+            medalImage.setImageResource(R.drawable.colorizedbus);
         }
         return row;
 
