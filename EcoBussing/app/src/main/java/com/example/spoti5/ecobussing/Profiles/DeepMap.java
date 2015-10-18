@@ -38,6 +38,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
         underlyingMap = new HashMap<>();
         tempMap1 = new HashMap<>();
         tempMap2 = new HashMap<>();
+
     }
 
     /**
@@ -217,6 +218,16 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
             }
         }
         return sum;
+    }
+
+    public int getTotaltTimesTraveled(){
+        int tot = 0;
+        for (int i = 0; i < underlyingMap.size(); i++){
+            for(int k = 0; k < (underlyingMap.get(i)).size(); k++){
+                tot = underlyingMap.get(i).get(k).size();
+            }
+        }
+        return tot;
     }
 
 
