@@ -192,12 +192,8 @@ public class Company implements IProfile {
             System.out.println("here");
             user.setCompany(name);
             SaveHandler.changeUser(user);
-<<<<<<< HEAD
-            members.add(user);
 
-=======
             members.add(user.getEmail());
->>>>>>> master
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date dateTime = new Date();
             String str = dateFormat.format(dateTime);
