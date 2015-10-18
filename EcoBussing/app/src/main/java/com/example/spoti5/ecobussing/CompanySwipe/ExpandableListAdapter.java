@@ -17,12 +17,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<IProfile> users;
-    private HashMap<IProfile, String>
+    private HashMap<IProfile, String> map;
+
+    public ExpandableListAdapter(Context context, List<IProfile> users, String text){
+        this.context = context;
+        this.users = users;
+        
+    }
 
 
 
 
-    @Override
+   // @Override
     public int getGroupCount() {
         return 0;
     }

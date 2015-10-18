@@ -48,7 +48,7 @@
             android:id="@+id/editTextCompInfo"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.27"
-            android:lines="3"/>
+            android:maxLines="3"/>
 
         <Button
             android:layout_width="154dp"
