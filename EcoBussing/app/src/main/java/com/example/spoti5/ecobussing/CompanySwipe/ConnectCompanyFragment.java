@@ -14,8 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Activites.SearchAdapter;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Database.SimpelSearch;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
@@ -50,6 +52,8 @@ public class ConnectCompanyFragment extends Fragment {
 
     private ArrayAdapter arrayAdapter;
     private String[] companies;
+
+    private SimpelSearch simpleSearch = SimpelSearch.getInstance();
 
     public ConnectCompanyFragment(){
     }
@@ -94,15 +98,29 @@ public class ConnectCompanyFragment extends Fragment {
     private void initSearchObjects(){
 
         System.out.println("initSearchObjects");
-        ArrayList<IProfile> list = (ArrayList)database.getCompanies();
+        ArrayList<IProfile> searchResults = (ArrayList)simpleSearch.search(autoCompleteTextView.getText().toString());
+        ArrayList<IProfile> companyResults = new ArrayList<>();
 
-        companies = new String[list.size()];
-
-        for(int i = 0; i < list.size(); i++){
-            companies[i] = list.get(i).getName();
+        if(companyResults.size() == 0){
+            companies = new String[1];
+            companies[0] = "";
+        }else {
+            for (IProfile profile : searchResults) {
+                if (profile instanceof Company) {
+                    companyResults.add(profile);
+                }
+            }
         }
 
-        arrayAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_1, companies);
+        companies = new String[companyResults.size()];
+
+        for(int i = 0; i < companyResults.size(); i++){
+            companies[i] = companyResults.get(i).getName();
+        }
+
+
+
+        arrayAdapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_list_item_1 ,companies);
 
     }
 
@@ -131,8 +149,9 @@ public class ConnectCompanyFragment extends Fragment {
         @Override
         public void onClick(View v) {
             currentUser.setCompany(company.getName());
+            database.updateUser(currentUser);
             company.addMember(currentUser);
-
+            database.updateCompany(company);
         }
     };
 

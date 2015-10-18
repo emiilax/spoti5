@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.CompanySwipe.EditCompanyFragment;
 import com.example.spoti5.ecobussing.Medals.MedalFragment;
 import com.example.spoti5.ecobussing.Medals.MedalViewSwiper;
 import com.example.spoti5.ecobussing.Profiles.Company;
@@ -321,19 +322,22 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 title = "Företagsinställningar";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
-                if(currentUser.getCompany().equals("") || currentUser.getCompany().equals(null)) {
-                    //Om man inte är connctad till ett företag
+                fragmentsVisitedName.add(title);
+                Company usersCompany = (Company)database.getCompany(currentUser.getCompany());
+                if(currentUser.getCompany().equals("")) {
                     CompanySwipeFragment fragment = new CompanySwipeFragment();
-                    fragmentsVisitedName.add(title);
                     fragmentsVisited.add(fragment);
                     fragmentTransaction.replace(R.id.container, fragment);
                 }else{
-                    //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
-                    //if()
-                    ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
-                    fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(connectedCompanyFragment);
-                    fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
+                    if(usersCompany.userIsModerator(currentUser)){
+                        EditCompanyFragment editCompanyFragment = new EditCompanyFragment();
+                        fragmentsVisited.add(editCompanyFragment);
+                        fragmentTransaction.replace(R.id.container, editCompanyFragment);
+                    }else {
+                        ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
+                        fragmentsVisited.add(connectedCompanyFragment);
+                        fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
+                    }
                 }
                 break;
             case 5:

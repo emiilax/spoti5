@@ -43,7 +43,7 @@
         <EditText
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences|textMultiLine"
             android:ems="10"
             android:id="@+id/editTextCompInfo"
             android:layout_gravity="center_horizontal"

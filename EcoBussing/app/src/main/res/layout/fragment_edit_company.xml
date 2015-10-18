@@ -1,6 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/companyPic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:src="@drawable/user" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/companyNameTextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:textSize="25dp"
+                android:text="New Text" />
+
+            <EditText
+                android:id="@+id/employeesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:textSize="17dp"
+            android:text="anställda"
+            android:id="@+id/textView14" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/infoTextField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="Information om företaget"
+        android:textSize="17dp"
+         />
+
+    <EditText
+        android:id="@+id/infoEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="3"
+        android:ems="10"
+        android:layout_weight="0.28" />
+
+    <TextView
+        android:id="@+id/usersTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textSize="17dp"
+        android:text="Anslutna användare"
+        />
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:divider="@color/nice_green"
+        android:dividerHeight="1dp"
+        />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="Spara"
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/borderlessButtonStyle"
+        android:textSize="20dp"
+        android:textColor="@color/nice_green" />
 
 </LinearLayout>
