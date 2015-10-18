@@ -61,8 +61,19 @@
     <string-array name="global_medals">
         <item>Spara tillsammans!</item>
         <item>Alla bör åka kollektivt!</item>
-        <item>Gilla Jolle!</item>
     </string-array>
+
+    <string-array name="company_medals">
+        <item>Ett grönt företag!</item>
+        <item>Ett komplett företag!</item>
+    </string-array>
+
+    <string-array name="user_medals">
+        <item>Spara dig glad!</item>
+        <item>Åk mer!</item>
+    </string-array>
+
+
 
     <string name="action_settings">Settings</string>
 

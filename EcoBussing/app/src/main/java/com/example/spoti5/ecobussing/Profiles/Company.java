@@ -44,6 +44,7 @@ public class Company implements IProfile {
     private String oldMemberJson;
 
     private HashMap userConnectionDates;
+
     private String usersConnectedJson;
     private String oldUserConnectedJson;
 
@@ -78,6 +79,7 @@ public class Company implements IProfile {
 
         updateMemberJson();
         updateModMemberJson();
+        updateUserConnectedJson();
     }
 
     @Override
@@ -99,10 +101,8 @@ public class Company implements IProfile {
     }
 
     private void updateMembersFromJson(){
-        System.out.println(memberJson);
-        System.out.println(oldMemberJson);
         if(oldMemberJson == null || members == null) {
-            if (!memberJson.equals(null)) {
+            if (!(memberJson == null)) {
                 Gson gson = new Gson();
                 members= gson.fromJson(memberJson, new TypeToken<List<String>>(){}.getType());
                 oldMemberJson = memberJson;
@@ -112,7 +112,7 @@ public class Company implements IProfile {
 
     private void updateModMembersFromJson(){
         if(oldMomMemberJson==null || moderatorMembers == null) {
-            if (!modMemberJson.equals(null)) {
+            if (!(modMemberJson== null)) {
                 Gson gson = new Gson();
                 moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<String>>(){}.getType());
                 oldMomMemberJson = modMemberJson;
@@ -122,7 +122,7 @@ public class Company implements IProfile {
 
     private void updateUserConnectionDates(){
         if(oldUserConnectedJson == null || userConnectionDates == null){
-            if(!usersConnectedJson.equals(null)){
+            if(!(usersConnectedJson==null)){
                 Gson gson = new Gson();
                 userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
                 oldUserConnectedJson = usersConnectedJson;
@@ -189,7 +189,6 @@ public class Company implements IProfile {
     public void addMember(User user) {
         updateUserConnectionDates();
         if (!userIsMember(user)) {
-            System.out.println("here");
             user.setCompany(name);
             SaveHandler.changeUser(user);
 
@@ -266,9 +265,7 @@ public class Company implements IProfile {
         updateMemberJson();
     }*/
 
-    public String getUsersConnectedJson() {
-        return usersConnectedJson;
-    }
+
 
     private void updateUserConnectedJson(){
         Gson gson = new Gson();
@@ -334,8 +331,11 @@ public class Company implements IProfile {
     }
 
     public String getModMemberJson() {
-
         return modMemberJson;
+    }
+
+    public String getUsersConnectedJson() {
+        return usersConnectedJson;
     }
 
     private void updateModMemberJson(){
@@ -352,6 +352,8 @@ public class Company implements IProfile {
         Gson gson = new Gson();
         memberJson = gson.toJson(members);
     }
+
+
 
     @Override
     public String toString() {
