@@ -19,12 +19,16 @@
         <item name="android:windowBackground">@color/white_blue</item>
         <item name="android:colorBackground">@color/white_blue</item>
     </style>
-    <style name="Divider">
+    <style name="Divider_Horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
-
+    <style name="Divider_Vertical">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
     <style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:minHeight">15dip</item>
         <item name="android:maxHeight">20dip</item>
