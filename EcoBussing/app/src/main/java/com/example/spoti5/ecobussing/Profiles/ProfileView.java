@@ -125,6 +125,8 @@ public class ProfileView extends Fragment{
         else{
             Company currentCompany = (Company)thisProfile;
             co2 = currentCompany.getCO2Saved(true);
+            ((ImageView)view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);
+            ((ImageView)view.findViewById(R.id.imageDistance)).setImageResource(R.drawable.employees);
 
             //There's no intrest in showing a company's traveled distance, so here we show number of
             //employees instead.
