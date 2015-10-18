@@ -120,7 +120,9 @@ public class CompanyMedalAdapter extends BaseAdapter {
         progBar.setProgress(progPer);
 
         if(progPer > 100){
-            //new image
+            medalImage.setImageResource(R.drawable.star);
+        }else {
+            medalImage.setImageResource(R.drawable.stargrey);
         }
         return row;
     }
@@ -137,7 +139,9 @@ public class CompanyMedalAdapter extends BaseAdapter {
         progBar.setProgress(progPer);
 
         if(progPer > 100){
-            //new image
+            medalImage.setImageResource(R.drawable.peoplemedal);
+        }else {
+            medalImage.setImageResource(R.drawable.peoplemedalgreysmall);
         }
 
         return row;
