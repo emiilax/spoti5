@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.spoti5.ecobussing.Database.Database;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
@@ -31,9 +34,36 @@ public class BarDiagram extends Fragment {
 
     private double highestValue;
     private View view;
+    private BarChart chart;
+    private IProfile profile;
+    private boolean isCompany;
+
+    public final static int LAST_SEVEN_DAYS = 0;
+    //public static int LAST_SEVEN_WEEKS = 1;
+    public final static int LAST_SEVEN_MONTHS = 2;
 
     public BarDiagram() {
         // Required empty public constructor
+    }
+
+    public final static BarDiagram newInstance(IProfile profile, int range){
+        BarDiagram bd = new BarDiagram();
+
+        bd.setProfile(profile);
+        bd.setChartBarData(range);
+        return bd;
+
+    }
+
+    public void setProfile(IProfile profile){
+        try{
+            this.profile = (IUser) profile;
+            isCompany = false;
+
+        }catch (ClassCastException e){
+            this.profile = (Company) profile;
+            isCompany = true;
+        }
     }
 
     @Override
@@ -48,8 +78,9 @@ public class BarDiagram extends Fragment {
         LayoutInflater lInflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        BarChart chart = (BarChart) view.findViewById(R.id.chart);
+        chart = (BarChart) view.findViewById(R.id.chart);
 
+        // No grids, no right axis
         chart.setDrawGridBackground(false);
         chart.getLegend().setEnabled(false);
         chart.getAxisRight().setDrawLabels(false);
@@ -63,48 +94,49 @@ public class BarDiagram extends Fragment {
         chart.getXAxis().setDrawLimitLinesBehindData(false);
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setDrawLimitLinesBehindData(false);
-
-
         chart.setDescription("");
 
-        chart.setData(getBarDataLastSevenDays());
+        //chart.setData(getBarDataLastSevenDays());
+        chart.setData(getBarDataLastSevenMonths());
 
 
         // X-axis
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
         xAxis.setTextSize(10f);
         xAxis.setTextColor(Color.BLACK);
-
         xAxis.setDrawAxisLine(true);
         xAxis.setAxisLineColor(getResources().getColor(R.color.diagram_lines));
-
         xAxis.setValueFormatter(new XAxisFormatter());
 
 
+        // Y-axis
         YAxis yAxis = chart.getAxisLeft();
-        //yAxis.setTypeface(...); // set a different font
         yAxis.setTextSize(10f); // set the textsize
-
-        //yAxis.setAxisMaxValue((float) (highestValue + 0.2));
         yAxis.setTextColor(Color.BLACK);
         yAxis.setDrawAxisLine(true);
         yAxis.setAxisLineColor(getResources().getColor(R.color.diagram_lines));
         yAxis.setDrawGridLines(true);
         yAxis.setGridColor(getResources().getColor(R.color.diagram_lines));
-        //yAxis.setDrawLimitLinesBehindData(false);w
-        yAxis.setAxisMaxValue((float) (Math.ceil(highestValue * 2) / 2));
-        chart.setY((float) (Math.ceil(highestValue * 2) / 2));
-        chart.setVisibleYRangeMaximum(((float) (Math.ceil(highestValue * 2) / 2)), YAxis.AxisDependency.LEFT);
         yAxis.setValueFormatter(new YAxisFormatter());
         yAxis.setLabelCount(3, true);
 
-
-        chart.invalidate();
-
+        setProfile(SaveHandler.getCurrentUser());
+        setChartBarData(LAST_SEVEN_DAYS);
 
         return view;
+    }
+
+
+
+    private void setChartBarData(int range) {
+
+        if(range == LAST_SEVEN_DAYS){
+            chart.setData(getBarDataLastSevenDays());
+        } else if(range == LAST_SEVEN_MONTHS){
+            chart.setData(getBarDataLastSevenMonths());
+        }
+
     }
 
     public BarData getBarDataLastSevenDays(){
@@ -116,7 +148,10 @@ public class BarDiagram extends Fragment {
 
         ArrayList<String> xVals = new ArrayList<String>();
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-        IUser currentUser = SaveHandler.getCurrentUser();
+
+
+        //IUser currentUser = SaveHandler.getCurrentUser();
+
         ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
 
         calendar.add(Calendar.DAY_OF_MONTH, + 1);
@@ -135,23 +170,26 @@ public class BarDiagram extends Fragment {
 
             xVals.add(0, getWeekDayName(dayOfWeek));
             double value = 0;
-            try{
-                value = currentUser.getCO2SavedDate(year, month, day);
 
-            } catch(Exception e){
-                //e.printStackTrace();
+            try{
+                if(isCompany){
+                    value = ((Company)profile).getCO2SavedDate(year, month, day);
+                }else{
+                    value = ((IUser)profile).getCO2SavedDate(year, month, day);
+                }
+
+            }catch (Exception e){
                 value = 0;
             }
 
+
             if(value > highestValue) highestValue = value;
-            //System.out.println(highestValue);
 
             System.out.println(year + ", " + month + ", " + day);
             System.out.println(getWeekDayName(dayOfWeek) + ": " + value);
 
-            //yVals.add(new BarEntry((float) value, i));
 
-            barEntryList.add(new BarEntry((float) value, 6-i));
+            barEntryList.add(new BarEntry((float) value, 6 - i));
 
 
         }
@@ -159,9 +197,121 @@ public class BarDiagram extends Fragment {
         bds.setColor(getResources().getColor(R.color.secondary));
         dataSets.add(bds);
 
+        setMaxYAxis();
+
         return new BarData(xVals, dataSets);
 
     }
+
+
+
+
+    public BarData getBarDataLastSevenMonths(){
+        Calendar calendar = Calendar.getInstance();
+
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        IUser currentUser = SaveHandler.getCurrentUser();
+        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+
+        highestValue = 0;
+
+        calendar.add(Calendar.MONTH, + 1);
+
+        for(int i = 0; i < 7; i++){
+
+            calendar.add(Calendar.MONTH, -1);
+            int year = calendar.get(Calendar.YEAR);
+            int month = 1 + calendar.get(Calendar.MONTH);
+
+            double value = 0;
+
+            try{
+                if(isCompany){
+                    value = ((Company)profile).getCO2SavedMonth(year, month);
+                }else{
+                    value = ((IUser)profile).getCO2SavedMonth(year, month);
+                }
+
+            }catch (Exception e){
+                value = 0;
+            }
+
+            xVals.add(0, getMonthName(month));
+
+            if(value > highestValue) highestValue = value;
+
+            barEntryList.add(new BarEntry((float) value, 6-i));
+
+        }
+
+        BarDataSet bds = new BarDataSet(barEntryList, "");
+        bds.setColor(getResources().getColor(R.color.secondary));
+        dataSets.add(bds);
+
+        setMaxYAxis();
+
+        return new BarData(xVals, dataSets);
+
+    }
+
+
+
+
+
+    public void setMaxYAxis(){
+        chart.getAxisLeft().setAxisMaxValue((float) (Math.ceil(highestValue * 2) / 2));
+    }
+
+
+    public String getMonthName(int month){
+
+        String monthName = "";
+
+        switch (month-1){
+            case Calendar.JANUARY:
+                monthName = "Ja";
+                break;
+            case Calendar.FEBRUARY:
+                monthName = "Fe";
+                break;
+            case Calendar.MARCH:
+                monthName = "Ma";
+                break;
+            case Calendar.APRIL:
+                monthName = "Ap";
+                break;
+            case Calendar.MAY:
+                monthName = "Ma";
+                break;
+            case Calendar.JUNE:
+                monthName = "Ju";
+                break;
+            case Calendar.JULY:
+                monthName = "Ju";
+                break;
+            case Calendar.AUGUST:
+                monthName = "Au";
+                break;
+            case Calendar.SEPTEMBER:
+                monthName = "Se";
+                break;
+            case Calendar.OCTOBER:
+                monthName = "Oc";
+                break;
+            case Calendar.NOVEMBER:
+                monthName = "No";
+                break;
+            case Calendar.DECEMBER:
+                monthName = "De";
+                break;
+
+        }
+
+        return monthName;
+    }
+
 
     public String getWeekDayName(int weekDay){
         String dayName = "";
@@ -191,5 +341,4 @@ public class BarDiagram extends Fragment {
         }
         return dayName;
     }
-
 }

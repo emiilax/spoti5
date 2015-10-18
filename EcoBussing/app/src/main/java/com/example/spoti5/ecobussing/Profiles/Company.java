@@ -34,8 +34,8 @@ public class Company implements IProfile {
      * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
      */
     private String creatorMember;                 //The creator of the bussiness-profile, has deletion right.
-    private ArrayList<IUser> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
-    private ArrayList<IUser> members;             //All members of the bussiness profile.
+    private ArrayList<String> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
+    private ArrayList<String> members;             //All members of the bussiness profile.
 
     private String modMemberJson;
     private String memberJson;
@@ -44,6 +44,7 @@ public class Company implements IProfile {
     private String oldMemberJson;
 
     private HashMap userConnectionDates;
+
     private String usersConnectedJson;
     private String oldUserConnectedJson;
 
@@ -53,11 +54,11 @@ public class Company implements IProfile {
         name = businessName;
         this.creatorMember = creatorMember.getEmail();
 
-        moderatorMembers = new ArrayList<IUser>();
-        members = new ArrayList<IUser>();
+        moderatorMembers = new ArrayList<String>();
+        members = new ArrayList<String>();
 
-        moderatorMembers.add(creatorMember);
-        members.add(creatorMember);
+        moderatorMembers.add(creatorMember.getEmail());
+        members.add(creatorMember.getEmail());
 
         pointCurrentMonth = 0;
         pointCurrentYear = 0;
@@ -78,6 +79,7 @@ public class Company implements IProfile {
 
         updateMemberJson();
         updateModMemberJson();
+        updateUserConnectedJson();
     }
 
     @Override
@@ -99,12 +101,10 @@ public class Company implements IProfile {
     }
 
     private void updateMembersFromJson(){
-        System.out.println(memberJson);
-        System.out.println(oldMemberJson);
         if(oldMemberJson == null || members == null) {
-            if (!memberJson.equals(null)) {
+            if (!(memberJson == null)) {
                 Gson gson = new Gson();
-                members= gson.fromJson(memberJson, new TypeToken<List<IUser>>(){}.getType());
+                members= gson.fromJson(memberJson, new TypeToken<List<String>>(){}.getType());
                 oldMemberJson = memberJson;
             }
         }
@@ -112,9 +112,9 @@ public class Company implements IProfile {
 
     private void updateModMembersFromJson(){
         if(oldMomMemberJson==null || moderatorMembers == null) {
-            if (!modMemberJson.equals(null)) {
+            if (!(modMemberJson== null)) {
                 Gson gson = new Gson();
-                moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<IUser>>(){}.getType());
+                moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<String>>(){}.getType());
                 oldMomMemberJson = modMemberJson;
             }
         }
@@ -122,7 +122,7 @@ public class Company implements IProfile {
 
     private void updateUserConnectionDates(){
         if(oldUserConnectedJson == null || userConnectionDates == null){
-            if(!usersConnectedJson.equals(null)){
+            if(!(usersConnectedJson==null)){
                 Gson gson = new Gson();
                 userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
                 oldUserConnectedJson = usersConnectedJson;
@@ -130,12 +130,12 @@ public class Company implements IProfile {
         }
     }
 
-    public List<IUser> getMembers(boolean avoidDatabaseUpload) {
+    public List<String> getMembers(boolean avoidDatabaseUpload) {
         updateMembersFromJson();
         return members;
     }
 
-    public List<IUser> getModeratorMembers(boolean avoidDatabaseUpload) {
+    public List<String> getModeratorMembers(boolean avoidDatabaseUpload) {
         updateModMembersFromJson();
         return moderatorMembers;
     }
@@ -152,7 +152,7 @@ public class Company implements IProfile {
     public boolean userIsModerator(IUser user) {
         updateModMembersFromJson();
         for (int i = 0; i < moderatorMembers.size(); i++) {
-            if (moderatorMembers.get(i).getEmail() == user.getEmail()) {
+            if (moderatorMembers.get(i).equals(user.getEmail())) {
                 return true;
             }
         }
@@ -162,7 +162,7 @@ public class Company implements IProfile {
     public boolean userIsMember(IUser user) {
         updateMembersFromJson();
         for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).getEmail() == user.getEmail()) {
+            if (members.get(i).equals(user.getEmail())) {
                 return true;
             }
         }
@@ -177,7 +177,7 @@ public class Company implements IProfile {
      */
     public void addModeratorMember(User creator, User user) {
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
-            moderatorMembers.add(user);
+            moderatorMembers.add(user.getEmail());
             updateModMemberJson();
         }
     }
@@ -187,10 +187,11 @@ public class Company implements IProfile {
      * @param user
      */
     public void addMember(User user) {
+        updateUserConnectionDates();
         if (!userIsMember(user)) {
             user.setCompany(name);
             SaveHandler.changeUser(user);
-            members.add(user);
+            members.add(user.getEmail());
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date dateTime = new Date();
             String str = dateFormat.format(dateTime);
@@ -208,7 +209,7 @@ public class Company implements IProfile {
      */
     public void removeModeratorMember(User creator, User user) {
         if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
-            moderatorMembers.remove(user);
+            moderatorMembers.remove(user.getEmail());
             updateModMemberJson();
         }
     }
@@ -221,12 +222,12 @@ public class Company implements IProfile {
     public void removeMember(User user) {
         if (!userIsCreator(user)) {
             if (userIsModerator(user)) {
-                moderatorMembers.remove(user);
-                members.remove(user);
+                moderatorMembers.remove(user.getEmail());
+                members.remove(user.getEmail());
                 updateModMemberJson();
             } else {
                 if (userIsMember(user)) {
-                    members.remove(user);
+                    members.remove(user.getEmail());
                 }
             }
             updateMemberJson();
@@ -236,16 +237,16 @@ public class Company implements IProfile {
     }
 
     /**
-     * Updates the company's member lists with the current information of each member from the database
+     * Updates the company's member lists with the current information of each member from the database, not needed?
      */
-    public void updateMembers(){
+ /*   public void updateMembers(){
         updateMembersFromJson();
         updateModMembersFromJson();
         List<IUser> tmpList = database.getUsers();
-        for(IUser member:members){
+        for(String memberMail:members){
             for (IUser user:tmpList) {
-                if(member.getEmail() == user.getEmail()){
-                    member = user;
+                if(memberMail.equals(user.getEmail())){
+                    memberMail = user.getEmail();
                 }
             }
         }
@@ -259,11 +260,9 @@ public class Company implements IProfile {
         }
         updateModMemberJson();
         updateMemberJson();
-    }
+    }*/
 
-    public String getUsersConnectedJson() {
-        return usersConnectedJson;
-    }
+
 
     private void updateUserConnectedJson(){
         Gson gson = new Gson();
@@ -329,8 +328,11 @@ public class Company implements IProfile {
     }
 
     public String getModMemberJson() {
-
         return modMemberJson;
+    }
+
+    public String getUsersConnectedJson() {
+        return usersConnectedJson;
     }
 
     private void updateModMemberJson(){
@@ -347,6 +349,8 @@ public class Company implements IProfile {
         Gson gson = new Gson();
         memberJson = gson.toJson(members);
     }
+
+
 
     @Override
     public String toString() {

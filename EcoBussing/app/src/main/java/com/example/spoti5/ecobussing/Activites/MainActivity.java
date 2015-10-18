@@ -2,8 +2,6 @@ package com.example.spoti5.ecobussing.Activites;
 
 import android.annotation.TargetApi;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,9 +29,10 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.Medals.MedalFragment;
+import com.example.spoti5.ecobussing.Medals.MedalViewSwiper;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
-import com.example.spoti5.ecobussing.BusinessFragment;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
@@ -121,18 +120,18 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchListView = (ListView) myView.findViewById(R.id.search_result_list);
         searchListView.setAdapter(searchAdapter);
         searchListView.setOnItemClickListener(this);
-        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
             @Override
-            public void onItemClick(AdapterView<?>adapter,View view, int position, long id){
+            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence text;
 
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 Object item = searchAdapter.getItem(position);
-                if(!(item instanceof Company)){
+                if (!(item instanceof Company)) {
                     IUser user = (IUser) item;
                     try {
                         String title = user.getName();
@@ -151,7 +150,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     drawerLayout.closeDrawer(drawerListRight);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
-                }else{
+                } else {
                     text = "nja, vi har ju inte implementerat detta för företag än";
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -195,7 +194,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void startFirstFragemnt(){
         IUser user = SaveHandler.getCurrentUser();
-        String title = user.getName();
+        String title = "Min profil";
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
@@ -263,7 +262,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         switch(position){
             case 0:
                 IUser user = SaveHandler.getCurrentUser();
-                title = user.getName();
+                title ="Min profil";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView profileView = ProfileView.newInstance(user);
@@ -274,7 +273,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
             case 1:
                 IProfile company = database.getCompanies().get(0);
-                title = company.getName();
+                title = "Mitt företag";
                 getSupportActionBar().setTitle(title);
                 view.setBackgroundResource(R.color.clicked);
                 ProfileView companyView = ProfileView.newInstance(company);
@@ -308,15 +307,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 break;
 
             case 3:
-                title = "WiFi Detect";
-
+                title = "Medaljer";
                 getSupportActionBar().setTitle(title);
+                view.setBackgroundResource(R.color.clicked);
+                MedalViewSwiper medalFragment = new MedalViewSwiper();
+                fragmentsVisited.add(medalFragment);
+                fragmentsVisitedName.add(title);
 
-
-                WifiFragment wfrag = new WifiFragment();
-
-                fragmentTransaction.replace(R.id.container, wfrag);
-
+                fragmentTransaction.replace(R.id.container, medalFragment);
 
                 break;
             case 4:
@@ -359,6 +357,17 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 fragmentTransaction.replace(R.id.container, bd);
                 fragmentsVisitedName.add(title);
                 fragmentsVisited.add(bd);
+                break;
+            case 8:
+
+                title = "WiFi Detect";
+                getSupportActionBar().setTitle(title);
+                WifiFragment wfrag = new WifiFragment();
+
+                fragmentTransaction.replace(R.id.container, wfrag);
+                fragmentsVisitedName.add(title);
+                fragmentsVisited.add(wfrag);
+                break;
 
         }
 

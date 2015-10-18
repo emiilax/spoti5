@@ -29,9 +29,6 @@ public class DrawerListAdapter extends BaseAdapter {
 
 
         for(String item: context.getResources().getStringArray(R.array.drawer_array)){
-            if(item.equals("Profile")){
-                item = " " + SaveHandler.getCurrentUser().getName();
-            }
             listItems.add(item);
         }
 
@@ -71,8 +68,26 @@ public class DrawerListAdapter extends BaseAdapter {
         ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
         switch (position){
             case 0:
-                icon.setImageResource(R.drawable.empty_profile);
+                icon.setImageResource(R.drawable.user);
                 break;
+            case 1:
+                icon.setImageResource(R.drawable.logo_compact);
+                break;
+            case 2:
+                icon.setImageResource(R.drawable.toplisticon);
+                break;
+            case 3:
+                icon.setImageResource(R.drawable.medalicon);
+                break;
+            case 4:
+                icon.setImageResource(R.drawable.logo_compact_setting);
+                break;
+            case 5:
+                icon.setImageResource(R.drawable.editicon);
+                break;
+            case 6:
+                icon.setImageResource(R.drawable.logout);
+
 
         }
         rowLabel.setText(listItems.get(position));

@@ -24,7 +24,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
 
     private Map<Integer, Double> tempMap2;
 
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
     private long timeStampInMillis = 0;
     private Integer stampedDay = new Integer(0);
     private Integer stampedMonth = new Integer(0);
@@ -106,11 +106,13 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return the sum.
      */
     public Double addToCurrentDate(Double value) {
+        calendar = Calendar.getInstance();
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);
         stampedDay = calendar.get(Calendar.DAY_OF_MONTH);
         stampedMonth = calendar.get(Calendar.MONTH) + 1;
         stampedYear = calendar.get(Calendar.YEAR);
+        System.out.println(stampedDay);
         return this.addToSpecificDate(stampedYear, stampedMonth, stampedDay, value);
     }
 
@@ -119,6 +121,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return todays date's value.
      */
     public Double getFromCurrentDate() {
+        calendar = Calendar.getInstance();
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);
         stampedDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -201,6 +204,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return the sum.
      */
     public Double getSumOfPastSevenDays() {
+        calendar = Calendar.getInstance();
         double sum = 0;
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);

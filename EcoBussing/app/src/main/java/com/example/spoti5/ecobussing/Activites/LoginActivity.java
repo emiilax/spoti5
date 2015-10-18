@@ -140,7 +140,11 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
                 toast = Toast.makeText(context, text, duration);
                 toast.show();
                 break;
-            case ErrorCodes.NO_CONNECTION:text = "Fel användarnamn eller lösenord";
+            case ErrorCodes.WRONG_CREDENTIALS:text = "Fel användarnamn eller lösenord";
+                toast = Toast.makeText(context, text, duration);
+                toast.show();
+                break;
+            case ErrorCodes.NO_CONNECTION:text = "Ingen uppkoppling";
                 toast = Toast.makeText(context, text, duration);
                 toast.show();
                 break;
