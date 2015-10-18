@@ -81,6 +81,7 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
             //((ToplistPagerAdapter)mPagerAdapter).setRange("month");
 
             ((ToplistPagerAdapter)mPagerAdapter).setRange("month");
+            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
             //mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "month");
             /*try {
                 busC.beginJourey(Busses.simulated);
@@ -92,7 +93,7 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
             btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
 
             ((ToplistPagerAdapter)mPagerAdapter).setRange("year");
-
+            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
             //mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "year");
 
             //((ToplistPagerAdapter)mPagerAdapter).setRange("month");
@@ -106,12 +107,13 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         }
 
         if(v == btnTotal){
-            mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "total");
-            //((ToplistPagerAdapter)mPagerAdapter).setRange("total");
+            //mPagerAdapter = new ToplistPagerAdapter(getActivity().getSupportFragmentManager(), "total");
+            ((ToplistPagerAdapter)mPagerAdapter).setRange("total");
+            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
             btnTotal.setBackgroundColor(getResources().getColor(R.color.secondary));
 
         }
-        mPagerAdapter.notifyDataSetChanged();
+        //mPagerAdapter.notifyDataSetChanged();
 
         //mViewPager.setAdapter(mPagerAdapter);
 

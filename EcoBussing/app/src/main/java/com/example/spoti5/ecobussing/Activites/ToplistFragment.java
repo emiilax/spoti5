@@ -30,14 +30,30 @@ public class ToplistFragment extends Fragment {
 
     public ToplistFragment() {
         // Required empty public constructor
+
+    }
+
+    public static ToplistFragment newInstance(boolean isCompany){
+        ToplistFragment tf = new ToplistFragment();
+
+        tf.isCompany = isCompany;
+        tf.range = "month";
+
+        return tf;
+    }
+
+    public static ToplistFragment newInstance(boolean isCompany, String range){
+        ToplistFragment tf = new ToplistFragment();
+
+        tf.isCompany = isCompany;
+        tf.range = range;
+
+        return tf;
     }
 
     private String range;
     private boolean isCompany;
-    /*public ToplistFragment(String range, boolean company) {
-        this.range = range;
-        this.company = company;
-    }*/
+
 
     public void setisCompany(boolean truFal){
         isCompany = truFal;
@@ -52,7 +68,7 @@ public class ToplistFragment extends Fragment {
 
         ListView drawerList= (ListView) view.findViewById(R.id.toplistListView);
 
-        listAdapter = new ToplistAdapter(view.getContext(), "month", isCompany);
+        listAdapter = new ToplistAdapter(view.getContext(), range, isCompany);
         drawerList.setAdapter(listAdapter);
 
         return view;

@@ -74,7 +74,7 @@ public class ToplistAdapter extends BaseAdapter {
                 size = database.getUserToplistYear().size();
                 tempList = database.getUserToplistYear();
             }else if(range.equals("total")){
-                size = database.getUserToplistYear().size();
+                size = database.getUserToplistAll().size();
                 tempList = database.getUserToplistYear();
             }
 
@@ -137,10 +137,13 @@ public class ToplistAdapter extends BaseAdapter {
             String value = "";
             if(range.equals("month")){
                 value = df.format(personList.get(position).getCo2CurrentMonth());
+
             }else if(range.equals("year")){
                 value = df.format(personList.get(position).getCo2CurrentYear());
+
             }else if(range.equals("total")){
                 value = df.format(personList.get(position).getCo2Tot());
+
             }
 
             co2.setText(value + " kgCO2");

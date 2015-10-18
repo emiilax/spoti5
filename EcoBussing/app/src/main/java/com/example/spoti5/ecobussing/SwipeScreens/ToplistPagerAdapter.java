@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.spoti5.ecobussing.Activites.ToplistFragment;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.diagram.BarDiagram;
 
 /**
  * Created by emilaxelsson on 03/10/15.
@@ -13,43 +15,45 @@ import com.example.spoti5.ecobussing.Activites.ToplistFragment;
 public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
 
     private String range;
-    private ToplistFragment theFragment;
+    private ToplistFragment fragmentUser;
+    private ToplistFragment fragmentCompany;
 
     public ToplistPagerAdapter(FragmentManager fragment, String range) {
         super(fragment);
 
         this.range = range;
+
     }
 
 
     public void setRange(String range){
 
-        ((ToplistFragment)this.getItem(0)).setRange(range);
-        ((ToplistFragment)this.getItem(1)).setRange(range);
+        this.range = range;
+
+        this.notifyDataSetChanged();
 
     }
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new ToplistFragment();
 
-                ((ToplistFragment)fragment).setRange(range);
-                ((ToplistFragment)fragment).setisCompany(false);
-                break;
+                return ToplistFragment.newInstance(false, range);
 
             case 1:
-                fragment = new ToplistFragment();
+                return ToplistFragment.newInstance(true, range);
 
-                ((ToplistFragment)fragment).setRange(range);
-                ((ToplistFragment)fragment).setisCompany(true);
-                break;
         }
         //System.out.println("get item called");
 
-        return fragment;
+        return null;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+        //return super.getItemPosition(object);
     }
 
     @Override

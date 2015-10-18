@@ -25,6 +25,7 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 /**
@@ -38,6 +39,8 @@ public class BarDiagram extends Fragment {
     private IProfile profile;
     private boolean isCompany;
 
+    private int range;
+
     public final static int LAST_SEVEN_DAYS = 0;
     public final static int LAST_SEVEN_WEEKS = 1;
     public final static int LAST_SEVEN_MONTHS = 2;
@@ -50,7 +53,8 @@ public class BarDiagram extends Fragment {
         BarDiagram bd = new BarDiagram();
 
         bd.setProfile(profile);
-        bd.setChartBarData(range);
+        bd.setRange(range);
+        //bd.setChartBarData(range);
         return bd;
 
     }
@@ -64,6 +68,11 @@ public class BarDiagram extends Fragment {
             this.profile = (Company) profile;
             isCompany = true;
         }
+    }
+
+    public void setRange(int range){
+        this.range = range;
+
     }
 
 
@@ -96,7 +105,8 @@ public class BarDiagram extends Fragment {
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisLeft().setDrawLimitLinesBehindData(false);
         chart.setDescription("");
-        chart.setDrawValueAboveBar(false);
+        chart.setMaxVisibleValueCount(0);
+
 
         //chart.setData(getBarDataLastSevenDays());
         //chart.setData(getBarDataLastSevenMonths());
@@ -111,6 +121,7 @@ public class BarDiagram extends Fragment {
         xAxis.setAxisLineColor(getResources().getColor(R.color.diagram_lines));
         //xAxis.setDrawLabels(false);
         xAxis.setEnabled(true);
+        xAxis.setAxisLineWidth(1f);
         xAxis.setValueFormatter(new XAxisFormatter());
 
 
@@ -123,10 +134,10 @@ public class BarDiagram extends Fragment {
         yAxis.setDrawGridLines(true);
         yAxis.setGridColor(getResources().getColor(R.color.diagram_lines));
         yAxis.setValueFormatter(new YAxisFormatter());
+        yAxis.setAxisLineWidth(1f);
         yAxis.setLabelCount(3, true);
 
-        setProfile(SaveHandler.getCurrentUser());
-        setChartBarData(LAST_SEVEN_WEEKS);
+        setChartBarData(range);
 
         return view;
     }
@@ -210,7 +221,7 @@ public class BarDiagram extends Fragment {
     }
 
     public BarData getBarDataLastSevenWeeks(){
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.GERMAN);
 
 
         ArrayList<String> xVals = new ArrayList<String>();
@@ -232,11 +243,11 @@ public class BarDiagram extends Fragment {
             int month = 1 + calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            System.out.println(weekNumber);
-            System.out.println(month);
-            System.out.println(day);
-            if(calendar.get(Calendar.DAY_OF_MONTH) == 6){
-                xVals.add(0, Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR)));
+            //System.out.println(weekNumber);
+            //System.out.println(month);
+            //System.out.println(day);
+            if(weekNumber < i){
+                xVals.add(0, Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR) + 1));
                 barEntryList.add(new BarEntry((float) value, 6-place));
                 System.out.println(value);
                 value = 0;

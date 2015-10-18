@@ -5,6 +5,12 @@
     android:layout_height="165dp"
     android:layout_width="match_parent"
     android:id="@+id/diagramholder">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:id="@+id/txtvChartType"
+        android:gravity="center_horizontal|center_vertical"/>
+
 
     <com.github.mikephil.charting.charts.BarChart
 
