@@ -42,6 +42,12 @@
                 android:id="@+id/user_company" />
         </RelativeLayout>
 
+        <View style="@style/Divider_Horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/profile_top_layout"/>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
