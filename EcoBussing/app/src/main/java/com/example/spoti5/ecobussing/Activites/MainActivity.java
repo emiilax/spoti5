@@ -80,6 +80,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private IUser currentUser;
 
+    String title;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,48 +122,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchListView = (ListView) myView.findViewById(R.id.search_result_list);
         searchListView.setAdapter(searchAdapter);
         searchListView.setOnItemClickListener(this);
-        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                CharSequence text;
-
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                Object item = searchAdapter.getItem(position);
-                IProfile profile = (IProfile) item;
-                try {
-                    String title = profile.getName();
-                    getSupportActionBar().setTitle(title);
-                    ProfileView profileView = ProfileView.newInstance(profile);
-                    fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(profileView);
-                    fragmentTransaction.replace(R.id.container, profileView);
-                } catch (IndexOutOfBoundsException e) {
-                    text = "Ingen kontakt med databasen, försök igen";
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                drawerLayout.closeDrawer(drawerListRight);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
-
-
-
-            }
-
-
-        });
 
         drawerListRight.addView(myView);
-
-
         drawerListLeft.setAdapter(listAdapter);
-
         drawerListLeft.setOnItemClickListener(this);
 
 
@@ -249,144 +212,185 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     Boolean wifi = false;
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String title;
+
         if(prevView != null ) prevView.setBackgroundResource(R.color.clear_white);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        switch(position){
-            case 0:
-                IUser user = SaveHandler.getCurrentUser();
-                title ="Min profil";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                ProfileView profileView = ProfileView.newInstance(user);
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(profileView);
-                fragmentTransaction.replace(R.id.container, profileView);
+        switch(parent.getId()){
+            case R.id.left_drawer:
+                switch(position){
+                    case 0:
+                        IProfile user = SaveHandler.getCurrentUser();
+                        changeFragment(user, "Min profil");
+                        view.setBackgroundResource(R.color.clicked);
+                        break;
+                    case 1:
+                        //IProfile company = database.getCompanies().get(0);
+                        IProfile company;
+                        String com = currentUser.getCompany();
+                        if (com.length() > 0) {
+                            company = database.getCompany(com);
+                            changeFragment(company, "Mitt företag");
+                            view.setBackgroundResource(R.color.clicked);
+                        }else{
+                            //temp, for when you are not connected to a company, shows this view instead,
+                            //where you can search for a company
+                            title = "Företagsinställningar";
+                            getSupportActionBar().setTitle(title);
+                            view.setBackgroundResource(R.color.clicked);
+                            CompanySwipeFragment fragment = new CompanySwipeFragment();
+                            fragmentsVisitedName.add(title);
+                            fragmentsVisited.add(fragment);
+                            fragmentTransaction.replace(R.id.container, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
 
-                break;
-            case 1:
-                //IProfile company = database.getCompanies().get(0);
-                IProfile company;
-                String com = currentUser.getCompany();
-                if (com.length() > 0) {
-                    company = database.getCompany(com);
-                    title = "Mitt företag";
+                        break;
+               /* case 1:
+                    title = "fragment 2";
                     getSupportActionBar().setTitle(title);
                     view.setBackgroundResource(R.color.clicked);
-                    ProfileView companyView = ProfileView.newInstance(company);
+                    BusinessFragment businessFragment = new BusinessFragment();
                     fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(companyView);
-                    fragmentTransaction.replace(R.id.container, companyView);
-                }else{
-                    //temp, for when you are not connected to a company, shows this view instead,
-                    //where you can search for a company
-                    title = "Företagsinställningar";
+                    fragmentsVisited.add(businessFragment);
+
+                    fragmentTransaction.replace(R.id.container, businessFragment);
+                    break;
+                    */
+                    case 2:
+                        title = "Topplistor";
+                        getSupportActionBar().setTitle(title);
+                        view.setBackgroundResource(R.color.third);
+
+                        ToplistSwiper test = new ToplistSwiper();
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(test);
+
+
+                        fragmentTransaction.replace(R.id.container, test);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+
+                    case 3:
+                        title = "Medaljer";
+                        getSupportActionBar().setTitle(title);
+                        view.setBackgroundResource(R.color.clicked);
+                        MedalViewSwiper medalFragment = new MedalViewSwiper();
+                        fragmentsVisited.add(medalFragment);
+                        fragmentsVisitedName.add(title);
+
+                        fragmentTransaction.replace(R.id.container, medalFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                        break;
+                    case 4:
+                        title = "Företagsinställningar";
+                        getSupportActionBar().setTitle(title);
+                        view.setBackgroundResource(R.color.clicked);
+                        if(currentUser.getCompany().equals("") || currentUser.getCompany().equals(null)) {
+                            //Om man inte är connctad till ett företag
+                            CompanySwipeFragment fragment = new CompanySwipeFragment();
+                            fragmentsVisitedName.add(title);
+                            fragmentsVisited.add(fragment);
+                            fragmentTransaction.replace(R.id.container, fragment);
+                        }else{
+                            //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
+                            //if()
+                            ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
+                            fragmentsVisitedName.add(title);
+                            fragmentsVisited.add(connectedCompanyFragment);
+                            fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
+                        }
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case 5:
+                        title = "Redigera profil";
+                        getSupportActionBar().setTitle(title);
+                        view.setBackgroundResource(R.color.clicked);
+                        EditInfoFragment editInfoFragment = new EditInfoFragment();
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(editInfoFragment);
+                        fragmentTransaction.replace(R.id.container, editInfoFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case 6:
+                        logout();
+                        break;
+
+                    case 7:
+                        title = "Diagram";
+                        getSupportActionBar().setTitle(title);
+                        view.setBackgroundResource(R.color.clicked);
+                        BarDiagram bd = new BarDiagram();
+                        fragmentTransaction.replace(R.id.container, bd);
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(bd);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+                    case 8:
+
+                        title = "WiFi Detect";
+                        getSupportActionBar().setTitle(title);
+                        WifiFragment wfrag = new WifiFragment();
+
+                        fragmentTransaction.replace(R.id.container, wfrag);
+                        fragmentsVisitedName.add(title);
+                        fragmentsVisited.add(wfrag);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        break;
+
+                }
+                prevView = view;
+                drawerLayout.closeDrawer(drawerListLeft);
+                break;
+
+            case R.id.search_result_list:
+                /*Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                CharSequence text;
+
+                fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                Object item = searchAdapter.getItem(position);
+                IProfile profile = (IProfile) item;
+                try {
+                    title = profile.getName();
                     getSupportActionBar().setTitle(title);
-                    view.setBackgroundResource(R.color.clicked);
-                    CompanySwipeFragment fragment = new CompanySwipeFragment();
+                    ProfileView profileView = ProfileView.newInstance(profile);
                     fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(fragment);
-                    fragmentTransaction.replace(R.id.container, fragment);
+                    fragmentsVisited.add(profileView);
+                    fragmentTransaction.replace(R.id.container, profileView);
+                } catch (IndexOutOfBoundsException e) {
+                    text = "Ingen kontakt med databasen, försök igen";
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
-
+                drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);*/
+                Object item = searchAdapter.getItem(position);
+                IProfile profile = (IProfile) item;
+                changeFragment(profile, profile.getName());
+                drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
                 break;
-           /* case 1:
-                title = "fragment 2";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                BusinessFragment businessFragment = new BusinessFragment();
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(businessFragment);
-
-                fragmentTransaction.replace(R.id.container, businessFragment);
-                break;
-                */
-            case 2:
-                title = "Topplistor";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.third);
-
-                ToplistSwiper test = new ToplistSwiper();
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(test);
-
-
-                fragmentTransaction.replace(R.id.container, test);
-                break;
-
-            case 3:
-                title = "Medaljer";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                MedalViewSwiper medalFragment = new MedalViewSwiper();
-                fragmentsVisited.add(medalFragment);
-                fragmentsVisitedName.add(title);
-
-                fragmentTransaction.replace(R.id.container, medalFragment);
-
-                break;
-            case 4:
-                title = "Företagsinställningar";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                if(currentUser.getCompany().equals("") || currentUser.getCompany().equals(null)) {
-                    //Om man inte är connctad till ett företag
-                    CompanySwipeFragment fragment = new CompanySwipeFragment();
-                    fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(fragment);
-                    fragmentTransaction.replace(R.id.container, fragment);
-                }else{
-                    //Om man är connectad till företag, borde finnas en till beroende på om man är moderator
-                    //if()
-                    ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
-                    fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(connectedCompanyFragment);
-                    fragmentTransaction.replace(R.id.container, connectedCompanyFragment);
-                }
-                break;
-            case 5:
-                title = "Redigera profil";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                EditInfoFragment editInfoFragment = new EditInfoFragment();
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(editInfoFragment);
-                fragmentTransaction.replace(R.id.container, editInfoFragment);
-                break;
-            case 6:
-                logout();
-                break;
-
-            case 7:
-                title = "Diagram";
-                getSupportActionBar().setTitle(title);
-                view.setBackgroundResource(R.color.clicked);
-                BarDiagram bd = new BarDiagram();
-                fragmentTransaction.replace(R.id.container, bd);
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(bd);
-                break;
-            case 8:
-
-                title = "WiFi Detect";
-                getSupportActionBar().setTitle(title);
-                WifiFragment wfrag = new WifiFragment();
-
-                fragmentTransaction.replace(R.id.container, wfrag);
-                fragmentsVisitedName.add(title);
-                fragmentsVisited.add(wfrag);
-                break;
-
         }
 
 
 
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-        prevView = view;
-        drawerLayout.closeDrawer(drawerListLeft);
+
+
+
+        /*fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();*/
         //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
     }
 
@@ -412,6 +416,32 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         NetworkStateChangeReciever.getInstance().endJourney();
         startRegisterActivity();
         SaveHandler.changeUser(null);
+    }
+
+    public void changeFragment(IProfile p, String t){
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence text;
+
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        IProfile profile = p;
+        //I don't think this try/catch is needed in this way cuz i dont think you cant get indexException anymore
+        try {
+            title = t;
+            getSupportActionBar().setTitle(title);
+            ProfileView profileView = ProfileView.newInstance(profile);
+            fragmentsVisitedName.add(title);
+            fragmentsVisited.add(profileView);
+            fragmentTransaction.replace(R.id.container, profileView);
+        } catch (IndexOutOfBoundsException e) {
+            text = "Ingen kontakt med databasen, försök igen";
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
     }
 
     @Override

@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.ToplistAdapter;
 
@@ -54,6 +56,17 @@ public class ToplistFragment extends Fragment {
 
         listAdapter = new ToplistAdapter(view.getContext(), "month", isCompany);
         drawerList.setAdapter(listAdapter);
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object item = listAdapter.getItem(position);
+                IProfile profile = (IProfile) item;
+                //MainActivity.changeFragment(profile, profile.getName());
+
+            }
+        });
+
+
 
         return view;
 
