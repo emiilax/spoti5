@@ -19,6 +19,7 @@ import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.UserListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +46,7 @@ public class EditCompanyFragment extends Fragment {
     private List<IProfile> listDataHeader;
     private HashMap<IProfile, String> listDataChild;
 
-    private ExpandableListAdapter adapter;
+    private UserListAdapter adapter;
 
     public EditCompanyFragment(){
 
@@ -84,7 +85,7 @@ public class EditCompanyFragment extends Fragment {
 
         //prepareListData();
 
-        adapter = new ExpandableListAdapter(this.getContext(), listDataHeader, listDataChild);
+        adapter = new UserListAdapter(this.getContext());
         userList.setAdapter(adapter);
 
         saveButton.setOnClickListener(saveCompanyChanges);

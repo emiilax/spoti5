@@ -72,8 +72,6 @@ public class UserListAdapter extends BaseAdapter {
         TextView nameLabel1 = (TextView) row.findViewById(R.id.toplistItem_name);
         TextView subtitleLabel1 = (TextView) row.findViewById(R.id.toplistItem_subtitle);
 
-        Company company = (Company)searchedCompanies.get(position);
-
         nameLabel1.setText(company.getName());
         subtitleLabel1.setText(Integer.toString(company.getMembers(true).size()));
 
