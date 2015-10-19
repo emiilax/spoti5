@@ -4,13 +4,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.spoti5.ecobussing.diagram.BarDiagram;
+
 /**
  * Created by Hampus on 2015-10-16.
  */
 public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
 
-    public CompanyPagerAdapter(FragmentManager fragment) {
+    private IProfile thisProfile;
+
+    public CompanyPagerAdapter(FragmentManager fragment, IProfile profile) {
         super(fragment);
+        thisProfile = profile;
     }
 
     @Override
@@ -18,11 +23,13 @@ public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = new UserProfileInfo();
+                fragment = BarDiagram.newInstance(thisProfile, 0);
                 break;
-
             case 1:
-                fragment = new UserProfileSavedTotals();
+                fragment = new BarDiagram();
+                break;
+            case 2:
+                fragment = BarDiagram.newInstance(thisProfile, 2);
                 break;
         }
 
@@ -31,7 +38,7 @@ public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }
 

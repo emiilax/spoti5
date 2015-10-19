@@ -30,6 +30,7 @@ public interface IDatabase {
     public void changePassword(String email, String oldPassword, String newPassword,  IDatabaseConnected connection);
 
     public int getPosition(IUser user);
+    public int getPosition(Company comp);
 
     public IProfile getCompany(String name);
 

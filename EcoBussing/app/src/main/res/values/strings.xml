@@ -46,6 +46,8 @@
     <string name="medal_co2_tot">Spara tillsammans!</string>
     <string name="medal_people">Alla bör åka kollektivt!</string>
 
+    <string name="no_company_text">Inget företag är kopplat till ditt konto...</string>
+
     <string-array name="drawer_array">
         <item>Min profil</item>
         <item>Mitt företag</item>
@@ -54,56 +56,27 @@
         <item>Företagsinställningar</item>
         <item>Redigera profil</item>
         <item>Log out</item>
-        <item>Diagram</item>
+        <item></item>
+        <item>cheat!!!</item>
+
 
     </string-array>
 
     <string-array name="global_medals">
         <item>Spara tillsammans!</item>
         <item>Alla bör åka kollektivt!</item>
-        <item>Gilla Jolle!</item>
     </string-array>
 
-    <string-array name="anders_array">
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-        <item>Anders Andersson</item>
-
+    <string-array name="company_medals">
+        <item>Ett grönt företag!</item>
+        <item>Ett komplett företag!</item>
     </string-array>
 
-    <string-array name="test_array">
-        <item>Object 1</item>
-        <item>Object 2</item>
-        <item>Object 3</item>
-        <item>Object 4</item>
-        <item>Object 5</item>
-        <item>Object 1</item>
-        <item>Object 2</item>
-        <item>Object 3</item>
-        <item>Object 4</item>
-        <item>Object 5</item>
-        <item>Object 1</item>
-        <item>Object 2</item>
-        <item>Object 3</item>
-        <item>Object 4</item>
-        <item>Object 5</item>
-        <item>Object 1</item>
-        <item>Object 2</item>
-        <item>Object 3</item>
-        <item>Object 4</item>
-        <item>Object 5</item>
-
+    <string-array name="user_medals">
+        <item>Spara dig glad!</item>
+        <item>Åk mer!</item>
     </string-array>
+
 
 
     <string name="action_settings">Settings</string>

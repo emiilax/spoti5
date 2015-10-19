@@ -5,7 +5,7 @@
     android:id="@+id/overviewBackground"
     android:onClick="onScreenTouch"
     android:weightSum="1"
-    android:background="@drawable/overviewback"
+    android:background="@drawable/simplebackground"
     >
 
 

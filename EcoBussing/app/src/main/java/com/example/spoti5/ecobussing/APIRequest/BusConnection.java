@@ -22,6 +22,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -33,6 +34,16 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
     public static void main(String[] args) throws IOException {
 
+        Calendar cal = Calendar.getInstance();
+
+        for(int i = 0; i < 24; i++){
+            cal.add(Calendar.MONTH, -1);
+            System.out.println(cal.get(Calendar.YEAR));
+            System.out.println(cal.get(Calendar.MONTH));
+
+        }
+
+        /*
         List<String> busdwg = new ArrayList<>();
 
         for (Bus b : Busses.theBusses) {
@@ -41,8 +52,11 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
         for(String s: busdwg){
             System.out.println(s);
+
             System.out.println(s.equals(Busses.simulated.getDwg()));
         }
+
+        */
         // System.out.println(busdwg.contains(Busses.simulated.getDwg()));
 
         //BusConnection demo = new BusConnection();
@@ -126,6 +140,10 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                     break;
                 }
 
+            }
+
+            if(startLoc == null){
+                beginJourey(bus);
             }
 
             System.out.println("Startloc finished");
@@ -308,7 +326,9 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
     // Getters
     public String getStartLoc(){
+
         return startLoc.getName();
+
     }
 
     public String getEndLoc(){

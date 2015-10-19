@@ -1,6 +1,4 @@
-package com.example.spoti5.ecobussing;
-
-import android.provider.Settings;
+package com.example.spoti5.ecobussing.Medals;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
@@ -38,7 +36,7 @@ public class GlobalMedal {
     }
 
     private void co2TotMedal(){
-        fullCO2Value = 1000000;
+        fullCO2Value = 10000;
         currentCO2Value = 0;
         calculateCurrentCO2();
     }
@@ -55,8 +53,6 @@ public class GlobalMedal {
      * @return percentage done in decimals
      */
     public int getCO2TotPercentage(){
-        System.out.println(currentCO2Value/fullCO2Value);
-        System.out.println((int) ((currentCO2Value / fullCO2Value) * 100));
         return (int)((currentCO2Value/fullCO2Value)*100);
     }
 

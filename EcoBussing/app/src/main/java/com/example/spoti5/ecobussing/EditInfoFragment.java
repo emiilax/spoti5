@@ -2,7 +2,6 @@ package com.example.spoti5.ecobussing;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -20,7 +19,6 @@ import com.example.spoti5.ecobussing.Database.ErrorCodes;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
 import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.Timer;
@@ -60,7 +58,7 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
                              Bundle savedInstanceState) {
         context = super.getContext();
         currentUser = SaveHandler.getCurrentUser();
-        View view = inflater.inflate(R.layout.edit_info_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_info, container, false);
         nameField = (EditText) view.findViewById(R.id.nameField);
         password1 = (EditText) view.findViewById(R.id.password1);
         password2 = (EditText) view.findViewById(R.id.password2);

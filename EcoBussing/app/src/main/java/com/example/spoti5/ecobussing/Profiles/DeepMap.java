@@ -24,7 +24,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
 
     private Map<Integer, Double> tempMap2;
 
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
     private long timeStampInMillis = 0;
     private Integer stampedDay = new Integer(0);
     private Integer stampedMonth = new Integer(0);
@@ -38,6 +38,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
         underlyingMap = new HashMap<>();
         tempMap1 = new HashMap<>();
         tempMap2 = new HashMap<>();
+
     }
 
     /**
@@ -106,11 +107,13 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return the sum.
      */
     public Double addToCurrentDate(Double value) {
+        calendar = Calendar.getInstance();
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);
         stampedDay = calendar.get(Calendar.DAY_OF_MONTH);
         stampedMonth = calendar.get(Calendar.MONTH) + 1;
         stampedYear = calendar.get(Calendar.YEAR);
+        System.out.println(stampedDay);
         return this.addToSpecificDate(stampedYear, stampedMonth, stampedDay, value);
     }
 
@@ -119,6 +122,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return todays date's value.
      */
     public Double getFromCurrentDate() {
+        calendar = Calendar.getInstance();
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);
         stampedDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -201,6 +205,7 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
      * @return the sum.
      */
     public Double getSumOfPastSevenDays() {
+        calendar = Calendar.getInstance();
         double sum = 0;
         timeStampInMillis = calendar.getTimeInMillis();
         calendar.setTimeInMillis(timeStampInMillis);
@@ -215,6 +220,16 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
         return sum;
     }
 
+   public int getTotaltTimesTraveled(){
+        int tot = 0;
+        for (Integer i = 0; i < this.size()-1; i++){
+            for(Integer k = 0; k < this.middleSize(i)-1; k++){
+                tot = innerSize(i, k);
+            }
+        }
+        return tot;
+    }
+
 
     public void clear() {
         underlyingMap.clear();
@@ -225,11 +240,11 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
         return underlyingMap.size();
     }
 
-    public int middleSize(K1 key1) {
+    public int middleSize(Integer key1) {
         return underlyingMap.get(key1).size();
     }
 
-    public int innerSize(K1 key1, K2 key2) {
+    public int innerSize(Integer key1, Integer key2) {
         return underlyingMap.get(key1).get(key2).size();
     }
     
