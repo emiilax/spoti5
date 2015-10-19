@@ -73,9 +73,6 @@ public class User implements IUser{
         this.name = name;
     }
 
-    public String getConnectedCompany(){
-        return connectedCompany;
-    }
 
     @Override
     public void setName(String name) {
@@ -128,7 +125,7 @@ public class User implements IUser{
         updateCo2Map();
         double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
 
-        if(!connectedCompany.equals("") || connectedCompany != null){
+        if(!connectedCompany.equals("")){
             updateCompany(co2Saved);
         }
 
@@ -263,6 +260,13 @@ public class User implements IUser{
     }
 
     @Override
+    public int getTotaltTimesTraveled(boolean avoidDatabaseUpload) {
+        updateCo2Map();
+        System.out.println(co2SavedMap.toString());
+        return co2SavedMap.getTotaltTimesTraveled();
+    }
+
+    @Override
     public Double getDistanceTraveled() {
         return null;
     }
@@ -346,6 +350,7 @@ public class User implements IUser{
 
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
+            System.out.println("hej");
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();

@@ -46,9 +46,12 @@
     <string name="medal_co2_tot">Spara tillsammans!</string>
     <string name="medal_people">Alla bör åka kollektivt!</string>
 
+
     <string name="barchart_lastSevenWeeks">Senaste 7 veckorna</string>
     <string name="barchart_lastSevenDays">Senaste 7 dagarna</string>
     <string name="barchart_lastSevenMonths">Senaste 7 månaderna</string>
+
+    <string name="no_company_text">Inget företag är kopplat till ditt konto...</string>
 
     <string-array name="drawer_array">
         <item>Min profil</item>
@@ -60,16 +63,24 @@
         <item>Log out</item>
         <item>Diagram</item>
         <item>Wifi-detect</item>
-
-
-
     </string-array>
 
     <string-array name="global_medals">
         <item>Spara tillsammans!</item>
         <item>Alla bör åka kollektivt!</item>
-        <item>Gilla Jolle!</item>
     </string-array>
+
+    <string-array name="company_medals">
+        <item>Ett grönt företag!</item>
+        <item>Ett komplett företag!</item>
+    </string-array>
+
+    <string-array name="user_medals">
+        <item>Spara dig glad!</item>
+        <item>Åk mer!</item>
+    </string-array>
+
+
 
     <string name="action_settings">Settings</string>
 

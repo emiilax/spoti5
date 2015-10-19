@@ -1,7 +1,6 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.Medals;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Database.SimpelSearch;
-import com.example.spoti5.ecobussing.GlobalMedal;
-import com.example.spoti5.ecobussing.Profiles.IProfile;
-import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -93,8 +87,9 @@ public class GlobalMedalAdapter extends BaseAdapter {
 
         DecimalFormat df = new DecimalFormat("#.00");
 
-        String current = df.format(global.getCurrentCO2Value()/1000000) + "kg CO2";
-        String full = df.format(global.getFullCO2Value()/1000000) + "kg CO2";
+        String current = df.format(global.getCurrentCO2Value()) + "kg CO2";
+        df.setMinimumFractionDigits(0);
+        String full = df.format(global.getFullCO2Value()/10) + "ton CO2";
 
         currentText.setText(current);
         maxText.setText(full);
@@ -120,7 +115,7 @@ public class GlobalMedalAdapter extends BaseAdapter {
         if(peoplePer>=100){
             medalImage.setImageResource(R.drawable.peoplemedal);
         }else {
-            medalImage.setImageResource(R.drawable.peoplemedalgrey);
+            medalImage.setImageResource(R.drawable.peoplemedalgreysmall);
         }
         progBar.setProgress(peoplePer);
 

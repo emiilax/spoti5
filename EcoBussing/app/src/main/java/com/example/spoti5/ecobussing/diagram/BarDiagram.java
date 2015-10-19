@@ -54,7 +54,8 @@ public class BarDiagram extends Fragment {
 
         bd.setProfile(profile);
         bd.setRange(range);
-        //bd.setChartBarData(range);
+
+
         return bd;
 
     }
@@ -70,20 +71,19 @@ public class BarDiagram extends Fragment {
         }
     }
 
+
     public void setRange(int range){
         this.range = range;
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
 
-
-        //BarChart chart = (BarChart) view.findViewById(R.id.chart);
 
         LayoutInflater lInflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -106,10 +106,6 @@ public class BarDiagram extends Fragment {
         chart.getAxisLeft().setDrawLimitLinesBehindData(false);
         chart.setDescription("");
         chart.setMaxVisibleValueCount(0);
-
-
-        //chart.setData(getBarDataLastSevenDays());
-        //chart.setData(getBarDataLastSevenMonths());
 
 
         // X-axis
@@ -137,6 +133,7 @@ public class BarDiagram extends Fragment {
         yAxis.setAxisLineWidth(1f);
         yAxis.setLabelCount(3, true);
 
+        //setProfile(SaveHandler.getCurrentUser());
         setChartBarData(range);
 
         return view;
@@ -211,7 +208,7 @@ public class BarDiagram extends Fragment {
 
         }
         BarDataSet bds = new BarDataSet(barEntryList, "");
-        bds.setColor(getResources().getColor(R.color.secondary));
+        //bds.setColor(getResources().getColor(R.color.secondary));
         dataSets.add(bds);
 
         setMaxYAxis();
@@ -425,8 +422,4 @@ public class BarDiagram extends Fragment {
         }
         return dayName;
     }
-
-
-
-
 }
