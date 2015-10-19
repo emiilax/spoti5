@@ -94,7 +94,7 @@ public class Database implements IDatabase{
         }
         return index;
     }
-
+    
     public IProfile getCompany(String name){
         for(IProfile c: getCompanies()){
             if(c.getName().equals(name)){
