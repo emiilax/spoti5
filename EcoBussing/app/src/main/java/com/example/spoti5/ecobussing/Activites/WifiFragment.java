@@ -14,12 +14,19 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.APIRequest.BusConnection;
 import com.example.spoti5.ecobussing.BusData.Bus;
 import com.example.spoti5.ecobussing.BusData.Busses;
+import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +85,26 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
         }else{
             setDisconnected();
         }
+
+        IDatabase curDatab = DatabaseHolder.getDatabase();
+
+        IUser usr = curDatab.getUser("et@mannen.se");
+        System.out.println(usr.toString());
+        Random rnd = new Random();
+        Calendar cal = Calendar.getInstance();
+        for(int i = 0; i < 210; i++){
+
+            int distance = rnd.nextInt(5000);
+
+
+            ((User)usr).updateSpecDate(distance, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
+
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+
+        }
+
+        SaveHandler.changeUser(usr);
+
 
 
         return view;

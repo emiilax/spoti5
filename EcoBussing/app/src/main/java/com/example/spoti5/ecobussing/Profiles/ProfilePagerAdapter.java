@@ -28,13 +28,13 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = BarDiagram.newInstance(thisProfile, 0);
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS);
                 break;
             case 1:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS);
                 break;
             case 2:
-                fragment = BarDiagram.newInstance(thisProfile, 2);
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS);
                 break;
         }
 

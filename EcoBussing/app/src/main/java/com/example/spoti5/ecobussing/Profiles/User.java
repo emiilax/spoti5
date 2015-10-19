@@ -135,6 +135,21 @@ public class User implements IUser{
         updateCo2Json();
     }
 
+    public void updateSpecDate(double distance,int year, int month, int day){
+        updateCo2Map();
+
+        double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
+
+        System.out.println("Add" + distance);
+
+        co2SavedMap.setSpecificDate(year, month, day, co2Saved);
+
+        this.incCurrentDistance(distance);
+        this.addToCurrentCO2Saved(co2Saved);
+        updateCo2Json();
+
+    }
+
     public void updateCompany(double distance){
         Company company = (Company)DatabaseHolder.getDatabase().getCompany(connectedCompany);
         company.incCO2Saved(distance);

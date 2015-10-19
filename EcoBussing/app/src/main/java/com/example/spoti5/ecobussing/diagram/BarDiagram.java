@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Profiles.Company;
@@ -37,6 +39,7 @@ public class BarDiagram extends Fragment {
     private View view;
     private BarChart chart;
     private IProfile profile;
+    private String nameOfChart;
     private boolean isCompany;
 
     private int range;
@@ -74,6 +77,13 @@ public class BarDiagram extends Fragment {
 
     public void setRange(int range){
         this.range = range;
+        if(range == LAST_SEVEN_DAYS) {
+            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenDays);
+        }else if(range == LAST_SEVEN_WEEKS) {
+            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenWeeks);
+        }else if(range == LAST_SEVEN_MONTHS){
+            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenMonths);
+        }
 
     }
 
@@ -83,6 +93,9 @@ public class BarDiagram extends Fragment {
 
         // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
+        TextView rangeText = (TextView) view.findViewById(R.id.txtvChartType);
+
+        rangeText.setText(nameOfChart);
 
 
         LayoutInflater lInflater = (LayoutInflater) getContext()
@@ -208,6 +221,7 @@ public class BarDiagram extends Fragment {
 
         }
         BarDataSet bds = new BarDataSet(barEntryList, "");
+        bds.setColor(getResources().getColor(R.color.secondary));
         //bds.setColor(getResources().getColor(R.color.secondary));
         dataSets.add(bds);
 
@@ -231,10 +245,11 @@ public class BarDiagram extends Fragment {
         int startWeeknumber = calendar.get(Calendar.WEEK_OF_YEAR);
         System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
         double value = 0;
-        boolean firstWeek = true;
+        //boolean firstWeek = true;
+        int place = 0;
         int i = startWeeknumber;
         while(i > startWeeknumber - 7 ){
-            int place = 0;
+
             int weekNumber = calendar.get(Calendar.WEEK_OF_YEAR);
             int year = calendar.get(Calendar.YEAR);
             int month = 1 + calendar.get(Calendar.MONTH);
@@ -245,10 +260,9 @@ public class BarDiagram extends Fragment {
             //System.out.println(day);
             if(weekNumber < i){
                 xVals.add(0, Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR) + 1));
-                barEntryList.add(new BarEntry((float) value, 6-place));
+                barEntryList.add(new BarEntry((float) value, 6 - place));
                 System.out.println(value);
                 value = 0;
-                firstWeek = false;
                 place++;
                 i--;
             }
@@ -266,9 +280,7 @@ public class BarDiagram extends Fragment {
             }
 
             if(value > highestValue) highestValue = value;
-
-            //barEntryList.add(new BarEntry((float) value, 6-Math.abs(i)));
-
+            
 
             calendar.add(Calendar.DAY_OF_MONTH, -1);
 

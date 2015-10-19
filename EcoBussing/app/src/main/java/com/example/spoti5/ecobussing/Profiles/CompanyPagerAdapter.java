@@ -26,7 +26,7 @@ public class CompanyPagerAdapter extends FragmentStatePagerAdapter {
                 fragment = BarDiagram.newInstance(thisProfile, 0);
                 break;
             case 1:
-                fragment = new BarDiagram();
+                fragment = BarDiagram.newInstance(thisProfile, 1);
                 break;
             case 2:
                 fragment = BarDiagram.newInstance(thisProfile, 2);
