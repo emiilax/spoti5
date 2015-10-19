@@ -190,7 +190,7 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value = ((Company)profile).getCO2SavedDate(year, month, day);
+                    value = ((Company)profile).getPointsSavedDate(year, month, day);
                 }else{
                     value = ((IUser)profile).getCO2SavedDate(year, month, day);
                 }
@@ -259,7 +259,7 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value += ((Company)profile).getCO2SavedDate(year, month, day);
+                    value += ((Company)profile).getPointsSavedDate(year, month, day);
                 }else{
                     value += ((IUser)profile).getCO2SavedDate(year, month, day);
                 }
@@ -313,7 +313,7 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value = ((Company)profile).getCO2SavedMonth(year, month);
+                    value = ((Company)profile).getPointsSavedMonth(year, month);
                 }else{
                     value = ((IUser)profile).getCO2SavedMonth(year, month);
                 }

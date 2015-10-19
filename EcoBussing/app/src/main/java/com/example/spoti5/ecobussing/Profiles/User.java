@@ -73,6 +73,10 @@ public class User implements IUser{
         this.name = name;
     }
 
+    public String getConnectedCompany(){
+        return connectedCompany;
+    }
+
     @Override
     public void setName(String name) {
         this.name = name;

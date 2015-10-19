@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -238,10 +239,33 @@ public class Company implements IProfile {
     }
 
     public void incPoints(double co2Saved){
+        checkDate();
 
-        pointCurrentMonth  += (2+(10*co2Saved)) / (100+nbrEmployees);
-        pointCurrentYear   += (2+(10*co2Saved)) / (100+nbrEmployees);
-        pointTot           += (2+(10*co2Saved)) / (100+nbrEmployees);
+        pointCurrentMonth  += calculatePoints(co2Saved);
+        pointCurrentYear   += calculatePoints(co2Saved);
+        pointTot           += calculatePoints(co2Saved);
+
+
+    }
+
+    public double calculatePoints(double co2Saved){
+
+        return (2+(10*co2Saved)) / (100+nbrEmployees);
+
+
+    }
+
+    public void checkDate(){
+        Calendar cal = Calendar.getInstance();
+        int month1 = cal.get(Calendar.MONTH);
+        int year1 = cal.get(Calendar.YEAR);
+
+        cal.add(Calendar.DAY_OF_MONTH, -1);
+        int month2 = cal.get(Calendar.MONTH);
+        int year2 = cal.get(Calendar.YEAR);
+
+        if(month1 != month2) pointCurrentMonth = 0;
+        if(year1 != year2) pointCurrentYear = 0;
 
 
     }
@@ -288,6 +312,37 @@ public class Company implements IProfile {
         return null;
     }
 
+    public double getPointsSavedDate(int year, int month, int day){
+
+        double value = 0;
+        for(String s: getMembers(true)){
+
+            IUser usr = DatabaseHolder.getDatabase().getUser(s);
+
+            value += calculatePoints(usr.getCO2SavedDate(year, month, day));
+
+        }
+
+
+
+
+        return value;
+    }
+
+    public double getPointsSavedMonth(int year, int month){
+
+        double value = 0;
+        for(String s: getMembers(true)){
+
+            IUser usr = DatabaseHolder.getDatabase().getUser(s);
+
+            value += calculatePoints(usr.getCO2SavedMonth(year, month));
+
+        }
+
+        return value;
+    }
+
     @Override
     public Double getCO2SavedYear(Integer year) {
         return null;
@@ -321,15 +376,18 @@ public class Company implements IProfile {
     }
 
     public double getpointTot() {
+        checkDate();
         return pointTot;
     }
 
 
     public double getpointCurrentYear() {
+        checkDate();
         return pointCurrentYear;
     }
 
     public double getpointCurrentMonth() {
+        checkDate();
         return  pointCurrentMonth;
     }
 

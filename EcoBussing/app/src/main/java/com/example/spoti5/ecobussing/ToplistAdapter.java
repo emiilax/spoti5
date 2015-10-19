@@ -13,6 +13,7 @@ import com.example.spoti5.ecobussing.Activites.ToplistFragment;
 import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
@@ -75,7 +76,7 @@ public class ToplistAdapter extends BaseAdapter {
                 tempList = database.getUserToplistYear();
             }else if(range.equals("total")){
                 size = database.getUserToplistAll().size();
-                tempList = database.getUserToplistYear();
+                tempList = database.getUserToplistAll();
             }
 
             for(int i = size-1; i>=0; i--){
@@ -127,14 +128,17 @@ public class ToplistAdapter extends BaseAdapter {
 
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
+        String value = "";
         if(company){
             name.setText((position + 1) + ". " + companyList.get(position).getName());
+            value = Double.toString(((Company)companyList.get(position)).getPointsSavedDate(1, 1, 1));
+
         }else{
             name.setText((position + 1) + ". " + personList.get(position).getName());
             DecimalFormat df = new DecimalFormat("####0.00");
 
 
-            String value = "";
+
             if(range.equals("month")){
                 value = df.format(personList.get(position).getCo2CurrentMonth());
 
