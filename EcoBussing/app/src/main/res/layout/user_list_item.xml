@@ -22,18 +22,20 @@
         android:paddingLeft="12dp">
 
         <TextView
+            android:id="@+id/userlistItem_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="1. Anders Andersson"
-            android:id="@+id/toplistItem_name" />
+             />
 
         <TextView
+            android:id="@+id/userlistItem_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="xxx CO2"
-            android:id="@+id/toplistItem_subtitle" />
+            />
     </LinearLayout>
 
     <ImageView

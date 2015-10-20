@@ -29,6 +29,7 @@ public class UserListAdapter extends BaseAdapter {
 
     public UserListAdapter(Context context){
         this.context = context;
+        connectedUsers = new ArrayList<>();
 
         company = (Company)database.getCompany(SaveHandler.getCurrentUser().getCompany());
         List<String> tmp;
@@ -64,17 +65,16 @@ public class UserListAdapter extends BaseAdapter {
         View row;
 
         if(convertView == null){
-            row = inflater.inflate(R.layout.toplist_item, parent, false);
+            row = inflater.inflate(R.layout.user_list_item, parent, false);
         }else{
             row = convertView;
         }
 
-        TextView nameLabel1 = (TextView) row.findViewById(R.id.toplistItem_name);
-        TextView subtitleLabel1 = (TextView) row.findViewById(R.id.toplistItem_subtitle);
+        TextView nameLabel1 = (TextView) row.findViewById(R.id.userlistItem_name);
+        TextView subtitleLabel1 = (TextView) row.findViewById(R.id.userlistItem_subtitle);
 
-        nameLabel1.setText(company.getName());
-        subtitleLabel1.setText(Integer.toString(company.getMembers(true).size()));
-
+        nameLabel1.setText(connectedUsers.get(position).getName());
+        subtitleLabel1.setText(Double.toString(connectedUsers.get(position).getCO2Saved(true)));
 
         return row;
     }

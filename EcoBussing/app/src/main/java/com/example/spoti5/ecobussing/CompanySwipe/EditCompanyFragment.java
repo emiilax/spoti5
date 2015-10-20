@@ -43,9 +43,6 @@ public class EditCompanyFragment extends Fragment {
     private ExpandableListView userList;
     private Button saveButton;
 
-    private List<IProfile> listDataHeader;
-    private HashMap<IProfile, String> listDataChild;
-
     private UserListAdapter adapter;
 
     public EditCompanyFragment(){
@@ -83,8 +80,6 @@ public class EditCompanyFragment extends Fragment {
         companyEmployees.setText(Integer.toString(usersCompany.getNbrEmployees()));
         companyInfo.setText(usersCompany.getCompanyInfo());
 
-        //prepareListData();
-
         adapter = new UserListAdapter(this.getContext());
         userList.setAdapter(adapter);
 
@@ -100,22 +95,5 @@ public class EditCompanyFragment extends Fragment {
             database.updateCompany(usersCompany);
         }
     };
-
-    /*private void prepareListData(){
-
-        listDataHeader = new ArrayList();
-        listDataChild = new HashMap<IProfile, String>();
-
-        ArrayList<String> members = (ArrayList)usersCompany.getMembers(true);
-
-        for(int i = 0; i< members.size(); i++){
-            listDataHeader.add(database.getUser(members.get(i)));
-        }
-
-        for(int i = 0; i < listDataHeader.size(); i++) {
-            listDataChild.put(listDataHeader.get(i), "HEjhej");
-        }
-
-    }*/
 
 }
