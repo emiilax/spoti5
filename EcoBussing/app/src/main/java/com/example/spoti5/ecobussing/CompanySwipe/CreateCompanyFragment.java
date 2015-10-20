@@ -122,6 +122,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
         database.updateUser(currentUser);
+
     }
 
 

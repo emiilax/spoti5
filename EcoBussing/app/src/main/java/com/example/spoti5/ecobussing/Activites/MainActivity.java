@@ -84,6 +84,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private IUser currentUser;
     private Company company;
+    private boolean connected;
 
     String title;
 
@@ -97,6 +98,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
         company = (Company) database.getCompany(currentUser.getCompany());
+        connected = currentUser.getCompany().equals("");
 
         fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
@@ -105,11 +107,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         System.out.println("Start activity");
 
 
+
         //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         //registerReceiver(wifiReciever, intentFilter);
         //addWifiChangeHandler();
 
-        listAdapter = new DrawerListAdapter(this);
+        listAdapter = new DrawerListAdapter(this, connected);
         searchAdapter = new SearchAdapter(this, "---");
 
         //planetTitles = getResources().getStringArray(R.array.planets_array);
