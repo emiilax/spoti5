@@ -275,7 +275,7 @@ public class Database implements IDatabase{
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         IUser user = userSnapshots.getValue(User.class);
                         addUserToList(listValue, user);
-                        //System.out.println(user.getEmail());
+                        System.out.println(user.getEmail());
 
                     }
                 } catch (FirebaseException var4) {
