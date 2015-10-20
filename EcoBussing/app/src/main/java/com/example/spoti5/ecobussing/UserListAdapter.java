@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.SimpelSearch;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 
 import java.util.ArrayList;
@@ -70,11 +71,24 @@ public class UserListAdapter extends BaseAdapter {
             row = convertView;
         }
 
-        TextView nameLabel1 = (TextView) row.findViewById(R.id.userlistItem_name);
+        final TextView nameLabel1 = (TextView) row.findViewById(R.id.userlistItem_name);
         TextView subtitleLabel1 = (TextView) row.findViewById(R.id.userlistItem_subtitle);
 
         nameLabel1.setText(connectedUsers.get(position).getName());
         subtitleLabel1.setText(Double.toString(connectedUsers.get(position).getCO2Saved(true)));
+
+        ImageView removeButton = (ImageView)convertView.findViewById(R.id.removeButton);
+
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IUser user = database.getUser(nameLabel1.getText().toString());
+                company.removeMember(user);
+                user.setCompany("");
+                database.updateCompany(company);
+                database.updateUser(user);
+            }
+        });
 
         return row;
     }
