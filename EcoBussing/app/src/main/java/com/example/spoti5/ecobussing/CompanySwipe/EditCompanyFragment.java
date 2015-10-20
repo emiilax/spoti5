@@ -6,11 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.Profiles.IProfile;
+import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.UserListAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by matildahorppu on 12/10/15.
@@ -18,6 +31,19 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 public class EditCompanyFragment extends Fragment {
 
     IDatabase database;
+    private IUser currentUser;
+    private Company usersCompany;
+
+    private ImageView companyPic;
+    private TextView companyName;
+    private EditText companyEmployees;
+    private TextView companyInfoText;
+    private EditText companyInfo;
+    private TextView connectedUsersText;
+    private ExpandableListView userList;
+    private Button saveButton;
+
+    private UserListAdapter adapter;
 
     public EditCompanyFragment(){
 
@@ -32,6 +58,8 @@ public class EditCompanyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         database = DatabaseHolder.getDatabase();
+        currentUser = SaveHandler.getCurrentUser();
+        usersCompany = (Company)database.getCompany(currentUser.getCompany());
     }
 
     @Override
@@ -39,13 +67,33 @@ public class EditCompanyFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_edit_company, container, false);
 
-        //header = (TextView)view.findViewById(R.id.headerTextView);
-        //nameTextField = (EditText)view.findViewById(R.id.editTextCompName);
-        //passwordTextField = (EditText)view.findViewById(R.id.editTextPassword);
-        //saveButton = (Button)view.findViewById(R.id.saveCompButton);
-        //saveButton.setOnClickListener(save);
+        companyPic = (ImageView)view.findViewById(R.id.companyPic);
+        companyName = (TextView)view.findViewById(R.id.companyNameTextField);
+        companyEmployees = (EditText)view.findViewById(R.id.employeesEditText);
+        companyInfoText = (TextView)view.findViewById(R.id.infoTextField);
+        companyInfo = (EditText)view.findViewById(R.id.infoEditText);
+        connectedUsersText = (TextView)view.findViewById(R.id.usersTextView);
+        userList = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        saveButton = (Button)view.findViewById(R.id.saveButton);
+
+        companyName.setText(currentUser.getCompany());
+        companyEmployees.setText(Integer.toString(usersCompany.getNbrEmployees()));
+        companyInfo.setText(usersCompany.getCompanyInfo());
+
+        adapter = new UserListAdapter(this.getContext());
+        userList.setAdapter(adapter);
+
+        saveButton.setOnClickListener(saveCompanyChanges);
 
         return view;
     }
+
+    private View.OnClickListener saveCompanyChanges = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            usersCompany.setCompanyInfo(companyInfo.getText().toString());
+            database.updateCompany(usersCompany);
+        }
+    };
 
 }

@@ -17,6 +17,7 @@
 
         <activity
             android:name=".Activites.MainActivity"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"
             android:label="@string/title_activity_drawer">
         </activity>
 

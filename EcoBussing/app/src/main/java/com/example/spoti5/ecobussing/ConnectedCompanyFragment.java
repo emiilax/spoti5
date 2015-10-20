@@ -105,9 +105,11 @@ public class ConnectedCompanyFragment extends Fragment {
     private View.OnClickListener disconnectFromComp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Ta bort från members i företaget
-            //Ta bort företag från user
-            System.out.println("Disconnecta företag");
+            Company company = (Company)database.getCompany(currentUser.getCompany());
+            company.removeMember(currentUser);
+            currentUser.setCompany("");
+            database.updateCompany(company);
+            database.updateUser(currentUser);
         }
     };
 

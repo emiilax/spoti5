@@ -16,9 +16,10 @@
         <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/nice_green</item>
         <!-- You can also set colorControlNormal,
              colorControlHighlight and colorSwitchThumbNormal. -->
-        <item name="android:windowBackground">@color/white_blue</item>
-        <item name="android:colorBackground">@color/white_blue</item>
+        <!--<item name="android:windowBackground">@color/white_blue</item>
+        <item name="android:colorBackground">@color/white_blue</item> -->
     </style>
+
     <style name="Divider_Horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
