@@ -14,6 +14,7 @@ public interface IUser extends IProfile {
     public double getCurrentDistance();
 
     public void incMoneySaved(double distance);
+    public void newJourney(double distance);
 
     public double getCo2CurrentYear();
     public double getCo2CurrentMonth();

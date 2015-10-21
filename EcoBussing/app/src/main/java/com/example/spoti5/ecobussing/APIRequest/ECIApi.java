@@ -75,7 +75,7 @@ public class ECIApi {
      *          Latitude, Longitude, Speed, Course, Altitude.
      *
      */
-    public List<EARespond> getGPSInfo(String dwgNr) throws IOException, IllegalArgumentException {
+    public List<EARespond> getGPSInfo(String dwgNr) throws IOException, IllegalArgumentException, NullPointerException {
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (30 * 1000);
 
@@ -169,41 +169,39 @@ public class ECIApi {
 
         }
 
-        try{
-            URL requestURL = new URL(url);
 
-            // Connect to the resource
-            HttpsURLConnection con = (HttpsURLConnection) requestURL
-                    .openConnection();
+        URL requestURL = new URL(url);
 
-            con.setConnectTimeout(5000);
-            con.setReadTimeout(5000);
-            // Get info from the resource (POST if you want to send anything)
-            con.setRequestMethod("GET");
+        // Connect to the resource
+        HttpsURLConnection con = (HttpsURLConnection) requestURL
+                .openConnection();
 
-            // Get access
-            con.setRequestProperty("Authorization", "Basic " + EAkey);
+        //con.setConnectTimeout(10000);
+        //con.setReadTimeout(10000);
+        // Get info from the resource (POST if you want to send anything)
+        con.setRequestMethod("GET");
 
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
+        // Get access
+        con.setRequestProperty("Authorization", "Basic " + EAkey);
 
-            // Read the response
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
+
+        // Read the response
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                con.getInputStream()));
 
 
-            // Put all the text into a String
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
+        // Put all the text into a String
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
 
-                response += inputLine;
-            }
-            in.close();
-
-        } catch (SocketTimeoutException e){
-            e.printStackTrace();
+            response += inputLine;
         }
+        in.close();
+
+
 
         // Used to point out the "resource" on internet
 

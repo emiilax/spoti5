@@ -11,15 +11,33 @@ import java.text.DecimalFormat;
 public class YAxisFormatter implements YAxisValueFormatter {
 
     private DecimalFormat mFormat;
+    private boolean isCompany;
+    private boolean isPointsMoney;
 
-    public YAxisFormatter () {
-        mFormat = new DecimalFormat("###,###,##0.00"); // use one decimal
+    public YAxisFormatter (boolean isCompany, boolean isPointsMoney) {
+
+        this.isCompany = isCompany;
+        this.isPointsMoney = isPointsMoney;
+
+        if(isPointsMoney){
+            mFormat = new DecimalFormat("###,###,##0");
+        }else {
+            mFormat = new DecimalFormat("###,###,##0.00");
+        }
     }
+
 
     @Override
     public String getFormattedValue(float value, YAxis yAxis) {
-        // write your logic here
-        // access the YAxis object to get more information
+
+        if(isPointsMoney){
+            if(isCompany){
+               return mFormat.format(value) + "poäng";
+            }else{
+                return mFormat.format(value) + "kr";
+            }
+
+        }
         return mFormat.format(value) + "\n kg CO2";
     }
 }

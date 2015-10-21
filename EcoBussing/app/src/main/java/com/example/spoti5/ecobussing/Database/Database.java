@@ -62,6 +62,7 @@ public class Database implements IDatabase{
         generateCompaniesList(topListAllValue, "co2Tot");
         generateCompaniesList(topListMonthValue, "co2CurrentMonth");
         generateCompaniesList(topListYearValue, "co2CurrentYear");
+
     }
 
     @Override
@@ -108,8 +109,11 @@ public class Database implements IDatabase{
         return index;
     }
 
+    @Override
     public IProfile getCompany(String name){
+
         for(IProfile c: getCompanies()){
+            System.out.println("input: " + name +", comapny name: " + c.getName());
             if(c.getName().equals(name)){
                 return c;
             }
@@ -162,6 +166,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onError(FirebaseError firebaseError) {
+                System.out.println("failed addUser()");
                 System.out.println(firebaseError.getMessage());
                 setErrorCode(firebaseError);
                 connection.addingFinished();
@@ -225,6 +230,7 @@ public class Database implements IDatabase{
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("failed addCompany()");
                 System.out.println(firebaseError.getMessage());
                 setErrorCode(firebaseError);
             }
@@ -354,6 +360,7 @@ public class Database implements IDatabase{
 
             }
         });
+
     }
 
     private void generateCompaniesList(final int listValue, String sorter) {
@@ -362,7 +369,7 @@ public class Database implements IDatabase{
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
+               try{
                     clearListCompany(listValue);
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
                         IProfile company = companySnapshots.getValue(Company.class);
@@ -370,6 +377,7 @@ public class Database implements IDatabase{
                     }
                 } catch(FirebaseException e){
                     allGenerated = false;
+                    System.out.println(listValue);
                     System.out.println(e.getMessage());
                 }
             }

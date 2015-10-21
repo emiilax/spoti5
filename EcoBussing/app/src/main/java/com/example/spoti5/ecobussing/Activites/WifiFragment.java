@@ -86,10 +86,13 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
             setDisconnected();
         }
 
+        /*
         IDatabase curDatab = DatabaseHolder.getDatabase();
 
         IUser usr = curDatab.getUser("et@mannen.se");
         System.out.println(usr.toString());
+
+
         Random rnd = new Random();
         Calendar cal = Calendar.getInstance();
         for(int i = 0; i < 210; i++){
@@ -102,8 +105,8 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
             cal.add(Calendar.DAY_OF_MONTH, -1);
 
         }
-
         SaveHandler.changeUser(usr);
+        */
 
 
 
@@ -191,11 +194,19 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
                 distance.setText("not set");
                 try {
                     busC.beginJourey(Busses.simulated);
+                    start.setText(busC.getStartLoc());
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("null");
+                    hasStarted = false;
+                    return;
+                } catch (NullPointerException e) {
+                    System.out.println("null");
+                    hasStarted = false;
+                    return;
                 }
                 startStop.setText("Stop");
-                start.setText(busC.getStartLoc());
+
                 status.setText("Journey start");
 
             }else{

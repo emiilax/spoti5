@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.spoti5.ecobussing.Medals.MedalFragment;
 import com.example.spoti5.ecobussing.Medals.MedalViewSwiper;
 import com.example.spoti5.ecobussing.Profiles.Company;
+import com.example.spoti5.ecobussing.SimulatedTripFragment;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
 import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
@@ -344,8 +345,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                         title = "WiFi Detect";
                         getSupportActionBar().setTitle(title);
                         WifiFragment wfrag = new WifiFragment();
+                        SimulatedTripFragment stf = new SimulatedTripFragment();
 
-                        fragmentTransaction.replace(R.id.container, wfrag);
+                        fragmentTransaction.replace(R.id.container, stf);
                         fragmentsVisitedName.add(title);
                         fragmentsVisited.add(wfrag);
                         fragmentTransaction.addToBackStack(null);

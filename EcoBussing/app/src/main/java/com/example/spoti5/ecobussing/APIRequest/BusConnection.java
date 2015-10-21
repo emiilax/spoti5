@@ -99,7 +99,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      * @param bus, the bus the device is connected to
      * @throws IOException
      */
-    public void beginJourey(Bus bus) throws IOException {
+    public void beginJourey(Bus bus) throws IOException, NullPointerException {
 
         if(!hasStarted){
             currentBus = bus;
@@ -114,6 +114,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             } catch(IllegalArgumentException e){
                 return;
             }
+
             System.out.println("Journey begin");
 
             for(EARespond rsp: gpsInfo){
@@ -143,7 +144,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             }
 
             if(startLoc == null){
-                beginJourey(bus);
+                throw new NullPointerException();
             }
 
             System.out.println("Startloc finished");
@@ -200,7 +201,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
                 IUser usr = SaveHandler.getCurrentUser();
                 System.out.println(usr.getCo2CurrentMonth());
-                usr.incCO2Saved(distance);
+                usr.newJourney(distance);
 
                 SaveHandler.changeUser(usr);
                 System.out.println(usr.getCo2CurrentMonth());
@@ -225,7 +226,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 StopLocation stop = (tempTripList.get(i)).get(1);
 
                 double distance = Calculator.getCalculator().calculateDistance(startLoc, endLoc);
-                usr.incCO2Saved(distance);
+                usr.newJourney(distance);
             }
             tempTripList.clear();
             SaveHandler.changeUser(usr);
@@ -289,6 +290,8 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 gpsInfo = eciApi.getGPSInfo(currentBus.getDwg());
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NullPointerException ex){
+
             }
 
             /*

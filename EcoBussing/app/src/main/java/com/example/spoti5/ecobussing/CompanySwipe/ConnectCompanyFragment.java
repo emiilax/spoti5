@@ -132,6 +132,7 @@ public class ConnectCompanyFragment extends Fragment {
         public void onClick(View v) {
             currentUser.setCompany(autoCompleteTextView.getText().toString());
             company.addMember(currentUser);
+            DatabaseHolder.getDatabase().updateCompany(company);
 
         }
     };

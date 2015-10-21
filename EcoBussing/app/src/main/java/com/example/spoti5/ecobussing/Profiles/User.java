@@ -151,8 +151,15 @@ public class User implements IUser{
     }
 
     public void updateCompany(double distance){
-        Company company = (Company)DatabaseHolder.getDatabase().getCompany(connectedCompany);
-        company.incCO2Saved(distance);
+        //System.out.println(connectedCompany);
+        IProfile company = DatabaseHolder.getDatabase().getCompany(connectedCompany);
+        //System.out.println(company.toString());
+        ((Company)company).newJourney(distance);
+    }
+
+    public void newJourney(double distance){
+        incCO2Saved(distance);
+        incMoneySaved(distance);
 
     }
 
@@ -365,7 +372,6 @@ public class User implements IUser{
 
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
-            System.out.println("hej");
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();

@@ -17,10 +17,12 @@ import com.example.spoti5.ecobussing.diagram.BarDiagram;
 public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     private IProfile thisProfile;
+    private boolean isPointsMoney;
 
-    public ProfilePagerAdapter(FragmentManager fragment, IProfile profile) {
+    public ProfilePagerAdapter(FragmentManager fragment, IProfile profile, boolean isPointsMoney) {
         super(fragment);
         thisProfile = profile;
+        this.isPointsMoney = isPointsMoney;
     }
 
     @Override
@@ -28,13 +30,13 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS);
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
                 break;
             case 1:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS);
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
                 break;
             case 2:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS);
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
                 break;
         }
 

@@ -80,9 +80,7 @@ public class Company implements IProfile {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     @Override
     public void setName(String name) {
@@ -244,10 +242,9 @@ public class Company implements IProfile {
     }
 
     public double calculatePoints(double co2Saved){
+        if(co2Saved == 0) return 0;
 
-        return (2+(10*co2Saved)) / (100+nbrEmployees);
-
-
+        return 100 * (2+(10*co2Saved)) / (100+nbrEmployees);
     }
 
     public void checkDate(){
@@ -261,8 +258,12 @@ public class Company implements IProfile {
 
         if(month1 != month2) pointCurrentMonth = 0;
         if(year1 != year2) pointCurrentYear = 0;
+    }
 
-
+    public void newJourney(double co2Saved){
+        incCO2Saved(co2Saved);
+        incPoints(co2Saved);
+        DatabaseHolder.getDatabase().updateCompany(this);
     }
 
     /**
@@ -294,8 +295,7 @@ public class Company implements IProfile {
 
 
     private void updateUserConnectedJson(){
-        Gson gson = new Gson();
-        usersConnectedJson =  gson.toJson(userConnectionDates);
+        usersConnectedJson =  new Gson().toJson(userConnectionDates);
     }
 
 
@@ -305,26 +305,37 @@ public class Company implements IProfile {
         return null;
     }
 
+
+    @Override
+    public void incCO2Saved(double distance) { checkDate(); }
+
+
+    private void updateModMemberJson(){
+        modMemberJson = new Gson().toJson(moderatorMembers);
+    }
+
+
+    private void updateMemberJson(){
+        memberJson = new Gson().toJson(members);
+    }
+
+
+
+    // Getters
     public double getPointsSavedDate(int year, int month, int day){
 
-        double value = 0;
-        for(String s: getMembers(true)){
-            try{
-                IUser usr = DatabaseHolder.getDatabase().getUser(s);
-                value += calculatePoints(usr.getCO2SavedDate(year, month, day));
-            }catch (NullPointerException e){
-                value += 0;
-            }
-
-
-
+    double value = 0;
+    for(String s: getMembers(true)){
+        try{
+            IUser usr = DatabaseHolder.getDatabase().getUser(s);
+            value += calculatePoints(usr.getCO2SavedDate(year, month, day));
+        }catch (NullPointerException e){
+            value += 0;
         }
-
-
-
-
-        return value;
     }
+
+    return value;
+}
 
     public double getPointsSavedMonth(int year, int month){
 
@@ -363,9 +374,6 @@ public class Company implements IProfile {
     }
 
     @Override
-    public void incCO2Saved(double distance) {}
-
-    @Override
     public Double getCO2Saved(boolean avoidDatabaseUpload) {
         return pointTot;
     }
@@ -375,18 +383,18 @@ public class Company implements IProfile {
     }
 
     public double getpointTot() {
-        checkDate();
+        //checkDate();
         return pointTot;
     }
 
 
-    public double getpointCurrentYear() {
-        checkDate();
+    public double getPointCurrentYear() {
+        //checkDate();
         return pointCurrentYear;
     }
 
-    public double getpointCurrentMonth() {
-        checkDate();
+    public double getPointCurrentMonth() {
+        //checkDate();
         return  pointCurrentMonth;
     }
 
@@ -402,20 +410,8 @@ public class Company implements IProfile {
         return usersConnectedJson;
     }
 
-    private void updateModMemberJson(){
-        Gson gson = new Gson();
-        modMemberJson = gson.toJson(moderatorMembers);
-    }
+    public String getMemberJson() { return memberJson; }
 
-    public String getMemberJson() {
-
-        return memberJson;
-    }
-
-    private void updateMemberJson(){
-        Gson gson = new Gson();
-        memberJson = gson.toJson(members);
-    }
 
 
 
@@ -434,21 +430,4 @@ public class Company implements IProfile {
                 ", userConnectedJson=" + usersConnectedJson +
                 '}';
     }
-
-    /*
-    //NEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDS CHANGEEEEEEEEEEEEEE
-    @Override
-    public void updateDistance() {
-        distance = 0;
-        for (int i = 0; i < members.size(); i++) {
-            distance = distance + members.get(i).getDistance();
-        }
-    }
-
-    public void updateCO2Saved() {
-        carbondioxideSaved = 0;
-        for (int i = 0; i < members.size(); i++) {
-            carbondioxideSaved = carbondioxideSaved + members.get(i).getCO2Saved();
-        }
-    } */
 }

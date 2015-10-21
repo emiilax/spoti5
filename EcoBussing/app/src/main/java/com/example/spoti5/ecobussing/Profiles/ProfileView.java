@@ -61,10 +61,10 @@ public class ProfileView extends Fragment{
     //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
         if(thisProfile instanceof IUser) {
-            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
-            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
+            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
         }else {
-            pagerAdapter1 = new CompanyPagerAdapter(getActivity().getSupportFragmentManager(), thisProfile);
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
         }
         viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
         viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);

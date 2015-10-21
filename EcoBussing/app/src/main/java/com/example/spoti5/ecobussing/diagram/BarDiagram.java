@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Activites.ActivityController;
-import com.example.spoti5.ecobussing.Database.Database;
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Profiles.Company;
 import com.example.spoti5.ecobussing.Profiles.IProfile;
 import com.example.spoti5.ecobussing.Profiles.IUser;
+import com.example.spoti5.ecobussing.Profiles.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.github.mikephil.charting.charts.BarChart;
@@ -41,6 +40,7 @@ public class BarDiagram extends Fragment {
     private IProfile profile;
     private String nameOfChart;
     private boolean isCompany;
+    private boolean moneyPoints;
 
     private int range;
 
@@ -52,11 +52,12 @@ public class BarDiagram extends Fragment {
         // Required empty public constructor
     }
 
-    public final static BarDiagram newInstance(IProfile profile, int range){
+    public final static BarDiagram newInstance(IProfile profile, int range, boolean moneyPoints){
         BarDiagram bd = new BarDiagram();
 
         bd.setProfile(profile);
         bd.setRange(range);
+        bd.moneyPoints = moneyPoints;
 
 
         return bd;
@@ -93,7 +94,7 @@ public class BarDiagram extends Fragment {
 
         // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
-        TextView rangeText = (TextView) view.findViewById(R.id.txtvChartType);
+        TextView rangeText = (TextView) view.findViewById(R.id.txtvChartRange);
 
         rangeText.setText(nameOfChart);
 
@@ -142,7 +143,7 @@ public class BarDiagram extends Fragment {
         yAxis.setAxisLineColor(getResources().getColor(R.color.diagram_lines));
         yAxis.setDrawGridLines(true);
         yAxis.setGridColor(getResources().getColor(R.color.diagram_lines));
-        yAxis.setValueFormatter(new YAxisFormatter());
+        yAxis.setValueFormatter(new YAxisFormatter(isCompany, moneyPoints));
         yAxis.setAxisLineWidth(1f);
         yAxis.setLabelCount(3, true);
 
@@ -200,9 +201,21 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value = ((Company)profile).getPointsSavedDate(year, month, day);
+
+                    if(moneyPoints){
+                        value = ((Company)profile).getPointsSavedDate(year, month, day);
+                    }else{
+                        value = ((Company)profile).getPointsSavedDate(year, month, day);
+                    }
+
                 }else{
-                    value = ((IUser)profile).getCO2SavedDate(year, month, day);
+
+                    if(moneyPoints){
+                        value = ((User)profile).getMoneySavedDate(year, month, day);
+                    }else{
+                        value = ((IUser)profile).getCO2SavedDate(year, month, day);
+                    }
+
                 }
 
             }catch (Exception e){
@@ -270,9 +283,17 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value += ((Company)profile).getPointsSavedDate(year, month, day);
+                    if(moneyPoints){
+                        value += ((Company)profile).getPointsSavedDate(year, month, day);
+                    }else{
+                        value += ((Company)profile).getPointsSavedDate(year, month, day);
+                    }
                 }else{
-                    value += ((IUser)profile).getCO2SavedDate(year, month, day);
+                    if(moneyPoints){
+                        value += ((User)profile).getMoneySavedDate(year, month, day);
+                    }else{
+                        value += ((IUser)profile).getCO2SavedDate(year, month, day);
+                    }
                 }
 
             }catch (Exception e){
@@ -322,9 +343,19 @@ public class BarDiagram extends Fragment {
 
             try{
                 if(isCompany){
-                    value = ((Company)profile).getPointsSavedMonth(year, month);
+                    if(moneyPoints){
+                        value = ((Company)profile).getPointsSavedMonth(year, month);
+                        System.out.println("month value " + i+ ": " + value);
+                    }else{
+                        value = ((Company)profile).getPointsSavedMonth(year, month);
+                    }
                 }else{
-                    value = ((IUser)profile).getCO2SavedMonth(year, month);
+                    if(moneyPoints){
+                        value = ((User)profile).getMoneySavedMonth(year, month);
+                    }else{
+                        value = ((IUser)profile).getCO2SavedMonth(year, month);
+                    }
+
                 }
 
             }catch (Exception e){
@@ -335,7 +366,7 @@ public class BarDiagram extends Fragment {
 
             if(value > highestValue) highestValue = value;
 
-            barEntryList.add(new BarEntry((float) value, 6-i));
+            barEntryList.add(new BarEntry((float) value, 6 - i));
 
         }
 
