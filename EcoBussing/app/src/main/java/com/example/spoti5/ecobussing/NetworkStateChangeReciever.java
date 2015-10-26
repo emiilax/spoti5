@@ -23,34 +23,34 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 30/09/15.
+ * Created by Emil Axelsson on 30/09/15.
  *
- * Singelton class. As
+ * Singelton class. Used to check the network connection. React when network state change
+ *
  */
-
 public class NetworkStateChangeReciever extends BroadcastReceiver implements Runnable {
 
     private static NetworkStateChangeReciever theReciver = null;
     private String bssid;
-    private Bus theBus;
     private BusConnection busConnection;
     private boolean onBus = false;
     private boolean connectedToWifi = false;
     private Activity activity;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     private boolean netwCon = false;
+    private boolean stopThread;
 
     private NetworkStateChangeReciever(){
         busConnection = new BusConnection();
         this.addPropertyChangeListener(busConnection);
-
         netwCon = hasActiveInternetConnection(ActivityController.getContext());
-        System.out.println("Connected to network: " + netwCon);
     }
 
-
-
+    /**
+     * Get the NetworkStateChangeReciver object
+     *
+     * @return, theReceiver
+     */
     public static NetworkStateChangeReciever getInstance(){
 
         if(theReciver == null){
@@ -61,7 +61,13 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     }
 
-
+    /**
+     * Check if there really is a network connection. "Pings" google, and check if the responsecode
+     * is right.
+     *
+     * @param context, the context of the application.
+     * @return a boolean whether its connected to internet or not
+     */
     public boolean hasActiveInternetConnection(Context context){
 
         try {
@@ -86,22 +92,28 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         return false;
     }
 
+    /**
+     * Sets the netwCon. And if its a network connection see if a journey should e started
+     * @param truFal
+     */
     public void setNetwCon(boolean truFal){
         netwCon = truFal;
 
         if(netwCon) {
-            startJourney();
+            tryStartJourney();
+
+            // The busconnection now know that there is network connection.
             pcs.firePropertyChange("netwConnected", null, null);
         }
     }
 
-    public boolean isNetwConnected(){
-        return netwCon;
-    }
 
-    Thread getConnectionThread = null;
-    private boolean stopThread;
-
+    /**
+     * Updates the network connection.
+     *
+     * @param intent
+     * @param context
+     */
     public void updateConnect(Intent intent, Context context){
 
         NetworkInfo in = (NetworkInfo)intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
@@ -112,6 +124,11 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
             setNetwCon(hasActiveInternetConnection(context));
 
+            // It can take som seconds to get active networkconnection after a state-change.
+            // Therefore a thread is started where it checks the active-networkconnectiom for
+            // 10 seconds.
+            // Just because you are connected to network, does not necessary mean that you have
+            // active-networkconnection.
             if(!netwCon){
                 stopThread = false;
                 new Thread(this).start();
@@ -124,62 +141,51 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     }
 
+    // Called whenever the network state changes.
     @Override
     public void onReceive(Context context, Intent intent) {
-        //System.out.println(" internet event");
 
-
+        //
         updateConnect(intent, context);
-        //System.out.println("Connected to network: " + netwCon);
 
         NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if(info != null ) {
 
             if(info.isConnected()) {
-                // Do your work.
-                connectedToWifi = true;
-                // e.g. To check the Network Name or other info:
+                // Used to get extra info about the wificonnection
                 WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+
                 if(wifiInfo.getBSSID() != null){
+                    connectedToWifi = true;
                     bssid = wifiInfo.getBSSID().replace(":", "");
-                    //System.out.println("Connected");
+
+                    // Used in develop-mode
                     this.pcs.firePropertyChange("connected", null, bssid);
 
-
-                    for(Bus b: Busses.theBusses){
-                        if(bssid.equals(b.getMacAdress()) && netwCon){
-                            onBus = true;
-                            System.out.println("on bus");
-                            try {
-                                busConnection.beginJourey(b);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            break;
-
-                        }
-                    }
+                    tryStartJourney();
                 }
 
-
+                // if there is no network connection
             } else {
+
+
                 connectedToWifi = false;
+
+                // Used in develop-mode
                 this.pcs.firePropertyChange("disconnected", null, null);
 
-                if(onBus){
-                    try {
-                        busConnection.endJourney();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    onBus = false;
-                }
+                tryEndJourney();
             }
         }
     }
 
-    public void endJourney(){
+    /**
+     * Called when the network connection is lost. Calls the busconnection endJourney if
+     * the user was on a bus before the connection were lost
+     */
+    public void tryEndJourney(){
         if(onBus){
             try{
                 busConnection.endJourney();
@@ -189,10 +195,14 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         }
     }
 
-    public void startJourney(){
-        if(!onBus && connectedToWifi){
+    /**
+     * Starts the journey if all of the requirements are filled.
+     * (Network-, wifi-connection. User not on bus, and the mac-address matches with bus)
+     */
+    public void tryStartJourney(){
+        if(!onBus && connectedToWifi && netwCon){
             for(Bus b: Busses.theBusses){
-                if(bssid.equals(b.getMacAdress()) && netwCon){
+                if(bssid.equals(b.getMacAdress())){
                     onBus = true;
                     System.out.println("on bus");
                     try {
@@ -201,30 +211,39 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
                         e.printStackTrace();
                     }
                     break;
-
                 }
             }
         }
     }
 
+    // Getters
+    public String getBssid(){ return bssid; }
+
+    public boolean isConnectedToWifi(){ return connectedToWifi; }
+
+    public boolean isNetwConnected(){ return netwCon; }
 
 
+    /**
+     * Adds a listener
+     * @param listener, the class that you add as a listener
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Removes a listener
+     * @param listener, the class that you remove as a listener
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
 
-    public String getBssid(){
-        return bssid;
-    }
 
-    public boolean isConnectedToWifi(){
-        return connectedToWifi;
-    }
 
+
+    // Used to check active-network connection. Check every second for 10 seconds.
     @Override
     public void run() {
         int i = 0;
@@ -232,7 +251,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
         while(!netwCon && !stopThread && i < 10 ){
 
             setNetwCon(hasActiveInternetConnection(ActivityController.getContext()));
-            System.out.println("Connected: " + netwCon);
+            //System.out.println("Connected: " + netwCon);
 
             synchronized (this){
                 try {

@@ -24,7 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 04/10/15.
+ * Created by Emil Axelsson on 04/10/15.
+ *
+ * Used to put the toplist from the Database in to listitems.
+ *
  */
 public class ToplistAdapter extends BaseAdapter {
 
@@ -33,8 +36,8 @@ public class ToplistAdapter extends BaseAdapter {
     private Context context;
     private IDatabase database;
     private boolean company;
-
     private String range;
+
 
     public ToplistAdapter(Context context, String range, boolean company){
 
@@ -43,10 +46,12 @@ public class ToplistAdapter extends BaseAdapter {
         int size = 0;
         this.range = range;
 
+        // Different list depending on whether its a company or not
         if(company){
             this.company = true;
             companyList = new ArrayList<>();
-            //Used because the list is back-to-front
+
+            // Different list depending on range
             List<IProfile> tempList = new ArrayList<IProfile>();
             if(range.equals("month") || range == null){
                 size = database.getCompaniesToplistMonth().size();
@@ -59,14 +64,17 @@ public class ToplistAdapter extends BaseAdapter {
                 tempList = database.getCompaniesToplistAll();
             }
 
+            // Load items backwards because the items in the list are back-to-front
             for(int i = size-1; i>=0; i--){
 
                 companyList.add(tempList.get(i));
             };
+
         }else{
             this.company = false;
             personList = new ArrayList<>();
-            //Used because the list is back-to-front
+
+            // Different list depending on range
             List<IUser> tempList = new ArrayList<>();
             if(range.equals("month") || range == null){
                 size = database.getUserToplistMonth().size();
@@ -79,8 +87,8 @@ public class ToplistAdapter extends BaseAdapter {
                 tempList = database.getUserToplistAll();
             }
 
+            // Load items backwards because the items in the list are back-to-front
             for(int i = size-1; i>=0; i--){
-
                 personList.add(tempList.get(i));
 
             };
@@ -116,9 +124,7 @@ public class ToplistAdapter extends BaseAdapter {
         View row = null;
 
         if(convertView == null){
-
             row = inflater.inflate(R.layout.toplist_item, parent, false);
-
         }else{
             row = convertView;
         }
@@ -126,18 +132,28 @@ public class ToplistAdapter extends BaseAdapter {
         TextView name = (TextView) row.findViewById(R.id.toplistItem_name);
         TextView co2 = (TextView) row.findViewById(R.id.toplistItem_subtitle);
 
-        //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
+        // This icon will be used when pictures for users are implemented
         //ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
+
+        // Put value and name in diffrently depending on if its a company or person
         String value = "";
         if(company){
             name.setText((position + 1) + ". " + companyList.get(position).getName());
-            value = Double.toString(((Company)companyList.get(position)).getPointsSavedDate(1, 1, 1));
+
+            if(range.equals("month")){
+                value = Double.toString(((Company) companyList.get(position)).getPointCurrentMonth());
+
+            }else if(range.equals("year")){
+                value = Double.toString(((Company) companyList.get(position)).getPointCurrentYear());
+
+            }else if(range.equals("total")) {
+                value = Double.toString(((Company) companyList.get(position)).getpointTot());
+
+            }
 
         }else{
             name.setText((position + 1) + ". " + personList.get(position).getName());
             DecimalFormat df = new DecimalFormat("####0.00");
-
-
 
             if(range.equals("month")){
                 value = df.format(personList.get(position).getCo2CurrentMonth());
@@ -152,10 +168,6 @@ public class ToplistAdapter extends BaseAdapter {
 
             co2.setText(value + " kgCO2");
         }
-        //System.out.println(listItems.size());
-
-
-
 
         return row;
     }

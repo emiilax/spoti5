@@ -4,7 +4,10 @@ import com.github.mikephil.charting.formatter.XAxisValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 /**
- * Created by emilaxelsson on 16/10/15.
+ * Created by Emil Axelsson on 16/10/15.
+ *
+ * The x-axis in the BarDiagram needs a "XAxisValueFormatter". This class does not do anything really.
+ * Just needed.
  */
 public class XAxisFormatter implements XAxisValueFormatter {
 

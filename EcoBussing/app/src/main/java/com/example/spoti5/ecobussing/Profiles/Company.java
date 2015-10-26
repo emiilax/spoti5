@@ -49,7 +49,7 @@ public class Company implements IProfile {
 
     public Company(){}
 
-    public Company(String businessName, User creatorMember, int nbrEmployees) {
+    public Company(String businessName, IUser creatorMember, int nbrEmployees) {
         name = businessName;
         this.creatorMember = creatorMember.getEmail();
 
@@ -170,7 +170,7 @@ public class Company implements IProfile {
      * @param creator
      * @param user
      */
-    public void addModeratorMember(User creator, User user) {
+    public void addModeratorMember(IUser creator, IUser user) {
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
             moderatorMembers.add(user.getEmail());
             updateModMemberJson();
@@ -181,17 +181,20 @@ public class Company implements IProfile {
      * A user adds himself to a business as a member if he is not already a member.
      * @param user
      */
-    public void addMember(User user) {
+    public void addMember(IUser user) {
         updateUserConnectionDates();
         if (!userIsMember(user)) {
             user.setCompany(name);
             SaveHandler.changeUser(user);
+
             members.add(user.getEmail());
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date dateTime = new Date();
             String str = dateFormat.format(dateTime);
-            String[] date = str.split(" ");
-            userConnectionDates.put(user, date[0]);
+            //String[] date = str.split(" ");
+
+            userConnectionDates.put(user, str);
+
             updateMemberJson();
         }
     }
@@ -202,7 +205,7 @@ public class Company implements IProfile {
      * @param creator
      * @param user
      */
-    public void removeModeratorMember(User creator, User user) {
+    public void removeModeratorMember(IUser creator, IUser user) {
         if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
             moderatorMembers.remove(user.getEmail());
             updateModMemberJson();
@@ -214,7 +217,7 @@ public class Company implements IProfile {
      * Also removes the user from the moderatorMember list if the user is a moderatorMember.
      * @param user
      */
-    public void removeMember(User user) {
+    public void removeMember(IUser user) {
         if (!userIsCreator(user)) {
             if (userIsModerator(user)) {
                 moderatorMembers.remove(user.getEmail());

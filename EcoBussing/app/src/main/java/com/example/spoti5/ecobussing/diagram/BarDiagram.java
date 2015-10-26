@@ -30,7 +30,10 @@ import java.util.Locale;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by Emil Axelsson on 16/10/15.
+ *
+ * Used to show diagrams in the profile-views.
+ *
  */
 public class BarDiagram extends Fragment {
 
@@ -40,6 +43,8 @@ public class BarDiagram extends Fragment {
     private IProfile profile;
     private String nameOfChart;
     private boolean isCompany;
+
+    //if the diagram should be in points(company), money(user)
     private boolean moneyPoints;
 
     private int range;
@@ -52,6 +57,13 @@ public class BarDiagram extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Used to get a new instance
+     * @param profile, the profile the diagrams should get its values from
+     * @param range, which range it should return
+     * @param moneyPoints, if company: should it be points or co2, if user: should it be money or co2
+     * @return, Bardiagram-object
+     */
     public final static BarDiagram newInstance(IProfile profile, int range, boolean moneyPoints){
         BarDiagram bd = new BarDiagram();
 
@@ -103,6 +115,9 @@ public class BarDiagram extends Fragment {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         chart = (BarChart) view.findViewById(R.id.chart);
+
+        // There are much code in this. The reason is that we are using a diagram-api where you
+        // are not able to use the xml-file to set different settings that you want...
 
         // No grids, no right axis
         chart.setDrawGridBackground(false);
@@ -167,6 +182,11 @@ public class BarDiagram extends Fragment {
 
     }
 
+    /**
+     * Used to get the diagrams for the last seven days.
+     *
+     * @return a BarData-object with all the values for the days
+     */
     public BarData getBarDataLastSevenDays(){
 
 
@@ -244,6 +264,12 @@ public class BarDiagram extends Fragment {
 
     }
 
+
+    /**
+     * Used to get the diagrams for the last seven weeks.
+     *
+     * @return a BarData-object with all the values for the last seven weeks
+     */
     public BarData getBarDataLastSevenWeeks(){
         Calendar calendar = Calendar.getInstance(Locale.GERMAN);
 
@@ -317,9 +343,11 @@ public class BarDiagram extends Fragment {
 
     }
 
-
-
-
+    /**
+     * Used to get the diagrams for the last seven months.
+     *
+     * @return a BarData-object with all the values for the last seven months
+     */
     public BarData getBarDataLastSevenMonths(){
         Calendar calendar = Calendar.getInstance();
 
@@ -380,15 +408,18 @@ public class BarDiagram extends Fragment {
 
     }
 
-
-
-
-
+    /**
+     * Sets the y-axis max when all the values in the diagram are set. Makes it dynamic.
+     */
     public void setMaxYAxis(){
         chart.getAxisLeft().setAxisMaxValue((float) (Math.ceil(highestValue * 2) / 2));
     }
 
-
+    /**
+     * Gets the month name first letters
+     * @param month, the month you want to get the name on
+     * @return, a string with the first two letters of the month-name
+     */
     public String getMonthName(int month){
 
         String monthName = "";
@@ -436,7 +467,12 @@ public class BarDiagram extends Fragment {
         return monthName;
     }
 
-
+    /**
+     * Used to get the two first days of the weekday.
+     *
+     * @param weekDay, the day in week
+     * @return, two letters of the weekday-name
+     */
     public String getWeekDayName(int weekDay){
         String dayName = "";
 

@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Created by emilaxelsson on 28/09/15.
  *
- * A class that contains all the busses. This makes it very easy to access the buses
+ * A class that contains all the busses. This makes it very easy to access the buses. This is
+ * not a solution we are happy with, but it works good in this project
  */
 public final class Busses {
 

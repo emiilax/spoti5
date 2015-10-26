@@ -10,13 +10,14 @@ import com.example.spoti5.ecobussing.SavedData.SaveHandler;
 import com.example.spoti5.ecobussing.diagram.BarDiagram;
 
 /**
- * Created by emilaxelsson on 03/10/15.
+ * Created by Emil Axelsson on 03/10/15.
+ *
+ * Pager adapter for the top list.
  */
 public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
 
     private String range;
-    private ToplistFragment fragmentUser;
-    private ToplistFragment fragmentCompany;
+
 
     public ToplistPagerAdapter(FragmentManager fragment, String range) {
         super(fragment);
@@ -26,13 +27,8 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-    public void setRange(String range){
+    public void setRange(String range) { this.range = range; }
 
-        this.range = range;
-
-        this.notifyDataSetChanged();
-
-    }
 
     @Override
     public Fragment getItem(int i) {
@@ -45,11 +41,10 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
                 return ToplistFragment.newInstance(true, range);
 
         }
-        //System.out.println("get item called");
-
         return null;
     }
 
+    // Used to update the views
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
@@ -73,7 +68,7 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
                 category = "Företag";
                 break;
         }
-        return category; //dummy title
+        return category;
     }
 
 }

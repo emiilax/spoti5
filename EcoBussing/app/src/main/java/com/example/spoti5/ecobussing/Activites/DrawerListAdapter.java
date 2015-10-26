@@ -23,13 +23,21 @@ public class DrawerListAdapter extends BaseAdapter {
 
     private List<String> listItems;
     private Context context;
-    DrawerListAdapter(Context context){
+    private boolean connected;
+
+    DrawerListAdapter(Context context, boolean connected){
         listItems = new ArrayList<>();
         this.context = context;
+        this.connected = connected;
 
-
-        for(String item: context.getResources().getStringArray(R.array.drawer_array)){
-            listItems.add(item);
+        if(!connected) {
+            for (String item : context.getResources().getStringArray(R.array.drawer_array)) {
+                listItems.add(item);
+            }
+        }else{
+            for(String item : context.getResources().getStringArray(R.array.drawer_array2)){
+                listItems.add(item);
+            }
         }
 
     }
@@ -66,32 +74,56 @@ public class DrawerListAdapter extends BaseAdapter {
         TextView rowLabel = (TextView) row.findViewById(R.id.listItemLabel);
         //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
         ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
-        switch (position){
-            case 0:
-                icon.setImageResource(R.drawable.user);
-                break;
-            case 1:
-                icon.setImageResource(R.drawable.logo_compact);
-                break;
-            case 2:
-                icon.setImageResource(R.drawable.toplisticon);
-                break;
-            case 3:
-                icon.setImageResource(R.drawable.medalicon);
-                break;
-            case 4:
-                icon.setImageResource(R.drawable.logo_compact_setting);
-                break;
-            case 5:
-                icon.setImageResource(R.drawable.editicon);
-                break;
-            case 6:
-                icon.setImageResource(R.drawable.logout);
 
+        if(!connected) {
+            switch (position) {
+                case 0:
+                    icon.setImageResource(R.drawable.user);
+                    break;
+                case 1:
+                    icon.setImageResource(R.drawable.logo_compact);
+                    break;
+                case 2:
+                    icon.setImageResource(R.drawable.toplisticon);
+                    break;
+                case 3:
+                    icon.setImageResource(R.drawable.medalicon);
+                    break;
+                case 4:
+                    icon.setImageResource(R.drawable.logo_compact_setting);
+                    break;
+                case 5:
+                    icon.setImageResource(R.drawable.editicon);
+                    break;
+                case 6:
+                    icon.setImageResource(R.drawable.logout);
 
+            }
+            rowLabel.setText(listItems.get(position));
+            return row;
+        }else{
+            switch (position) {
+                case 0:
+                    icon.setImageResource(R.drawable.user);
+                    break;
+                case 1:
+                    icon.setImageResource(R.drawable.logo_compact);
+                    break;
+                case 2:
+                    icon.setImageResource(R.drawable.toplisticon);
+                    break;
+                case 3:
+                    icon.setImageResource(R.drawable.medalicon);
+                    break;
+                case 4:
+                    icon.setImageResource(R.drawable.editicon);
+                    break;
+                case 5:
+                    icon.setImageResource(R.drawable.logout);
+
+            }
+            rowLabel.setText(listItems.get(position));
+            return row;
         }
-        rowLabel.setText(listItems.get(position));
-
-        return row;
     }
 }

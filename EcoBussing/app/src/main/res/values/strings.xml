@@ -61,8 +61,19 @@
         <item>Företagsinställningar</item>
         <item>Redigera profil</item>
         <item>Log out</item>
-        <item>Diagram</item>
-        <item>Wifi-detect</item>
+        <item></item>
+        <item>cheat!!!</item>
+    </string-array>
+
+    <string-array name="drawer_array2">
+        <item>Min profil</item>
+        <item>Mitt företag</item>
+        <item>Topplistor</item>
+        <item>Medaljer</item>
+        <item>Redigera profil</item>
+        <item>Log out</item>
+        <item></item>
+        <item>cheat!!!</item>
     </string-array>
 
     <string-array name="global_medals">

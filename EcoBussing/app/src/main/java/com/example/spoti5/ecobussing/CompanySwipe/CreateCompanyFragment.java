@@ -117,11 +117,12 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     private void registerCompany() {
         initStrings();
-        newCompany = new Company(name, (User) currentUser, nbrEmployees);
+        newCompany = new Company(name, currentUser, nbrEmployees);
         newCompany.setCompanyInfo(compInfo);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
         database.updateUser(currentUser);
+
     }
 
 

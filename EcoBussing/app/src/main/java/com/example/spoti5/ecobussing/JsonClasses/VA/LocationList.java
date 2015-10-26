@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 01/10/15.
+ * Created by Emil Axelsson on 01/10/15.
+ *
+ * Used when converting a Json-object from the Vasttrafik-api to a java object.
  */
 public class LocationList {
 

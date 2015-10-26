@@ -1,9 +1,10 @@
 package com.example.spoti5.ecobussing.JsonClasses.EA;
 
 /**
- * Created by emilaxelsson on 27/09/15.
+ * Created by Emil Axelsson on 27/09/15.
  *
- * An instance of this class will be created when a requested answer has arrived.
+ * An instance of this class will be created when converting the requested Json-object from the
+ * Electricity-api has arrived.
  */
 public class EARespond {
 

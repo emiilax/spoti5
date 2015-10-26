@@ -6,7 +6,10 @@ import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import java.text.DecimalFormat;
 
 /**
- * Created by emilaxelsson on 16/10/15.
+ * Created by Emil Axelsson on 16/10/15.
+ *
+ * This is the Formatter for the Y-axis in the BarDiaram. Sets the format, and name
+ * of the y-axis values
  */
 public class YAxisFormatter implements YAxisValueFormatter {
 
