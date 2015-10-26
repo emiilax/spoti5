@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.Profiles;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.Calculations.Calculator;
-import com.example.spoti5.ecobussing.Database.Database;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
 import com.example.spoti5.ecobussing.R;
@@ -100,7 +98,7 @@ public class ProfileView extends Fragment{
             IUser currentUser = (IUser) thisProfile;
             co2 = currentUser.getCO2Saved(true);
             distance = calc.calculateDistanceFromCO2(co2);
-            money = currentUser.getMoneySaved(true);
+            money = currentUser.getMoneySaved();
             position = db.getPosition(currentUser);
 
             String moneyS = df0.format(money);

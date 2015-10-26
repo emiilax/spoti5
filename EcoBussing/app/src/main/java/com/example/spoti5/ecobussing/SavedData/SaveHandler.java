@@ -5,6 +5,7 @@ import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.Activites.StartActivites;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
+import com.example.spoti5.ecobussing.Profiles.DatabaseUser;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 
@@ -24,7 +25,7 @@ public class SaveHandler {
     private static final long serialVersionUID = 7863262235394607247L;
     private static String filename = "ecoTravel.ser";
     private static IDatabase database = DatabaseHolder.getDatabase();
-    private static IUser currentUser;
+    private static DatabaseUser du;
     private static Context context = ActivityController.getContext();
 
     /**
@@ -32,11 +33,11 @@ public class SaveHandler {
      * @return Null if no user is logged locally
      */
     public static IUser getCurrentUser() {
-        if(currentUser == null){
+        if(du == null){
             try {
                 FileInputStream fileInputStream = context.openFileInput(filename);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                currentUser = (IUser) objectInputStream.readObject();
+                du = (DatabaseUser)objectInputStream.readObject();
                 objectInputStream.close();
                 fileInputStream.close();
 
@@ -50,12 +51,13 @@ public class SaveHandler {
             }
 
         }
-        return currentUser;
+        IUser user = new User(du);
+        return user;
     }
 
     public static void changeUser(IUser newUser) {
         Context context = ActivityController.getContext();
-        currentUser = newUser;
+        du = newUser.getDatabaseUser();
         database.updateUser(newUser);
         SaveUser();
     }
@@ -64,7 +66,7 @@ public class SaveHandler {
         try {
             FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(currentUser);
+            oos.writeObject(du);
             oos.close();
             fos.close();
 

@@ -21,7 +21,6 @@ public interface IDatabase {
     public List<IProfile> getCompaniesToplistMonth();
     public List<IProfile> getCompaniesToplistYear();
 
-    public List<IUser> getCompTopList();
     public void addUser(String email, String password, final User user, IDatabaseConnected connection);
     public void addCompany(String name, final Company company, IDatabaseConnected connection);
     public void loginUser(String email, String password, IDatabaseConnected connection);
