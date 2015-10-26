@@ -74,13 +74,13 @@ public class Calculator {
 
             } catch (IndexOutOfBoundsException e) {
                 dist = -1;
-                System.out.println(e);
+                e.printStackTrace();
             } catch (IOException e) {
                 dist = -1;
-                System.out.println(e);
+                e.printStackTrace();
             } catch (Exception e) {
                 dist = -1;
-                System.out.println(e);
+                //System.out.println(e);
                 e.printStackTrace();
             }
         }else{
@@ -110,14 +110,14 @@ public class Calculator {
     }
 
     /**
-     * @returns the amount of money in KR saved from the distance given.
+     * @return the amount of money in KR saved from the distance given.
      */
     public double calculateMoneySaved(Double distance) {
         return (distance/10000)*petrolPrice*avgCarPetrolConsumption;
     }
 
     /**
-     * @returns the amount of carbondioxide in milligrams saved from the distance given.
+     * @return the amount of carbondioxide in milligrams saved from the distance given.
      */
     public double calculateCarbonSaved(Double distance) {
         return (distance/10000)*avgCarPetrolConsumption*carbondioxideEmittedPerLiter;
@@ -128,7 +128,7 @@ public class Calculator {
      * Calculates the distance a user has traveled based on the stored co2 of the user.
      *
      * OBS! This method most likely needs an update when the rest of the Calculator methods get fixed
-     * @param co2
+     * @param co2 how much c02
      * @return the distance, based on the parameter co2
      */
     public double calculateDistanceFromCO2(double co2) {

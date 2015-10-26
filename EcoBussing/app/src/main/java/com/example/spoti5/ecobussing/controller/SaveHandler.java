@@ -42,7 +42,7 @@ public class SaveHandler {
             } catch (IOException e){
                 e.printStackTrace();
             } catch(NullPointerException e){
-
+                e.printStackTrace();
             }
 
         }

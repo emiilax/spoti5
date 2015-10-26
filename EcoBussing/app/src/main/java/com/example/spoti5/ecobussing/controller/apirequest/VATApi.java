@@ -39,9 +39,7 @@ public class VATApi {
 
         String jsonObject = getVAResponse(url);
 
-        VANearbyStops ns = new Gson().fromJson(jsonObject, VANearbyStops.class);
-
-        return ns;
+        return new Gson().fromJson(jsonObject, VANearbyStops.class);
 
 
     }

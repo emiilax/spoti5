@@ -47,7 +47,7 @@ public class ToplistAdapter extends BaseAdapter {
             companyList = new ArrayList<>();
 
             // Different list depending on range
-            List<IProfile> tempList = new ArrayList<IProfile>();
+            List<IProfile> tempList = new ArrayList<>();
             if(range.equals("month") || range == null){
                 size = database.getCompaniesToplistMonth().size();
                 tempList = database.getCompaniesToplistMonth();
@@ -63,7 +63,7 @@ public class ToplistAdapter extends BaseAdapter {
             for(int i = size-1; i>=0; i--){
 
                 companyList.add(tempList.get(i));
-            };
+            }
 
         }else{
             this.company = false;
@@ -86,7 +86,7 @@ public class ToplistAdapter extends BaseAdapter {
             for(int i = size-1; i>=0; i--){
                 personList.add(tempList.get(i));
 
-            };
+            }
         }
 
     }

@@ -42,9 +42,8 @@ public class StopLocation {
     public String getIdx() { return idx; }
 
     public boolean equals(Object o){
-        if(o instanceof StopLocation){
-            return this.getName().equals(((StopLocation)o).getName());
-        }
-        return false;
+
+        return o instanceof StopLocation && this.getName().equals(((StopLocation)o).getName());
+
     }
 }

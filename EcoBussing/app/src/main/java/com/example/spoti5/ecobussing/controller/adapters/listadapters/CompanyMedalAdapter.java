@@ -24,7 +24,6 @@ import java.util.List;
 public class CompanyMedalAdapter extends BaseAdapter {
     private List<String> medalNames;
     private CompanyMedal companyMedal;
-    private TextView title;
     private TextView currentText;
     private TextView maxText;
     private ImageView medalImage;
@@ -75,7 +74,7 @@ public class CompanyMedalAdapter extends BaseAdapter {
                 row = convertView;
             }
 
-            title = (TextView) row.findViewById(R.id.medalTitle);
+            TextView title = (TextView) row.findViewById(R.id.medalTitle);
             currentText = (TextView) row.findViewById(R.id.currentText);
             maxText = (TextView) row.findViewById(R.id.maxText);
             medalImage = (ImageView) row.findViewById(R.id.medalImage);

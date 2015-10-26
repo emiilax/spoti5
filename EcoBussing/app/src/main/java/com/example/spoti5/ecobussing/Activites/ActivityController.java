@@ -17,9 +17,9 @@ public abstract class ActivityController extends AppCompatActivity {
 
 
     // The variables used to react when connected to wifi
-    protected NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();;
-    protected IntentFilter intentFilter = new IntentFilter();;
-    protected static Context context;
+    private NetworkStateChangeReciever wifiReciever = NetworkStateChangeReciever.getInstance();
+    private IntentFilter intentFilter = new IntentFilter();
+    static Context context;
 
     public static Context getContext() {
         return context;

@@ -32,7 +32,7 @@ public class MedalFragment extends Fragment {
 
     }
 
-    public static final MedalFragment getInstance(int medalType){
+    public static MedalFragment getInstance(int medalType){
         MedalFragment mf = new MedalFragment();
 
         mf.setMedalType(medalType);
@@ -40,17 +40,6 @@ public class MedalFragment extends Fragment {
         return mf;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

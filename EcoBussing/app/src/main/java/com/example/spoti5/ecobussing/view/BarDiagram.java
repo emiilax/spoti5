@@ -40,7 +40,6 @@ import java.util.Locale;
 public class BarDiagram extends Fragment {
 
     private double highestValue;
-    private View view;
     private BarChart chart;
     private IProfile profile;
     private String nameOfChart;
@@ -66,9 +65,9 @@ public class BarDiagram extends Fragment {
      * @param profile, the profile the diagrams should get its values from
      * @param range, which range it should return
      * @param moneyPoints, if company: should it be points or co2, if user: should it be money or co2
-     * @return, Bardiagram-object
+     * @return Bardiagram-object
      */
-    public final static BarDiagram newInstance(IProfile profile, int range, boolean moneyPoints){
+    public static BarDiagram newInstance(IProfile profile, int range, boolean moneyPoints){
         BarDiagram bd = new BarDiagram();
 
         bd.setProfile(profile);
@@ -82,11 +81,11 @@ public class BarDiagram extends Fragment {
 
     public void setProfile(IProfile profile){
         try{
-            this.profile = (IUser) profile;
+            this.profile = profile;
             isCompany = false;
 
         }catch (ClassCastException e){
-            this.profile = (Company) profile;
+            this.profile = profile;
             isCompany = true;
         }
     }
@@ -109,7 +108,7 @@ public class BarDiagram extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-         view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
+        View view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
         TextView rangeText = (TextView) view.findViewById(R.id.txtvChartRange);
 
         rangeText.setText(nameOfChart);
@@ -198,13 +197,13 @@ public class BarDiagram extends Fragment {
         Calendar calendar = Calendar.getInstance();
 
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
 
 
         //IUser currentUser = SaveHandler.getCurrentUser();
 
-        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barEntryList = new ArrayList<>();
 
         calendar.add(Calendar.DAY_OF_MONTH, + 1);
 
@@ -237,7 +236,7 @@ public class BarDiagram extends Fragment {
                     if(moneyPoints){
                         value = ((User)profile).getMoneySavedDate(year, month, day);
                     }else{
-                        value = ((IUser)profile).getCO2SavedDate(year, month, day);
+                        value = profile.getCO2SavedDate(year, month, day);
                     }
 
                 }
@@ -278,10 +277,10 @@ public class BarDiagram extends Fragment {
         Calendar calendar = Calendar.getInstance(Locale.GERMAN);
 
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         IUser currentUser = SaveHandler.getCurrentUser();
-        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barEntryList = new ArrayList<>();
 
         highestValue = 0;
 
@@ -322,7 +321,7 @@ public class BarDiagram extends Fragment {
                     if(moneyPoints){
                         value += ((User)profile).getMoneySavedDate(year, month, day);
                     }else{
-                        value += ((IUser)profile).getCO2SavedDate(year, month, day);
+                        value += profile.getCO2SavedDate(year, month, day);
                     }
                 }
 
@@ -356,10 +355,10 @@ public class BarDiagram extends Fragment {
         Calendar calendar = Calendar.getInstance();
 
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         IUser currentUser = SaveHandler.getCurrentUser();
-        ArrayList<BarEntry> barEntryList = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> barEntryList = new ArrayList<>();
 
         highestValue = 0;
 
@@ -385,7 +384,7 @@ public class BarDiagram extends Fragment {
                     if(moneyPoints){
                         value = ((User)profile).getMoneySavedMonth(year, month);
                     }else{
-                        value = ((IUser)profile).getCO2SavedMonth(year, month);
+                        value = profile.getCO2SavedMonth(year, month);
                     }
 
                 }
@@ -422,7 +421,7 @@ public class BarDiagram extends Fragment {
     /**
      * Gets the month name first letters
      * @param month, the month you want to get the name on
-     * @return, a string with the first two letters of the month-name
+     * @return a string with the first two letters of the month-name
      */
     public String getMonthName(int month){
 
@@ -475,7 +474,7 @@ public class BarDiagram extends Fragment {
      * Used to get the two first days of the weekday.
      *
      * @param weekDay, the day in week
-     * @return, two letters of the weekday-name
+     * @return two letters of the weekday-name
      */
     public String getWeekDayName(int weekDay){
         String dayName = "";

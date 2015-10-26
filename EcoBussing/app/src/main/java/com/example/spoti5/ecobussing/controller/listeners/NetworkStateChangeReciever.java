@@ -42,13 +42,13 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
     private NetworkStateChangeReciever(){
         busConnection = new BusConnection();
         this.addPropertyChangeListener(busConnection);
-        netwCon = hasActiveInternetConnection(ActivityController.getContext());
+        netwCon = hasActiveInternetConnection();
     }
 
     /**
      * Get the NetworkStateChangeReciver object
      *
-     * @return, theReceiver
+     * @return theReceiver
      */
     public static NetworkStateChangeReciever getInstance(){
 
@@ -64,10 +64,9 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
      * Check if there really is a network connection. "Pings" google, and check if the responsecode
      * is right.
      *
-     * @param context, the context of the application.
      * @return a boolean whether its connected to internet or not
      */
-    public boolean hasActiveInternetConnection(Context context){
+    public boolean hasActiveInternetConnection(){
 
         try {
 
@@ -93,7 +92,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
     /**
      * Sets the netwCon. And if its a network connection see if a journey should e started
-     * @param truFal
+     * @param truFal if it is networkconnection or not
      */
     public void setNetwCon(boolean truFal){
         netwCon = truFal;
@@ -110,18 +109,18 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
     /**
      * Updates the network connection.
      *
-     * @param intent
-     * @param context
+     * @param intent the intent
+     * @param context the context
      */
     public void updateConnect(Intent intent, Context context){
 
         NetworkInfo in = (NetworkInfo)intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
 
-        System.out.println("State: " + in.getState());
+
 
         if(in!=null && in.getState() == NetworkInfo.State.CONNECTED) {
 
-            setNetwCon(hasActiveInternetConnection(context));
+            setNetwCon(hasActiveInternetConnection());
 
             // It can take som seconds to get active networkconnection after a state-change.
             // Therefore a thread is started where it checks the active-networkconnectiom for
@@ -249,7 +248,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
         while(!netwCon && !stopThread && i < 10 ){
 
-            setNetwCon(hasActiveInternetConnection(ActivityController.getContext()));
+            setNetwCon(hasActiveInternetConnection());
             //System.out.println("Connected: " + netwCon);
 
             synchronized (this){
