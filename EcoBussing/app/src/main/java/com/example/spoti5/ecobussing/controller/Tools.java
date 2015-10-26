@@ -1,5 +1,8 @@
 package com.example.spoti5.ecobussing.controller;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
@@ -14,16 +17,16 @@ import java.util.List;
  */
 public class Tools {
 
-    private static Tools simpelSearch;
+    private static Tools tools;
     private List<IProfile> results = new ArrayList<>();
 
     private IDatabase database;
 
     public static Tools getInstance(){
-        if(simpelSearch == null){
-            simpelSearch = new Tools();
+        if(tools == null){
+            tools = new Tools();
         }
-        return simpelSearch;
+        return tools;
     }
 
     private Tools(){
@@ -56,6 +59,12 @@ public class Tools {
             }
         }
         return results;
+    }
+
+    public void showToast(CharSequence text, Context context){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public List<IProfile> oldResults(){

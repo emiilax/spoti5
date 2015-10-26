@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
@@ -25,25 +26,23 @@ import java.util.TimerTask;
  */
 public class RegisterActivity extends ActivityController implements IDatabaseConnected{
 
-    Button register_button;
-    EditText nameView;
-    EditText emailView;
-    EditText passwordView;
-    EditText secondPasswordView;
-    TextView login;
+    private Button register_button;
+    private EditText nameView;
+    private EditText emailView;
+    private EditText passwordView;
+    private EditText secondPasswordView;
+    private TextView login;
+    private Tools tools;
 
-    String name;
-    String email;
-    String password;
-    String secondPassword;
+    private String name;
+    private String email;
+    private String password;
+    private String secondPassword;
 
     private Context context;
-    private int duration = Toast.LENGTH_SHORT;
-    private CharSequence toastText;
-    private Toast toast;
 
-    IDatabase database;
-    User newUser;
+    private IDatabase database;
+    private User newUser;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,37 +58,35 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
         login.setOnClickListener(goToLogin);
         register_button.setOnClickListener(register);
-
+        tools = Tools.getInstance();
         secondPasswordView.setOnKeyListener(autoReg);
         context = getApplicationContext();
     }
 
-    View.OnClickListener goToLogin = new View.OnClickListener() {
+    private View.OnClickListener goToLogin = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             startLoginActivity();
         }
     };
 
-    View.OnClickListener register = new View.OnClickListener() {
+    private View.OnClickListener register = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             register();
         }
     };
 
+    //Checks input values, then sends data to the database and adds user, if the email isn't taken
     private void register(){
         getDatabase();
         initStrings();
         boolean passIsCorrect = checkPasswords();
 
         if(valuesIsOk()){
-
             boolean emailIsOk = CheckUserInput.checkEmail(email);
-
             if(!emailIsOk){
-                toastText = "Ogiltig email";
-                showToast();
+                tools.showToast("Ogiltig email", context);
             }
 
             if(passIsCorrect && emailIsOk){
@@ -101,8 +98,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     private boolean valuesIsOk(){
         if(name.equals("") || email.equals("")){
-            toastText = "Alla fält måste fyllas i";
-            showToast();
+            tools.showToast("Alla fält måste fyllas i", context);
             return false;
         } else {
             return true;
@@ -121,30 +117,32 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     }
 
     private boolean checkPasswords(){
+        CharSequence toastText = "";
         if(!password.equals(secondPassword)){
             toastText = "Lösenorden måste matcha";
-            showToast();
             return false;
         } else {
             int index = CheckUserInput.checkPassword(password);
-            switch (index){
+            switch (index) {
                 case -1:
-                        return true;
-                case 0: toastText = "Lösenordet är för kort";
-                    showToast();
-                        return false;
-                case 1: toastText = "Lösenordet måste innehålla en stor bokstav";
-                    showToast();
-                        return false;
-                case 2: toastText = "Lösenordet måste innehålla en liten bokstav";
-                    showToast();
-                        return false;
-                case 3: toastText = "Lösenordet måste innehålla en siffra";
-                    showToast();
-                        return false;
+                    return true;
+                case 0:
+                    toastText = "Lösenordet är för kort";
+                    return false;
+                case 1:
+                    toastText = "Lösenordet måste innehålla en stor bokstav";
+                    return false;
+                case 2:
+                    toastText = "Lösenordet måste innehålla en liten bokstav";
+                    return false;
+                case 3:
+                    toastText = "Lösenordet måste innehålla en siffra";
+                    return false;
             }
-            return false;
         }
+
+        tools.showToast(toastText, context);
+        return false;
     }
 
     boolean timerRunning = false;
@@ -177,43 +175,38 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
     @Override
     public void addingFinished() {
-
+        CharSequence toastText ="";
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: database.loginUser(email, password, this);
-                SaveHandler.changeUser(newUser);
                 break;
             case ErrorCodes.BAD_EMAIL: toastText ="Mailen är ogiltig";
-                showToast();
                 break;
-            case ErrorCodes.EMAIL_ALREADY_EXISTS: toastText = "Mailen finns redan";
-                showToast();
+            case ErrorCodes.EMAIL_ALREADY_EXISTS: toastText = "Mailen finns redan";;
                 break;
             case ErrorCodes.NO_CONNECTION: toastText = "Ingen uppkoppling";
-                showToast();
                 break;
             case ErrorCodes.UNKNOWN_ERROR: toastText = "något gick fel";
-                showToast();
                 break;
+        }
+        if(toastText.length() != 0){
+            tools.showToast(toastText, context);
         }
     }
 
     @Override
     public void loginFinished() {
+        CharSequence toastText = "";
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR: startOverviewActivity();
                 SaveHandler.changeUser(newUser);
                 break;
             case ErrorCodes.NO_CONNECTION: toastText = "Registrering lyckades, men uppkopplingen försvann. Försök logga in.";
-                showToast();
                 break;
             case ErrorCodes.UNKNOWN_ERROR: toastText = "Något gick fel.";
-                showToast();
                 break;
         }
-    }
-
-    private void showToast(){
-        toast = Toast.makeText(context,toastText, duration);
-        toast.show();
+        if(toastText.length() != 0){
+            tools.showToast(toastText, context);
+        }
     }
 }

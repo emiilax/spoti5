@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
@@ -89,23 +90,19 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         @Override
         public void onClick(View v) {
             Context context = getActivity().getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            CharSequence text;
-            Toast toast;
+            CharSequence text= "";
             if(nameTextField.getText() == null && nbrEmployeesTextField.getText() == null){
                 text = "Namn och antal anställda måste anges";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
             }else if(nameTextField.getText() == null){
                 text = "Namn måste fyllas i";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
             }else if(nbrEmployeesTextField.getText() == null){
                 text = "Antal anställda måste fyllas i";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
             }else {
                 registerCompany();
+            }
+            if(text.equals("")) {
+                Tools tools = Tools.getInstance();
+                tools.showToast(text, context);
             }
         }
     };

@@ -114,7 +114,6 @@ public class Database implements IDatabase {
     public IProfile getCompany(String name){
 
         for(IProfile c: getCompanies()){
-            System.out.println("input: " + name +", comapny name: " + c.getName());
             if(c.getName().equals(name)){
                 return c;
             }
@@ -282,8 +281,6 @@ public class Database implements IDatabase {
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
                         IUser user = userSnapshots.getValue(User.class);
                         addUserToList(listValue, user);
-                        System.out.println(user.getEmail());
-
                     }
                 } catch (FirebaseException var4) {
                     allGenerated = false;

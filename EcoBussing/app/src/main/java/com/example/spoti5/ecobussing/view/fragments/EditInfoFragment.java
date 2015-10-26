@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.controller.calculations.CheckUserInput;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
@@ -36,9 +37,10 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
     private EditText password1;
     private EditText password2;
     private Button saveChanges;
-    private Context context;
     private ImageView profilePic;
     private IDatabase database;
+    private Tools tools;
+    private Context context;
 
     public EditInfoFragment(){
 
@@ -72,6 +74,8 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         database = DatabaseHolder.getDatabase();
 
         password2.setOnKeyListener(autoUpdate);
+
+        tools = Tools.getInstance();
         initFields();
         return view;
     }
@@ -79,17 +83,9 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
     View.OnClickListener changeImage = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            CharSequence text = "Ej implementerat";
-            showToast(text);
+            tools.showToast("Ej implementerat",context);
         }
     };
-
-    private void showToast(CharSequence text){
-        Context context = getActivity().getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
 
     private void initFields(){
         nameField.setText(currentUser.getName());
@@ -116,17 +112,17 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
                         changeUser();
                         break;
                     case 0:
-                        showToast("Lösenordet är för kort");
+                        tools.showToast("Lösenordet är för kort", context);
                         break;
                     case 1:
-                        showToast("Det nya lösenordet måste innehålla en stor bokstav");
+                        tools.showToast("Det nya lösenordet måste innehålla en stor bokstav", context);
                         break;
                     case 2:
-                        showToast("Det nya lösenordet måste innehålla en liten bokstav");
+                        tools.showToast("Det nya lösenordet måste innehålla en liten bokstav", context);
                         break;
                 }
             } else {
-                showToast("Det nya lösenordet matchar inte");
+                tools.showToast("Det nya lösenordet matchar inte", context);
             }
         } else {
             changeUser();
@@ -137,9 +133,7 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         currentUser.setName(nameField.getText().toString());
         SaveHandler.changeUser(currentUser);
         DatabaseHolder.getDatabase().updateUser(currentUser);
-
-        CharSequence text = "Profilen är uppdaterad.";
-        showToast(text);
+        tools.showToast("Profilen är uppdaterad.", context);
     }
 
     @Override
@@ -149,18 +143,16 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
 
     @Override
     public void loginFinished() {
-        CharSequence text;
+        CharSequence text="";
         int error = database.getErrorCode();
         if(error == ErrorCodes.NO_CONNECTION){
             text = "Ingen uppkoppling";
-            showToast(text);
         } else if (error == ErrorCodes.WRONG_CREDENTIALS) {
             text ="Ditt nuvarande lösenord stämmer inte";
-            showToast(text);
         } else if(error == ErrorCodes.NO_ERROR){
             text = "Profilen är uppdaterad.";
-            showToast(text);
         }
+        tools.showToast(text, context);
     }
 
     boolean timerRunning = false;

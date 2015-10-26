@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.view.fragments.EditCompanyFragment;
 import com.example.spoti5.ecobussing.controller.swipers.MedalViewSwiper;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -69,6 +70,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private ListView drawerListLeft;
     private FrameLayout drawerListRight;
     private ListView searchListView;
+    private Tools tools;
 
     private ImageView searchImage;
     private EditText searchText;
@@ -142,6 +144,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
+        tools = Tools.getInstance();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -446,9 +449,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void changeFragment(IProfile p, String t) {
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        CharSequence text;
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         IProfile profile = p;
@@ -461,9 +461,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             fragmentsVisited.add(profileView);
             fragmentTransaction.replace(R.id.container, profileView);
         } catch (IndexOutOfBoundsException e) {
-            text = "Ingen kontakt med databasen, försök igen";
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            tools.showToast("Ingen kontakt med databasen, försök igen", context);
         }
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();

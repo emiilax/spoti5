@@ -25,7 +25,7 @@ import com.example.spoti5.ecobussing.controller.adapters.listadapters.UserListAd
  */
 public class EditCompanyFragment extends Fragment {
 
-    IDatabase database;
+    private IDatabase database;
     private IUser currentUser;
     private Company usersCompany;
 
