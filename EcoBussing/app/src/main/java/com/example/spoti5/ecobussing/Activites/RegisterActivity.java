@@ -9,14 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
-import com.example.spoti5.ecobussing.Database.ErrorCodes;
-import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
-import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
+import com.example.spoti5.ecobussing.model.ErrorCodes;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
+import com.example.spoti5.ecobussing.controller.calculations.CheckUserInput;
+import com.example.spoti5.ecobussing.model.profile.User;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.controller.SaveHandler;
 import java.util.Timer;
 import java.util.TimerTask;
 

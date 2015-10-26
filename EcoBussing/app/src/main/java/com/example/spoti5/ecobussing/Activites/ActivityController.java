@@ -7,7 +7,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
 
 /**
  * Created by Erik on 2015-09-27.
