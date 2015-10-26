@@ -21,8 +21,7 @@ public class StartActivites extends ActivityController{
         loggedUser = SaveHandler.getCurrentUser();
 
         if(playerIsLogged()){
-            //startOverviewActivity();
-            startRegisterActivity();
+            startOverviewActivity();
         } else {
             startRegisterActivity();
         }
