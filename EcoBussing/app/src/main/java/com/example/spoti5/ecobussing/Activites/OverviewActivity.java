@@ -1,19 +1,14 @@
 package com.example.spoti5.ecobussing.Activites;
 
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Calculations.Calculator;
-import com.example.spoti5.ecobussing.Database.Database;
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
+import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.controller.SaveHandler;
 
 /**
  * Created by hilden on 2015-09-17.

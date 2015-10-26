@@ -1,12 +1,8 @@
 package com.example.spoti5.ecobussing;
 
-import com.example.spoti5.ecobussing.Calculations.Calculator;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.model.profile.User;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,8 +2,8 @@ package com.example.spoti5.ecobussing;
 
 import android.test.AndroidTestCase;
 
-import com.example.spoti5.ecobussing.Profiles.Company;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.model.profile.Company;
+import com.example.spoti5.ecobussing.model.profile.User;
 
 import java.util.ArrayList;
 

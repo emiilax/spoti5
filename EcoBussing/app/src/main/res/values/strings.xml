@@ -46,6 +46,11 @@
     <string name="medal_co2_tot">Spara tillsammans!</string>
     <string name="medal_people">Alla bör åka kollektivt!</string>
 
+
+    <string name="barchart_lastSevenWeeks">Senaste 7 veckorna</string>
+    <string name="barchart_lastSevenDays">Senaste 7 dagarna</string>
+    <string name="barchart_lastSevenMonths">Senaste 7 månaderna</string>
+
     <string name="no_company_text">Inget företag är kopplat till ditt konto...</string>
 
     <string-array name="drawer_array">

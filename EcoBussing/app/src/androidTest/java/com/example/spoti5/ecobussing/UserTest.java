@@ -2,7 +2,7 @@ package com.example.spoti5.ecobussing;
 
 import android.test.AndroidTestCase;
 
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.model.profile.User;
 
 /**
  * Created by hilden on 2015-10-09.

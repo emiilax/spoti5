@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/simulatetrip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Simulerad resa"
+        android:id="@+id/textView14"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp"
+        android:paddingBottom="20dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:id="@+id/linear"
+        android:weightSum="2"
+        android:layout_below="@id/textView14">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Startstation: "
+                android:id="@+id/textView15"
+                android:layout_gravity="right"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Status: "
+                android:id="@+id/textView16"
+                android:layout_gravity="right"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Slutstation: "
+                android:id="@+id/textView17"
+                android:layout_gravity="right"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Distans: "
+                android:id="@+id/textView18"
+                android:layout_gravity="right"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="not set"
+                android:id="@+id/txtvStart"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="not set"
+                android:id="@+id/txtvStatus"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="not set"
+                android:id="@+id/txtvStop"
+                android:textSize="13dp"
+                android:paddingBottom="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="not set"
+                android:id="@+id/txtvDistance"
+                android:layout_alignTop="@+id/textView18"
+                android:layout_toRightOf="@+id/btnStartTrip"
+                android:layout_toEndOf="@+id/btnStartTrip"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Starta resan"
+        android:id="@+id/btnStartTrip"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/linear"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
