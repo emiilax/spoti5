@@ -89,7 +89,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         public boolean onKey(View v, int keyCode, KeyEvent event){
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 login();
             }
 

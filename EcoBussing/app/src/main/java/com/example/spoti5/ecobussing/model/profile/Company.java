@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by hilden on 2015-09-29.
@@ -135,11 +136,8 @@ public class Company implements IProfile {
 
 
     public boolean userIsCreator(IUser user) {
-        if (creatorMember == user.getEmail()) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return creatorMember == user.getEmail();
     }
 
     public boolean userIsModerator(IUser user) {
@@ -186,7 +184,7 @@ public class Company implements IProfile {
             SaveHandler.changeUser(user);
 
             members.add(user.getEmail());
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.GERMAN);
             Date dateTime = new Date();
             String str = dateFormat.format(dateTime);
             //String[] date = str.split(" ");

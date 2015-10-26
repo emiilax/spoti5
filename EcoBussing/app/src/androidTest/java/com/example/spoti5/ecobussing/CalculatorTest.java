@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class CalculatorTest {
 
-    Calculator calculator = Calculator.getCalculator();
-    List<Double> distances = new ArrayList<Double>();
+    private Calculator calculator = Calculator.getCalculator();
+    List<Double> distances = new ArrayList<>();
     User testUser = new User("mail@mail.com");
 
     public CalculatorTest(){

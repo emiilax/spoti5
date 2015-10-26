@@ -11,31 +11,31 @@ import java.util.List;
  * Created by erikk on 2015-09-23.
  */
 public interface IDatabase {
-    public List<IUser> getUsers();
-    public List<IUser> getUserToplistAll();
-    public List<IUser> getUserToplistMonth();
-    public List<IUser> getUserToplistYear();
+    List<IUser> getUsers();
+    List<IUser> getUserToplistAll();
+    List<IUser> getUserToplistMonth();
+    List<IUser> getUserToplistYear();
 
-    public List<IProfile> getCompanies();
-    public List<IProfile> getCompaniesToplistAll();
-    public List<IProfile> getCompaniesToplistMonth();
-    public List<IProfile> getCompaniesToplistYear();
+    List<IProfile> getCompanies();
+    List<IProfile> getCompaniesToplistAll();
+    List<IProfile> getCompaniesToplistMonth();
+    List<IProfile> getCompaniesToplistYear();
 
-    public List<IUser> getCompTopList();
-    public void addUser(String email, String password, final User user, IDatabaseConnected connection);
-    public void addCompany(String name, final Company company, IDatabaseConnected connection);
-    public void loginUser(String email, String password, IDatabaseConnected connection);
-    public int getErrorCode();
-    public IUser getUser(String email);
-    public void changePassword(String email, String oldPassword, String newPassword,  IDatabaseConnected connection);
+    List<IUser> getCompTopList();
+    void addUser(String email, String password, final User user, IDatabaseConnected connection);
+    void addCompany(String name, final Company company, IDatabaseConnected connection);
+    void loginUser(String email, String password, IDatabaseConnected connection);
+    int getErrorCode();
+    IUser getUser(String email);
+    void changePassword(String email, String oldPassword, String newPassword, IDatabaseConnected connection);
 
-    public int getPosition(IUser user);
-    public int getPosition(Company comp);
+    int getPosition(IUser user);
+    int getPosition(Company comp);
 
-    public IProfile getCompany(String name);
+    IProfile getCompany(String name);
 
-    public void updateUser(IUser user);
-    public void updateCompany(IProfile company);
+    void updateUser(IUser user);
+    void updateCompany(IProfile company);
 
 }
 

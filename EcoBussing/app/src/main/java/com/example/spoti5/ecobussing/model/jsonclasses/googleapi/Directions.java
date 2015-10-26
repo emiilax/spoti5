@@ -13,9 +13,9 @@ public class Directions {
 
     @SerializedName("geocoded_waypoints")
     @Expose
-    public List<GeocodedWaypoint> geocodedWaypoints = new ArrayList<GeocodedWaypoint>();
+    public List<GeocodedWaypoint> geocodedWaypoints = new ArrayList<>();
     @SerializedName("routes")
     @Expose
-    public List<Route> routes = new ArrayList<Route>();
+    public List<Route> routes = new ArrayList<>();
 
 }

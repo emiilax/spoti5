@@ -26,18 +26,7 @@ public class ConnectCompanyFragment extends Fragment {
 
     private CompanySearchAdapter adapter;
 
-    public ConnectCompanyFragment(){
-    }
-
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-    }
+    public ConnectCompanyFragment(){}
 
 
     @Override

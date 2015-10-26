@@ -16,10 +16,10 @@ public class CompanyMedal {
     private int employeesCurrent;
 
     private Company company;
-    private IDatabase database;
+
 
     public CompanyMedal(String company){
-        database = DatabaseHolder.getDatabase();
+        IDatabase database = DatabaseHolder.getDatabase();
         this.company = (Company)database.getCompany(company);
 
         pointMedal();

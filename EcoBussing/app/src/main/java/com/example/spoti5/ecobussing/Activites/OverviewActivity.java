@@ -60,7 +60,7 @@ public class OverviewActivity extends ActivityController {
      * Should probably be moved, maybe?
      */
     private void animateTextView(int initialValue, int finalValue, final TextView  textview) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt((int) initialValue, (int) finalValue);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(initialValue, finalValue);
         valueAnimator.setDuration(3000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

@@ -113,11 +113,6 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
         }
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-    }
 
     @Override
     public void onDetach() {
@@ -136,7 +131,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
 
     }
 
-    public void setConnected(String bssid){
+    private void setConnected(String bssid){
         boolean onTheBus = false;
         for(Bus b: Busses.theBusses){
             if(bssid.equals(b.getMacAdress())){
@@ -161,7 +156,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
 
     }
 
-    public void setDisconnected(){
+    private void setDisconnected(){
 
         dwg.setText("no dwg");
         vinnr.setText("no vinnr");
@@ -231,7 +226,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

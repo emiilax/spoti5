@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,9 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         btnYear.setOnClickListener(this);
         btnTotal.setOnClickListener(this);
 
-        btnMonth.setBackgroundColor(getResources().getColor(R.color.secondary));
+
+
+        btnMonth.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondary));
 
         return view;
     }
@@ -70,27 +73,27 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        btnMonth.setBackgroundColor(getResources().getColor(R.color.third));
-        btnYear.setBackgroundColor(getResources().getColor(R.color.third));
-        btnTotal.setBackgroundColor(getResources().getColor(R.color.third));
+        btnMonth.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.third));
+        btnYear.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.third));
+        btnTotal.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.third));
 
 
 
         if(v == btnMonth){
-            btnMonth.setBackgroundColor(getResources().getColor(R.color.secondary));
+            btnMonth.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondary));
 
             ((ToplistPagerAdapter)mPagerAdapter).setRange("month");
 
             // Ugly solution to update the view in the pageradapter. But it works
-            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
+            mPagerAdapter.getItemPosition(new Object());
         }
         if(v == btnYear){
-            btnYear.setBackgroundColor(getResources().getColor(R.color.secondary));
+            btnYear.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondary));
 
             ((ToplistPagerAdapter)mPagerAdapter).setRange("year");
 
             // Ugly solution to update the view in the pageradapter. But it works
-            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
+            mPagerAdapter.getItemPosition(new Object());
         }
 
         if(v == btnTotal){
@@ -98,8 +101,8 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
             ((ToplistPagerAdapter)mPagerAdapter).setRange("total");
 
             // Ugly solution to update the view in the pageradapter. But it works
-            ((ToplistPagerAdapter)mPagerAdapter).getItemPosition(new Object());
-            btnTotal.setBackgroundColor(getResources().getColor(R.color.secondary));
+            mPagerAdapter.getItemPosition(new Object());
+            btnTotal.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.secondary));
 
         }
 

@@ -40,7 +40,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     private Context context;
     private int duration = Toast.LENGTH_SHORT;
     private CharSequence toastText;
-    private Toast toast;
 
     IDatabase database;
     User newUser;
@@ -154,7 +153,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 register();
             }
 
@@ -213,7 +212,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     }
 
     private void showToast(){
-        toast = Toast.makeText(context,toastText, duration);
+        Toast toast = Toast.makeText(context,toastText, duration);
         toast.show();
     }
 }
