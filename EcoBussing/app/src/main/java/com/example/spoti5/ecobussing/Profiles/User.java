@@ -52,7 +52,7 @@ public class User implements IUser{
         this.currentDistance = 0;
         this.co2CurrentMonth = 0;
         this.co2CurrentYear = 0;
-        this.co2Tot = 30;
+        this.co2Tot = 0;
         this.firstUse = true;
         co2SavedMap = new DeepMap<>();
         moneySavedMap = new DeepMap<>();
@@ -336,7 +336,6 @@ public class User implements IUser{
 
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
-            System.out.println("hej");
             Gson gson = new Gson();
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();
