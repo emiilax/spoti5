@@ -29,24 +29,26 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.example.spoti5.ecobussing.CompanySwipe.EditCompanyFragment;
-import com.example.spoti5.ecobussing.Medals.MedalFragment;
-import com.example.spoti5.ecobussing.Medals.MedalViewSwiper;
-import com.example.spoti5.ecobussing.Profiles.Company;
-import com.example.spoti5.ecobussing.diagram.BarDiagram;
-import com.example.spoti5.ecobussing.CompanySwipe.CompanySwipeFragment;
-import com.example.spoti5.ecobussing.ConnectedCompanyFragment;
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
-import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.EditInfoFragment;
-import com.example.spoti5.ecobussing.NetworkStateChangeReciever;
-import com.example.spoti5.ecobussing.Profiles.IProfile;
-import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.ProfileView;
+import com.example.spoti5.ecobussing.view.fragments.EditCompanyFragment;
+import com.example.spoti5.ecobussing.controller.swipers.MedalViewSwiper;
+import com.example.spoti5.ecobussing.model.profile.Company;
+import com.example.spoti5.ecobussing.controller.adapters.listadapters.DrawerListAdapter;
+import com.example.spoti5.ecobussing.controller.adapters.listadapters.SearchAdapter;
+import com.example.spoti5.ecobussing.view.BarDiagram;
+import com.example.spoti5.ecobussing.view.fragments.CompanySwipeFragment;
+import com.example.spoti5.ecobussing.view.fragments.ConnectedCompanyFragment;
+import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.view.fragments.EditInfoFragment;
+import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.view.fragments.ProfileView;
 
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
-import com.example.spoti5.ecobussing.SwipeScreens.ToplistSwiper;
+import com.example.spoti5.ecobussing.controller.SaveHandler;
+import com.example.spoti5.ecobussing.controller.swipers.ToplistSwiper;
+import com.example.spoti5.ecobussing.view.fragments.WifiFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by emilaxelsson on 16/09/15.
+ * Created by Emil Axelsson on 16/09/15.
+ * Edited by all
  */
 public class MainActivity extends ActivityController implements AdapterView.OnItemClickListener, View.OnClickListener {
 
@@ -106,11 +109,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         setContentView(R.layout.activity_drawer);
         System.out.println("Start activity");
 
-
-
-        //intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        //registerReceiver(wifiReciever, intentFilter);
-        //addWifiChangeHandler();
 
         listAdapter = new DrawerListAdapter(this, connected);
         searchAdapter = new SearchAdapter(this, "---");
@@ -176,8 +174,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private Drawable rezizedDrawable() {
         Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
         Bitmap mp = ((BitmapDrawable) logo).getBitmap();
-        Drawable smallLogo = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
-        return smallLogo;
+
+        return new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
     }
 
     private void loadSelection(int i) {
@@ -369,7 +367,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 /*Context context = getApplicationContext();
                 int duration = Toast.LENGTH_SHORT;
                 CharSequence text;
-
                 fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 Object item = searchAdapter.getItem(position);
                 IProfile profile = (IProfile) item;
@@ -441,12 +438,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     private void logout() {
-        NetworkStateChangeReciever.getInstance().endJourney();
+        NetworkStateChangeReciever.getInstance().tryEndJourney();
         startRegisterActivity();
         SaveHandler.changeUser(null);
     }
 
-    public void changeFragment(IProfile p, String t) {
+    public void changeFragment(IProfile profile, String t) {
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         Context context = getApplicationContext();
@@ -454,7 +451,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         CharSequence text;
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        IProfile profile = p;
+
         //I don't think this try/catch is needed in this way cuz i dont think you cant get indexException anymore
         try {
             title = t;
@@ -491,7 +488,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 search();
             }
 

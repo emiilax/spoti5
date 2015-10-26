@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.calculations;
 
-import com.example.spoti5.ecobussing.Calculations.Calculator;
+import com.example.spoti5.ecobussing.controller.calculations.Calculator;
 import static org.junit.Assert.*;
 
 import org.junit.Rule;

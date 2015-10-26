@@ -2,14 +2,13 @@ package com.example.spoti5.ecobussing;
 
 import android.test.AndroidTestCase;
 
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
-import com.example.spoti5.ecobussing.Database.ErrorCodes;
-import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
-import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
+import com.example.spoti5.ecobussing.model.ErrorCodes;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.model.profile.User;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 /**

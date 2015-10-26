@@ -3,7 +3,7 @@ package com.example.spoti5.ecobussing;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.spoti5.ecobussing.Calculations.CheckUserInput;
+import com.example.spoti5.ecobussing.controller.calculations.CheckUserInput;
 
 /**
  * Created by erikk on 2015-09-16.

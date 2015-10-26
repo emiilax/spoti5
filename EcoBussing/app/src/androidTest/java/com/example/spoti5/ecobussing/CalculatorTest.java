@@ -1,12 +1,8 @@
 package com.example.spoti5.ecobussing;
 
-import com.example.spoti5.ecobussing.Calculations.Calculator;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.model.profile.User;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +11,8 @@ import java.util.List;
  */
 public class CalculatorTest {
 
-    Calculator calculator = Calculator.getCalculator();
-    List<Double> distances = new ArrayList<Double>();
+    private Calculator calculator = Calculator.getCalculator();
+    List<Double> distances = new ArrayList<>();
     User testUser = new User("mail@mail.com");
 
     public CalculatorTest(){

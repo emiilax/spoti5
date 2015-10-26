@@ -8,16 +8,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
-import com.example.spoti5.ecobussing.Database.ErrorCodes;
-import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Database.IDatabaseConnected;
-import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.User;
+import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
+import com.example.spoti5.ecobussing.model.ErrorCodes;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.SavedData.SaveHandler;
+import com.example.spoti5.ecobussing.controller.SaveHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -91,7 +89,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         public boolean onKey(View v, int keyCode, KeyEvent event){
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 login();
             }
 
