@@ -2,8 +2,6 @@ package com.example.spoti5.ecobussing;
 
 import android.test.AndroidTestCase;
 
-import com.example.spoti5.ecobussing.Profiles.TimeStampedDouble;
-
 /**
  * Created by hilden on 2015-10-06.
  */

@@ -1,14 +1,12 @@
 package com.example.spoti5.ecobussing.apirequests;
 
-import com.example.spoti5.ecobussing.APIRequest.ECIApi;
-import com.example.spoti5.ecobussing.BusData.Busses;
-import com.example.spoti5.ecobussing.JsonClasses.EA.EARespond;
-import com.google.gson.Gson;
+import com.example.spoti5.ecobussing.controller.apirequest.ECIApi;
+import com.example.spoti5.ecobussing.model.bus.Busses;
+import com.example.spoti5.ecobussing.model.jsonclasses.eciapi.EARespond;
 
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
