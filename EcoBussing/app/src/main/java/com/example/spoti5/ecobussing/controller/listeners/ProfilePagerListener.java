@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import com.example.spoti5.ecobussing.R;
 
 /**
+ * This class is used for changing the size of the dots that indicates what slide of the graphs are
+ * viewed in the profile.
  * Created by Hampus on 2015-10-17.
  */
 public class ProfilePagerListener implements ViewPager.OnPageChangeListener {
