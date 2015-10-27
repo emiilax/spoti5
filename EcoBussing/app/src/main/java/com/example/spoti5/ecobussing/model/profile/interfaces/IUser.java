@@ -1,5 +1,7 @@
 package com.example.spoti5.ecobussing.model.profile.interfaces;
 
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
+
 /**
  * Created by erikk on 2015-09-16.
  */
@@ -18,26 +20,17 @@ public interface IUser extends IProfile {
     double getCo2CurrentMonth();
     double getCo2Tot();
 
-
-    /**
-     *
-     * @param avoidDatabaseUpload doesn't matter if true or false, this avoids MoneySaved to be stored in the database.
-     * @return total money saved
-     */
-    Double getMoneySaved(boolean avoidDatabaseUpload);
+    Double getMoneySaved();
     Double getMoneySavedYear(Integer year);
     Double getMoneySavedMonth(Integer year, Integer month);
     Double getMoneySavedDate(Integer year, Integer month, Integer day);
 
-    /**
-     *
-     * @param avoidDatabaseUpload doesn't matter if true of false, this avoids MoneySavedPast7Days to be stored in the database.
-     * @return total money saved
-     */
-    Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
-    int getTotaltTimesTraveled(boolean avoidDatabaseUpload);
+
+    Double getMoneySavedPast7Days();
+    int getTotaltTimesTraveled();
+    DatabaseUser getDatabaseUser();
+
 
     String getCompany();
-
     void setCompany(String name);
 }

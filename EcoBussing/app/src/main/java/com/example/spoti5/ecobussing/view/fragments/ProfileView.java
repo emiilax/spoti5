@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.example.spoti5.ecobussing.controller.calculations.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
@@ -17,6 +18,7 @@ import com.example.spoti5.ecobussing.model.profile.Company;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.listeners.ProfilePagerListener;
+
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ProfilePagerAdapter;
 
@@ -101,9 +103,9 @@ public class ProfileView extends Fragment{
         //Does stuff if the profile is for a user
         if(thisProfile instanceof IUser){
             IUser currentUser = (IUser) thisProfile;
-            co2 = currentUser.getCO2Saved(true);
+            co2 = currentUser.getCO2Saved();
             distance = calc.calculateDistanceFromCO2(co2);
-            money = currentUser.getMoneySaved(true);
+            money = currentUser.getMoneySaved();
             position = db.getPosition(currentUser);
 
             String moneyS = df0.format(money);
@@ -127,7 +129,9 @@ public class ProfileView extends Fragment{
         //Does other stuff if the profile is for a company
         else{
             Company currentCompany = (Company)thisProfile;
-            co2 = currentCompany.getCO2Saved(true);
+            System.out.println(currentCompany.getName());
+            co2 = currentCompany.getCO2Saved();
+
             ((ImageView)view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);
             ((ImageView)view.findViewById(R.id.imageDistance)).setImageResource(R.drawable.employees);
 

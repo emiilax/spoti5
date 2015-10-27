@@ -36,7 +36,7 @@ public class UserListAdapter extends BaseAdapter {
         company = (Company)database.getCompany(SaveHandler.getCurrentUser().getCompany());
         List<String> tmp;
 
-        tmp = company.getMembers(true);
+        tmp = company.getMembers();
 
         for(String str:tmp){
             connectedUsers.add(database.getCompany(str));
@@ -76,7 +76,7 @@ public class UserListAdapter extends BaseAdapter {
         TextView subtitleLabel1 = (TextView) row.findViewById(R.id.userlistItem_subtitle);
 
         nameLabel1.setText(connectedUsers.get(position).getName());
-        subtitleLabel1.setText(Double.toString(connectedUsers.get(position).getCO2Saved(true)));
+        subtitleLabel1.setText(Double.toString(connectedUsers.get(position).getCO2Saved()));
 
         ImageView removeButton = (ImageView)convertView.findViewById(R.id.removeButton);
 

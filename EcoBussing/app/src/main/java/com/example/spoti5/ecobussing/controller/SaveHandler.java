@@ -4,7 +4,10 @@ import android.content.Context;
 import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
+import com.example.spoti5.ecobussing.model.profile.User;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +23,7 @@ public class SaveHandler {
     private static final long serialVersionUID = 7863262235394607247L;
     private static String filename = "ecoTravel.ser";
     private static IDatabase database = DatabaseHolder.getDatabase();
-    private static IUser currentUser;
+    private static DatabaseUser du;
     private static Context context = ActivityController.getContext();
 
     /**
@@ -28,11 +31,11 @@ public class SaveHandler {
      * @return Null if no user is logged locally
      */
     public static IUser getCurrentUser() {
-        if(currentUser == null){
+        if(du == null){
             try {
                 FileInputStream fileInputStream = context.openFileInput(filename);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                currentUser = (IUser) objectInputStream.readObject();
+                du = (DatabaseUser)objectInputStream.readObject();
                 objectInputStream.close();
                 fileInputStream.close();
 
@@ -46,12 +49,16 @@ public class SaveHandler {
             }
 
         }
-        return currentUser;
+        if(du != null){
+            IUser user = new User(du);
+            return user;
+        }
+        return null;
     }
 
     public static void changeUser(IUser newUser) {
         Context context = ActivityController.getContext();
-        currentUser = newUser;
+        du = newUser.getDatabaseUser();
         database.updateUser(newUser);
         SaveUser();
     }
@@ -60,7 +67,7 @@ public class SaveHandler {
         try {
             FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(currentUser);
+            oos.writeObject(du);
             oos.close();
             fos.close();
 
