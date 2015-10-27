@@ -14,22 +14,11 @@ import com.example.spoti5.ecobussing.Activites.ActivityController;
 import com.example.spoti5.ecobussing.controller.bardiagram.DiagramBarData;
 import com.example.spoti5.ecobussing.controller.bardiagram.XAxisFormatter;
 import com.example.spoti5.ecobussing.controller.bardiagram.YAxisFormatter;
-import com.example.spoti5.ecobussing.model.profile.Company;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
-import com.example.spoti5.ecobussing.model.profile.User;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 
 /**

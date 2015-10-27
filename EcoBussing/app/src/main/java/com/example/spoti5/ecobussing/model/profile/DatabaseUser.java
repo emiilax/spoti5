@@ -1,8 +1,5 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import android.provider.ContactsContract;
-
-import com.example.spoti5.ecobussing.model.profile.DeepMap;
 import com.google.gson.Gson;
 
 import java.io.Serializable;

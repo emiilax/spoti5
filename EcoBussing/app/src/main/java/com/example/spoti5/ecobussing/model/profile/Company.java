@@ -4,17 +4,8 @@ import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by hilden on 2015-09-29.
