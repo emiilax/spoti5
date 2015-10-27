@@ -96,7 +96,7 @@ public class DatabaseTest extends AndroidTestCase implements IDatabaseConnected 
         }
         for (IUser u: topList){
             System.out.println("----------------------");
-            System.out.println(u.getCO2Saved(true));
+            System.out.println(u.getCO2Saved());
         }
         System.out.println("----------------------");
     }
