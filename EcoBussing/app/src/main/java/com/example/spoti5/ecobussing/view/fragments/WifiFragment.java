@@ -181,7 +181,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
                 status.setText("not set");
                 distance.setText("not set");
                 try {
-                    busC.beginJourey(Busses.simulated);
+                    busC.beginJourey(Busses.eog622);
                     start.setText(busC.getStartLoc());
                 } catch (IOException e) {
                     e.printStackTrace();

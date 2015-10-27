@@ -171,6 +171,7 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
 
                 connectedToWifi = false;
 
+
                 // Used in develop-mode
                 this.pcs.firePropertyChange("disconnected", null, null);
 
@@ -185,8 +186,10 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
      */
     public void tryEndJourney(){
         if(onBus){
+            onBus = false;
             try{
                 busConnection.endJourney();
+
             }catch (IOException e){
                 e.printStackTrace();
             }
@@ -198,8 +201,11 @@ public class NetworkStateChangeReciever extends BroadcastReceiver implements Run
      * (Network-, wifi-connection. User not on bus, and the mac-address matches with bus)
      */
     public void tryStartJourney(){
+        System.out.println("onbus: " + onBus+  ", wifi: " + connectedToWifi + " ,network: " + netwCon);
         if(!onBus && connectedToWifi && netwCon){
+
             for(Bus b: Busses.theBusses){
+                //System.out.println("Bssid: " + bssid + "bus: " + b.getMacAdress());
                 if(bssid.equals(b.getMacAdress())){
                     onBus = true;
                     System.out.println("on bus");

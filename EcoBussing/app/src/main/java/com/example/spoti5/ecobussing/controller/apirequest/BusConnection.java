@@ -111,6 +111,10 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             try {
                 gpsInfo = eciApi.getGPSInfo(dwgNr);
             } catch(IllegalArgumentException e){
+                e.printStackTrace();
+                return;
+            } catch (NullPointerException e){
+                e.printStackTrace();
                 return;
             }
 
@@ -273,7 +277,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
 
 
-
+    List<EARespond> oldGpsInfo = null;
     /**
      * Checking the position every 5 second.
      */
@@ -287,9 +291,12 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             List<EARespond> gpsInfo = null;
             try {
                 gpsInfo = eciApi.getGPSInfo(currentBus.getDwg());
+                oldGpsInfo = gpsInfo;
             } catch (IOException e) {
+                gpsInfo = oldGpsInfo;
                 e.printStackTrace();
             } catch (NullPointerException ex){
+                gpsInfo = oldGpsInfo;
                 ex.printStackTrace();
             }
 

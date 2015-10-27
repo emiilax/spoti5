@@ -83,12 +83,14 @@ public class ECIApi {
         System.out.println(url);
 
         String response = getEAResponse(url);
+        System.out.println(response);
 
         Type listOfTestObject = new TypeToken<List<EARespond>>(){}.getType();
 
-
         List<EARespond> list = Collections.synchronizedList(
-                (List<EARespond>) new Gson().fromJson(response, listOfTestObject));
+                    (List<EARespond>) new Gson().fromJson(response, listOfTestObject));
+
+
 
 
         list = sortObjectList(list);
@@ -204,8 +206,6 @@ public class ECIApi {
 
 
         // Used to point out the "resource" on internet
-
-
         return response;
     }
 }
