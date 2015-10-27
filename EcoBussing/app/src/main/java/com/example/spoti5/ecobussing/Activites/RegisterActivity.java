@@ -40,7 +40,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
     private String secondPassword;
 
     private Context context;
-
     private IDatabase database;
     private User newUser;
 
@@ -152,7 +151,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
 
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 register();
             }
 
@@ -205,8 +204,16 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             case ErrorCodes.UNKNOWN_ERROR: toastText = "Något gick fel.";
                 break;
         }
+<<<<<<< HEAD
         if(toastText.length() != 0){
             tools.showToast(toastText, context);
         }
+=======
+    }
+
+    private void showToast(){
+        Toast toast = Toast.makeText(context,toastText, duration);
+        toast.show();
+>>>>>>> ef7b1504d9ef849644be6e60cbfc3fe97ff8c012
     }
 }

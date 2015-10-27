@@ -12,7 +12,7 @@ import com.example.spoti5.ecobussing.controller.SaveHandler;
 
 /**
  * Created by hilden on 2015-09-17.
- * A class to store the animations that displays your increase in saved carbondioxid and cash.
+ * A class to store the animations that displays your increase in saved carbondioxide.
  *
  */
 public class OverviewActivity extends ActivityController {
@@ -35,37 +35,46 @@ public class OverviewActivity extends ActivityController {
          */
         DatabaseHolder.getDatabase();
 
-        SaveHandler.getCurrentUser().resetCurrentDistance();
-        SaveHandler.getCurrentUser().incCurrentDistance(2);
-        currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
-
-        if (currentDistance > 0) {
-            setOverviewText();
-        } else {
-            startMainActivity();
-        }
+       setOverviewText();
     }
 
     private void setOverviewText() {
-        //double CO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
+        System.out.println("-------------------------------------------------------------------------- " + currentDistance);
+        currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
         double currentCO2Saved = Calculator.getCalculator().calculateCarbonSaved(currentDistance);
-        textViewDistance.setText(Integer.toString((int)currentDistance) + " km");
-        textViewCarbon.setText("+" + Integer.toString((int)currentCO2Saved) + " mg");
         double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
-        animateTextView((int) totCO2Saved, (int) (currentCO2Saved + totCO2Saved), textViewTotal);
+
+        textViewDistance.setText(Integer.toString((int)currentDistance) + " m");
+        textViewCarbon.setText("+ " + Double.toString(transformValue(currentCO2Saved)) + " kg");
+        animateTextView((totCO2Saved - currentCO2Saved)*1000, (totCO2Saved)*1000, textViewTotal);
+    }
+
+    private double transformValue(double value) {
+        value = value * 1000;
+        int tempValue = (int)value;
+        value = (double)tempValue/1000;
+        return value;
     }
 
     /**
      * The animation of increasing a number until it reaches another number.
      * Should probably be moved, maybe?
      */
-    private void animateTextView(int initialValue, int finalValue, final TextView  textview) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt((int) initialValue, (int) finalValue);
+    private void animateTextView(double initialValue, double finalValue, final TextView  textview) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt((int)initialValue, (int)finalValue);
         valueAnimator.setDuration(3000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                textview.setText(valueAnimator.getAnimatedValue().toString() + " mg");
+                String tempString = "";
+                int valueLength = valueAnimator.getAnimatedValue().toString().length();
+                for (int i = 0; i < valueLength; i++) {
+                    tempString = tempString + valueAnimator.getAnimatedValue().toString().charAt(i);
+                    if (i == valueLength - 4) {
+                        tempString = tempString + ".";
+                    }
+                }
+                textview.setText(tempString + " kg");
             }
         });
         valueAnimator.start();
@@ -73,8 +82,9 @@ public class OverviewActivity extends ActivityController {
 
     public void onScreenTouch(View v) {
         if(v.getId() == R.id.overviewBackground) {
-            startMainActivity();
             SaveHandler.getCurrentUser().resetCurrentDistance();
+            SaveHandler.SaveUser();
+            startMainActivity();
         }
     }
 }

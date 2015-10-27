@@ -23,13 +23,16 @@ public class CompanySearchAdapter extends BaseAdapter {
     private List<IProfile> searchResults;
     private List<IProfile> searchedCompanies;
     private Context context;
-    private Tools simpelSearch = Tools.getInstance();
+
 
     public CompanySearchAdapter(Context context, String searchWord){
         this.context = context;
         if(searchWord.equals("")) {
             searchWord = "---";
         }
+
+        Tools simpelSearch = Tools.getInstance();
+
         searchResults = simpelSearch.search(searchWord);
         searchedCompanies = new ArrayList();
 

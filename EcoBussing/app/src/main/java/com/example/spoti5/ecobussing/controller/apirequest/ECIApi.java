@@ -86,6 +86,7 @@ public class ECIApi {
 
         Type listOfTestObject = new TypeToken<List<EARespond>>(){}.getType();
 
+
         List<EARespond> list = Collections.synchronizedList(
                 (List<EARespond>) new Gson().fromJson(response, listOfTestObject));
 

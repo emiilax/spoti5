@@ -5,18 +5,18 @@ package com.example.spoti5.ecobussing.model.profile.interfaces;
  */
 public interface IUser extends IProfile {
 
-    public String getEmail();
+    String getEmail();
 
-    public void incCurrentDistance(double addedDistance);
-    public void resetCurrentDistance();
-    public double getCurrentDistance();
+    void incCurrentDistance(double addedDistance);
+    void resetCurrentDistance();
+    double getCurrentDistance();
 
-    public void incMoneySaved(double distance);
-    public void newJourney(double distance);
+    void incMoneySaved(double distance);
+    void newJourney(double distance);
 
-    public double getCo2CurrentYear();
-    public double getCo2CurrentMonth();
-    public double getCo2Tot();
+    double getCo2CurrentYear();
+    double getCo2CurrentMonth();
+    double getCo2Tot();
 
 
     /**
@@ -24,20 +24,20 @@ public interface IUser extends IProfile {
      * @param avoidDatabaseUpload doesn't matter if true or false, this avoids MoneySaved to be stored in the database.
      * @return total money saved
      */
-    public Double getMoneySaved(boolean avoidDatabaseUpload);
-    public Double getMoneySavedYear(Integer year);
-    public Double getMoneySavedMonth(Integer year, Integer month);
-    public Double getMoneySavedDate(Integer year, Integer month, Integer day);
+    Double getMoneySaved(boolean avoidDatabaseUpload);
+    Double getMoneySavedYear(Integer year);
+    Double getMoneySavedMonth(Integer year, Integer month);
+    Double getMoneySavedDate(Integer year, Integer month, Integer day);
 
     /**
      *
      * @param avoidDatabaseUpload doesn't matter if true of false, this avoids MoneySavedPast7Days to be stored in the database.
      * @return total money saved
      */
-    public Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
-    public int getTotaltTimesTraveled(boolean avoidDatabaseUpload);
+    Double getMoneySavedPast7Days(boolean avoidDatabaseUpload);
+    int getTotaltTimesTraveled(boolean avoidDatabaseUpload);
 
-    public String getCompany();
+    String getCompany();
 
-    public void setCompany(String name);
+    void setCompany(String name);
 }

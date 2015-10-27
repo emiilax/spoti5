@@ -42,19 +42,9 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
     private Tools tools;
     private Context context;
 
-    public EditInfoFragment(){
+    public EditInfoFragment(){}
 
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -161,7 +151,7 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         public boolean onKey(View v, int keyCode, KeyEvent event){
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 checkValues();
             }
 

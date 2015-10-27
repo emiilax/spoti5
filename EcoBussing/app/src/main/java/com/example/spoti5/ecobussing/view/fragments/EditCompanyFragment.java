@@ -44,10 +44,6 @@ public class EditCompanyFragment extends Fragment {
 
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){

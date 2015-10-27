@@ -177,8 +177,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private Drawable rezizedDrawable() {
         Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
         Bitmap mp = ((BitmapDrawable) logo).getBitmap();
-        Drawable smallLogo = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
-        return smallLogo;
+
+        return new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(mp, 100, 100, true));
     }
 
     private void loadSelection(int i) {
@@ -446,12 +446,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         SaveHandler.changeUser(null);
     }
 
-    public void changeFragment(IProfile p, String t) {
+    public void changeFragment(IProfile profile, String t) {
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        IProfile profile = p;
+
         //I don't think this try/catch is needed in this way cuz i dont think you cant get indexException anymore
         try {
             title = t;
@@ -486,7 +486,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         public boolean onKey(View v, int keyCode, KeyEvent event) {
             final Timer t = new Timer();
 
-            if (keyCode == event.KEYCODE_ENTER && !timerRunning) {
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
                 search();
             }
 

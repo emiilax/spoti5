@@ -44,10 +44,6 @@ public class ConnectedCompanyFragment extends Fragment {
     public ConnectedCompanyFragment(){
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
