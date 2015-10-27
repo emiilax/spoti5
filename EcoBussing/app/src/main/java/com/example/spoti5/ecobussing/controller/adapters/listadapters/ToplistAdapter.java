@@ -115,7 +115,7 @@ public class ToplistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater =
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = null;
+        View row;
 
         if(convertView == null){
             row = inflater.inflate(R.layout.toplist_item, parent, false);

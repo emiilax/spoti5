@@ -95,7 +95,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
-        Company company = (Company) database.getCompany(currentUser.getCompany());
         connected = currentUser.getCompany().equals("");
 
         fragmentsVisited = new ArrayList<>();
@@ -222,10 +221,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         if (prevView != null) prevView.setBackgroundResource(R.color.clear_white);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Company company = (Company)database.getCompany(currentUser.getCompany());
+        String usrCompanyString = currentUser.getCompany();
+        Company company = (Company)database.getCompany(usrCompanyString);
         switch (parent.getId()) {
             case R.id.left_drawer:
-                if (currentUser.getCompany().equals("")) {
+                if (usrCompanyString.equals("")) {
                     switch (position) {
                         case 0:
                             changeFragment(currentUser, "Min profil");
@@ -446,17 +446,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        //I don't think this try/catch is needed in this way cuz i dont think you cant get indexException anymore
-        try {
-            title = t;
-            getSupportActionBar().setTitle(title);
-            ProfileView profileView = ProfileView.newInstance(profile);
-            fragmentsVisitedName.add(title);
-            fragmentsVisited.add(profileView);
-            fragmentTransaction.replace(R.id.container, profileView);
-        } catch (IndexOutOfBoundsException e) {
-            tools.showToast("Ingen kontakt med databasen, försök igen", context);
-        }
+        title = t;
+        getSupportActionBar().setTitle(title);
+        ProfileView profileView = ProfileView.newInstance(profile);
+        fragmentsVisitedName.add(title);
+        fragmentsVisited.add(profileView);
+        fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 

@@ -52,7 +52,7 @@ public class Company implements IProfile {
 
     public boolean userIsCreator(IUser user) {
 
-        return dbCompany.getCreatorMember() == user.getEmail();
+        return dbCompany.getCreatorMember().equals(user.getEmail());
     }
 
     public void setNbrEmployees(int nbrEmployees){

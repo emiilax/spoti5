@@ -203,11 +203,9 @@ public class BusConnection implements Runnable, PropertyChangeListener{
                 // Update current user
 
                 IUser usr = SaveHandler.getCurrentUser();
-                System.out.println(usr.getCo2CurrentMonth());
                 usr.newJourney(distance);
 
                 SaveHandler.changeUser(usr);
-                System.out.println(usr.getCo2CurrentMonth());
             }else{
                 storeJourney(startLoc, endLoc);
             }

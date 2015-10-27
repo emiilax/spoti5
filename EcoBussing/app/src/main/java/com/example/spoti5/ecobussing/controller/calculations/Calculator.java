@@ -57,7 +57,7 @@ public class Calculator {
      */
     public int calculateDistance(double originLat, double originLng, double destinationLat,
                                  double destinationLng) {
-        int dist = 0;
+        int dist;
 
         // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
