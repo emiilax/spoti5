@@ -29,22 +29,31 @@
                 android:layout_marginTop="32dp"
                 android:textSize="25dp"
                 android:text="New Text" />
-
-            <EditText
-                android:id="@+id/employeesEditText"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:text="Anställda:"
+                    android:id="@+id/textView14" />
+                <EditText
+                    android:id="@+id/employeesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:numeric="integer" />
+
+
+                </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
-            android:textSize="17dp"
-            android:text="anställda"
-            android:id="@+id/textView14" />
+
     </LinearLayout>
 
     <TextView
@@ -52,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Information om företaget"
+        android:text="Beskrivning:"
         android:textSize="17dp"
          />
 
@@ -86,15 +95,37 @@
         android:dividerHeight="1dp"
         />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Spara"
-        android:layout_gravity="center_horizontal"
-        style="?android:attr/borderlessButtonStyle"
-        android:textSize="20dp"
-        android:textColor="@color/nice_green" />
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Spara"
+            android:layout_gravity="left"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="20dp"
+            android:textColor="@color/nice_green" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Ta bort företag"
+            android:textSize="15dp"
+            android:textColor="@color/nice_green"
+            android:layout_gravity="right"
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>

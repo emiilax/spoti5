@@ -126,6 +126,10 @@ public class DatabaseCompany {
         this.pointCurrentMonth = pointCurrentMonth;
     }
 
+    public void setNbrEmployees(int nbrEmployees){
+        this.nbrEmployees = nbrEmployees;
+    }
+
     public void setPointCurrentYear(double pointCurrentYear) {
         this.pointCurrentYear = pointCurrentYear;
     }

@@ -84,6 +84,7 @@ public class EditCompanyFragment extends Fragment {
         @Override
         public void onClick(View v) {
             usersCompany.setCompanyInfo(companyInfo.getText().toString());
+            usersCompany.setNbrEmployees(Integer.parseInt(companyEmployees.getText().toString()));
             database.updateCompany(usersCompany);
         }
     };
