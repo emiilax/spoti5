@@ -1,5 +1,6 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -7,11 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.controller.database.Database;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -38,6 +43,7 @@ public class ProfileView extends Fragment{
     private static IProfile thisProfile;
     private static Calculator calc = Calculator.getCalculator();
     private static IDatabase db;
+    private Button connectCompanyButton;
 
     public ProfileView() {
         // Required empty public constructor
@@ -57,11 +63,29 @@ public class ProfileView extends Fragment{
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
         view = setMPagerAdapter(view);
+        connectCompanyButton = (Button)view.findViewById(R.id.connectButton_company);
+        connectCompanyButton.setOnClickListener(connectToCompany);
 
         setDataStrings(view);
 
         return view;
     }
+
+    View.OnClickListener connectToCompany = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            IUser currentUser = SaveHandler.getCurrentUser();
+
+            Company company = (Company)thisProfile;
+            company.addMember(currentUser);
+            currentUser.setCompany(company.getName());
+            SaveHandler.changeUser(currentUser);
+            DatabaseHolder.getDatabase().updateCompany(company);
+            MainActivity currentActivity = (MainActivity)getActivity();
+            currentActivity.changeFragment(thisProfile, thisProfile.getName());
+            currentActivity.updateList(false);
+        }
+    };
 
     //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
@@ -80,7 +104,7 @@ public class ProfileView extends Fragment{
         return viewen;
     }
 
-    public static void setDataStrings(View view) {
+    public void setDataStrings(View view) {
         DecimalFormat df2 = new DecimalFormat("#.00");
         DecimalFormat df0 = new DecimalFormat("#");
 
@@ -125,6 +149,8 @@ public class ProfileView extends Fragment{
             }else{
                 companyNameView.setText("Ej ansluten till något företag");
             }
+
+            connectCompanyButton.setVisibility(View.INVISIBLE);
         }
         //Does other stuff if the profile is for a company
         else{
@@ -153,6 +179,11 @@ public class ProfileView extends Fragment{
             view.findViewById(R.id.profilePager2).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.dotRow2).setVisibility(View.INVISIBLE);
             view.findViewById(R.id.dividerGraph1).setVisibility(View.INVISIBLE);
+
+            IUser currentUser = SaveHandler.getCurrentUser();
+            if(!(currentUser.getCompany().equals(""))){
+                connectCompanyButton.setVisibility(View.INVISIBLE);
+            }
         }
 
 

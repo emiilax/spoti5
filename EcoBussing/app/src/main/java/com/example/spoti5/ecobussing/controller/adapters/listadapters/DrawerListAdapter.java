@@ -27,7 +27,11 @@ public class DrawerListAdapter extends BaseAdapter {
         listItems = new ArrayList<>();
         this.context = context;
         this.connected = connected;
+        setList();
+    }
 
+    private void setList(){
+        listItems.clear();
         if(!connected) {
             for (String item : context.getResources().getStringArray(R.array.drawer_array)) {
                 listItems.add(item);
@@ -37,7 +41,6 @@ public class DrawerListAdapter extends BaseAdapter {
                 listItems.add(item);
             }
         }
-
     }
 
     @Override
@@ -123,5 +126,15 @@ public class DrawerListAdapter extends BaseAdapter {
             rowLabel.setText(listItems.get(position));
             return row;
         }
+    }
+
+    /**
+     * Changes between having business settings and not depending on if the user has
+     * a business connection
+     * @param connected if the user is connected to a company or not
+     */
+    public void changeLayout(boolean connected){
+        this.connected = connected;
+        setList();
     }
 }

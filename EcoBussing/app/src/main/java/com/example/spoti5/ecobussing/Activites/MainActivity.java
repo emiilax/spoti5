@@ -85,7 +85,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private List<? super Fragment> fragmentsVisited;
 
     private IUser currentUser;
-    private Company company;
     private boolean connected;
 
     String title;
@@ -97,7 +96,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
-        company = (Company) database.getCompany(currentUser.getCompany());
+        Company company = (Company) database.getCompany(currentUser.getCompany());
         connected = currentUser.getCompany().equals("");
 
         fragmentsVisited = new ArrayList<>();
@@ -224,7 +223,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         if (prevView != null) prevView.setBackgroundResource(R.color.clear_white);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
+        Company company = (Company)database.getCompany(currentUser.getCompany());
         switch (parent.getId()) {
             case R.id.left_drawer:
                 if (currentUser.getCompany().equals("")) {
@@ -315,7 +314,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                             title = "Företagsinställningar";
                             getSupportActionBar().setTitle(title);
                             view.setBackgroundResource(R.color.clicked);
-                            if (this.company.userIsModerator(currentUser)) {
+                            if (company.userIsModerator(currentUser)) {
                                 EditCompanyFragment editCompanyFragment = new EditCompanyFragment();
                                 changeFragment(title, editCompanyFragment);
                             } else {
@@ -468,6 +467,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         if (v.equals(searchImage)) {
             search();
         }
+    }
+
+    public void updateList(boolean connected){
+        listAdapter.changeLayout(connected);
+        drawerListLeft.setAdapter(listAdapter);
     }
 
     private void search() {
