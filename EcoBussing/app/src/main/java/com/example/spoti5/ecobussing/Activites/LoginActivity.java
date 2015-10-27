@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
@@ -25,13 +27,13 @@ import java.util.TimerTask;
  */
 public class LoginActivity extends ActivityController implements IDatabaseConnected{
 
-    Button loginButton;
-    TextView emailField;
-    TextView passwordField;
-    IDatabase database;
-    TextView register;
-
-    IUser user;
+    private Button loginButton;
+    private TextView emailField;
+    private TextView passwordField;
+    private IDatabase database;
+    private TextView register;
+    private Tools tools;
+    private IUser user;
     private List<IUser> allUsers;
     private List<IUser> topList;
 
@@ -43,6 +45,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
         loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(login);
+        tools = Tools.getInstance();
 
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
@@ -76,6 +79,11 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     };
 
     private void login(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
         String inputEmail = emailField.getText().toString();
         String inputPassword = passwordField.getText().toString();
 
@@ -104,15 +112,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
                     t.cancel();
                 }
             }, 1000);
-
-            /*
-            WifiManager wifiMan = (WifiManager) getSystemService(
-                    Context.WIFI_SERVICE);
-            WifiInfo wifiInf = wifiMan.getConnectionInfo();
-            String macAddr = wifiInf.getBSSID();
-            System.out.println(macAddr);
-            */
-
             return true;
         }
     };
@@ -124,32 +123,23 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
     @Override
     public void loginFinished() {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        CharSequence text;
-        Toast toast;
+        CharSequence text = "";
         switch (database.getErrorCode()){
             case ErrorCodes.NO_ERROR:
                 SaveHandler.changeUser(database.getUser(emailField.getText().toString()));
                 startOverviewActivity();
-
                 break;
             case ErrorCodes.BAD_EMAIL: text = "Ogiltig email";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
                 break;
             case ErrorCodes.WRONG_CREDENTIALS:text = "Fel användarnamn eller lösenord";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
                 break;
             case ErrorCodes.NO_CONNECTION:text = "Ingen uppkoppling";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
                 break;
             case ErrorCodes.UNKNOWN_ERROR: text = "Fel användarnamn eller lösenord";
-                toast = Toast.makeText(context, text, duration);
-                toast.show();
                 break;
+        }
+        if(text.length() != 0) {
+            tools.showToast(text, context);
         }
     }
 
