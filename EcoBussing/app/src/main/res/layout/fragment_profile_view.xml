@@ -75,12 +75,15 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="8dp">
 
-            <ImageView
+            <Button
+                android:id="@+id/connectButton_company"
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:src="@drawable/fb_share"
-                android:id="@+id/imageView7"
-                android:layout_marginLeft="16dp" />
+                android:layout_height="wrap_content"
+                android:text="Anlut till företag"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:layout_gravity="center_horizontal"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@color/nice_green"/>
         </TableRow>
 
         <ScrollView

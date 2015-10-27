@@ -64,6 +64,10 @@ public class Company implements IProfile {
         return dbCompany.getCreatorMember() == user.getEmail();
     }
 
+    public void setNbrEmployees(int nbrEmployees){
+        dbCompany.setNbrEmployees(nbrEmployees);
+    }
+
     public boolean userIsModerator(IUser user) {
         List<String> users = dbCompany.getModeratorMembers(true);
         for (int i = 0; i < users.size(); i++) {

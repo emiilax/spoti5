@@ -39,7 +39,7 @@ public class UserListAdapter extends BaseAdapter {
         tmp = company.getMembers();
 
         for(String str:tmp){
-            connectedUsers.add(database.getCompany(str));
+            connectedUsers.add(database.getUser(str));
         }
 
     }
@@ -78,7 +78,7 @@ public class UserListAdapter extends BaseAdapter {
         nameLabel1.setText(connectedUsers.get(position).getName());
         subtitleLabel1.setText(Double.toString(connectedUsers.get(position).getCO2Saved()));
 
-        ImageView removeButton = (ImageView)convertView.findViewById(R.id.removeButton);
+        ImageView removeButton = (ImageView)row.findViewById(R.id.removeButton);
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override

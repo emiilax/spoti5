@@ -50,17 +50,6 @@ public class Tools {
         return results;
     }
 
-    public List<IProfile> companySearch(String name){
-        results.clear();
-
-        for (IProfile company: database.getCompanies()){
-            if((company.getName().toLowerCase()).contains(name.toLowerCase())){
-                results.add(company);
-            }
-        }
-        return results;
-    }
-
     public void showToast(CharSequence text, Context context){
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);

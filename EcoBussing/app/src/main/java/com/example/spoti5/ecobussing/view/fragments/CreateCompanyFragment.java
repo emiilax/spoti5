@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.spoti5.ecobussing.Activites.MainActivity;
 import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
@@ -110,8 +111,10 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         newCompany.setCompanyInfo(compInfo);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());
-        database.updateUser(currentUser);
-
+        SaveHandler.changeUser(currentUser);
+        MainActivity currentActivity = (MainActivity)getActivity();
+        currentActivity.changeFragment(newCompany, "Mitt företag");
+        currentActivity.updateList(false);
     }
 
 
