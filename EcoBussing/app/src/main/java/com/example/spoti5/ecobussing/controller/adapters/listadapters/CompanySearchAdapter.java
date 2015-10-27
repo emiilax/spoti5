@@ -46,12 +46,12 @@ public class CompanySearchAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return searchResults.size();
+        return searchedCompanies.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return searchResults.get(position);
+        return searchedCompanies.get(position);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CompanySearchAdapter extends BaseAdapter {
         Company company = (Company)searchedCompanies.get(position);
 
         nameLabel1.setText(company.getName());
-        subtitleLabel1.setText(Integer.toString(company.getMembers().size()));
+        subtitleLabel1.setText("Antal användare: " + Integer.toString(company.getMembers().size()));
 
 
         return row;
