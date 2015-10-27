@@ -37,7 +37,7 @@ import java.text.DecimalFormat;
 public class ProfileView extends Fragment{
     private static View view;
     private static IProfile thisProfile;
-    private static Calculator calc = Calculator.getCalculator();
+    private static final Calculator calc = Calculator.getCalculator();
     private Button connectCompanyButton;
 
     public ProfileView() {
@@ -66,7 +66,7 @@ public class ProfileView extends Fragment{
         return view;
     }
 
-    View.OnClickListener connectToCompany = new View.OnClickListener() {
+    private final View.OnClickListener connectToCompany = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             IUser currentUser = SaveHandler.getCurrentUser();
@@ -101,7 +101,7 @@ public class ProfileView extends Fragment{
         return viewen;
     }
 
-    public void setDataStrings(View view) {
+    private void setDataStrings(View view) {
         DecimalFormat df2 = new DecimalFormat("#.00");
         DecimalFormat df0 = new DecimalFormat("#");
 
@@ -193,7 +193,7 @@ public class ProfileView extends Fragment{
 
     }
 
-    public void setThisProfile(IProfile ip){
+    private void setThisProfile(IProfile ip){
         thisProfile = ip;
     }
 }

@@ -18,11 +18,11 @@ public class Calculator {
     private static Calculator calculator;
 
     private double petrolPrice = 14.32;
-    private double carbondioxideEmittedPerLiter = 2.348; //Currently measured in kg.
-    private double avgCarPetrolConsumption = 0.7;
+    private final double carbondioxideEmittedPerLiter = 2.348; //Currently measured in kg.
+    private final double avgCarPetrolConsumption = 0.7;
 
 
-    private String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
+    private final String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
 
     private final String key = "AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
 

@@ -23,7 +23,7 @@ import java.util.Locale;
  */
 public class Company implements IProfile {
 
-    private DatabaseCompany dbCompany;
+    private final DatabaseCompany dbCompany;
 
     public Company(DatabaseCompany dbCompany){
         this.dbCompany = dbCompany;

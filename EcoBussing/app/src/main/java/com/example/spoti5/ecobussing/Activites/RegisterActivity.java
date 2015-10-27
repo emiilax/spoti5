@@ -180,7 +180,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
                 break;
             case ErrorCodes.BAD_EMAIL: toastText ="Mailen är ogiltig";
                 break;
-            case ErrorCodes.EMAIL_ALREADY_EXISTS: toastText = "Mailen finns redan";;
+            case ErrorCodes.EMAIL_ALREADY_EXISTS: toastText = "Mailen finns redan";
                 break;
             case ErrorCodes.NO_CONNECTION: toastText = "Ingen uppkoppling";
                 break;

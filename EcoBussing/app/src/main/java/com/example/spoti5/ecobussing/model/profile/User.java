@@ -13,7 +13,7 @@ import java.util.Calendar;
  */
 public class User implements IUser {
 
-    private Calendar calendar = Calendar.getInstance();
+    private static final Calendar calendar = Calendar.getInstance();
 
     private Integer stampedMonth;
     private Integer stampedYear;
