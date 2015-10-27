@@ -42,7 +42,7 @@ public class DatabaseUser implements Serializable{
         this.currentDistance = 0;
         this.co2CurrentMonth = 0;
         this.co2CurrentYear = 0;
-        this.co2Tot = 30;
+        this.co2Tot = 0;
         this.firstUse = true;
         co2SavedMap = new DeepMap<>();
         moneySavedMap = new DeepMap<>();
