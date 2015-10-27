@@ -1,9 +1,8 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.Activites.MainActivity;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.controller.calculations.Calculator;
-import com.example.spoti5.ecobussing.controller.database.Database;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -37,12 +35,9 @@ import java.text.DecimalFormat;
  *  Created by Hampus on 2015-10-12.
  */
 public class ProfileView extends Fragment{
-    private FragmentStatePagerAdapter pagerAdapter1, pagerAdapter2;
-    private ViewPager viewPager1, viewPager2;
     private static View view;
     private static IProfile thisProfile;
     private static Calculator calc = Calculator.getCalculator();
-    private static IDatabase db;
     private Button connectCompanyButton;
 
     public ProfileView() {
@@ -89,18 +84,20 @@ public class ProfileView extends Fragment{
 
     //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
+        PagerAdapter pagerAdapter1, pagerAdapter2;
         if(thisProfile instanceof IUser) {
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
             pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
+
+            ViewPager viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+            viewPager2.setAdapter(pagerAdapter2);
+            viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
         }else {
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
         }
-        viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
-        viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+        ViewPager viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
         viewPager1.setAdapter(pagerAdapter1);
-        viewPager2.setAdapter(pagerAdapter2);
         viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
-        viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
         return viewen;
     }
 
@@ -115,7 +112,7 @@ public class ProfileView extends Fragment{
         TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
         TextView topListPosView = (TextView)view.findViewById(R.id.positionOrEmployedNbr);
 
-        db = DatabaseHolder.getDatabase();
+        IDatabase db = DatabaseHolder.getDatabase();
 
         double co2;
         double distance;
@@ -176,13 +173,13 @@ public class ProfileView extends Fragment{
 
             companyNameView.setText(null);
 
-            view.findViewById(R.id.profilePager2).setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.dotRow2).setVisibility(View.INVISIBLE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
+            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
+            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);
 
             IUser currentUser = SaveHandler.getCurrentUser();
             if(!(currentUser.getCompany().equals(""))){
-                connectCompanyButton.setVisibility(View.INVISIBLE);
+                connectCompanyButton.setVisibility(View.GONE);
             }
         }
 
