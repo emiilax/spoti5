@@ -43,7 +43,7 @@ public class ProfileView extends Fragment{
         // Required empty public constructor
     }
 
-    public static final ProfileView newInstance(IProfile ip)
+    public static ProfileView newInstance(IProfile ip)
     {
         ProfileView f = new ProfileView();
         f.setThisProfile(ip);
@@ -148,9 +148,9 @@ public class ProfileView extends Fragment{
 
             companyNameView.setText(null);
 
-            view.findViewById(R.id.profilePager2).setVisibility(view.INVISIBLE);
-            view.findViewById(R.id.dotRow2).setVisibility(view.INVISIBLE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(view.INVISIBLE);
+            view.findViewById(R.id.profilePager2).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.dotRow2).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.dividerGraph1).setVisibility(View.INVISIBLE);
         }
 
 

@@ -45,10 +45,6 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

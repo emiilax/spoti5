@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Profiles;
+package com.example.spoti5.ecobussing.model.profile;
 
 import android.provider.ContactsContract;
 

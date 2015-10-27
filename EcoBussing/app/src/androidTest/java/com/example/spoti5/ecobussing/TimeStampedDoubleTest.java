@@ -7,7 +7,10 @@ import android.test.AndroidTestCase;
  */
 public class TimeStampedDoubleTest extends AndroidTestCase {
 
+
+    /*
     private TimeStampedDouble distance;
+
 
     public TimeStampedDoubleTest() {
         distance = new TimeStampedDouble(20.0);
@@ -21,5 +24,8 @@ public class TimeStampedDoubleTest extends AndroidTestCase {
         System.out.println("MONTH: " + distance.getStampedMonth());
         System.out.println("DAY: " + distance.getStampedDay());
         System.out.println(distance.getStampedYear() + "/" + distance.getStampedMonth() + "/" + distance.getStampedDay());
+
     }
+    */
+
 }

@@ -1,9 +1,7 @@
 package com.example.spoti5.ecobussing.controller.listeners;
 
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.spoti5.ecobussing.R;

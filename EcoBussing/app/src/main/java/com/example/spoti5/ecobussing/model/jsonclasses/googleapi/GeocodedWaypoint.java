@@ -19,6 +19,6 @@ public class GeocodedWaypoint {
     public String placeId;
     @SerializedName("types")
     @Expose
-    public List<String> types = new ArrayList<String>();
+    public List<String> types = new ArrayList<>();
 
 }

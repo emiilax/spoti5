@@ -3,10 +3,9 @@ import android.content.Context;
 
 import com.example.spoti5.ecobussing.Activites.ActivityController;
 <<<<<<< HEAD:EcoBussing/app/src/main/java/com/example/spoti5/ecobussing/SavedData/SaveHandler.java
-import com.example.spoti5.ecobussing.Activites.StartActivites;
 import com.example.spoti5.ecobussing.Database.DatabaseHolder;
 import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.Profiles.DatabaseUser;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
 import com.example.spoti5.ecobussing.Profiles.IUser;
 import com.example.spoti5.ecobussing.Profiles.User;
 =======
@@ -51,7 +50,7 @@ public class SaveHandler {
             } catch (IOException e){
                 e.printStackTrace();
             } catch(NullPointerException e){
-
+                e.printStackTrace();
             }
 
         }

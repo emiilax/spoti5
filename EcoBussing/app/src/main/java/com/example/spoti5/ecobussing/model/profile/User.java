@@ -1,12 +1,9 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import com.example.spoti5.ecobussing.Profiles.DatabaseUser;
 import com.example.spoti5.ecobussing.controller.calculations.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
-
-import com.google.gson.Gson;
 
 import java.util.Calendar;
 

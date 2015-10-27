@@ -12,6 +12,6 @@ import java.util.List;
 public class Route {
     @SerializedName("legs")
     @Expose
-    public List<Leg> legs = new ArrayList<Leg>();
+    public List<Leg> legs = new ArrayList<>();
 
 }

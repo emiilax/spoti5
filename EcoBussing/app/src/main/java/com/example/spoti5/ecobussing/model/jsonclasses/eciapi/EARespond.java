@@ -50,14 +50,8 @@ public class EARespond {
     public String getGatewayId() { return gatewayId; }
 
     public boolean equals(Object o){
-        if(o instanceof EARespond){
-            if (((EARespond)o).getResourceSpec().equals(this.resourceSpec)){
-                return true;
+        return o instanceof EARespond && ((EARespond)o).getResourceSpec().equals(this.resourceSpec);
 
-            }else
-                return false;
-        }
-        return false;
     }
 
 

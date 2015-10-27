@@ -24,7 +24,10 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
     }
 
 
-    public void setRange(String range) { this.range = range; }
+    public void setRange(String range) {
+        this.range = range;
+        this.notifyDataSetChanged();
+    }
 
 
     @Override

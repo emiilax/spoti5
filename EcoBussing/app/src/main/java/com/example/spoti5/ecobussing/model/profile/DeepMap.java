@@ -1,16 +1,10 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import android.support.annotation.NonNull;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by hilden on 2015-10-07.

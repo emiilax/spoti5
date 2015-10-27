@@ -1,7 +1,7 @@
 
 package com.example.spoti5.ecobussing.controller.database;
 
-import com.example.spoti5.ecobussing.Profiles.DatabaseUser;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -30,7 +30,7 @@ public class Database implements IDatabase {
     private String companiesString = "companies";
 
     //Database setup
-    public static final String FIREBASE = "https://ecotravel.firebaseio.com/";
+    private static final String FIREBASE = "https://ecotravel.firebaseio.com/";
     private Firebase firebaseRef;
 
     private List<IUser> allUsers = new ArrayList<>();

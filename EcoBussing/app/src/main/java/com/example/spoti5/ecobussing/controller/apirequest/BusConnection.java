@@ -65,21 +65,22 @@ public class BusConnection implements Runnable, PropertyChangeListener{
     }
 
     // Electricity-api connection
-    private ECIApi eciApi;
+    private final ECIApi eciApi;
 
     // Västtrafik-api connection
-    private VATApi vatApi;
+    private final VATApi vatApi;
 
     private boolean stillConnected;
 
     // Holds the trips that not have been put into the database
-    private List<List<StopLocation>> tempTripList;
+    private final  List<List<StopLocation>> tempTripList;
 
     // Keeps the last location checked in run().
     private VANearbyStops lastLocations;
 
     private Bus currentBus;
-    boolean hasStarted = false;
+    private boolean hasStarted = false;
+    private boolean hasEnded = false;
     private StopLocation startLoc;
     private StopLocation endLoc;
     private double lastDistance = 0;
@@ -157,7 +158,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
 
     }
 
-    boolean hasEnded = false;
+
 
     /**
      * Called when the journey ends. Defines endlocation and calculates the distance.
@@ -216,7 +217,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      * Called when there is network-connection available.
      * If there are any trips that are not in the database, put them there now
      */
-    public void updateUser(){
+    private void updateUser(){
         if(tempTripList.size()>0) {
             IUser usr = SaveHandler.getCurrentUser();
             for(int i = 0; i<tempTripList.size(); i++){
@@ -237,7 +238,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      * @param start, start location
      * @param stop, stoplocation
      */
-    public void storeJourney(StopLocation start, StopLocation stop){
+    private void storeJourney(StopLocation start, StopLocation stop){
 
         List<StopLocation> trip = new ArrayList<>();
         trip.add(start);
@@ -255,9 +256,9 @@ public class BusConnection implements Runnable, PropertyChangeListener{
      *
      * @param theValue, the name of the value
      * @param list, the list of objects
-     * @return
+     * @return the requested value
      */
-    public double getEAValue(String theValue, List<EARespond> list){
+    private double getEAValue(String theValue, List<EARespond> list){
         double value = 0;
 
         for(EARespond ear: list){
@@ -289,7 +290,7 @@ public class BusConnection implements Runnable, PropertyChangeListener{
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NullPointerException ex){
-
+                ex.printStackTrace();
             }
 
             /*
