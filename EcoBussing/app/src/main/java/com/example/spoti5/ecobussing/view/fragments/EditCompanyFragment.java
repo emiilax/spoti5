@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
@@ -35,7 +36,7 @@ public class EditCompanyFragment extends Fragment {
     private TextView companyInfoText;
     private EditText companyInfo;
     private TextView connectedUsersText;
-    private ExpandableListView userList;
+    private ListView userList;
     private Button saveButton;
 
     private UserListAdapter adapter;
@@ -64,7 +65,7 @@ public class EditCompanyFragment extends Fragment {
         companyInfoText = (TextView)view.findViewById(R.id.infoTextField);
         companyInfo = (EditText)view.findViewById(R.id.infoEditText);
         connectedUsersText = (TextView)view.findViewById(R.id.usersTextView);
-        userList = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        userList = (ListView)view.findViewById(R.id.expandableListView);
         saveButton = (Button)view.findViewById(R.id.saveButton);
 
         companyName.setText(currentUser.getCompany());

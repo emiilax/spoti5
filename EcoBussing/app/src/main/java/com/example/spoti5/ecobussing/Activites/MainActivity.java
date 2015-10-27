@@ -252,6 +252,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                             getSupportActionBar().setTitle(title);
                             view.setBackgroundResource(R.color.clicked);
                             changeFragment(title, medalFragment);
+                            break;
                         case 4:
                             EditInfoFragment editInfoFragment = new EditInfoFragment();
                             title = "Redigera profil";
