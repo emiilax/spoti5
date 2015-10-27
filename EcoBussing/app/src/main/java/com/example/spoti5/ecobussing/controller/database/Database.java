@@ -1,6 +1,7 @@
 
 package com.example.spoti5.ecobussing.controller.database;
 
+import com.example.spoti5.ecobussing.model.profile.DatabaseCompany;
 import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
@@ -111,6 +112,7 @@ public class Database implements IDatabase {
 
         for(IProfile c: getCompanies()){
             if(c.getName().equals(name)){
+                System.out.println(c.getName());
                 return c;
             }
         }
@@ -127,10 +129,10 @@ public class Database implements IDatabase {
     }
 
     @Override
-    public void updateCompany(IProfile company) {
+    public void updateCompany(Company company) {
         if(company != null) {
             Firebase ref = firebaseRef.child(companiesString).child(company.getName());
-            ref.setValue(company);
+            ref.setValue(company.getDatabaseCompany());
             generateAll();
         }
     }
@@ -220,7 +222,7 @@ public class Database implements IDatabase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild(name)) {
-                    tmpRef.child(name).setValue(company);
+                    tmpRef.child(name).setValue(company.getDatabaseCompany());
                     errorCode = ErrorCodes.NO_ERROR;
                     generateAll();
                 } else {
@@ -347,7 +349,8 @@ public class Database implements IDatabase {
                 try {
                     clearListCompany(listValue);
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
-                        IProfile company = companySnapshots.getValue(Company.class);
+                        DatabaseCompany du = companySnapshots.getValue(DatabaseCompany.class);
+                        IProfile company = new Company(du);
                         addCompanyToList(listValue, company);
 
                     }
@@ -374,7 +377,8 @@ public class Database implements IDatabase {
                try{
                     clearListCompany(listValue);
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
-                        IProfile company = companySnapshots.getValue(Company.class);
+                        DatabaseCompany du = companySnapshots.getValue(DatabaseCompany.class);
+                        IProfile company = new Company(du);
                         addCompanyToList(listValue, company);
                     }
                 } catch(FirebaseException e){
@@ -473,12 +477,10 @@ public class Database implements IDatabase {
         return topListMonth;
     }
 
-
     @Override
     public List<IUser> getUserToplistYear() {
         return topListYear;
     }
-
 
     public boolean isAllGenerated() {
         return allGenerated;

@@ -121,9 +121,7 @@ public class User implements IUser {
     }
 
     public void updateCompany(double distance){
-        //System.out.println(connectedCompany);
         IProfile company = DatabaseHolder.getDatabase().getCompany(dbUser.getCompany());
-        //System.out.println(company.toString());
         ((Company)company).newJourney(distance);
     }
 
@@ -134,7 +132,7 @@ public class User implements IUser {
     }
 
     @Override
-    public Double getCO2Saved(boolean avoidDatabaseUpload) {
+    public Double getCO2Saved() {
         return dbUser.getCo2SavedMap(true).getSumOfAllDates();
     }
 
@@ -154,7 +152,7 @@ public class User implements IUser {
     }
 
     @Override
-    public Double getCO2SavedPast7Days(boolean avoidDatabaseUpload) {
+    public Double getCO2SavedPast7Days() {
         return dbUser.getCo2SavedMap(true).getSumOfPastSevenDays();
     }
 

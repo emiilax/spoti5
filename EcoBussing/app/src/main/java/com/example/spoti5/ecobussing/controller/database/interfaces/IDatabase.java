@@ -34,7 +34,7 @@ public interface IDatabase {
     public IProfile getCompany(String name);
 
     public void updateUser(IUser user);
-    public void updateCompany(IProfile company);
+    public void updateCompany(Company company);
 
 }
 

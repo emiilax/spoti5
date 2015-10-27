@@ -13,11 +13,11 @@ public interface IProfile extends Serializable {
 
     void incCO2Saved(double distance);
 
-    Double getCO2Saved(boolean avoidDatabaseUpload);
+    Double getCO2Saved();
     Double getCO2SavedYear(Integer year);
     Double getCO2SavedMonth(Integer year, Integer month);
     Double getCO2SavedDate(Integer year, Integer month, Integer day);
-    Double getCO2SavedPast7Days(boolean avoidDatabaseUpload);
+    Double getCO2SavedPast7Days();
 
     void setName(String name);
 }

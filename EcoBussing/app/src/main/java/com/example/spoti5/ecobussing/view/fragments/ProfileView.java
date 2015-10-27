@@ -103,7 +103,7 @@ public class ProfileView extends Fragment{
         //Does stuff if the profile is for a user
         if(thisProfile instanceof IUser){
             IUser currentUser = (IUser) thisProfile;
-            co2 = currentUser.getCO2Saved(true);
+            co2 = currentUser.getCO2Saved();
             distance = calc.calculateDistanceFromCO2(co2);
             money = currentUser.getMoneySaved();
             position = db.getPosition(currentUser);
@@ -129,7 +129,9 @@ public class ProfileView extends Fragment{
         //Does other stuff if the profile is for a company
         else{
             Company currentCompany = (Company)thisProfile;
-            co2 = currentCompany.getCO2Saved(true);
+            System.out.println(currentCompany.getName());
+            co2 = currentCompany.getCO2Saved();
+
             ((ImageView)view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);
             ((ImageView)view.findViewById(R.id.imageDistance)).setImageResource(R.drawable.employees);
 

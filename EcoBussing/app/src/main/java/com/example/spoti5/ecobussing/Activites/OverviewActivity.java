@@ -42,7 +42,7 @@ public class OverviewActivity extends ActivityController {
         System.out.println("-------------------------------------------------------------------------- " + currentDistance);
         currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
         double currentCO2Saved = Calculator.getCalculator().calculateCarbonSaved(currentDistance);
-        double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved(true);
+        double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
 
         textViewDistance.setText(Integer.toString((int)currentDistance) + " m");
         textViewCarbon.setText("+ " + Double.toString(transformValue(currentCO2Saved)) + " kg");

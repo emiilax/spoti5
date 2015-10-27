@@ -2,17 +2,12 @@ package com.example.spoti5.ecobussing.controller;
 import android.content.Context;
 
 import com.example.spoti5.ecobussing.Activites.ActivityController;
-<<<<<<< HEAD:EcoBussing/app/src/main/java/com/example/spoti5/ecobussing/SavedData/SaveHandler.java
-import com.example.spoti5.ecobussing.Database.DatabaseHolder;
-import com.example.spoti5.ecobussing.Database.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
-import com.example.spoti5.ecobussing.Profiles.IUser;
-import com.example.spoti5.ecobussing.Profiles.User;
-=======
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
+import com.example.spoti5.ecobussing.model.profile.User;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
->>>>>>> 204d82174c30e32b865a621582afd4605b44f640:EcoBussing/app/src/main/java/com/example/spoti5/ecobussing/controller/SaveHandler.java
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -54,8 +49,11 @@ public class SaveHandler {
             }
 
         }
-        IUser user = new User(du);
-        return user;
+        if(du != null){
+            IUser user = new User(du);
+            return user;
+        }
+        return null;
     }
 
     public static void changeUser(IUser newUser) {

@@ -49,7 +49,7 @@ public class CompanyMedal {
 
     private void employeesMedal(){
         employeesMax = company.getNbrEmployees();
-        employeesCurrent = company.getMembers(true).size();
+        employeesCurrent = company.getMembers().size();
     }
 
     public int getEmployeesPercantage(){

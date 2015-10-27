@@ -140,7 +140,12 @@ public class DatabaseUser implements Serializable{
         return moneyJson;
     }
 
-
+    /**
+     *
+     * @param avoidDatabaseUpload a parameter that can be both true or false, avoids member array to
+     *                             be stored at the database
+     * @return DeepMap of the co2 the user have saved
+     */
     public DeepMap<Integer, Integer, Integer, Double> getCo2SavedMap(boolean avoidDatabaseUpload) {
         updateCo2Map();
         return co2SavedMap;
@@ -151,6 +156,12 @@ public class DatabaseUser implements Serializable{
         updateCo2Json();
     }
 
+    /**
+     *
+     * @param avoidDatabaseUpload a parameter that can be both true or false, avoids member array to
+     *                             be stored at the database
+     * @return DeepMap of the money the user have saved
+     */
     public DeepMap<Integer, Integer, Integer, Double> getMoneySavedMap(boolean avoidDatabaseUpload) {
         updateMoneyMap();
         return moneySavedMap;

@@ -76,7 +76,7 @@ public class CompanySearchAdapter extends BaseAdapter {
         Company company = (Company)searchedCompanies.get(position);
 
         nameLabel1.setText(company.getName());
-        subtitleLabel1.setText(Integer.toString(company.getMembers(true).size()));
+        subtitleLabel1.setText(Integer.toString(company.getMembers().size()));
 
 
         return row;

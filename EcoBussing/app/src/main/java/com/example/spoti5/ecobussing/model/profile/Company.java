@@ -18,132 +18,56 @@ import java.util.Locale;
 
 /**
  * Created by hilden on 2015-09-29.
+ * This users can be edited etc without errors on the database. No variables are stored here
+ * because everything is stored in the databaseCompany
  */
 public class Company implements IProfile {
 
-    private String name;
-    private double pointCurrentMonth;
-    private double pointCurrentYear;
-    private double pointTot;
-    private String companyInfo;
-    private int nbrEmployees;
+    private DatabaseCompany dbCompany;
 
-    /**
-     * Different type of members, the "creatorMember" is always a "moderatorMember", and all "moderatorMembers" are always "members".
-     */
-    private String creatorMember;                 //The creator of the bussiness-profile, has deletion right.
-    private ArrayList<String> moderatorMembers;    //The members of the bussiness-profile with modifying rights.
-    private ArrayList<String> members;             //All members of the bussiness profile.
-
-    private String modMemberJson;
-    private String memberJson;
-
-    private String oldMomMemberJson;
-    private String oldMemberJson;
-
-    private HashMap userConnectionDates;
-
-    private String usersConnectedJson;
-    private String oldUserConnectedJson;
-
-    public Company(){}
+    public Company(DatabaseCompany dbCompany){
+        this.dbCompany = dbCompany;
+    }
 
     public Company(String businessName, IUser creatorMember, int nbrEmployees) {
-        name = businessName;
-        this.creatorMember = creatorMember.getEmail();
-
-        moderatorMembers = new ArrayList<String>();
-        members = new ArrayList<String>();
-
-        moderatorMembers.add(creatorMember.getEmail());
-        members.add(creatorMember.getEmail());
-
-        pointCurrentMonth = 0;
-        pointCurrentYear = 0;
-        pointTot = 0;
-        companyInfo = "";
-
-        oldMemberJson="";
-        oldMomMemberJson="";
-
-        modMemberJson = "";
-        memberJson = "";
-
-        this.nbrEmployees = nbrEmployees;
-
-        userConnectionDates = new HashMap();
-
-        updateMemberJson();
-        updateModMemberJson();
-        updateUserConnectedJson();
+        dbCompany = new DatabaseCompany(businessName, creatorMember, nbrEmployees);
     }
 
     @Override
-    public String getName() { return name; }
+    public String getName() { return dbCompany.getName(); }
 
     @Override
     public void setName(String name) {
-        this.name = name;
+        dbCompany.setName(name);
     }
 
     public void setCompanyInfo(String info){
-        companyInfo = info;
+        dbCompany.setCompanyInfo(info);
     }
 
     public String getCreatorMember() {
-        return creatorMember;
+        return dbCompany.getCreatorMember();
     }
 
-    private void updateMembersFromJson(){
-        if(oldMemberJson == null || members == null) {
-            if (!(memberJson == null)) {
-                Gson gson = new Gson();
-                members= gson.fromJson(memberJson, new TypeToken<List<String>>(){}.getType());
-                oldMemberJson = memberJson;
-            }
-        }
+
+    public List<String> getMembers() {
+        return dbCompany.getMembers(true);
     }
 
-    private void updateModMembersFromJson(){
-        if(oldMomMemberJson==null || moderatorMembers == null) {
-            if (!(modMemberJson== null)) {
-                Gson gson = new Gson();
-                moderatorMembers = gson.fromJson(modMemberJson, new TypeToken<List<String>>(){}.getType());
-                oldMomMemberJson = modMemberJson;
-            }
-        }
-    }
-
-    private void updateUserConnectionDates(){
-        if(oldUserConnectedJson == null || userConnectionDates == null){
-            if(!(usersConnectedJson==null)){
-                Gson gson = new Gson();
-                userConnectionDates = gson.fromJson(usersConnectedJson, HashMap.class);
-                oldUserConnectedJson = usersConnectedJson;
-            }
-        }
-    }
-
-    public List<String> getMembers(boolean avoidDatabaseUpload) {
-        updateMembersFromJson();
-        return members;
-    }
-
-    public List<String> getModeratorMembers(boolean avoidDatabaseUpload) {
-        updateModMembersFromJson();
-        return moderatorMembers;
+    public List<String> getModeratorMembers() {
+        return dbCompany.getModeratorMembers(true);
     }
 
 
     public boolean userIsCreator(IUser user) {
 
-        return creatorMember == user.getEmail();
+        return dbCompany.getCreatorMember() == user.getEmail();
     }
 
     public boolean userIsModerator(IUser user) {
-        updateModMembersFromJson();
-        for (int i = 0; i < moderatorMembers.size(); i++) {
-            if (moderatorMembers.get(i).equals(user.getEmail())) {
+        List<String> users = dbCompany.getModeratorMembers(true);
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equals(user.getEmail())) {
                 return true;
             }
         }
@@ -151,9 +75,9 @@ public class Company implements IProfile {
     }
 
     public boolean userIsMember(IUser user) {
-        updateMembersFromJson();
-        for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).equals(user.getEmail())) {
+        List<String> users = dbCompany.getMembers(true);
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).equals(user.getEmail())) {
                 return true;
             }
         }
@@ -167,10 +91,11 @@ public class Company implements IProfile {
      * @param user
      */
     public void addModeratorMember(IUser creator, IUser user) {
+        List<String> users = dbCompany.getModeratorMembers(true);
         if (userIsCreator(creator) && !userIsModerator(user) && userIsMember(user)) {
-            moderatorMembers.add(user.getEmail());
-            updateModMemberJson();
+            users.add(user.getEmail());
         }
+        dbCompany.setModMembers(users);
     }
 
     /**
@@ -178,20 +103,13 @@ public class Company implements IProfile {
      * @param user
      */
     public void addMember(IUser user) {
-        updateUserConnectionDates();
+        List<String> users = dbCompany.getMembers(true);
         if (!userIsMember(user)) {
-            user.setCompany(name);
+            user.setCompany(dbCompany.getName());
             SaveHandler.changeUser(user);
 
-            members.add(user.getEmail());
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.GERMAN);
-            Date dateTime = new Date();
-            String str = dateFormat.format(dateTime);
-            //String[] date = str.split(" ");
-
-            userConnectionDates.put(user, str);
-
-            updateMemberJson();
+            users.add(user.getEmail());
+            dbCompany.setMembers(users);
         }
     }
 
@@ -202,9 +120,10 @@ public class Company implements IProfile {
      * @param user
      */
     public void removeModeratorMember(IUser creator, IUser user) {
+        List<String> users = dbCompany.getModeratorMembers(true);
         if (userIsCreator(creator) && userIsModerator(user) && !userIsCreator(user)) {
-            moderatorMembers.remove(user.getEmail());
-            updateModMemberJson();
+            users.remove(user.getEmail());
+            dbCompany.setModMembers(users);
         }
     }
 
@@ -214,17 +133,19 @@ public class Company implements IProfile {
      * @param user
      */
     public void removeMember(IUser user) {
+        List<String> users = dbCompany.getMembers(true);
+        List<String> modUsers = dbCompany.getModeratorMembers(true);
         if (!userIsCreator(user)) {
             if (userIsModerator(user)) {
-                moderatorMembers.remove(user.getEmail());
-                members.remove(user.getEmail());
-                updateModMemberJson();
+                modUsers.remove(user.getEmail());
+                users.remove(user.getEmail());
             } else {
                 if (userIsMember(user)) {
-                    members.remove(user.getEmail());
+                    users.remove(user.getEmail());
                 }
             }
-            updateMemberJson();
+            dbCompany.setModMembers(modUsers);
+            dbCompany.setMembers(users);
             user.setCompany("");
             SaveHandler.changeUser(user);
         }
@@ -232,18 +153,16 @@ public class Company implements IProfile {
 
     public void incPoints(double co2Saved){
         checkDate();
-
-        pointCurrentMonth  += calculatePoints(co2Saved);
-        pointCurrentYear   += calculatePoints(co2Saved);
-        pointTot           += calculatePoints(co2Saved);
-
-
+        double points = calculatePoints(co2Saved);
+        dbCompany.setPointCurrentMonth(dbCompany.getPointCurrentMonth() + points);
+        dbCompany.setPointCurrentYear(dbCompany.getPointCurrentYear() + points);
+        dbCompany.setPointTot(dbCompany.getpointTot() +points);
     }
 
     public double calculatePoints(double co2Saved){
         if(co2Saved == 0) return 0;
 
-        return 100 * (2+(10*co2Saved)) / (100+nbrEmployees);
+        return 100 * (2+(10*co2Saved)) / (100+dbCompany.getNbrEmployees());
     }
 
     public void checkDate(){
@@ -255,8 +174,8 @@ public class Company implements IProfile {
         int month2 = cal.get(Calendar.MONTH);
         int year2 = cal.get(Calendar.YEAR);
 
-        if(month1 != month2) pointCurrentMonth = 0;
-        if(year1 != year2) pointCurrentYear = 0;
+        if(month1 != month2) dbCompany.setPointCurrentMonth(0);
+        if(year1 != year2) dbCompany.setPointCurrentYear(0);
     }
 
     public void newJourney(double co2Saved){
@@ -265,58 +184,6 @@ public class Company implements IProfile {
         DatabaseHolder.getDatabase().updateCompany(this);
     }
 
-    /**
-     * Updates the company's member lists with the current information of each member from the database, not needed?
-     */
- /*   public void updateMembers(){
-        updateMembersFromJson();
-        updateModMembersFromJson();
-        List<IUser> tmpList = database.getUsers();
-        for(String memberMail:members){
-            for (IUser user:tmpList) {
-                if(memberMail.equals(user.getEmail())){
-                    memberMail = user.getEmail();
-                }
-            }
-        }
-
-        for(IUser modMember:moderatorMembers){
-            for (IUser member:members) {
-                if(modMember.getEmail() == member.getEmail()){
-                    modMember = member;
-                }
-            }
-        }
-        updateModMemberJson();
-        updateMemberJson();
-    }*/
-
-
-
-    private void updateUserConnectedJson(){
-        usersConnectedJson =  new Gson().toJson(userConnectionDates);
-    }
-
-
-    @Override
-    public Double getDistanceTraveled() {
-        //co2Tot/co2 saved per km?
-        return null;
-    }
-
-
-    @Override
-    public void incCO2Saved(double distance) { checkDate(); }
-
-
-    private void updateModMemberJson(){
-        modMemberJson = new Gson().toJson(moderatorMembers);
-    }
-
-
-    private void updateMemberJson(){
-        memberJson = new Gson().toJson(members);
-    }
 
 
 
@@ -324,7 +191,7 @@ public class Company implements IProfile {
     public double getPointsSavedDate(int year, int month, int day){
 
     double value = 0;
-    for(String s: getMembers(true)){
+    for(String s: dbCompany.getMembers(true)){
         try{
             IUser usr = DatabaseHolder.getDatabase().getUser(s);
             value += calculatePoints(usr.getCO2SavedDate(year, month, day));
@@ -339,7 +206,7 @@ public class Company implements IProfile {
     public double getPointsSavedMonth(int year, int month){
 
         double value = 0;
-        for(String s: getMembers(true)){
+        for(String s: dbCompany.getMembers(true)){
             try{
                 IUser usr = DatabaseHolder.getDatabase().getUser(s);
 
@@ -351,6 +218,43 @@ public class Company implements IProfile {
 
         return value;
     }
+
+    public int getNbrEmployees() {
+        return dbCompany.getNbrEmployees();
+    }
+
+    public double getpointTot() {
+        checkDate();
+        return dbCompany.getpointTot();
+    }
+
+    public double getPointCurrentYear() {
+        checkDate();
+        return dbCompany.getPointCurrentYear();
+    }
+
+    public double getPointCurrentMonth() {
+        checkDate();
+        return  dbCompany.getPointCurrentMonth();
+    }
+
+    public String getCompanyInfo() {
+        return dbCompany.getCompanyInfo();
+    }
+
+    public DatabaseCompany getDatabaseCompany(){
+        return dbCompany;
+    }
+
+    //TODO WITH DEEPMAPS-------------------------------------------------------------
+    @Override
+    public Double getDistanceTraveled() {
+        //co2Tot/co2 saved per km?
+        return null;
+    }
+
+    @Override
+    public void incCO2Saved(double distance) { checkDate(); }
 
     @Override
     public Double getCO2SavedYear(Integer year) {
@@ -368,65 +272,13 @@ public class Company implements IProfile {
     }
 
     @Override
-    public Double getCO2SavedPast7Days(boolean avoidDatabaseUpload) {
+    public Double getCO2Saved() {
+        return 0.0;
+    }
+
+    @Override
+    public Double getCO2SavedPast7Days(){
         return null;
     }
 
-    @Override
-    public Double getCO2Saved(boolean avoidDatabaseUpload) {
-        return pointTot;
-    }
-
-    public int getNbrEmployees() {
-        return nbrEmployees;
-    }
-
-    public double getpointTot() {
-        //checkDate();
-        return pointTot;
-    }
-
-
-    public double getPointCurrentYear() {
-        //checkDate();
-        return pointCurrentYear;
-    }
-
-    public double getPointCurrentMonth() {
-        //checkDate();
-        return  pointCurrentMonth;
-    }
-
-    public String getCompanyInfo() {
-        return companyInfo;
-    }
-
-    public String getModMemberJson() {
-        return modMemberJson;
-    }
-
-    public String getUsersConnectedJson() {
-        return usersConnectedJson;
-    }
-
-    public String getMemberJson() { return memberJson; }
-
-
-
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "name='" + name + '\'' +
-                ", pointCurrentMonth=" +  pointCurrentMonth +
-                ", pointCurrentYear=" + pointCurrentYear +
-                ", pointTot=" + pointTot + ", " +
-                "nbrEmployees="+ nbrEmployees +
-                ", companyInfo='" + companyInfo + '\'' +
-                ", creatorMember='" + creatorMember + '\'' +
-                ", modMemberJson='" + modMemberJson + '\'' +
-                ", memberJson='" + memberJson + '\'' +
-                ", userConnectedJson=" + usersConnectedJson +
-                '}';
-    }
 }
