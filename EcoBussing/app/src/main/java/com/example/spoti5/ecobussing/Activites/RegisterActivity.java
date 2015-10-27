@@ -204,16 +204,11 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             case ErrorCodes.UNKNOWN_ERROR: toastText = "Något gick fel.";
                 break;
         }
-<<<<<<< HEAD
+
         if(toastText.length() != 0){
             tools.showToast(toastText, context);
         }
-=======
+
     }
 
-    private void showToast(){
-        Toast toast = Toast.makeText(context,toastText, duration);
-        toast.show();
->>>>>>> ef7b1504d9ef849644be6e60cbfc3fe97ff8c012
-    }
 }
