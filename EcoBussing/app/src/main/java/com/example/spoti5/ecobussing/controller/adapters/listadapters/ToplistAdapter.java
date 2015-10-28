@@ -133,8 +133,10 @@ public class ToplistAdapter extends BaseAdapter {
         String value = "";
         if(company){
             name.setText((position + 1) + ". " + companyList.get(position).getName());
+            DecimalFormat df = new DecimalFormat("####0");
 
             if(range.equals("month")){
+
                 value = Double.toString(((Company) companyList.get(position)).getPointCurrentMonth());
 
             }else if(range.equals("year")){
@@ -144,6 +146,7 @@ public class ToplistAdapter extends BaseAdapter {
                 value = Double.toString(((Company) companyList.get(position)).getpointTot());
 
             }
+            value = df.format(value);
 
         }else{
             name.setText((position + 1) + ". " + personList.get(position).getName());
@@ -162,7 +165,12 @@ public class ToplistAdapter extends BaseAdapter {
 
 
         }
-        co2.setText(value + " kgCO2");
+        if(company){
+            co2.setText(value + " poäng");
+        }else{
+            co2.setText(value + " kgCO2");
+        }
+
 
         return row;
     }

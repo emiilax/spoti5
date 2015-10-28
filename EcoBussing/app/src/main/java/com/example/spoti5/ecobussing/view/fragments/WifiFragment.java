@@ -78,29 +78,6 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
             setDisconnected();
         }
 
-        /*
-        IDatabase curDatab = DatabaseHolder.getDatabase();
-
-        IUser usr = curDatab.getUser("et@mannen.se");
-        System.out.println(usr.toString());
-
-
-        Random rnd = new Random();
-        Calendar cal = Calendar.getInstance();
-        for(int i = 0; i < 210; i++){
-
-            int distance = rnd.nextInt(5000);
-
-
-            ((User)usr).updateSpecDate(distance, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH));
-
-            cal.add(Calendar.DAY_OF_MONTH, -1);
-
-        }
-        SaveHandler.changeUser(usr);
-        */
-
-
 
         return view;
     }

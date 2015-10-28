@@ -189,7 +189,7 @@ public class DatabaseCompany {
         return pointSavedMap;
     }
 
-    public void setMoneySavedMap(DeepMap<Integer, Integer, Integer, Double> pointSavedMap) {
+    public void setPointSavedMap(DeepMap<Integer, Integer, Integer, Double> pointSavedMap) {
         this.pointSavedMap = pointSavedMap;
         updatePointJson();
     }

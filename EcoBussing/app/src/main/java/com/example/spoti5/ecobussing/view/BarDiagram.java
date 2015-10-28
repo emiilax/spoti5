@@ -16,6 +16,7 @@ import com.example.spoti5.ecobussing.controller.bardiagram.XAxisFormatter;
 import com.example.spoti5.ecobussing.controller.bardiagram.YAxisFormatter;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.R;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -61,8 +62,9 @@ public class BarDiagram extends Fragment {
         BarDiagram bd = new BarDiagram();
 
         bd.setProfile(profile);
-        bd.setRange(range);
         bd.moneyPoints = moneyPoints;
+        bd.setRange(range);
+
 
 
         return bd;
@@ -71,7 +73,7 @@ public class BarDiagram extends Fragment {
 
     public void setProfile(IProfile profile){
         try{
-            this.profile = profile;
+            this.profile = (IUser)profile;
             isCompany = false;
 
         }catch (ClassCastException e){
@@ -83,12 +85,23 @@ public class BarDiagram extends Fragment {
 
     public void setRange(int range){
         this.range = range;
+        String unit = "";
+        if(moneyPoints){
+            if(isCompany){
+                unit = "Poäng ";
+            }else{
+                unit = "Pengar ";
+            }
+        }else{
+            unit = "CO2 ";
+        }
+
         if(range == LAST_SEVEN_DAYS) {
-            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenDays);
+            nameOfChart = unit + ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenDays);
         }else if(range == LAST_SEVEN_WEEKS) {
-            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenWeeks);
+            nameOfChart = unit + ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenWeeks);
         }else if(range == LAST_SEVEN_MONTHS){
-            nameOfChart = ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenMonths);
+            nameOfChart = unit + ActivityController.getContext().getResources().getString(R.string.barchart_lastSevenMonths);
         }
 
     }
@@ -100,6 +113,7 @@ public class BarDiagram extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_barchart_holder, container, false);
         TextView rangeText = (TextView) view.findViewById(R.id.txtvChartRange);
+        TextView unitText = (TextView) view.findViewById(R.id.txtvUnit);
 
         rangeText.setText(nameOfChart);
 
@@ -143,6 +157,7 @@ public class BarDiagram extends Fragment {
         xAxis.setValueFormatter(new XAxisFormatter());
 
 
+
         // Y-axis
         YAxis yAxis = chart.getAxisLeft();
         yAxis.setTextSize(10f); // set the textsize
@@ -155,7 +170,18 @@ public class BarDiagram extends Fragment {
         yAxis.setAxisLineWidth(1f);
         yAxis.setLabelCount(3, true);
 
-        //setProfile(SaveHandler.getCurrentUser());
+        String unit = "";
+
+        if(moneyPoints){
+            if(isCompany){
+                unit = "Poäng";
+            }else{
+                unit = "Kr";
+            }
+        }else{
+            unit = "Kg CO2";
+        }
+        unitText.setText(unit);
         setChartBarData(range);
 
         return view;

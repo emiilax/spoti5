@@ -63,9 +63,9 @@ public class Database implements IDatabase {
         generateUserList(topListYearValue, "co2CurrentYear");
 
         generateCompaniesList(allValue);
-        generateCompaniesList(topListAllValue, "co2Tot");
-        generateCompaniesList(topListMonthValue, "co2CurrentMonth");
-        generateCompaniesList(topListYearValue, "co2CurrentYear");
+        generateCompaniesList(topListAllValue, "pointTot");
+        generateCompaniesList(topListMonthValue, "pointCurrentMonth");
+        generateCompaniesList(topListYearValue, "pointCurrentYear");
 
     }
 

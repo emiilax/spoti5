@@ -89,15 +89,19 @@ public class ProfileView extends Fragment{
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
             pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
 
-            ViewPager viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
-            viewPager2.setAdapter(pagerAdapter2);
-            viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
+
         }else {
-            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
+            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
+            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
         }
+
         ViewPager viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
         viewPager1.setAdapter(pagerAdapter1);
         viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
+
+        ViewPager viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+        viewPager2.setAdapter(pagerAdapter2);
+        viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
         return viewen;
     }
 
@@ -172,10 +176,6 @@ public class ProfileView extends Fragment{
             position = db.getPosition(currentCompany);
 
             companyNameView.setText(null);
-
-            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
-            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);
 
             IUser currentUser = SaveHandler.getCurrentUser();
             if(!(currentUser.getCompany().equals(""))){

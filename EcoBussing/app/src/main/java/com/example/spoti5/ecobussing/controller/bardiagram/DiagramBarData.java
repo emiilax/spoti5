@@ -76,7 +76,7 @@ public class DiagramBarData  {
                     if(moneyPoints){
                         value = ((Company)profile).getPointsSavedDate(year, month, day);
                     }else{
-                        value = ((Company)profile).getPointsSavedDate(year, month, day);
+                        value = ((Company)profile).getCO2SavedDate(year, month, day);
                     }
 
                 }else{
@@ -160,8 +160,10 @@ public class DiagramBarData  {
                 if(isCompany){
                     if(moneyPoints){
                         value += ((Company)profile).getPointsSavedDate(year, month, day);
+                        System.out.println("valuepoints= " + value);
                     }else{
-                        value += ((Company)profile).getPointsSavedDate(year, month, day);
+                        value += ((Company)profile).getCO2SavedDate(year, month, day);
+                        System.out.println("valueco2= " + value);
                     }
                 }else{
                     if(moneyPoints){
@@ -223,7 +225,7 @@ public class DiagramBarData  {
                         value = ((Company)profile).getPointsSavedMonth(year, month);
                         System.out.println("month value " + i+ ": " + value);
                     }else{
-                        value = ((Company)profile).getPointsSavedMonth(year, month);
+                        value = ((Company)profile).getCO2SavedMonth(year, month);
                     }
                 }else{
                     if(moneyPoints){

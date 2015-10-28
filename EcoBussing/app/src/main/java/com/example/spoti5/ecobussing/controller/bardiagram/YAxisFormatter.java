@@ -35,12 +35,12 @@ public class YAxisFormatter implements YAxisValueFormatter {
 
         if(isPointsMoney){
             if(isCompany){
-               return mFormat.format(value) + "poäng";
+               return mFormat.format(value);
             }else{
-                return mFormat.format(value) + "kr";
+                return mFormat.format(value);
             }
 
         }
-        return mFormat.format(value) + "\n kg CO2";
+        return mFormat.format(value);
     }
 }
