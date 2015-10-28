@@ -160,8 +160,9 @@ public class ToplistAdapter extends BaseAdapter {
 
             }
 
-            co2.setText(value + " kgCO2");
+
         }
+        co2.setText(value + " kgCO2");
 
         return row;
     }
