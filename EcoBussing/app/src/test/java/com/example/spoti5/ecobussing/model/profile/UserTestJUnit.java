@@ -126,8 +126,6 @@ public class UserTestJUnit {
     public void getTotalTimesTraveledShouldReturn1MoreAfterAJourney(){
         int initTimes = testUser.getTotaltTimesTraveled();
 
-        System.out.println(initTimes);
-
         testUser.newJourney(2000);
 
         assertTrue(initTimes == (testUser.getTotaltTimesTraveled() - 1));
