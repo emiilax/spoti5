@@ -1,6 +1,8 @@
-package com.example.spoti5.ecobussing.calculations;
+package com.example.spoti5.ecobussing.controller.calculations;
 
 import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.StopLocation;
+
 import static org.junit.Assert.*;
 
 import org.junit.Rule;
@@ -14,36 +16,40 @@ public class CalculatorTestJUnit{
 
     Calculator testCalc = Calculator.getCalculator();
     int dist;
+    double goodOriginLat = 57.7074868;
+    double goodOriginLng = 11.939063;
+    double goodDestinationLat = 57.6913241;
+    double goodDestinationLng = 11.9669449;
 
     @Test
     public void calculatingDistanceBetweenTheSameLocationsShouldReturnZero() throws Exception {
         dist = 12;
-        dist = testCalc.calculateDistance(57.7074868, 11.939063, 57.7074868, 11.939063);
+        dist = testCalc.calculateDistance(goodOriginLat, goodOriginLng, goodOriginLat, goodOriginLng);
         assertTrue(dist == 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatingDistanceWithToBigLatValueShouldThrowException() throws IllegalArgumentException{
         dist = 12;
-        dist = testCalc.calculateDistance(57.7074868, 11.939063, 92.132512, 11.939063);
+        dist = testCalc.calculateDistance(goodOriginLat, goodOriginLng, 92.132512, goodDestinationLng);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatingDistanceWithToBigLngValueShouldThrowException() throws IllegalArgumentException{
         dist = 12;
-        dist = testCalc.calculateDistance(4.0, 181.0, -13.0, 12.9875);
+        dist = testCalc.calculateDistance(goodOriginLat, 181.0, goodDestinationLat, goodDestinationLng);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatingDistanceWithToSmallLatValueShouldThrowException() throws IllegalArgumentException{
         dist = 12;
-        dist = testCalc.calculateDistance(-91.0, 12.9875, -13.0, 12.9875);
+        dist = testCalc.calculateDistance(-91.0, goodOriginLng, goodDestinationLat, goodDestinationLng);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatingDistanceWithToSmallLngValueShouldThrowException() throws IllegalArgumentException{
         dist = 12;
-        dist = testCalc.calculateDistance(4.0, 12.9875, -13.0, -181.0);
+        dist = testCalc.calculateDistance(goodOriginLat, goodOriginLng, goodDestinationLat, -181.0);
     }
 
     @Test
@@ -58,8 +64,25 @@ public class CalculatorTestJUnit{
     @Test
     public void calculationWithDifferentValuesShouldReturnGreaterThanZero(){
         dist = -12;
-        dist = testCalc.calculateDistance(57.7074868, 11.939063,57.6913241,11.9669449);
+        dist = testCalc.calculateDistance(goodOriginLat, goodOriginLng, goodDestinationLat, goodDestinationLng);
         assertTrue(dist > 0);
+    }
+
+    @Test
+    public void usingTwoStopLocationsToCalculateDistanceShouldBeTheSameAsUsingTheirCoordinates(){
+        double coordDist = testCalc.calculateDistance(goodOriginLat, goodOriginLng, goodDestinationLat,
+                goodDestinationLng);
+        StopLocation origin = new StopLocation();
+        StopLocation destination = new StopLocation();
+
+        origin.setLat(Double.toString(goodOriginLat));
+        origin.setLon(Double.toString(goodOriginLng));
+        destination.setLat(Double.toString(goodDestinationLat));
+        destination.setLon(Double.toString(goodDestinationLng));
+
+        double stopLocationDist = testCalc.calculateDistance(origin, destination);
+
+        assertTrue(coordDist == stopLocationDist);
     }
 
 
