@@ -18,6 +18,10 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     private IProfile thisProfile;
     private boolean isPointsMoney;
+    private Fragment frag1;
+    private Fragment frag2;
+    private Fragment frag3;
+
 
     public ProfilePagerAdapter(FragmentManager fragment, IProfile profile, boolean isPointsMoney) {
         super(fragment);
@@ -30,17 +34,27 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
+                frag1 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
+                fragment = frag1;
                 break;
             case 1:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
+                frag2 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
+                fragment = frag2;
                 break;
             case 2:
-                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
+                frag3 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
+                fragment = frag3;
                 break;
         }
 
         return fragment;
+    }
+    // Used to update the views
+    @Override
+    public int getItemPosition(Object object) {
+        notifyDataSetChanged();
+        return POSITION_NONE;
+        //return super.getItemPosition(object);
     }
 
     @Override

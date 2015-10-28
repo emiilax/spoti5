@@ -35,10 +35,12 @@ import java.text.DecimalFormat;
  *  Created by Hampus on 2015-10-12.
  */
 public class ProfileView extends Fragment{
-    private static View view;
-    private static IProfile thisProfile;
+    private View view;
+    private IProfile thisProfile;
     private static final Calculator calc = Calculator.getCalculator();
     private Button connectCompanyButton;
+    private ProfilePagerAdapter pagerAdapter1;
+    private ProfilePagerAdapter pagerAdapter2;
 
     public ProfileView() {
         // Required empty public constructor
@@ -84,7 +86,7 @@ public class ProfileView extends Fragment{
 
     //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
-        PagerAdapter pagerAdapter1, pagerAdapter2;
+
         if(thisProfile instanceof IUser) {
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
             pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
@@ -205,6 +207,12 @@ public class ProfileView extends Fragment{
         co2View.setText(co2S + " kg");
 
 
+    }
+
+    @Override
+    public void onResume() {
+        setMPagerAdapter(view);
+        super.onResume();
     }
 
     private void setThisProfile(IProfile ip){

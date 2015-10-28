@@ -96,8 +96,6 @@ public class DiagramBarData  {
 
             if(value > highestValue) highestValue = value;
 
-            System.out.println(year + ", " + month + ", " + day);
-            System.out.println(getWeekDayName(dayOfWeek) + ": " + value);
 
 
             barEntryList.add(new BarEntry((float) value, 6 - i));
@@ -131,7 +129,8 @@ public class DiagramBarData  {
         highestValue = 0;
 
         int startWeeknumber = calendar.get(Calendar.WEEK_OF_YEAR);
-        System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
+
+
         double value = 0;
         //boolean firstWeek = true;
         int place = 0;
@@ -143,13 +142,10 @@ public class DiagramBarData  {
             int month = 1 + calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            //System.out.println(weekNumber);
-            //System.out.println(month);
-            //System.out.println(day);
             if(weekNumber < i){
                 xVals.add(0, Integer.toString(calendar.get(Calendar.WEEK_OF_YEAR) + 1));
                 barEntryList.add(new BarEntry((float) value, 6 - place));
-                System.out.println(value);
+
                 value = 0;
                 place++;
                 i--;
@@ -160,10 +156,10 @@ public class DiagramBarData  {
                 if(isCompany){
                     if(moneyPoints){
                         value += ((Company)profile).getPointsSavedDate(year, month, day);
-                        System.out.println("valuepoints= " + value);
+
                     }else{
                         value += ((Company)profile).getCO2SavedDate(year, month, day);
-                        System.out.println("valueco2= " + value);
+
                     }
                 }else{
                     if(moneyPoints){
@@ -223,7 +219,7 @@ public class DiagramBarData  {
                 if(isCompany){
                     if(moneyPoints){
                         value = ((Company)profile).getPointsSavedMonth(year, month);
-                        System.out.println("month value " + i+ ": " + value);
+
                     }else{
                         value = ((Company)profile).getCO2SavedMonth(year, month);
                     }

@@ -107,5 +107,16 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    @Override
+    public void onResume() {
+        System.out.println("Resuming");
+        mPagerAdapter =
+                new ToplistPagerAdapter(
+                        getActivity().getSupportFragmentManager(), "month");
+        mViewPager.setAdapter(mPagerAdapter);
+
+        super.onResume();
+    }
 }
 

@@ -209,6 +209,9 @@ public class BarDiagram extends Fragment {
         chart.getAxisLeft().setAxisMaxValue((float)
                 (Math.ceil(diagramBarData.getHighestValue() * 2) / 2));
     }
+    public void redrawDiagram(){
+        chart.invalidate();
+    }
 
 
 }

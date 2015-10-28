@@ -51,6 +51,7 @@ import com.example.spoti5.ecobussing.view.fragments.WifiFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,6 +67,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private FrameLayout drawerListRight;
     private ListView searchListView;
     private Tools tools;
+
+    private Stack<Fragment> prevFragments;
 
     private ImageView searchImage;
     private EditText searchText;
@@ -96,6 +99,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         connected = currentUser.getCompany().equals("");
 
         fragmentsVisitedName = new ArrayList<>();
+
+        prevFragments = new Stack<>();
 
         setContentView(R.layout.activity_drawer);
         System.out.println("Start activity");
@@ -145,7 +150,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+
         loadSelection(0);
+
 
         startFirstFragemnt();
     }
@@ -155,10 +162,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         String title = "Min profil";
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
-        fragmentsVisitedName.add(title);
-        fragmentTransaction.replace(R.id.container, profileView);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+        changeFragment(title, profileView);
+
     }
 
 
@@ -215,12 +220,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (prevView != null) prevView.setBackgroundResource(R.color.clear_white);
+
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         String usrCompanyString = currentUser.getCompany();
         Company company = (Company) database.getCompany(usrCompanyString);
         switch (position) {
             case 0:
-                changeToProfileFragment(currentUser, "Min profil");
+                ProfileView pv = ProfileView.newInstance(currentUser);
+                changeFragment("Min profil", pv);
                 break;
             case 1:
                 Fragment fragment = null;
@@ -294,26 +301,57 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
 
 
-/*    @Override
+    @Override
     public void onBackPressed(){
+
+        int count = prevFragments.size();
+
+
+        System.out.println("Stack size: " + count );
         if(drawerLayout.isDrawerOpen(drawerListLeft)){
+
             drawerLayout.closeDrawer(drawerListLeft);
+
         } else if(drawerLayout.isDrawerOpen(drawerListRight)){
+
             drawerLayout.closeDrawer(drawerListRight);
-        } else if(fragmentsVisitedName.size() > 2){
+
+        }else if (count > 1) {
+            //super.onBackPressed();
+            //additional code
             int last = fragmentsVisitedName.size() - 2;
+            prevFragments.pop();
+
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = prevFragments.peek();
             getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
+            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            //fragment.onResume();
+
+
             fragmentsVisitedName.remove(last + 1);
-            super.onBackPressed();
-        } else {
-            super.onBackPressed();
+
         }
 
+        /* else if(fragmentsVisitedName.size() > 2){
+
+
+
+
+            super.onBackPressed();
+
+        } else {
+            super.onBackPressed();
+        }*/
+
     }
-    }*/
+
 
 
     private void changeFragment(String title, Fragment fragment) {
+        prevFragments.push(fragment);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         getSupportActionBar().setTitle(title);
         fragmentsVisitedName.add(title);
@@ -329,19 +367,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     public void changeToProfileFragment(IProfile profile, String t) {
-
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        title = t;
-        getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(profile);
-        fragmentsVisitedName.add(title);
-        fragmentTransaction.replace(R.id.container, profileView);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
+        changeFragment(t, profileView);
     }
 
     @Override
@@ -361,29 +388,40 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchListView.setAdapter(searchAdapter);
     }
 
-boolean timerRunning = false;
-View.OnKeyListener autoSearch = new View.OnKeyListener() {
     @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        final Timer t = new Timer();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
 
-        if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
-            search();
         }
 
-        /**
-         * Timer, otherwise it calls twice
-         */
-        timerRunning = true;
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                timerRunning = false;
-                t.cancel();
-            }
-        }, 1000);
-
-        return true;
+        return super.onKeyDown(keyCode, event);
     }
-};
+
+
+    boolean timerRunning = false;
+    View.OnKeyListener autoSearch = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            final Timer t = new Timer();
+
+            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
+                search();
+            }
+
+            /**
+             * Timer, otherwise it calls twice
+             */
+            timerRunning = true;
+            t.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timerRunning = false;
+                    t.cancel();
+                }
+            }, 1000);
+
+            return true;
+        }
+    };
 }
