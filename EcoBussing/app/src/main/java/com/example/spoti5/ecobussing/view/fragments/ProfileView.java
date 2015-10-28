@@ -25,6 +25,8 @@ import com.example.spoti5.ecobussing.controller.listeners.ProfilePagerListener;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ProfilePagerAdapter;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 
 /**
@@ -111,6 +113,7 @@ public class ProfileView extends Fragment{
         TextView co2View = (TextView)view.findViewById(R.id.textCo2);
         TextView moneyView = (TextView)view.findViewById(R.id.textMoney);
         TextView topListPosView = (TextView)view.findViewById(R.id.positionOrEmployedNbr);
+        TextView infoText = (TextView)view.findViewById(R.id.companyInfOTextView);
 
         IDatabase db = DatabaseHolder.getDatabase();
 
@@ -147,7 +150,8 @@ public class ProfileView extends Fragment{
                 companyNameView.setText("Ej ansluten till något företag");
             }
 
-            connectCompanyButton.setVisibility(View.INVISIBLE);
+            connectCompanyButton.setVisibility(View.GONE);
+            infoText.setVisibility(View.GONE);
         }
         //Does other stuff if the profile is for a company
         else{
@@ -155,8 +159,22 @@ public class ProfileView extends Fragment{
             System.out.println(currentCompany.getName());
             co2 = currentCompany.getCO2Saved();
 
-            ((ImageView)view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);
+            infoText.setVisibility(View.VISIBLE);
+
+            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
+            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
+            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);
+
+            IUser currentUser = SaveHandler.getCurrentUser();
+            if(!(currentUser.getCompany().equals(""))){
+                connectCompanyButton.setVisibility(View.GONE);
+            }else{
+                connectCompanyButton.setVisibility(View.VISIBLE);
+            }
+
+            ((ImageView) view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);
             ((ImageView)view.findViewById(R.id.imageDistance)).setImageResource(R.drawable.employees);
+            infoText.setText(currentCompany.getCompanyInfo());
 
             //There's no intrest in showing a company's traveled distance, so here we show number of
             //employees instead.
@@ -173,14 +191,6 @@ public class ProfileView extends Fragment{
 
             companyNameView.setText(null);
 
-            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
-            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);
-
-            IUser currentUser = SaveHandler.getCurrentUser();
-            if(!(currentUser.getCompany().equals(""))){
-                connectCompanyButton.setVisibility(View.GONE);
-            }
         }
 
 
