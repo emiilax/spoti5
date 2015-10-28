@@ -214,13 +214,15 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
     }
 
    public int getTotaltTimesTraveled(){
-        int tot = 0;
-        for (Integer i = 0; i < this.size()-1; i++){
-            for(Integer k = 0; k < this.middleSize(i)-1; k++){
-                tot = innerSize(i, k);
-            }
-        }
-        return tot;
+       int tot = 0;
+       for (Map.Entry<Integer, Map<Integer, Map<Integer, Double>>> entry : underlyingMap.entrySet()){
+           for(Map.Entry<Integer, Map<Integer, Double>> entry2 : entry.getValue().entrySet()) {
+               for (Map.Entry<Integer, Double> entry3 : entry2.getValue().entrySet()) {
+                   tot++;
+               }
+           }
+       }
+       return tot;
     }
 
 

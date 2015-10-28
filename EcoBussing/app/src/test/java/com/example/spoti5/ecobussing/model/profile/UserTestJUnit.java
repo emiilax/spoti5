@@ -122,4 +122,24 @@ public class UserTestJUnit {
         assertTrue(initMoney < testUser.getMoneySaved());
     }
 
+    @Test
+    public void getTotalTimesTraveledShouldReturn1MoreAfterAJourney(){
+        int initTimes = testUser.getTotaltTimesTraveled();
+
+        System.out.println(initTimes);
+
+        testUser.newJourney(2000);
+
+        assertTrue(initTimes == (testUser.getTotaltTimesTraveled() - 1));
+
+        testUser.updateSpecDate(2500, 2015, 6, 6);
+
+        assertTrue(initTimes == (testUser.getTotaltTimesTraveled() - 2));
+
+        testUser.updateSpecDate(2500, 2015, 6, 8);
+        testUser.updateSpecDate(2500, 2015, 5, 6);
+
+        assertTrue(initTimes == (testUser.getTotaltTimesTraveled() - 4));
+    }
+
 }
