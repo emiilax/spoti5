@@ -109,7 +109,7 @@ public class ConnectedCompanyFragment extends Fragment {
 
             MainActivity currentActivity = (MainActivity)getActivity();
             currentActivity.updateList(true);
-            currentActivity.changeFragment(currentUser, "Min profil");
+            currentActivity.changeToProfileFragment(currentUser, "Min profil");
         }
     };
 

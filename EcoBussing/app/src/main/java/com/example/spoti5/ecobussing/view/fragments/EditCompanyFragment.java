@@ -98,7 +98,7 @@ public class EditCompanyFragment extends Fragment {
             }
             database.removeCompany(usersCompany);
             MainActivity activity = ((MainActivity)getActivity());
-            activity.changeFragment(currentUser, "Min profil");
+            activity.changeToProfileFragment(currentUser, "Min profil");
             activity.updateList(false);
 
         }

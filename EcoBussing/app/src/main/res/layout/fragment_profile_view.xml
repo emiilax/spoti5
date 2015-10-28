@@ -61,11 +61,22 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:layout_below="@id/profile_pic"
+                android:id="@+id/companyInfOTextView" />
+
             <View style="@style/Divider_Horizontal"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_below="@id/profile_pic"/>
+                android:layout_below="@id/companyInfOTextView"/>
+
         </RelativeLayout>
 
 
