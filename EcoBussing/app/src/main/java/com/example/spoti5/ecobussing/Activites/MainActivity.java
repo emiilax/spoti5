@@ -42,7 +42,7 @@ import com.example.spoti5.ecobussing.view.fragments.EditInfoFragment;
 import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
-import com.example.spoti5.ecobussing.view.fragments.ProfileView;
+import com.example.spoti5.ecobussing.view.fragments.ProfileViewFragment;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
@@ -160,8 +160,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private void startFirstFragemnt() {
         IUser user = SaveHandler.getCurrentUser();
         String title = "Min profil";
-        getSupportActionBar().setTitle(title);
-        ProfileView profileView = ProfileView.newInstance(user);
+
+        ProfileViewFragment profileView = ProfileViewFragment.newInstance(user);
         changeFragment(title, profileView);
 
     }
@@ -226,14 +226,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         Company company = (Company) database.getCompany(usrCompanyString);
         switch (position) {
             case 0:
-                ProfileView pv = ProfileView.newInstance(currentUser);
+                ProfileViewFragment pv = ProfileViewFragment.newInstance(currentUser);
                 changeFragment("Min profil", pv);
                 break;
             case 1:
                 Fragment fragment = null;
                 try{
                     IProfile usercompany = database.getCompany(currentUser.getCompany());
-                    fragment = ProfileView.newInstance(usercompany);
+                    fragment = ProfileViewFragment.newInstance(usercompany);
                 } catch(NullPointerException e){
                     fragment = new CompanySwipeFragment();
                 }
@@ -367,8 +367,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     public void changeToProfileFragment(IProfile profile, String t) {
-        ProfileView profileView = ProfileView.newInstance(profile);
+
+        ProfileViewFragment profileView = ProfileViewFragment.newInstance(profile);
         changeFragment(t, profileView);
+
     }
 
     @Override
