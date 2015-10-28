@@ -115,7 +115,7 @@
 
         <Button
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/button2"
+            android:id="@+id/remove_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_horizontal_margin"

@@ -1,8 +1,5 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import android.provider.ContactsContract;
-
-import com.example.spoti5.ecobussing.model.profile.DeepMap;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
@@ -42,7 +39,7 @@ public class DatabaseUser implements Serializable{
         this.currentDistance = 0;
         this.co2CurrentMonth = 0;
         this.co2CurrentYear = 0;
-        this.co2Tot = 30;
+        this.co2Tot = 0;
         this.firstUse = true;
         co2SavedMap = new DeepMap<>();
         moneySavedMap = new DeepMap<>();

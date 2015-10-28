@@ -18,11 +18,11 @@ public class Calculator {
     private static Calculator calculator;
 
     private double petrolPrice = 14.32;
-    private double carbondioxideEmittedPerLiter = 2.348; //Currently measured in kg.
-    private double avgCarPetrolConsumption = 0.7;
+    private final double carbondioxideEmittedPerLiter = 2.348; //Currently measured in kg.
+    private final double avgCarPetrolConsumption = 0.7;
 
 
-    private String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
+    private final String baseURL = "https://maps.googleapis.com/maps/api/directions/json?";
 
     private final String key = "AIzaSyDFYgoDp2y2oL8JMyRyaVMRaQkBriCouNg";
 
@@ -57,7 +57,7 @@ public class Calculator {
      */
     public int calculateDistance(double originLat, double originLng, double destinationLat,
                                  double destinationLng) {
-        int dist = 0;
+        int dist;
 
         // Creates the complete URL used to get Json from Google Maps Directions API. Consists of the
         // baseURL, the doubles of origin and destination and the key.
@@ -72,17 +72,11 @@ public class Calculator {
                 Directions directions = gson.fromJson(jsonString, Directions.class);
                 dist = directions.routes.get(0).legs.get(0).distance.value;
 
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException | IOException  e) {
                 dist = -1;
-                e.printStackTrace();
-            } catch (IOException e) {
-                dist = -1;
-                e.printStackTrace();
-            } catch (Exception e) {
-                dist = -1;
-                //System.out.println(e);
                 e.printStackTrace();
             }
+
         }else{
                 throw new IllegalArgumentException("Latitude or longitude values are too big or too small");
             }
@@ -91,18 +85,21 @@ public class Calculator {
         return dist;
     }
 
-    private static String readUrl(String urlString) throws Exception {
+    private static String readUrl(String urlString) throws IOException{
         BufferedReader reader = null;
         try {
             URL url = new URL(urlString);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuffer buffer = new StringBuffer();
+
+            //StringBuilder is faster than StringBuffer, which was first used, because StringBuffer
+            //is synchronized. A StringBuffer is not required here.
+            StringBuilder builder = new StringBuilder();
             int read;
             char[] chars = new char[1024];
             while ((read = reader.read(chars)) != -1)
-                buffer.append(chars, 0, read);
+                builder.append(chars, 0, read);
 
-            return buffer.toString();
+            return builder.toString();
         } finally {
             if (reader != null)
                 reader.close();

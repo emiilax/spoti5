@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -181,7 +180,7 @@ public class WifiFragment extends Fragment implements PropertyChangeListener, Vi
                 status.setText("not set");
                 distance.setText("not set");
                 try {
-                    busC.beginJourey(Busses.eog622);
+                    busC.beginJourey(Busses.simulated);
                     start.setText(busC.getStartLoc());
                 } catch (IOException e) {
                     e.printStackTrace();

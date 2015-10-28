@@ -130,13 +130,12 @@ public class Database implements IDatabase {
 
     @Override
     public void updateCompany(Company company) {
-        if(company != null) {
+        if (company != null) {
             Firebase ref = firebaseRef.child(companiesString).child(company.getName());
             ref.setValue(company.getDatabaseCompany());
             generateAll();
         }
     }
-
 
     /**
      * Adds user to database. This takes time and onSuccess is called if the connection and
@@ -179,7 +178,7 @@ public class Database implements IDatabase {
     @Override
     public void changePassword(String email, String oldPassword, String newPassword, final IDatabaseConnected connection) {
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child(userString).changePassword(email, oldPassword, newPassword ,new Firebase.ResultHandler() {
+        firebaseRef.child(userString).changePassword(email, oldPassword, newPassword, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 errorCode = ErrorCodes.NO_ERROR;
@@ -239,6 +238,13 @@ public class Database implements IDatabase {
                 setErrorCode(firebaseError);
             }
         });
+    }
+
+    @Override
+    public void removeCompany(Company company) {
+        final Firebase tmpRef = firebaseRef.child(companiesString);
+        tmpRef.child(company.getName()).removeValue();
+        generateAll();
     }
 
     /**

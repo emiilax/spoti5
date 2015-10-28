@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ public class ToplistFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ToplistAdapter listAdapter;
-    private View view;
 
     public ToplistFragment() {
         // Required empty public constructor
@@ -64,7 +62,7 @@ public class ToplistFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_toplist, container, false);
+        View view = inflater.inflate(R.layout.fragment_toplist, container, false);
 
         ListView drawerList= (ListView) view.findViewById(R.id.toplistListView);
 

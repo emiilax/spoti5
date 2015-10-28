@@ -13,7 +13,7 @@ import java.util.Calendar;
  */
 public class User implements IUser {
 
-    private Calendar calendar = Calendar.getInstance();
+    private static final Calendar calendar = Calendar.getInstance();
 
     private Integer stampedMonth;
     private Integer stampedYear;
@@ -107,16 +107,17 @@ public class User implements IUser {
         this.addToCurrentCO2Saved(co2Saved);
     }
 
+    //This method is used in testing for adding values to different dates that are not today
     public void updateSpecDate(double distance,int year, int month, int day){
 
         double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
         DeepMap<Integer, Integer, Integer, Double> map = dbUser.getCo2SavedMap(true);
 
-        map.setSpecificDate(year, month, day, co2Saved);
+        map.addToSpecificDate(year, month, day, co2Saved);
         dbUser.setCo2SavedMap(map);
 
         this.incCurrentDistance(distance);
-        this.addToCurrentCO2Saved(co2Saved);
+        dbUser.setCo2Tot(dbUser.getCo2Tot() + co2Saved);
 
     }
 

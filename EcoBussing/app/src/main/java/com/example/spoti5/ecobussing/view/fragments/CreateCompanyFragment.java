@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
