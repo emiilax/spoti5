@@ -8,8 +8,8 @@ import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.view.BarDiagram;
 
 /**
- * This is the pager adapter for the ViewPager in ProfileView. New fragments are added in getItem().
- * When this is done there also need to be more cases added in onPageSelected() in ProfileView.
+ * This is the pager adapter for the ViewPager in ProfileViewFragment. New fragments are added in getItem().
+ * When this is done there also need to be more cases added in onPageSelected() in ProfileViewFragment.
  * Also getCount needs a change.
  *
  * Created by Hampus on 2015-10-12.

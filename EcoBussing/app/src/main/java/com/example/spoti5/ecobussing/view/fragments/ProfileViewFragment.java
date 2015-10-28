@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 
@@ -34,19 +35,19 @@ import java.text.DecimalFormat;
  *
  *  Created by Hampus on 2015-10-12.
  */
-public class ProfileView extends Fragment{
+public class ProfileViewFragment extends Fragment{
     private static View view;
     private static IProfile thisProfile;
     private static final Calculator calc = Calculator.getCalculator();
     private Button connectCompanyButton;
 
-    public ProfileView() {
+    public ProfileViewFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileView newInstance(IProfile ip)
+    public static ProfileViewFragment newInstance(IProfile ip)
     {
-        ProfileView f = new ProfileView();
+        ProfileViewFragment f = new ProfileViewFragment();
         f.setThisProfile(ip);
         return f;
     }
@@ -113,6 +114,8 @@ public class ProfileView extends Fragment{
         TextView topListPosView = (TextView)view.findViewById(R.id.positionOrEmployedNbr);
         TextView infoText = (TextView)view.findViewById(R.id.companyInfOTextView);
 
+        TableRow botRow = (TableRow)view.findViewById(R.id.profile_bot_row);
+
         IDatabase db = DatabaseHolder.getDatabase();
 
         double co2;
@@ -148,7 +151,7 @@ public class ProfileView extends Fragment{
                 companyNameView.setText("Ej ansluten till något företag");
             }
 
-            connectCompanyButton.setVisibility(View.GONE);
+            botRow.setVisibility(View.GONE);
             infoText.setVisibility(View.GONE);
         }
         //Does other stuff if the profile is for a company
@@ -165,9 +168,9 @@ public class ProfileView extends Fragment{
 
             IUser currentUser = SaveHandler.getCurrentUser();
             if(!(currentUser.getCompany().equals(""))){
-                connectCompanyButton.setVisibility(View.GONE);
+                botRow.setVisibility(View.GONE);
             }else{
-                connectCompanyButton.setVisibility(View.VISIBLE);
+                botRow.setVisibility(View.VISIBLE);
             }
 
             ((ImageView) view.findViewById(R.id.imageMoney)).setImageResource(R.drawable.business_point);

@@ -42,7 +42,7 @@ import com.example.spoti5.ecobussing.view.fragments.EditInfoFragment;
 import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
-import com.example.spoti5.ecobussing.view.fragments.ProfileView;
+import com.example.spoti5.ecobussing.view.fragments.ProfileViewFragment;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
@@ -154,7 +154,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         IUser user = SaveHandler.getCurrentUser();
         String title = "Min profil";
         getSupportActionBar().setTitle(title);
-        ProfileView profileView = ProfileView.newInstance(user);
+        ProfileViewFragment profileView = ProfileViewFragment.newInstance(user);
         fragmentsVisitedName.add(title);
         fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
@@ -328,7 +328,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         title = t;
         getSupportActionBar().setTitle(title);
-        ProfileView profileView = ProfileView.newInstance(profile);
+        ProfileViewFragment profileView = ProfileViewFragment.newInstance(profile);
         fragmentsVisitedName.add(title);
         fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
