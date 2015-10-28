@@ -233,7 +233,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 Fragment fragment = null;
                 try{
                     IProfile usercompany = database.getCompany(currentUser.getCompany());
-                    fragment = ProfileViewFragment.newInstance(usercompany);
+                    if(usercompany != null){
+                        fragment = ProfileViewFragment.newInstance(usercompany);
+                    }else{
+                        throw new NullPointerException();
+                    }
+
                 } catch(NullPointerException e){
                     fragment = new CompanySwipeFragment();
                 }
