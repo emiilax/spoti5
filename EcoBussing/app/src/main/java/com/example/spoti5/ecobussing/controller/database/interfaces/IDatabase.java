@@ -36,6 +36,8 @@ public interface IDatabase {
     public void updateUser(IUser user);
     public void updateCompany(Company company);
 
+    public void removeCompany(Company company);
+
 }
 
 
