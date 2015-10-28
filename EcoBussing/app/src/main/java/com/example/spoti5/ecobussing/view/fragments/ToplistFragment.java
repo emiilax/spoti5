@@ -73,7 +73,7 @@ public class ToplistFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object item = listAdapter.getItem(position);
                 IProfile profile = (IProfile) item;
-                ((MainActivity)getActivity()).changeFragment(profile, profile.getName());
+                ((MainActivity)getActivity()).changeToProfileFragment(profile, profile.getName());
             }
         });
 

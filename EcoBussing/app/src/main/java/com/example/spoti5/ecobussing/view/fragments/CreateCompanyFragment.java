@@ -112,7 +112,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
         currentUser.setCompany(newCompany.getName());
         SaveHandler.changeUser(currentUser);
         MainActivity currentActivity = (MainActivity)getActivity();
-        currentActivity.changeFragment(newCompany, "Mitt företag");
+        currentActivity.changeToProfileFragment(newCompany, "Mitt företag");
         currentActivity.updateList(false);
     }
 
