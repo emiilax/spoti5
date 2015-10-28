@@ -390,6 +390,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchListView.setAdapter(searchAdapter);
     }
 
+    /*
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -398,7 +399,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         }
 
         return super.onKeyDown(keyCode, event);
-    }
+    }*/
 
 
     boolean timerRunning = false;
