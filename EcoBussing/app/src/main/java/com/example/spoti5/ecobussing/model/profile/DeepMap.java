@@ -107,7 +107,6 @@ public class DeepMap<K1, K2, K3, V> implements Serializable{
         stampedDay = calendar.get(Calendar.DAY_OF_MONTH);
         stampedMonth = calendar.get(Calendar.MONTH) + 1;
         stampedYear = calendar.get(Calendar.YEAR);
-        System.out.println(stampedDay);
         return this.addToSpecificDate(stampedYear, stampedMonth, stampedDay, value);
     }
 

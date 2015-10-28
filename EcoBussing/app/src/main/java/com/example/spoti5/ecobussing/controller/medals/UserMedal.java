@@ -47,7 +47,7 @@ public class UserMedal {
 
     private void travelMoreMedal() {
         maxTimesTravel = 100;
-        currentTimesTravel = user.getTotaltTimesTraveled(true);
+        currentTimesTravel = user.getTotaltTimesTraveled();
     }
 
     public int getTravelMorePercantage(){

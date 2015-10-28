@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Activites.MainActivity;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -106,6 +106,10 @@ public class ConnectedCompanyFragment extends Fragment {
             currentUser.setCompany("");
             database.updateCompany(company);
             database.updateUser(currentUser);
+
+            MainActivity currentActivity = (MainActivity)getActivity();
+            currentActivity.updateList(true);
+            currentActivity.changeToProfileFragment(currentUser, "Min profil");
         }
     };
 

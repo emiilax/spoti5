@@ -1,6 +1,5 @@
 package com.example.spoti5.ecobussing.view.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.spoti5.ecobussing.Activites.MainActivity;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -19,6 +19,8 @@ import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.UserListAdapter;
+
+import java.util.List;
 
 /**
  * Created by matildahorppu on 12/10/15.
@@ -35,8 +37,9 @@ public class EditCompanyFragment extends Fragment {
     private TextView companyInfoText;
     private EditText companyInfo;
     private TextView connectedUsersText;
-    private ExpandableListView userList;
+    private ListView userList;
     private Button saveButton;
+    private Button removeCompany;
 
     private UserListAdapter adapter;
 
@@ -64,7 +67,7 @@ public class EditCompanyFragment extends Fragment {
         companyInfoText = (TextView)view.findViewById(R.id.infoTextField);
         companyInfo = (EditText)view.findViewById(R.id.infoEditText);
         connectedUsersText = (TextView)view.findViewById(R.id.usersTextView);
-        userList = (ExpandableListView)view.findViewById(R.id.expandableListView);
+        userList = (ListView)view.findViewById(R.id.expandableListView);
         saveButton = (Button)view.findViewById(R.id.saveButton);
 
         companyName.setText(currentUser.getCompany());
@@ -73,16 +76,39 @@ public class EditCompanyFragment extends Fragment {
 
         adapter = new UserListAdapter(this.getContext());
         userList.setAdapter(adapter);
+        removeCompany = (Button)view.findViewById(R.id.remove_company);
+
+        removeCompany.setOnClickListener(companyRemove);
 
         saveButton.setOnClickListener(saveCompanyChanges);
 
         return view;
     }
 
+    private View.OnClickListener companyRemove = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            currentUser.setCompany("");
+            SaveHandler.changeUser(currentUser);
+            List<String> users = usersCompany.getMembers();
+            for(String mail: users){
+                IUser user = database.getUser(mail);
+                user.setCompany("");
+                database.updateUser(user);
+            }
+            database.removeCompany(usersCompany);
+            MainActivity activity = ((MainActivity)getActivity());
+            activity.changeToProfileFragment(currentUser, "Min profil");
+            activity.updateList(false);
+
+        }
+    };
+
     private View.OnClickListener saveCompanyChanges = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             usersCompany.setCompanyInfo(companyInfo.getText().toString());
+            usersCompany.setNbrEmployees(Integer.parseInt(companyEmployees.getText().toString()));
             database.updateCompany(usersCompany);
         }
     };

@@ -1,5 +1,8 @@
+
 package com.example.spoti5.ecobussing.controller.database;
 
+import com.example.spoti5.ecobussing.model.profile.DatabaseCompany;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -66,14 +69,6 @@ public class Database implements IDatabase {
 
     }
 
-    @Override
-    public List<IUser> getCompTopList() {
-
-        List<IProfile> topList = getCompanies();
-
-        return null;
-    }
-
     public int getErrorCode(){
         return errorCode;
     }
@@ -90,7 +85,6 @@ public class Database implements IDatabase {
 
     @Override
     public int getPosition(IUser user) {
-        generateAll();
         int index = topListAll.size();
         for(IUser u: topListAll){
             if(u.getEmail().equals(user.getEmail())){
@@ -104,8 +98,11 @@ public class Database implements IDatabase {
     @Override
     public int getPosition(Company comp){
         int index = 0;
-        if(topListAllCompanies.contains(comp)){
-            index = topListAllCompanies.indexOf(comp);
+        for(IProfile u: topListAllCompanies){
+            if(u.getName().equals(u.getName())){
+                return index;
+            }
+            index = index -1;
         }
         return index;
     }
@@ -115,6 +112,7 @@ public class Database implements IDatabase {
 
         for(IProfile c: getCompanies()){
             if(c.getName().equals(name)){
+                System.out.println(c.getName());
                 return c;
             }
         }
@@ -125,18 +123,19 @@ public class Database implements IDatabase {
     public void updateUser(IUser user) {
         if(user != null) {
             Firebase ref = firebaseRef.child(userString).child(editEmail(user.getEmail()));
-            ref.setValue(user);
+            ref.setValue(user.getDatabaseUser());
+            generateAll();
         }
     }
 
     @Override
-    public void updateCompany(IProfile company) {
-        if(company != null) {
+    public void updateCompany(Company company) {
+        if (company != null) {
             Firebase ref = firebaseRef.child(companiesString).child(company.getName());
-            ref.setValue(company);
+            ref.setValue(company.getDatabaseCompany());
+            generateAll();
         }
     }
-
 
     /**
      * Adds user to database. This takes time and onSuccess is called if the connection and
@@ -155,11 +154,13 @@ public class Database implements IDatabase {
             @Override
             public void onSuccess() {
                 Firebase tmpRef = firebaseRef.child(userString).child(editEmail(theUser.getEmail()));
-                tmpRef.setValue(theUser, new Firebase.CompletionListener() {
+                DatabaseUser du = theUser.getDatabaseUser();
+                tmpRef.setValue(du, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         errorCode = ErrorCodes.NO_ERROR;
                         connection.addingFinished();
+                        generateAll();
                     }
                 });
             }
@@ -177,11 +178,12 @@ public class Database implements IDatabase {
     @Override
     public void changePassword(String email, String oldPassword, String newPassword, final IDatabaseConnected connection) {
         errorCode = ErrorCodes.NO_ERROR;
-        firebaseRef.child(userString).changePassword(email, oldPassword, newPassword ,new Firebase.ResultHandler() {
+        firebaseRef.child(userString).changePassword(email, oldPassword, newPassword, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
                 errorCode = ErrorCodes.NO_ERROR;
                 connection.loginFinished();
+                generateAll();
             }
 
             @Override
@@ -219,8 +221,9 @@ public class Database implements IDatabase {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.hasChild(name)) {
-                    tmpRef.child(name).setValue(company);
+                    tmpRef.child(name).setValue(company.getDatabaseCompany());
                     errorCode = ErrorCodes.NO_ERROR;
+                    generateAll();
                 } else {
                     errorCode = ErrorCodes.COMPANY_ALREADY_EXISTS;
                 }
@@ -235,6 +238,13 @@ public class Database implements IDatabase {
                 setErrorCode(firebaseError);
             }
         });
+    }
+
+    @Override
+    public void removeCompany(Company company) {
+        final Firebase tmpRef = firebaseRef.child(companiesString);
+        tmpRef.child(company.getName()).removeValue();
+        generateAll();
     }
 
     /**
@@ -279,7 +289,8 @@ public class Database implements IDatabase {
                 try {
                     clearListUser(listValue);
                     for (DataSnapshot userSnapshots : dataSnapshot.getChildren()) {
-                        IUser user = userSnapshots.getValue(User.class);
+                        DatabaseUser du = userSnapshots.getValue(DatabaseUser.class);
+                        IUser user = new User(du);
                         addUserToList(listValue, user);
                     }
                 } catch (FirebaseException var4) {
@@ -304,8 +315,9 @@ public class Database implements IDatabase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 clearListUser(listValue);
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User u = snapshot.getValue(User.class);
-                    addUserToList(listValue, u);
+                    DatabaseUser du = snapshot.getValue(DatabaseUser.class);
+                    IUser user = new User(du);
+                    addUserToList(listValue, user);
                 }
             }
 
@@ -343,7 +355,8 @@ public class Database implements IDatabase {
                 try {
                     clearListCompany(listValue);
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
-                        IProfile company = companySnapshots.getValue(Company.class);
+                        DatabaseCompany du = companySnapshots.getValue(DatabaseCompany.class);
+                        IProfile company = new Company(du);
                         addCompanyToList(listValue, company);
 
                     }
@@ -370,7 +383,8 @@ public class Database implements IDatabase {
                try{
                     clearListCompany(listValue);
                     for (DataSnapshot companySnapshots : dataSnapshot.getChildren()) {
-                        IProfile company = companySnapshots.getValue(Company.class);
+                        DatabaseCompany du = companySnapshots.getValue(DatabaseCompany.class);
+                        IProfile company = new Company(du);
                         addCompanyToList(listValue, company);
                     }
                 } catch(FirebaseException e){
@@ -436,53 +450,43 @@ public class Database implements IDatabase {
 
     @Override
     public List<IUser> getUsers() {
-        generateAll();
         return allUsers;
     }
 
     @Override
     public List<IUser> getUserToplistAll() {
-        generateAll();
         return topListAll;
     }
 
     @Override
     public List<IProfile> getCompanies(){
-        generateAll();
         return allCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistAll() {
-        generateAll();
         return topListAllCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistMonth() {
-        generateAll();
         return topListMonthCompanies;
     }
 
     @Override
     public List<IProfile> getCompaniesToplistYear() {
-        generateAll();
         return topListYearCompanies;
     }
 
     @Override
     public List<IUser> getUserToplistMonth() {
-        generateAll();
         return topListMonth;
     }
 
-
     @Override
     public List<IUser> getUserToplistYear() {
-        generateAll();
         return topListYear;
     }
-
 
     public boolean isAllGenerated() {
         return allGenerated;

@@ -11,31 +11,32 @@ import java.util.List;
  * Created by erikk on 2015-09-23.
  */
 public interface IDatabase {
-    List<IUser> getUsers();
-    List<IUser> getUserToplistAll();
-    List<IUser> getUserToplistMonth();
-    List<IUser> getUserToplistYear();
+    public List<IUser> getUsers();
+    public List<IUser> getUserToplistAll();
+    public List<IUser> getUserToplistMonth();
+    public List<IUser> getUserToplistYear();
 
-    List<IProfile> getCompanies();
-    List<IProfile> getCompaniesToplistAll();
-    List<IProfile> getCompaniesToplistMonth();
-    List<IProfile> getCompaniesToplistYear();
+    public List<IProfile> getCompanies();
+    public List<IProfile> getCompaniesToplistAll();
+    public List<IProfile> getCompaniesToplistMonth();
+    public List<IProfile> getCompaniesToplistYear();
 
-    List<IUser> getCompTopList();
-    void addUser(String email, String password, final User user, IDatabaseConnected connection);
-    void addCompany(String name, final Company company, IDatabaseConnected connection);
-    void loginUser(String email, String password, IDatabaseConnected connection);
-    int getErrorCode();
-    IUser getUser(String email);
-    void changePassword(String email, String oldPassword, String newPassword, IDatabaseConnected connection);
+    public void addUser(String email, String password, final User user, IDatabaseConnected connection);
+    public void addCompany(String name, final Company company, IDatabaseConnected connection);
+    public void loginUser(String email, String password, IDatabaseConnected connection);
+    public int getErrorCode();
+    public IUser getUser(String email);
+    public void changePassword(String email, String oldPassword, String newPassword,  IDatabaseConnected connection);
 
-    int getPosition(IUser user);
-    int getPosition(Company comp);
+    public int getPosition(IUser user);
+    public int getPosition(Company comp);
 
-    IProfile getCompany(String name);
+    public IProfile getCompany(String name);
 
-    void updateUser(IUser user);
-    void updateCompany(IProfile company);
+    public void updateUser(IUser user);
+    public void updateCompany(Company company);
+
+    public void removeCompany(Company company);
 
 }
 

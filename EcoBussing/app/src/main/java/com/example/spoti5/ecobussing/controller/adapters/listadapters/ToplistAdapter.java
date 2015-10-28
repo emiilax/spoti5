@@ -29,7 +29,6 @@ public class ToplistAdapter extends BaseAdapter {
     private List<IProfile> companyList;
     private List<IUser> personList;
     private Context context;
-    private IDatabase database;
     private boolean company;
     private String range;
 
@@ -37,7 +36,7 @@ public class ToplistAdapter extends BaseAdapter {
     public ToplistAdapter(Context context, String range, boolean company){
 
         this.context = context;
-        database = DatabaseHolder.getDatabase();
+        IDatabase database = DatabaseHolder.getDatabase();
         int size = 0;
         this.range = range;
 
@@ -116,7 +115,7 @@ public class ToplistAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater =
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row = null;
+        View row;
 
         if(convertView == null){
             row = inflater.inflate(R.layout.toplist_item, parent, false);

@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.example.spoti5.ecobussing.controller.Tools;
 import com.example.spoti5.ecobussing.view.fragments.EditCompanyFragment;
@@ -35,7 +34,6 @@ import com.example.spoti5.ecobussing.controller.swipers.MedalViewSwiper;
 import com.example.spoti5.ecobussing.model.profile.Company;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.DrawerListAdapter;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.SearchAdapter;
-import com.example.spoti5.ecobussing.view.BarDiagram;
 import com.example.spoti5.ecobussing.view.fragments.CompanySwipeFragment;
 import com.example.spoti5.ecobussing.view.fragments.ConnectedCompanyFragment;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
@@ -62,9 +60,6 @@ import java.util.TimerTask;
  */
 public class MainActivity extends ActivityController implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    //is it okay to use a static like this?
-    public static MainActivity main;
-
     private String[] planetTitles;
     private DrawerLayout drawerLayout;
     private ListView drawerListLeft;
@@ -85,10 +80,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private SearchAdapter searchAdapter;
 
     private List<String> fragmentsVisitedName;
-    private List<? super Fragment> fragmentsVisited;
 
     private IUser currentUser;
-    private Company company;
     private boolean connected;
 
     String title;
@@ -98,14 +91,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        main = this;
-
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
-        company = (Company) database.getCompany(currentUser.getCompany());
         connected = currentUser.getCompany().equals("");
 
-        fragmentsVisited = new ArrayList<>();
         fragmentsVisitedName = new ArrayList<>();
 
         setContentView(R.layout.activity_drawer);
@@ -167,7 +156,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
-        fragmentsVisited.add(profileView);
         fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -227,189 +215,75 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (prevView != null) prevView.setBackgroundResource(R.color.clear_white);
-
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-        switch (parent.getId()) {
-            case R.id.left_drawer:
-                if (currentUser.getCompany().equals("")) {
-                    switch (position) {
-                        case 0:
-                            changeFragment(currentUser, "Min profil");
-                            view.setBackgroundResource(R.color.clicked);
-                            break;
-                        case 1:
-                            CompanySwipeFragment fragment = new CompanySwipeFragment();
-                            title = "Mitt företag";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            changeFragment(title, fragment);
-                            break;
-                        case 2:
-                            ToplistSwiper test = new ToplistSwiper();
-                            title = "Topplistor";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.third);
-                            changeFragment(title, test);
-                            break;
-                        case 3:
-                            MedalViewSwiper medalFragment = new MedalViewSwiper();
-                            title = "Medaljer";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            changeFragment(title, medalFragment);
-                        case 4:
-                            EditInfoFragment editInfoFragment = new EditInfoFragment();
-                            title = "Redigera profil";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            changeFragment(title, editInfoFragment);
-                            break;
-                        case 5:
-                            logout();
-                            break;
-                        case 6:
-                            title = "Diagram";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            BarDiagram bd = new BarDiagram();
-                            fragmentTransaction.replace(R.id.container, bd);
-                            fragmentsVisitedName.add(title);
-                            fragmentsVisited.add(bd);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                            break;
-                        case 7:
-                            title = "WiFi Detect";
-                            getSupportActionBar().setTitle(title);
-                            WifiFragment wfrag = new WifiFragment();
-                            fragmentTransaction.replace(R.id.container, wfrag);
-                            fragmentsVisitedName.add(title);
-                            fragmentsVisited.add(wfrag);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                            break;
-                    }
-                    prevView = view;
-                    drawerLayout.closeDrawer(drawerListLeft);
+        String usrCompanyString = currentUser.getCompany();
+        Company company = (Company) database.getCompany(usrCompanyString);
+        switch (position) {
+            case 0:
+                changeToProfileFragment(currentUser, "Min profil");
+                break;
+            case 1:
+                CompanySwipeFragment fragment = new CompanySwipeFragment();
+                title = "Mitt företag";
+                changeFragment(title, fragment);
+                break;
+            case 2:
+                ToplistSwiper test = new ToplistSwiper();
+                title = "Topplistor";
+                changeFragment(title, test);
+                break;
+            case 3:
+                MedalViewSwiper medalFragment = new MedalViewSwiper();
+                title = "Medaljer";
+                changeFragment(title, medalFragment);
+                break;
+            case 4:
+                if (usrCompanyString.equals("")) {
+                    EditInfoFragment editInfoFragment = new EditInfoFragment();
+                    title = "Redigera profil";
+                    changeFragment(title, editInfoFragment);
                 } else {
-                    switch (position) {
-                        case 0:
-                            changeFragment(currentUser, "Min profil");
-                            view.setBackgroundResource(R.color.clicked);
-                            break;
-                        case 1:
-                            changeFragment(company, "Mitt företag");
-                            view.setBackgroundResource(R.color.clicked);
-                            break;
-                        case 2:
-                            ToplistSwiper test = new ToplistSwiper();
-                            title = "Topplistor";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.third);
-                            changeFragment(title, test);
-                            break;
-                        case 3:
-                            MedalViewSwiper medalFragment = new MedalViewSwiper();
-                            title = "Medaljer";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            changeFragment(title, medalFragment);
-                            break;
-                        case 4:
-                            title = "Företagsinställningar";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            if (this.company.userIsModerator(currentUser)) {
-                                EditCompanyFragment editCompanyFragment = new EditCompanyFragment();
-                                changeFragment(title, editCompanyFragment);
-                            } else {
-                                ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
-                                changeFragment(title, connectedCompanyFragment);
-                            }
-                            break;
-                        case 5:
-                            EditInfoFragment editInfoFragment = new EditInfoFragment();
-                            title = "Redigera profil";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            changeFragment(title, editInfoFragment);
-                            break;
-                        case 6:
-                            logout();
-                            break;
-                        case 7:
-                            title = "Diagram";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            BarDiagram bd = new BarDiagram();
-                            fragmentTransaction.replace(R.id.container, bd);
-                            fragmentsVisitedName.add(title);
-                            fragmentsVisited.add(bd);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                            break;
-                        case 8:
-                            title = "WiFi Detect";
-                            getSupportActionBar().setTitle(title);
-                            view.setBackgroundResource(R.color.clicked);
-                            WifiFragment wfrag = new WifiFragment();
-                            fragmentTransaction.replace(R.id.container, wfrag);
-                            fragmentsVisitedName.add(title);
-                            fragmentsVisited.add(wfrag);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
-                            break;
-
+                    title = "Företagsinställningar";
+                    if (company.userIsModerator(currentUser)) {
+                        EditCompanyFragment editCompanyFragment = new EditCompanyFragment();
+                        changeFragment(title, editCompanyFragment);
+                    } else {
+                        ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
+                        changeFragment(title, connectedCompanyFragment);
                     }
-                    prevView = view;
-                    drawerLayout.closeDrawer(drawerListLeft);
                 }
                 break;
-            case R.id.search_result_list:
-                /*Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                CharSequence text;
-                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                Object item = searchAdapter.getItem(position);
-                IProfile profile = (IProfile) item;
-                try {
-                    title = profile.getName();
-                    getSupportActionBar().setTitle(title);
-                    ProfileView profileView = ProfileView.newInstance(profile);
-                    fragmentsVisitedName.add(title);
-                    fragmentsVisited.add(profileView);
-                    fragmentTransaction.replace(R.id.container, profileView);
-                } catch (IndexOutOfBoundsException e) {
-                    text = "Ingen kontakt med databasen, försök igen";
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+            case 5:
+                if (usrCompanyString.equals("")) {
+                    logout();
+                } else {
+                    EditInfoFragment editInfoFragment = new EditInfoFragment();
+                    title = "Redigera profil";
+                    changeFragment(title, editInfoFragment);
                 }
-                drawerLayout.closeDrawer(drawerListRight);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);*/
-                Object item = searchAdapter.getItem(position);
-                IProfile profile = (IProfile) item;
-                changeFragment(profile, profile.getName());
-                drawerLayout.closeDrawer(drawerListRight);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
+                break;
+            case 6:
+                if (usrCompanyString.equals("")) {
+                    title = "WiFi Detect";
+                    getSupportActionBar().setTitle(title);
+                    WifiFragment wfrag = new WifiFragment();
+                    changeFragment(title, wfrag);
+
+                } else {
+                    logout();
+                }
+                break;
+            case 7:
+                title = "WiFi Detect";
+                WifiFragment wfrag = new WifiFragment();
+                changeFragment(title, wfrag);
                 break;
         }
-
-
-
-
-        /*fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
-        //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
+        view.setBackgroundResource(R.color.third);
+        prevView = view;
+        drawerLayout.closeDrawer(drawerListLeft);
     }
 
-
-
-        /*fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();*/
-    //Toast.makeText(this, planetTitles[position] + " was selected", Toast.LENGTH_LONG).show();
 
 
 /*    @Override
@@ -433,7 +307,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
     private void changeFragment(String title, Fragment fragment) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentsVisited.add(fragment);
+        getSupportActionBar().setTitle(title);
         fragmentsVisitedName.add(title);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
@@ -446,23 +320,17 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         SaveHandler.changeUser(null);
     }
 
-    public void changeFragment(IProfile profile, String t) {
+    public void changeToProfileFragment(IProfile profile, String t) {
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        //I don't think this try/catch is needed in this way cuz i dont think you cant get indexException anymore
-        try {
-            title = t;
-            getSupportActionBar().setTitle(title);
-            ProfileView profileView = ProfileView.newInstance(profile);
-            fragmentsVisitedName.add(title);
-            fragmentsVisited.add(profileView);
-            fragmentTransaction.replace(R.id.container, profileView);
-        } catch (IndexOutOfBoundsException e) {
-            tools.showToast("Ingen kontakt med databasen, försök igen", context);
-        }
+        title = t;
+        getSupportActionBar().setTitle(title);
+        ProfileView profileView = ProfileView.newInstance(profile);
+        fragmentsVisitedName.add(title);
+        fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
@@ -475,34 +343,39 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         }
     }
 
+    public void updateList(boolean connected) {
+        listAdapter.changeLayout(connected);
+        drawerListLeft.setAdapter(listAdapter);
+    }
+
     private void search() {
         searchAdapter = new SearchAdapter(this, searchText.getText().toString());
         searchListView.setAdapter(searchAdapter);
     }
 
-    boolean timerRunning = false;
-    View.OnKeyListener autoSearch = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            final Timer t = new Timer();
+boolean timerRunning = false;
+View.OnKeyListener autoSearch = new View.OnKeyListener() {
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        final Timer t = new Timer();
 
-            if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
-                search();
-            }
-
-            /**
-             * Timer, otherwise it calls twice
-             */
-            timerRunning = true;
-            t.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    timerRunning = false;
-                    t.cancel();
-                }
-            }, 1000);
-
-            return true;
+        if (keyCode == KeyEvent.KEYCODE_ENTER && !timerRunning) {
+            search();
         }
-    };
+
+        /**
+         * Timer, otherwise it calls twice
+         */
+        timerRunning = true;
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timerRunning = false;
+                t.cancel();
+            }
+        }, 1000);
+
+        return true;
+    }
+};
 }
