@@ -207,7 +207,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         if(toastText.length() != 0){
             tools.showToast(toastText, context);
         }
-
     }
 
 }

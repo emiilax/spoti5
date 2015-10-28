@@ -25,8 +25,6 @@ import com.example.spoti5.ecobussing.controller.listeners.ProfilePagerListener;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ProfilePagerAdapter;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 
 /**
@@ -79,7 +77,7 @@ public class ProfileView extends Fragment{
             SaveHandler.changeUser(currentUser);
             DatabaseHolder.getDatabase().updateCompany(company);
             MainActivity currentActivity = (MainActivity)getActivity();
-            currentActivity.changeFragment(thisProfile, thisProfile.getName());
+            currentActivity.changeToProfileFragment(thisProfile, thisProfile.getName());
             currentActivity.updateList(false);
         }
     };
