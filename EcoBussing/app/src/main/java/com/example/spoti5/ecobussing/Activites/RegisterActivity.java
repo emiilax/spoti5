@@ -25,12 +25,10 @@ import java.util.TimerTask;
  */
 public class RegisterActivity extends ActivityController implements IDatabaseConnected{
 
-    private Button register_button;
     private EditText nameView;
     private EditText emailView;
     private EditText passwordView;
     private EditText secondPasswordView;
-    private TextView login;
     private Tools tools;
 
     private String name;
@@ -46,13 +44,13 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_screen);
 
-        register_button = (Button) findViewById(R.id.button_register);
+        Button register_button = (Button) findViewById(R.id.button_register);
         nameView = (EditText) (findViewById(R.id.name));
         emailView = (EditText) findViewById(R.id.email);
 
         passwordView = (EditText) findViewById(R.id.first_password);
         secondPasswordView = (EditText) findViewById(R.id.second_password);
-        login = (TextView) findViewById(R.id.logInString);
+        TextView login = (TextView) findViewById(R.id.logInString);
 
         login.setOnClickListener(goToLogin);
         register_button.setOnClickListener(register);

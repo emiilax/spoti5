@@ -27,25 +27,17 @@ import com.example.spoti5.ecobussing.controller.SaveHandler;
  */
 public class CreateCompanyFragment extends Fragment implements IDatabaseConnected {
 
-    private ImageView compImage;
     private EditText nameTextField;
     private EditText nbrEmployeesTextField;
     private EditText compInfoTextField;
-    private Button saveButton;
 
     private String name;
-    private Company newCompany;
     private String compInfo;
     private int nbrEmployees;
 
     private IUser currentUser;
 
     private IDatabase database;
-
-    public CreateCompanyFragment() {
-
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,12 +51,12 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
         View view = inflater.inflate(R.layout.fragment_create_company, container, false);
 
-        compImage = (ImageView)view.findViewById(R.id.imageViewComp);
+        ImageView compImage = (ImageView)view.findViewById(R.id.imageViewComp);
         //compImage.setOnClickListener(setImage);
         nameTextField = (EditText) view.findViewById(R.id.editTextCompName);
         nbrEmployeesTextField = (EditText) view.findViewById(R.id.editTextEmployees);
         compInfoTextField = (EditText)view.findViewById(R.id.editTextCompInfo);
-        saveButton = (Button) view.findViewById(R.id.saveCompButton);
+        Button saveButton = (Button) view.findViewById(R.id.saveCompButton);
         saveButton.setOnClickListener(save);
 
 
@@ -106,7 +98,7 @@ public class CreateCompanyFragment extends Fragment implements IDatabaseConnecte
 
     private void registerCompany() {
         initStrings();
-        newCompany = new Company(name, currentUser, nbrEmployees);
+        Company newCompany = new Company(name, currentUser, nbrEmployees);
         newCompany.setCompanyInfo(compInfo);
         database.addCompany(name, newCompany, this);
         currentUser.setCompany(newCompany.getName());

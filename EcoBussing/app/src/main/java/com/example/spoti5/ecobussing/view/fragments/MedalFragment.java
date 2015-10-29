@@ -18,9 +18,6 @@ import com.example.spoti5.ecobussing.controller.adapters.listadapters.UserMedalA
  * Created by Erik on 2015-10-17.
  */
 public class MedalFragment extends Fragment {
-    private Activity currentActivity;
-    private View view;
-    private ListView listView;
     private int medalType;
     private ListAdapter listAdapter;
 
@@ -44,10 +41,10 @@ public class MedalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.medal_list, container, false);
+        View view = inflater.inflate(R.layout.medal_list, container, false);
 
-        currentActivity = getActivity();
-        listView = (ListView)view.findViewById(R.id.medalList);
+        Activity currentActivity = getActivity();
+        ListView listView = (ListView)view.findViewById(R.id.medalList);
 
         if(this.medalType == USER_MEDALS){
             listAdapter = new UserMedalAdapter(currentActivity);

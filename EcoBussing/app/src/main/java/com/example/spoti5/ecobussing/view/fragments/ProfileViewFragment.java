@@ -37,11 +37,10 @@ import java.text.DecimalFormat;
  */
 public class ProfileViewFragment extends Fragment{
     private View view;
+    private ViewPager viewPager1;
+    private ViewPager viewPager2;
     private IProfile thisProfile;
     private static final Calculator calc = Calculator.getCalculator();
-    private Button connectCompanyButton;
-    private ProfilePagerAdapter pagerAdapter1;
-    private ProfilePagerAdapter pagerAdapter2;
 
     public ProfileViewFragment() {
         // Required empty public constructor
@@ -61,7 +60,7 @@ public class ProfileViewFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
         view = setMPagerAdapter(view);
-        connectCompanyButton = (Button)view.findViewById(R.id.connectButton_company);
+        Button connectCompanyButton = (Button)view.findViewById(R.id.connectButton_company);
         connectCompanyButton.setOnClickListener(connectToCompany);
 
         setDataStrings(view);
@@ -87,7 +86,8 @@ public class ProfileViewFragment extends Fragment{
 
     //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
-
+        ProfilePagerAdapter pagerAdapter1;
+        ProfilePagerAdapter pagerAdapter2;
         if(thisProfile instanceof IUser) {
             pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
             pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
@@ -98,11 +98,11 @@ public class ProfileViewFragment extends Fragment{
             pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
         }
 
-        ViewPager viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
+        viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
         viewPager1.setAdapter(pagerAdapter1);
         viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
 
-        ViewPager viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
+        viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
         viewPager2.setAdapter(pagerAdapter2);
         viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
         return viewen;

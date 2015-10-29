@@ -182,6 +182,7 @@ public class DatabaseUser implements Serializable{
     private void updateMoneyMap(){
         if(moneySavedMap == null || !oldMoneyJson.equals(moneyJson)){
             Gson gson = new Gson();
+            //noinspection unchecked
             moneySavedMap = gson.fromJson(this.getMoneyJson(), DeepMap.class);
             oldMoneyJson = this.getMoneyJson();
         }
@@ -190,6 +191,7 @@ public class DatabaseUser implements Serializable{
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
             Gson gson = new Gson();
+            //noinspection unchecked
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();
         }

@@ -50,8 +50,7 @@ public class SaveHandler {
 
         }
         if(du != null){
-            IUser user = new User(du);
-            return user;
+            return new User(du);
         }
         return null;
     }

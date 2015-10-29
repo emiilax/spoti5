@@ -34,8 +34,6 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
     private EditText currentPassword;
     private EditText password1;
     private EditText password2;
-    private Button saveChanges;
-    private ImageView profilePic;
     private IDatabase database;
     private Tools tools;
     private Context context;
@@ -54,8 +52,8 @@ public class EditInfoFragment extends Fragment implements IDatabaseConnected {
         password1 = (EditText) view.findViewById(R.id.password1);
         password2 = (EditText) view.findViewById(R.id.password2);
         currentPassword = (EditText) view.findViewById(R.id.current_password);
-        saveChanges = (Button) view.findViewById(R.id.save_button);
-        profilePic = (ImageView) view.findViewById(R.id.edit_profile_pic);
+        Button saveChanges = (Button) view.findViewById(R.id.save_button);
+        ImageView profilePic = (ImageView) view.findViewById(R.id.edit_profile_pic);
 
         profilePic.setOnClickListener(changeImage);
         saveChanges.setOnClickListener(save);

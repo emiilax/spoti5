@@ -66,7 +66,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private ListView drawerListLeft;
     private FrameLayout drawerListRight;
     private ListView searchListView;
-    private Tools tools;
 
     private Stack<Fragment> prevFragments;
 
@@ -85,7 +84,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private List<String> fragmentsVisitedName;
 
     private IUser currentUser;
-    private boolean connected;
 
     String title;
 
@@ -96,7 +94,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
-        connected = currentUser.getCompany().equals("");
+        Boolean connected = currentUser.getCompany().equals("");
 
         fragmentsVisitedName = new ArrayList<>();
 
@@ -138,7 +136,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        tools = Tools.getInstance();
+        Tools tools = Tools.getInstance();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 

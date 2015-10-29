@@ -18,10 +18,6 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
 
     private IProfile thisProfile;
     private boolean isPointsMoney;
-    private Fragment frag1;
-    private Fragment frag2;
-    private Fragment frag3;
-
 
     public ProfilePagerAdapter(FragmentManager fragment, IProfile profile, boolean isPointsMoney) {
         super(fragment);
@@ -34,16 +30,13 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                frag1 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
-                fragment = frag1;
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
                 break;
             case 1:
-                frag2 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
-                fragment = frag2;
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
                 break;
             case 2:
-                frag3 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
-                fragment = frag3;
+                fragment = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
                 break;
         }
 

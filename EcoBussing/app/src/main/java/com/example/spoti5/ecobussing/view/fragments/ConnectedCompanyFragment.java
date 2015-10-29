@@ -31,13 +31,7 @@ public class ConnectedCompanyFragment extends Fragment {
     private IDatabase database;
     private IUser currentUser;
 
-    private ImageView companyImage;
-    private TextView companyName;
-    private TextView employees;
-    private TextView co2Saved;
-    private TextView connectedUsersText;
     private ListView userList;
-    private Button disconnectCompany;
 
     private List<String> usersConnected;
 
@@ -58,13 +52,13 @@ public class ConnectedCompanyFragment extends Fragment {
 
         View view =inflater.inflate(R.layout.fragment_connected_company,container,false);
 
-        companyImage = (ImageView)view.findViewById(R.id.imageViewComp);
-        companyName = (TextView)view.findViewById(R.id.textViewCompanyName);
-        employees = (TextView)view.findViewById(R.id.textViewEmployees);
-        co2Saved = (TextView)view.findViewById(R.id.textViewCo2);
-        connectedUsersText = (TextView)view.findViewById(R.id.textView13);
+        ImageView companyImage = (ImageView)view.findViewById(R.id.imageViewComp);
+        TextView companyName = (TextView)view.findViewById(R.id.textViewCompanyName);
+        TextView employees = (TextView)view.findViewById(R.id.textViewEmployees);
+        TextView co2Saved = (TextView)view.findViewById(R.id.textViewCo2);
+        TextView connectedUsersText = (TextView)view.findViewById(R.id.textView13);
         userList = (ListView)view.findViewById(R.id.listView);
-        disconnectCompany = (Button)view.findViewById(R.id.buttonDisconnect);
+        Button disconnectCompany = (Button)view.findViewById(R.id.buttonDisconnect);
 
         disconnectCompany.setOnClickListener(disconnectFromComp);
         companyName.setText(currentUser.getCompany());

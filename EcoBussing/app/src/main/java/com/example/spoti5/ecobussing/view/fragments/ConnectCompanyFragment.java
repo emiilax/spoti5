@@ -28,7 +28,6 @@ import java.util.TimerTask;
 public class ConnectCompanyFragment extends Fragment {
 
     private EditText searchField;
-    private ImageView searchButton;
     private ListView searchResults;
 
     private CompanySearchAdapter adapter;
@@ -41,7 +40,7 @@ public class ConnectCompanyFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_connect_company,container,false);
 
         searchField = (EditText)view.findViewById(R.id.searchField);
-        searchButton = (ImageView)view.findViewById(R.id.searchImageView);
+        ImageView searchButton = (ImageView)view.findViewById(R.id.searchImageView);
         searchResults = (ListView)view.findViewById(R.id.searchResults);
 
         searchField.setOnKeyListener(autoSearch);

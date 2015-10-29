@@ -20,10 +20,10 @@ import java.util.List;
 public class SearchAdapter extends BaseAdapter {
     private List<IProfile> searchResults;
     private Context context;
-    private Tools simpelSearch = Tools.getInstance();
 
     public SearchAdapter(Context context, String searchWord){
         this.context = context;
+        Tools simpelSearch = Tools.getInstance();
         if(searchWord.equals("")) {
             searchWord = "---";
         }

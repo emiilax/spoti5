@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class CompanySearchAdapter extends BaseAdapter {
 
-    private List<IProfile> searchResults;
     private List<IProfile> searchedCompanies;
     private Context context;
 
@@ -33,7 +32,8 @@ public class CompanySearchAdapter extends BaseAdapter {
 
         Tools simpelSearch = Tools.getInstance();
 
-        searchResults = simpelSearch.search(searchWord);
+        List<IProfile> searchResults = simpelSearch.search(searchWord);
+        //noinspection unchecked
         searchedCompanies = new ArrayList();
 
         for(IProfile profile: searchResults){
