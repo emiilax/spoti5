@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 public class CompanyTestJUnit {
     private User testUser1 = new User("tu1@mail.com", "tu1");
     private User testUser2 = new User("tu2@mail.com", "tu2");
-    private User testUser3 = new User("tu3@mail.com", "tu3");
 
     private Company testCompany1 = new Company("tc1", testUser1, 30);
 
@@ -21,14 +20,28 @@ public class CompanyTestJUnit {
 
     @Test
     public void testUserIsMember(){
-        testCompany1.addMember(testUser2);
-        assertTrue(testCompany1.userIsMember(testUser2));
         assertTrue(testCompany1.userIsMember(testUser1));
+        assertFalse(testCompany1.userIsMember(testUser2));
     }
 
     @Test
     public void testUserIsCreator(){
         assertTrue(testCompany1.userIsCreator(testUser1));
+        assertFalse(testCompany1.userIsCreator(testUser2));
     }
 
+    @Test
+    public void testUserIsModerator() {
+        assertTrue(testCompany1.userIsModerator(testUser1));
+        assertFalse(testCompany1.userIsModerator(testUser2));
+    }
+
+    @Test
+    public void testGetSetNbrOfEmployees() {
+        assertTrue(testCompany1.getNbrEmployees() == 30);
+
+        testCompany1.setNbrEmployees(35);
+
+        assertTrue(testCompany1.getNbrEmployees() == 35);
+    }
 }
