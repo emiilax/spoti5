@@ -14,9 +14,9 @@ import com.example.spoti5.ecobussing.controller.viewcontroller.activities.Activi
 import com.example.spoti5.ecobussing.controller.bardiagram.DiagramBarData;
 import com.example.spoti5.ecobussing.controller.bardiagram.XAxisFormatter;
 import com.example.spoti5.ecobussing.controller.bardiagram.YAxisFormatter;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;

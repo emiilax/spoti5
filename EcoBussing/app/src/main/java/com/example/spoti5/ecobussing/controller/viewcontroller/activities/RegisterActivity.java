@@ -14,7 +14,7 @@ import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
 import com.example.spoti5.ecobussing.io.CheckUserInput;
-import com.example.spoti5.ecobussing.model.profile.User;
+import com.example.spoti5.ecobussing.controller.profile.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import java.util.Timer;
@@ -94,6 +94,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         }
     }
 
+    //checks if textfields have anything in them
     private boolean valuesIsOk(){
         if(name.equals("") || email.equals("")){
             tools.showToast("Alla fält måste fyllas i", context);
@@ -107,6 +108,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         database = DatabaseHolder.getDatabase();
     }
 
+    //sets all strings to the input in the textfield
     private void initStrings(){
         name = nameView.getText().toString();
         email = emailView.getText().toString();
@@ -114,6 +116,7 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
         secondPassword = secondPasswordView.getText().toString();
     }
 
+    //simple password check, shows toast if anything is wrong
     private boolean checkPasswords(){
         CharSequence toastText = "";
         if(!password.equals(secondPassword)){
@@ -165,8 +168,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
                     t.cancel();
                 }
             }, 1000);
-
-
         return true;
         }
     };
@@ -203,7 +204,6 @@ public class RegisterActivity extends ActivityController implements IDatabaseCon
             case ErrorCodes.UNKNOWN_ERROR: toastText = "Något gick fel.";
                 break;
         }
-
         if(toastText.length() != 0){
             tools.showToast(toastText, context);
         }

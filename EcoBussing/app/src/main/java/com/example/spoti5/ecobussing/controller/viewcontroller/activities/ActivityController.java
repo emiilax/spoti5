@@ -35,11 +35,9 @@ public abstract class ActivityController extends AppCompatActivity {
     }
 
     /**
-     * Starts the overview activity. Is not reverseable
+     * Starts the overview activity. Is not reversible
      */
     protected void startRegisterActivity() {
-        //addWifiChangeHandler();
-
         Intent registerActivity = new Intent(ActivityController.this, RegisterActivity.class);
         registerActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ActivityController.this.startActivity(registerActivity);
@@ -49,7 +47,6 @@ public abstract class ActivityController extends AppCompatActivity {
      * Starts the login activity.
      */
     protected void startLoginActivity() {
-        //addWifiChangeHandler();
         Intent loginActivity = new Intent(ActivityController.this, LoginActivity.class);
         ActivityController.this.startActivity(loginActivity);
     }
@@ -58,7 +55,6 @@ public abstract class ActivityController extends AppCompatActivity {
      * Starts the overview activity. Is not reverseable
      */
     protected void startOverviewActivity() {
-        //addWifiChangeHandler();
         Intent overviewActivity = new Intent(ActivityController.this, OverviewActivity.class);
         overviewActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ActivityController.this.startActivity(overviewActivity);
@@ -68,7 +64,6 @@ public abstract class ActivityController extends AppCompatActivity {
      * Starts the overview activity.
      */
     protected void startMainActivity() {
-        //addWifiChangeHandler();
         Intent MainActivity = new Intent(ActivityController.this, MainActivity.class);
         ActivityController.this.startActivity(MainActivity);
     }
@@ -77,7 +72,6 @@ public abstract class ActivityController extends AppCompatActivity {
      * Sets the sensor for whenever the wifi-state change
      */
     protected void addWifiChangeHandler(){
-        //unregisterReceiver(wifiReciever);
         intentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         registerReceiver(wifiReciever, intentFilter);
     }

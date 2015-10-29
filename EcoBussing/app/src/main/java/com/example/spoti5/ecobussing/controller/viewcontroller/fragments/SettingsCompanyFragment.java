@@ -15,12 +15,12 @@ import android.widget.TextView;
 import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.Company;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.Company;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +72,9 @@ public class SettingsCompanyFragment extends Fragment {
         companyName.setText(company.getName());
 
         employees.setText("Anställda: " + company.getNbrEmployees());
-        co2Saved.setText("Sparad co2: " + company.getCO2Saved());
+
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        co2Saved.setText("Sparad co2: " + df2.format(company.getCO2Saved()) + "kg");
         usersConnected = new ArrayList<>();
 
         createListView();
@@ -89,10 +91,7 @@ public class SettingsCompanyFragment extends Fragment {
                 usersConnected.add(user.getName());
             }
         }
-
         userList.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, usersConnected));
-
-
     }
 
     private View.OnClickListener viewCompany = new View.OnClickListener() {

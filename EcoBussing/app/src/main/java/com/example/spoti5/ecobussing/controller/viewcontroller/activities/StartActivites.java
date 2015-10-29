@@ -4,11 +4,15 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 
 /**
  * Created by Erik on 2015-09-27.
+ * First class that is initizated. Works like a factory, chooses
+ * what activity should be started. If no user i logged in, start register activity. If
+ * user is logged in but hasn't traveled since last use, start main activity. If the user has traveled,
+ * start overview activity
  */
 public class StartActivites extends ActivityController{
 

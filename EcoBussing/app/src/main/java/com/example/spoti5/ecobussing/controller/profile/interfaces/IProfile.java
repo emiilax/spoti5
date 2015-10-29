@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.model.profile.interfaces;
+package com.example.spoti5.ecobussing.controller.profile.interfaces;
 
 import java.io.Serializable;
 
