@@ -10,7 +10,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.StrictMode;
 
-import com.example.spoti5.ecobussing.controller.apirequest.BusConnection;
+import com.example.spoti5.ecobussing.io.net.apirequest.BusConnection;
 import com.example.spoti5.ecobussing.model.bus.Bus;
 import com.example.spoti5.ecobussing.model.bus.Busses;
 

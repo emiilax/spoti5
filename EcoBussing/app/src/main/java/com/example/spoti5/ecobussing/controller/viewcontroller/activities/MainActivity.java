@@ -1,9 +1,8 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
 import android.annotation.TargetApi;
 
 import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -29,25 +28,25 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.spoti5.ecobussing.controller.Tools;
-import com.example.spoti5.ecobussing.view.fragments.EditCompanyFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.SettingsAdminCompanyFragment;
 import com.example.spoti5.ecobussing.controller.swipers.MedalViewSwiper;
 import com.example.spoti5.ecobussing.model.profile.Company;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.DrawerListAdapter;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.SearchAdapter;
-import com.example.spoti5.ecobussing.view.fragments.CompanySwipeFragment;
-import com.example.spoti5.ecobussing.view.fragments.ConnectedCompanyFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.CompanySwipeFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.SettingsCompanyFragment;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.view.fragments.EditInfoFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.EditInfoFragment;
 import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
-import com.example.spoti5.ecobussing.view.fragments.ProfileViewFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.ProfileViewFragment;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.controller.swipers.ToplistSwiper;
-import com.example.spoti5.ecobussing.view.fragments.WifiFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.WifiFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +82,12 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private SearchAdapter searchAdapter;
 
     private List<String> fragmentsVisitedName;
+    private List<? super Fragment> fragmentsVisited;
 
     private IUser currentUser;
     private boolean connected;
 
-    String title;
+    private String title;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -99,6 +99,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         connected = currentUser.getCompany().equals("");
 
         fragmentsVisitedName = new ArrayList<>();
+        fragmentsVisited = new ArrayList<>();
 
         prevFragments = new Stack<>();
 
@@ -115,7 +116,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         drawerListRight = (FrameLayout) findViewById(R.id.right_drawer);
 
         LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
         LinearLayout myView = (LinearLayout) inflater.inflate(R.layout.search_view, null);
 
         searchImage = (ImageView) myView.findViewById(R.id.button_search);
@@ -160,10 +161,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private void startFirstFragemnt() {
         IUser user = SaveHandler.getCurrentUser();
         String title = "Min profil";
-
         ProfileViewFragment profileView = ProfileViewFragment.newInstance(user);
         changeFragment(title, profileView);
-
     }
 
 
@@ -207,7 +206,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             drawerLayout.openDrawer(drawerListRight);
             drawerLayout.clearFocus();
             searchText.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             imm.showSoftInput(searchText, InputMethodManager.SHOW_IMPLICIT);
         }
         return super.onOptionsItemSelected(item);
@@ -238,12 +237,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                     }else{
                         throw new NullPointerException();
                     }
-
                 } catch(NullPointerException e){
                     fragment = new CompanySwipeFragment();
                 }
 
-                
                 title = "Mitt företag";
                 changeFragment(title, fragment);
                 break;
@@ -265,11 +262,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
                 } else {
                     title = "Företagsinställningar";
                     if (company.userIsModerator(currentUser)) {
-                        EditCompanyFragment editCompanyFragment = new EditCompanyFragment();
-                        changeFragment(title, editCompanyFragment);
+                        SettingsAdminCompanyFragment settingsAdminCompanyFragment = new SettingsAdminCompanyFragment();
+                        changeFragment(title, settingsAdminCompanyFragment);
                     } else {
-                        ConnectedCompanyFragment connectedCompanyFragment = new ConnectedCompanyFragment();
-                        changeFragment(title, connectedCompanyFragment);
+                        SettingsCompanyFragment settingsCompanyFragment = new SettingsCompanyFragment();
+                        changeFragment(title, settingsCompanyFragment);
                     }
                 }
                 break;
@@ -339,18 +336,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
             fragmentsVisitedName.remove(last + 1);
 
         }
-
-        /* else if(fragmentsVisitedName.size() > 2){
-
-
-
-
-            super.onBackPressed();
-
-        } else {
-            super.onBackPressed();
-        }*/
-
     }
 
 
@@ -360,6 +345,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         getSupportActionBar().setTitle(title);
         fragmentsVisitedName.add(title);
+        fragmentsVisited.add(fragment);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -372,10 +358,8 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
     public void changeToProfileFragment(IProfile profile, String t) {
-
         ProfileViewFragment profileView = ProfileViewFragment.newInstance(profile);
         changeFragment(t, profileView);
-
     }
 
     @Override
@@ -394,18 +378,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchAdapter = new SearchAdapter(this, searchText.getText().toString());
         searchListView.setAdapter(searchAdapter);
     }
-
-    /*
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }*/
-
 
     boolean timerRunning = false;
     View.OnKeyListener autoSearch = new View.OnKeyListener() {

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.spoti5.ecobussing.controller.apirequest.BusConnection;
-import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.io.net.apirequest.BusConnection;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
 import com.example.spoti5.ecobussing.model.bus.Busses;
 import com.example.spoti5.ecobussing.R;
 

@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.support.v4.app.Fragment;
 import android.graphics.Color;

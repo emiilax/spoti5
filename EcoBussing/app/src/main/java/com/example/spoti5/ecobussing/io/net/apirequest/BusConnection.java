@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.controller.apirequest;
+package com.example.spoti5.ecobussing.io.net.apirequest;
 
 
 
@@ -6,7 +6,6 @@ package com.example.spoti5.ecobussing.controller.apirequest;
 
 import com.example.spoti5.ecobussing.model.bus.Bus;
 import com.example.spoti5.ecobussing.model.bus.Bus55Stops;
-import com.example.spoti5.ecobussing.controller.calculations.Calculator;
 import com.example.spoti5.ecobussing.model.jsonclasses.eciapi.EARespond;
 import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.StopLocation;
 import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.VANearbyStops;

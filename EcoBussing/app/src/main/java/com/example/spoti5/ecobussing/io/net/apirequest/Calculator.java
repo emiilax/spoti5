@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.controller.calculations;
+package com.example.spoti5.ecobussing.io.net.apirequest;
 
 import com.example.spoti5.ecobussing.model.jsonclasses.googleapi.Directions;
 import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.StopLocation;

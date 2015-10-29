@@ -1,9 +1,10 @@
-package com.example.spoti5.ecobussing;
+package com.example.spoti5.ecobussing.controller.database;
 
 import com.firebase.client.Firebase;
 
 /**
  * Created by matildahorppu on 29/09/15.
+ * Creates a context for the database class
  */
 public class EcoTravelApplication extends android.app.Application {
 

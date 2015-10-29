@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
-import com.example.spoti5.ecobussing.controller.calculations.CheckUserInput;
+import com.example.spoti5.ecobussing.io.CheckUserInput;
 import com.example.spoti5.ecobussing.model.profile.User;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;

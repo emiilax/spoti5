@@ -1,6 +1,5 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -80,7 +79,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     private void login(){
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         String inputEmail = emailField.getText().toString();

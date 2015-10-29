@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
 import com.example.spoti5.ecobussing.controller.bardiagram.DiagramBarData;
 import com.example.spoti5.ecobussing.controller.bardiagram.XAxisFormatter;
 import com.example.spoti5.ecobussing.controller.bardiagram.YAxisFormatter;
@@ -28,7 +28,7 @@ import com.github.mikephil.charting.components.YAxis;
  * Used to show diagrams in the profile-views.
  *
  */
-public class BarDiagram extends Fragment {
+public class BarDiagramFragment extends Fragment {
 
     //private double highestValue;
     private BarChart chart;
@@ -46,7 +46,8 @@ public class BarDiagram extends Fragment {
     public final static int LAST_SEVEN_WEEKS = 1;
     public final static int LAST_SEVEN_MONTHS = 2;
 
-    public BarDiagram() {
+
+    public BarDiagramFragment() {
         diagramBarData = new DiagramBarData(this);
     }
 
@@ -57,8 +58,8 @@ public class BarDiagram extends Fragment {
      * @param moneyPoints, if company: should it be points or co2, if user: should it be money or co2
      * @return Bardiagram-object
      */
-    public static BarDiagram newInstance(IProfile profile, int range, boolean moneyPoints){
-        BarDiagram bd = new BarDiagram();
+    public static BarDiagramFragment newInstance(IProfile profile, int range, boolean moneyPoints){
+        BarDiagramFragment bd = new BarDiagramFragment();
 
         bd.setProfile(profile);
         bd.moneyPoints = moneyPoints;

@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.controller.calculations;
+package com.example.spoti5.ecobussing.io;
 
 /**
  * Created by erikk on 2015-09-16.
@@ -20,23 +20,18 @@ public class CheckUserInput {
         } else {
             boolean upper = false;
             boolean lower = false;
-            boolean number = false;
             for (char c: password.toCharArray()){
                 if(Character.isUpperCase(c)){
                     upper = true;
                 }else if(Character.isLowerCase(c)){
                     lower = true;
-                } else if (Character.isDigit(c)){
-                    number = true;
                 }
             }
             if(!upper){
                 return 1;
             }else if (!lower){
                 return 2;
-            }/* else if (!number){
-                return 3;
-            }*/
+            }
         }
         return -1;
     }
@@ -48,5 +43,4 @@ public class CheckUserInput {
         return m.matches();
     }
 
-    public static boolean checkUsernameAvailabilty(String username){return true;}
 }

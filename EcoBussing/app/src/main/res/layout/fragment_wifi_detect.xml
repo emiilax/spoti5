@@ -21,7 +21,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.example.spoti5.ecobussing.view.fragments.WifiFragment"
+        tools:context="com.example.spoti5.ecobussing.controller.viewcontroller.fragments.WifiFragment"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:paddingBottom="50dp"
@@ -147,7 +147,7 @@
             android:layout_centerHorizontal="true"
             android:textStyle="bold" />
         <LinearLayout
-            tools:context="com.example.spoti5.ecobussing.view.fragments.WifiFragment"
+            tools:context="com.example.spoti5.ecobussing.controller.viewcontroller.fragments.WifiFragment"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_below="@id/txtvTitle"

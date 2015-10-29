@@ -1,8 +1,9 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.CompanyMedalAdapter;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.GlobalMedalAdapter;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.UserMedalAdapter;
+import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ToplistPagerAdapter;
 
 /**
  * Created by Erik on 2015-10-17.
@@ -49,13 +51,7 @@ public class MedalFragment extends Fragment {
         currentActivity = getActivity();
         listView = (ListView)view.findViewById(R.id.medalList);
 
-        if(this.medalType == USER_MEDALS){
-            listAdapter = new UserMedalAdapter(currentActivity);
-        }else if(this.medalType == COMPANY_MEDALS){
-            listAdapter = new CompanyMedalAdapter(currentActivity);
-        }else if(this.medalType == GLOBAL_MEDALS){
-            listAdapter = new GlobalMedalAdapter(currentActivity);
-        }
+        listAdapter = selectMedal();
 
         listView.setAdapter(listAdapter);
 
@@ -63,10 +59,21 @@ public class MedalFragment extends Fragment {
         return view;
     }
 
+    private ListAdapter selectMedal(){
+        if(this.medalType == USER_MEDALS){
+            return new UserMedalAdapter(currentActivity);
+        }else if(this.medalType == COMPANY_MEDALS){
+            return new CompanyMedalAdapter(currentActivity);
+        }else if(this.medalType == GLOBAL_MEDALS){
+            return new GlobalMedalAdapter(currentActivity);
+        }
+        else{
+            return null;
+        }
+    }
+
 
     public void setMedalType(int medalType) {
         this.medalType = medalType;
-
-
     }
 }

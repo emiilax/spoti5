@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.spoti5.ecobussing.controller.Tools;
-import com.example.spoti5.ecobussing.controller.calculations.CheckUserInput;
+import com.example.spoti5.ecobussing.io.CheckUserInput;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;

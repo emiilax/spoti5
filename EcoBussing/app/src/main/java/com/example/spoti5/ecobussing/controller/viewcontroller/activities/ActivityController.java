@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
 import android.content.Context;
 import android.content.Intent;
