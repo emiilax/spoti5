@@ -2,10 +2,11 @@ package com.example.spoti5.ecobussing.controller.medals;
 
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.Company;
+import com.example.spoti5.ecobussing.controller.profile.Company;
 
 /**
  * Created by Erik on 2015-10-18.
+ * Contains all variables and data for company medals
  */
 public class CompanyMedal {
 
@@ -18,21 +19,22 @@ public class CompanyMedal {
     private Company company;
 
 
-    public CompanyMedal(String company){
+    public CompanyMedal(String company) {
         IDatabase database = DatabaseHolder.getDatabase();
-        this.company = (Company)database.getCompany(company);
+        this.company = (Company) database.getCompany(company);
 
         pointMedal();
         employeesMedal();
     }
 
+    //sets all values for point medal
     private void pointMedal() {
         maxPointTotal = 1000;
         currentPointTotal = company.getpointTot();
     }
 
-    public int getPointPercentage(){
-        return (int)(currentPointTotal/maxPointTotal)*100;
+    public int getPointPercentage() {
+        return (int) ((currentPointTotal / maxPointTotal) * 100);
     }
 
     public double getCurrentPointTotal() {
@@ -47,13 +49,16 @@ public class CompanyMedal {
         this.maxPointTotal = maxPointTotal;
     }
 
-    private void employeesMedal(){
+    //sets all values for employee medal
+    private void employeesMedal() {
         employeesMax = company.getNbrEmployees();
         employeesCurrent = company.getMembers().size();
     }
 
-    public int getEmployeesPercantage(){
-        return (employeesCurrent/employeesMax)*100;
+    public int getEmployeesPercantage() {
+        double ec = (double)employeesCurrent;
+        double em = (double)employeesMax;
+        return (int)((ec / em) * 100);
     }
 
     public int getEmployeesMax() {

@@ -17,9 +17,9 @@ import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.Company;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.Company;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.listeners.ProfilePagerListener;
 
 import com.example.spoti5.ecobussing.R;

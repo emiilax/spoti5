@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.BarDiagramFragment;
 
 /**
