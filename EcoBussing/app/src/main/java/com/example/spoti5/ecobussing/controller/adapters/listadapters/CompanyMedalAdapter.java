@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by emilaxelsson on 17/10/15.
+ * Created by Emil Axelsson on 17/10/15.
+ * Edited by Erik Karlkvist
  */
 public class CompanyMedalAdapter extends BaseAdapter {
     private List<String> medalNames;

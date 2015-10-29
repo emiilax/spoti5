@@ -44,12 +44,10 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
         return null;
     }
 
-    // Used to update the views
+    // Used to update the views, not a "ugly" solution.. But could not find any other solution
     @Override
     public int getItemPosition(Object object) {
-        notifyDataSetChanged();
         return POSITION_NONE;
-        //return super.getItemPosition(object);
     }
 
     @Override

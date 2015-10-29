@@ -73,9 +73,10 @@ public class DrawerListAdapter extends BaseAdapter {
         }
 
         TextView rowLabel = (TextView) row.findViewById(R.id.listItemLabel);
-        //ImageView rowIcon = (ImageView) row.findViewById(R.id.listItemIcon);
+
         ImageView icon = (ImageView) row.findViewById(R.id.listItemIcon);
 
+        // Used to load images to the listitems
         if(!connected) {
             switch (position) {
                 case 0:

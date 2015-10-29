@@ -168,10 +168,6 @@ public class ProfileViewFragment extends Fragment{
 
             infoText.setVisibility(View.VISIBLE);
 
-            /*
-            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
-            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);*/
 
             IUser currentUser = SaveHandler.getCurrentUser();
             if(!(currentUser.getCompany().equals(""))){
