@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
@@ -99,9 +99,6 @@ public class User implements IUser {
         map.addToCurrentDate(co2Saved);
         dbUser.setCo2SavedMap(map);
 
-        if(!dbUser.getCompany().equals("")){
-            updateCompany(co2Saved);
-        }
 
         this.incCurrentDistance(distance);
         this.addToCurrentCO2Saved(co2Saved);
@@ -128,6 +125,11 @@ public class User implements IUser {
 
     public void newJourney(double distance){
         incCO2Saved(distance);
+
+        if(!dbUser.getCompany().equals("")){
+            updateCompany(distance);
+        }
+
         incMoneySaved(distance);
 
     }

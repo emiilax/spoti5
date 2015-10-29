@@ -47,9 +47,9 @@
     <string name="medal_people">Alla bör åka kollektivt!</string>
 
 
-    <string name="barchart_lastSevenWeeks">Senaste 7 veckorna</string>
-    <string name="barchart_lastSevenDays">Senaste 7 dagarna</string>
-    <string name="barchart_lastSevenMonths">Senaste 7 månaderna</string>
+    <string name="barchart_lastSevenWeeks">sparat senaste 7 veckorna</string>
+    <string name="barchart_lastSevenDays">sparat senaste 7 dagarna</string>
+    <string name="barchart_lastSevenMonths">sparat senaste 7 månaderna</string>
 
     <string name="no_company_text">Inget företag är kopplat till ditt konto...</string>
 

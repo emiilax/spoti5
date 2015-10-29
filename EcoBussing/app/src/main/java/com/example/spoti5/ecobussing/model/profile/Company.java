@@ -1,5 +1,6 @@
 package com.example.spoti5.ecobussing.model.profile;
 
+import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
@@ -146,15 +147,19 @@ public class Company implements IProfile {
         }
     }
 
-    public void incPoints(double co2Saved){
+    public void incPoints(double distance){
         checkDate();
-        double points = calculatePoints(co2Saved);
+        double points = calculatePoints(distance);
+        DeepMap<Integer, Integer, Integer, Double> map = dbCompany.getPointSavedMap(true);
+        map.addToCurrentDate(points);
+        dbCompany.setPointSavedMap(map);
         dbCompany.setPointCurrentMonth(dbCompany.getPointCurrentMonth() + points);
         dbCompany.setPointCurrentYear(dbCompany.getPointCurrentYear() + points);
         dbCompany.setPointTot(dbCompany.getpointTot() +points);
     }
 
-    public double calculatePoints(double co2Saved){
+    public double calculatePoints(double distance){
+        double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
         if(co2Saved == 0) return 0;
 
         return 100 * (2+(10*co2Saved)) / (100+dbCompany.getNbrEmployees());
@@ -173,31 +178,33 @@ public class Company implements IProfile {
         if(year1 != year2) dbCompany.setPointCurrentYear(0);
     }
 
-    public void newJourney(double co2Saved){
-        incCO2Saved(co2Saved);
-        incPoints(co2Saved);
+    public void newJourney(double distance){
+        checkDate();
+        incCO2Saved(distance);
+        incPoints(distance);
         DatabaseHolder.getDatabase().updateCompany(this);
     }
 
 
 
-
+    /*
     // Getters
     public double getPointsSavedDate(int year, int month, int day){
 
-    double value = 0;
-    for(String s: dbCompany.getMembers(true)){
-        try{
-            IUser usr = DatabaseHolder.getDatabase().getUser(s);
-            value += calculatePoints(usr.getCO2SavedDate(year, month, day));
-        }catch (NullPointerException e){
-            value += 0;
+        double value = 0;
+        for(String s: dbCompany.getMembers(true)){
+            try{
+                IUser usr = DatabaseHolder.getDatabase().getUser(s);
+                value += calculatePoints(usr.getCO2SavedDate(year, month, day));
+            }catch (NullPointerException e){
+                value += 0;
+            }
         }
-    }
 
-    return value;
-}
+        return value;
+    }*/
 
+    /*
     public double getPointsSavedMonth(int year, int month){
 
         double value = 0;
@@ -212,7 +219,7 @@ public class Company implements IProfile {
         }
 
         return value;
-    }
+    }*/
 
     public int getNbrEmployees() {
         return dbCompany.getNbrEmployees();
@@ -244,36 +251,86 @@ public class Company implements IProfile {
     //TODO WITH DEEPMAPS-------------------------------------------------------------
     @Override
     public Double getDistanceTraveled() {
-        //co2Tot/co2 saved per km?
-        return null;
+        double value = 0;
+        for(String s: dbCompany.getMembers(true)){
+            try{
+                IUser usr = DatabaseHolder.getDatabase().getUser(s);
+
+                value += calculatePoints(usr.getCurrentDistance());
+            }catch (NullPointerException e){
+                value += 0;
+            }
+        }
+
+        return value;
     }
 
     @Override
-    public void incCO2Saved(double distance) { checkDate(); }
+    public void incCO2Saved(double distance) {
+        double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
+        DeepMap<Integer, Integer, Integer, Double> map = dbCompany.getCo2SavedMap(true);
+        map.addToCurrentDate(co2Saved);
+        dbCompany.setCo2SavedMap(map);
+
+    }
 
     @Override
     public Double getCO2SavedYear(Integer year) {
-        return null;
+        return dbCompany.getCo2SavedMap(true).getSumOfOneYear(year);
     }
 
     @Override
     public Double getCO2SavedMonth(Integer year, Integer month) {
-        return null;
+
+        return dbCompany.getCo2SavedMap(true).getSumOfOneMonth(year, month);
     }
 
     @Override
     public Double getCO2SavedDate(Integer year, Integer month, Integer day) {
-        return null;
+
+        return dbCompany.getCo2SavedMap(true).getSpecificDate(year, month, day);
     }
 
     @Override
     public Double getCO2Saved() {
-        return 0.0;
+        return dbCompany.getCo2SavedMap(true).getSumOfAllDates();
     }
 
     @Override
     public Double getCO2SavedPast7Days(){
-        return null;
+
+        return dbCompany.getCo2SavedMap(true).getSumOfPastSevenDays();
+    }
+
+
+    public Double getPointsSavedYear(Integer year) {
+        return dbCompany.getCo2SavedMap(true).getSumOfOneYear(year);
+    }
+
+
+    public Double getPointsSavedMonth(Integer year, Integer month) {
+
+        return dbCompany.getPointSavedMap(true).getSumOfOneMonth(year, month);
+    }
+
+
+    public Double getPointsSavedDate(Integer year, Integer month, Integer day) {
+
+        return dbCompany.getPointSavedMap(true).getSpecificDate(year, month, day);
+    }
+
+
+    public Double getPointsSaved() {
+
+        return dbCompany.getPointSavedMap(true).getSumOfAllDates();
+
+    }
+
+
+    public Double getPointsSavedPast7Days(){
+
+        return dbCompany.getPointSavedMap(true).getSumOfPastSevenDays();
+
     }
 
 }

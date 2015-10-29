@@ -6,7 +6,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 /**
  * Created by Emil Axelsson on 16/10/15.
  *
- * The x-axis in the BarDiagram needs a "XAxisValueFormatter". This class does not do anything really.
+ * The x-axis in the BarDiagramFragment needs a "XAxisValueFormatter". This class does not do anything really.
  * Just needed.
  */
 public class XAxisFormatter implements XAxisValueFormatter {

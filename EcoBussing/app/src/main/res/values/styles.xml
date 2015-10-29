@@ -14,6 +14,8 @@
         <item name="android:colorAccent" tools:targetApi="lollipop">#FF4081</item>
         <!-- colorControlActivated is used for the colour when a textfield is chosen-->
         <item name="android:colorControlActivated" tools:targetApi="lollipop">@color/nice_green</item>
+        <item name="android:windowBackground">@color/clear_white</item>
+
         <!-- You can also set colorControlNormal,
              colorControlHighlight and colorSwitchThumbNormal. -->
         <!--<item name="android:windowBackground">@color/white_blue</item>
