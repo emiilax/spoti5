@@ -2,12 +2,13 @@ package com.example.spoti5.ecobussing.controller.medals;
 
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 
 import java.util.List;
 
 /**
  * Created by Erik on 2015-10-17.
+ * Contains all variables and data for global medal
  */
 public class GlobalMedal {
 
@@ -19,9 +20,10 @@ public class GlobalMedal {
     private int maxPeople;
     private int currentPeople;
 
-
-
-
+    /**
+     * Singelton constructor because all users have the same global medal
+     * @return global medal instance
+     */
     public static GlobalMedal getInstance(){
         if(instance == null){
             instance = new GlobalMedal();
@@ -35,6 +37,7 @@ public class GlobalMedal {
         peopleMedal();
     }
 
+    //set value for co2 medal
     private void co2TotMedal(){
         fullCO2Value = 10000;
         currentCO2Value = 0;
@@ -69,6 +72,7 @@ public class GlobalMedal {
         this.fullCO2Value = fullCO2Value;
     }
 
+    //sets value for people medal
     private void peopleMedal() {
         maxPeople = 1000;
         currentPeople = 0;

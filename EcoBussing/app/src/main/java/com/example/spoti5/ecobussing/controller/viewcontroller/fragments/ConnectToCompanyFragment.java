@@ -17,7 +17,7 @@ import android.widget.ListView;
 import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.CompanySearchAdapter;
 import com.example.spoti5.ecobussing.R;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
 
 import java.util.Timer;
 import java.util.TimerTask;

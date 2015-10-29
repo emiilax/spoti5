@@ -1,7 +1,6 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.User;
 
 import org.junit.Test;
 

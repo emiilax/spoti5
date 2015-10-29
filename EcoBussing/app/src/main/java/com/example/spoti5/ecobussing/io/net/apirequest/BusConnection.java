@@ -9,7 +9,7 @@ import com.example.spoti5.ecobussing.model.bus.Bus55Stops;
 import com.example.spoti5.ecobussing.model.jsonclasses.eciapi.EARespond;
 import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.StopLocation;
 import com.example.spoti5.ecobussing.model.jsonclasses.vastapi.VANearbyStops;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import com.example.spoti5.ecobussing.controller.listeners.NetworkStateChangeReciever;
 

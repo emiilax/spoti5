@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.controller.medals.CompanyMedal;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 
@@ -19,8 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Emil Axelsson on 17/10/15.
- * Edited by Erik Karlkvist
+ * Created by Erik on 17/10/15.
  */
 public class CompanyMedalAdapter extends BaseAdapter {
     private List<String> medalNames;
@@ -106,7 +105,9 @@ public class CompanyMedalAdapter extends BaseAdapter {
         return row;
     }
 
-
+    /*
+    Sets all values to the medal view, such as progress, pictures etc.
+     */
     private View saveTogheterMedal(View row) {
         DecimalFormat df = new DecimalFormat("#.00");
 
@@ -119,7 +120,7 @@ public class CompanyMedalAdapter extends BaseAdapter {
         int progPer = companyMedal.getPointPercentage();
         progBar.setProgress(progPer);
 
-        if(progPer > 100){
+        if(progPer >= 100){
             medalImage.setImageResource(R.drawable.star);
         }else {
             medalImage.setImageResource(R.drawable.stargrey);
@@ -138,7 +139,7 @@ public class CompanyMedalAdapter extends BaseAdapter {
         int progPer = companyMedal.getEmployeesPercantage();
         progBar.setProgress(progPer);
 
-        if(progPer > 100){
+        if(progPer >= 100){
             medalImage.setImageResource(R.drawable.peoplemedal);
         }else {
             medalImage.setImageResource(R.drawable.peoplemedalgreysmall);

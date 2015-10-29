@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.model.profile;
 
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

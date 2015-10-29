@@ -1,9 +1,12 @@
-package com.example.spoti5.ecobussing.model.profile;
+package com.example.spoti5.ecobussing.controller.profile;
 
+import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.model.profile.DatabaseCompany;
+import com.example.spoti5.ecobussing.model.profile.DeepMap;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 import java.util.Calendar;
 import java.util.List;
@@ -185,42 +188,6 @@ public class Company implements IProfile {
         DatabaseHolder.getDatabase().updateCompany(this);
     }
 
-
-
-    /*
-    // Getters
-    public double getPointsSavedDate(int year, int month, int day){
-
-        double value = 0;
-        for(String s: dbCompany.getMembers(true)){
-            try{
-                IUser usr = DatabaseHolder.getDatabase().getUser(s);
-                value += calculatePoints(usr.getCO2SavedDate(year, month, day));
-            }catch (NullPointerException e){
-                value += 0;
-            }
-        }
-
-        return value;
-    }*/
-
-    /*
-    public double getPointsSavedMonth(int year, int month){
-
-        double value = 0;
-        for(String s: dbCompany.getMembers(true)){
-            try{
-                IUser usr = DatabaseHolder.getDatabase().getUser(s);
-
-                value += calculatePoints(usr.getCO2SavedMonth(year, month));
-            }catch (NullPointerException e){
-                value += 0;
-            }
-        }
-
-        return value;
-    }*/
-
     public int getNbrEmployees() {
         return dbCompany.getNbrEmployees();
     }
@@ -248,30 +215,35 @@ public class Company implements IProfile {
         return dbCompany;
     }
 
-    //TODO WITH DEEPMAPS-------------------------------------------------------------
+    /**
+     * Returns the total distance traveled for all users in the company
+     * @return A double with the total distance traveled value
+     */
     @Override
     public Double getDistanceTraveled() {
+        IDatabase database = DatabaseHolder.getDatabase();
         double value = 0;
         for(String s: dbCompany.getMembers(true)){
             try{
-                IUser usr = DatabaseHolder.getDatabase().getUser(s);
-
+                IUser usr = database.getUser(s);
                 value += calculatePoints(usr.getCurrentDistance());
             }catch (NullPointerException e){
                 value += 0;
             }
         }
-
         return value;
     }
 
+    /**
+     * Increments the co2 saved based on a distance
+     * @param distance The distance that will generate co2 saved
+     */
     @Override
     public void incCO2Saved(double distance) {
         double co2Saved = Calculator.getCalculator().calculateCarbonSaved(distance);
         DeepMap<Integer, Integer, Integer, Double> map = dbCompany.getCo2SavedMap(true);
         map.addToCurrentDate(co2Saved);
         dbCompany.setCo2SavedMap(map);
-
     }
 
     @Override
@@ -281,13 +253,11 @@ public class Company implements IProfile {
 
     @Override
     public Double getCO2SavedMonth(Integer year, Integer month) {
-
         return dbCompany.getCo2SavedMap(true).getSumOfOneMonth(year, month);
     }
 
     @Override
     public Double getCO2SavedDate(Integer year, Integer month, Integer day) {
-
         return dbCompany.getCo2SavedMap(true).getSpecificDate(year, month, day);
     }
 
@@ -298,7 +268,6 @@ public class Company implements IProfile {
 
     @Override
     public Double getCO2SavedPast7Days(){
-
         return dbCompany.getCo2SavedMap(true).getSumOfPastSevenDays();
     }
 
@@ -309,28 +278,22 @@ public class Company implements IProfile {
 
 
     public Double getPointsSavedMonth(Integer year, Integer month) {
-
         return dbCompany.getPointSavedMap(true).getSumOfOneMonth(year, month);
     }
 
 
     public Double getPointsSavedDate(Integer year, Integer month, Integer day) {
-
         return dbCompany.getPointSavedMap(true).getSpecificDate(year, month, day);
     }
 
 
     public Double getPointsSaved() {
-
         return dbCompany.getPointSavedMap(true).getSumOfAllDates();
-
     }
 
 
     public Double getPointsSavedPast7Days(){
-
         return dbCompany.getPointSavedMap(true).getSumOfPastSevenDays();
-
     }
 
 }

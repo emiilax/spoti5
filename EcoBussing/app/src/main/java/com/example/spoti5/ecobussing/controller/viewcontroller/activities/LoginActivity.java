@@ -12,7 +12,7 @@ import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.model.ErrorCodes;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabaseConnected;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
 
@@ -31,9 +31,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     private IDatabase database;
     private TextView register;
     private Tools tools;
-    private IUser user;
-    private List<IUser> allUsers;
-    private List<IUser> topList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,13 +50,6 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
         passwordField.setOnKeyListener(autoLogin);
 
         database = DatabaseHolder.getDatabase();
-
-        List<IUser> users = database.getUserToplistMonth();
-
-        for(IUser u: users){
-            System.out.println(u.getCo2CurrentMonth());
-        }
-
     }
 
     View.OnClickListener login = new View.OnClickListener() {
@@ -77,6 +67,7 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
     };
 
     private void login(){
+        //closes virtual keyboard
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);

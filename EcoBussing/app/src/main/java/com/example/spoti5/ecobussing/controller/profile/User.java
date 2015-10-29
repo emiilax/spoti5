@@ -1,9 +1,11 @@
-package com.example.spoti5.ecobussing.model.profile;
+package com.example.spoti5.ecobussing.controller.profile;
 
 import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
+import com.example.spoti5.ecobussing.model.profile.DeepMap;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 
 import java.util.Calendar;
 
@@ -118,20 +120,25 @@ public class User implements IUser {
 
     }
 
+    /**
+     * Updates the users company with the new distance
+     * @param distance The distance that will be added to the company
+     */
     public void updateCompany(double distance){
         IProfile company = DatabaseHolder.getDatabase().getCompany(dbUser.getCompany());
         ((Company)company).newJourney(distance);
     }
 
+    /**
+     * Adds a new journey to the user with a distance
+     * @param distance The distance that will be added to the user
+     */
     public void newJourney(double distance){
         incCO2Saved(distance);
-
         if(!dbUser.getCompany().equals("")){
             updateCompany(distance);
         }
-
         incMoneySaved(distance);
-
     }
 
     @Override

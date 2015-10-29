@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing.model;
 
 /**
  * Created by Erik on 2015-10-02.
+ * Class containing integer values, used to parse error codes
  */
 public class ErrorCodes {
     public static final int NO_ERROR = 0;
