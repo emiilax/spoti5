@@ -80,6 +80,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private SearchAdapter searchAdapter;
 
     private List<String> fragmentsVisitedName;
+    private List<? super Fragment> fragmentsVisited;
 
     private IUser currentUser;
     private boolean connected;
@@ -96,6 +97,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         connected = currentUser.getCompany().equals("");
 
         fragmentsVisitedName = new ArrayList<>();
+        fragmentsVisited = new ArrayList<>();
 
         setContentView(R.layout.activity_drawer);
         System.out.println("Start activity");
@@ -156,6 +158,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(user);
         fragmentsVisitedName.add(title);
+        fragmentsVisited.add(profileView);
         fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -286,29 +289,32 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
 
 
-/*    @Override
+    @Override
     public void onBackPressed(){
         if(drawerLayout.isDrawerOpen(drawerListLeft)){
             drawerLayout.closeDrawer(drawerListLeft);
         } else if(drawerLayout.isDrawerOpen(drawerListRight)){
             drawerLayout.closeDrawer(drawerListRight);
-        } else if(fragmentsVisitedName.size() > 2){
-            int last = fragmentsVisitedName.size() - 2;
+        } else if(fragmentsVisitedName.size() > 1){
+            System.out.println("OnBackPressed");
+            int last = fragmentsVisitedName.size()-1;
             getSupportActionBar().setTitle(fragmentsVisitedName.get(last));
-            fragmentsVisitedName.remove(last + 1);
-            super.onBackPressed();
+            fragmentsVisitedName.remove(last);
+            getSupportFragmentManager().popBackStack();
+            fragmentsVisited.remove(last);
         } else {
             super.onBackPressed();
         }
 
     }
-    }*/
+
 
 
     private void changeFragment(String title, Fragment fragment) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         getSupportActionBar().setTitle(title);
         fragmentsVisitedName.add(title);
+        fragmentsVisited.add(fragment);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -330,6 +336,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         getSupportActionBar().setTitle(title);
         ProfileView profileView = ProfileView.newInstance(profile);
         fragmentsVisitedName.add(title);
+        fragmentsVisited.add(profileView);
         fragmentTransaction.replace(R.id.container, profileView);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
