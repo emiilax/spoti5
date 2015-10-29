@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
@@ -22,14 +21,14 @@ android {
         }
     }
 
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE-FIREBASE.txt'
         exclude 'META-INF/NOTICE'
     }
+
 }
-
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
