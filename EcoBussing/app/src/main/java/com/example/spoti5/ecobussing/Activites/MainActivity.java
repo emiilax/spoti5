@@ -85,7 +85,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private IUser currentUser;
     private boolean connected;
 
-    String title;
+    private String title;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override

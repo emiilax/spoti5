@@ -56,6 +56,9 @@ public class Database implements IDatabase {
         generateAll();
     }
 
+    /*
+        Retrives all toplists of users and companies. Updates all so they all have same values
+     */
     private void generateAll(){
         generateUserList(allValue);
         generateUserList(topListAllValue, "co2Tot");
@@ -69,10 +72,20 @@ public class Database implements IDatabase {
 
     }
 
+    /**
+     * For retriving potential errors that occurs. Use ErrorCodes class to check
+     * what the error is
+     * @return the errorcode value as integer
+     */
     public int getErrorCode(){
         return errorCode;
     }
 
+    /**
+     * Use to retrive a specific user from the database
+     * @param email the email of the user you want to retrive
+     * @return an IUser with the corresponding email
+     */
     @Override
     public IUser getUser(String email) {
         for(IUser u: getUsers()){
@@ -83,6 +96,11 @@ public class Database implements IDatabase {
         return null;
     }
 
+    /**
+     * Retrives the position of a user in the toplist all
+     * @param user The user you want the position of.
+     * @return The position value as an integer
+     */
     @Override
     public int getPosition(IUser user) {
         int index = topListAll.size();
@@ -95,6 +113,11 @@ public class Database implements IDatabase {
         return index;
     }
 
+    /**
+     * Retrives the position of a company in the toplist all
+     * @param comp The company you want the position of.
+     * @return The position value as an integer
+     */
     @Override
     public int getPosition(Company comp){
         int index = 0;
@@ -107,6 +130,11 @@ public class Database implements IDatabase {
         return index;
     }
 
+    /**
+     * Used to retrive a specific company in the database
+     * @param name The name of the company you want to retrive
+     * @return The company with the specific name
+     */
     @Override
     public IProfile getCompany(String name){
 
@@ -119,6 +147,10 @@ public class Database implements IDatabase {
         return null;
     }
 
+    /**
+     * Updates an already exsiiting user on the database with new values
+     * @param user The user that will be updated
+     */
     @Override
     public void updateUser(IUser user) {
         if(user != null) {
@@ -128,6 +160,10 @@ public class Database implements IDatabase {
         }
     }
 
+    /**
+     * Updates an already exsiting company on the database with new values
+     * @param company The company that will be updated
+     */
     @Override
     public void updateCompany(Company company) {
         if (company != null) {
@@ -175,6 +211,13 @@ public class Database implements IDatabase {
         });
     }
 
+    /**
+     * Changes the password on an existing user on the database
+     * @param email Email of the user you want to change the password on
+     * @param oldPassword The users old password
+     * @param newPassword The users new password
+     * @param connection the origin class that is called after the database changed password or failed to changed password
+     */
     @Override
     public void changePassword(String email, String oldPassword, String newPassword, final IDatabaseConnected connection) {
         errorCode = ErrorCodes.NO_ERROR;
@@ -196,7 +239,9 @@ public class Database implements IDatabase {
     }
 
 
-
+    /*
+    Sets errorcode variable
+     */
     private void setErrorCode(FirebaseError error) {
         int tmpError = error.getCode();
         if (tmpError == FirebaseError.INVALID_CREDENTIALS || tmpError == FirebaseError.INVALID_PASSWORD) {
@@ -212,6 +257,12 @@ public class Database implements IDatabase {
         }
     }
 
+    /**
+     * Adds a new company to the database
+     * @param name The name of the new company
+     * @param company The company class containing the values of the new company
+     * @param connection The class that is called after the addition has failed or succeeded
+     */
     @Override
     public void addCompany(final String name, final Company company, final IDatabaseConnected connection) {
 
@@ -240,6 +291,10 @@ public class Database implements IDatabase {
         });
     }
 
+    /**
+     * Removes a company from the database
+     * @param company The company that will be removed from the database
+     */
     @Override
     public void removeCompany(Company company) {
         final Firebase tmpRef = firebaseRef.child(companiesString);
@@ -259,6 +314,12 @@ public class Database implements IDatabase {
     }
 
 
+    /**
+     * Checks if credentials are valid and sets the error code accordingly
+     * @param email The email of the user that will be logged in
+     * @param password The password of the user that will be logged in
+     * @param connection The class that will be called after the log in i successfull or not
+     */
     @Override
     public void loginUser(String email, String password, final IDatabaseConnected connection){
         errorCode = ErrorCodes.NO_ERROR;
@@ -279,6 +340,9 @@ public class Database implements IDatabase {
         });
     }
 
+    /*
+    Generates a user list, not in any specific order
+     */
     private void generateUserList(final int listValue){
 
         firebaseRef.child(userString).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -307,6 +371,9 @@ public class Database implements IDatabase {
         });
     }
 
+    /*
+    Generates a user list with a specific sorting node
+     */
     private void generateUserList(final int listValue, String sorter) {
         final Query queryRef = firebaseRef.child(userString).orderByChild(sorter);
 
@@ -345,6 +412,9 @@ public class Database implements IDatabase {
             }
         }
 
+    /*
+    Generates company list, unsorted
+     */
     private void generateCompaniesList(final int listValue){
 
         firebaseRef.child(companiesString).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -374,6 +444,9 @@ public class Database implements IDatabase {
 
     }
 
+    /*
+    Generates company list with specific sorting node
+     */
     private void generateCompaniesList(final int listValue, String sorter) {
         final Query queryRef = firebaseRef.child(companiesString).orderByChild(sorter);
 
@@ -401,6 +474,9 @@ public class Database implements IDatabase {
         });
     }
 
+    /*
+    Add a user to a list
+     */
     private void addUserToList(int listValue, IUser user){
             switch(listValue){
                 case Database.allValue: allUsers.add(user);
@@ -448,46 +524,73 @@ public class Database implements IDatabase {
         return null;
     }
 
+    /**
+     * @return A list of unsorted users
+     */
     @Override
     public List<IUser> getUsers() {
         return allUsers;
     }
 
+    /**
+     * @return A list of user sorted by co2saved, lowest first
+     */
     @Override
     public List<IUser> getUserToplistAll() {
         return topListAll;
     }
 
+    /**
+     * @return A list of companies, unsorted
+     */
     @Override
     public List<IProfile> getCompanies(){
         return allCompanies;
     }
 
+    /**
+     *@return A list of companies sorted by point total, lowest first
+     */
     @Override
     public List<IProfile> getCompaniesToplistAll() {
         return topListAllCompanies;
     }
 
+    /**
+     * @return A list of companies sorted by monthly point total, lowest first
+     */
     @Override
     public List<IProfile> getCompaniesToplistMonth() {
         return topListMonthCompanies;
     }
 
+    /**
+     * @return A list of companies sorted by yearly point total, lowest first
+     */
     @Override
     public List<IProfile> getCompaniesToplistYear() {
         return topListYearCompanies;
     }
 
+    /**
+     * @return A list of users sorted by monthly co2 saved, lowest first
+     */
     @Override
     public List<IUser> getUserToplistMonth() {
         return topListMonth;
     }
 
+    /**
+     * @return A list of users sorted by yearly co2 saved, lowest first
+     */
     @Override
     public List<IUser> getUserToplistYear() {
         return topListYear;
     }
 
+    /**
+     * @return A boolean that is true or false depending on if all lists are generated properly
+     */
     public boolean isAllGenerated() {
         return allGenerated;
     }
