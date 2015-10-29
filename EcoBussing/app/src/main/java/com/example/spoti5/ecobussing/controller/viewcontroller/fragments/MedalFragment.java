@@ -76,14 +76,4 @@ public class MedalFragment extends Fragment {
     public void setMedalType(int medalType) {
         this.medalType = medalType;
     }
-
-    @Override
-    public void onResume() {
-        System.out.println("Resuming");
-        listAdapter = selectMedal();
-        listView = (ListView)view.findViewById(R.id.medalList);
-        listView.setAdapter(listAdapter);
-
-        super.onResume();
-    }
 }
