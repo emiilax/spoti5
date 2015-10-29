@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by matildahorppu on 12/10/15.
  */
-public class EditCompanyFragment extends Fragment {
+public class SettingsAdminCompanyFragment extends Fragment {
 
     private IDatabase database;
     private IUser currentUser;
@@ -43,7 +43,7 @@ public class EditCompanyFragment extends Fragment {
 
     private UserListAdapter adapter;
 
-    public EditCompanyFragment(){
+    public SettingsAdminCompanyFragment(){
 
     }
 

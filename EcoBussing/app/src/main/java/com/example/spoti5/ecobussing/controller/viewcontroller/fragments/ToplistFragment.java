@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.spoti5.ecobussing.Activites.ActivityController;
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.ToplistAdapter;

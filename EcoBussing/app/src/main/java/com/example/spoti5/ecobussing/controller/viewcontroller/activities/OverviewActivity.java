@@ -1,11 +1,11 @@
-package com.example.spoti5.ecobussing.Activites;
+package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;

@@ -1,5 +1,7 @@
 package com.example.spoti5.ecobussing.controller.calculations;
 
+import com.example.spoti5.ecobussing.io.CheckUserInput;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

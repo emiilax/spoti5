@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.graphics.Color;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.controller.apirequest.BusConnection;
+import com.example.spoti5.ecobussing.io.net.apirequest.BusConnection;
 import com.example.spoti5.ecobussing.model.bus.Bus;
 import com.example.spoti5.ecobussing.model.bus.Busses;
 import com.example.spoti5.ecobussing.R;

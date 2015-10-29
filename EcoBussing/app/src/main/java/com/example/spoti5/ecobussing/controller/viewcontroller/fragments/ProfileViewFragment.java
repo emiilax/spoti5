@@ -1,8 +1,7 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +12,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
-import com.example.spoti5.ecobussing.controller.calculations.Calculator;
+import com.example.spoti5.ecobussing.io.net.apirequest.Calculator;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
@@ -89,13 +88,13 @@ public class ProfileViewFragment extends Fragment{
     private View setMPagerAdapter(View viewen) {
 
         if(thisProfile instanceof IUser) {
-            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
-            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
+            pagerAdapter1 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, false);
+            pagerAdapter2 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, true);
 
 
         }else {
-            pagerAdapter1 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, false);
-            pagerAdapter2 = new ProfilePagerAdapter(getActivity().getSupportFragmentManager(), thisProfile, true);
+            pagerAdapter1 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, false);
+            pagerAdapter2 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, true);
         }
 
         ViewPager viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);

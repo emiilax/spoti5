@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.view.BarDiagram;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.BarDiagramFragment;
 
 /**
  * This is the pager adapter for the ViewPager in ProfileViewFragment. New fragments are added in getItem().
@@ -34,15 +34,15 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch(i){
             case 0:
-                frag1 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_DAYS, isPointsMoney);
+                frag1 = BarDiagramFragment.newInstance(thisProfile, BarDiagramFragment.LAST_SEVEN_DAYS, isPointsMoney);
                 fragment = frag1;
                 break;
             case 1:
-                frag2 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_WEEKS, isPointsMoney);
+                frag2 = BarDiagramFragment.newInstance(thisProfile, BarDiagramFragment.LAST_SEVEN_WEEKS, isPointsMoney);
                 fragment = frag2;
                 break;
             case 2:
-                frag3 = BarDiagram.newInstance(thisProfile, BarDiagram.LAST_SEVEN_MONTHS, isPointsMoney);
+                frag3 = BarDiagramFragment.newInstance(thisProfile, BarDiagramFragment.LAST_SEVEN_MONTHS, isPointsMoney);
                 fragment = frag3;
                 break;
         }

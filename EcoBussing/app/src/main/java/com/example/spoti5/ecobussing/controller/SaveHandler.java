@@ -1,7 +1,7 @@
 package com.example.spoti5.ecobussing.controller;
 import android.content.Context;
 
-import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.DatabaseUser;

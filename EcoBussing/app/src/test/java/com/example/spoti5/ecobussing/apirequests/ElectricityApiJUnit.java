@@ -1,6 +1,6 @@
 package com.example.spoti5.ecobussing.apirequests;
 
-import com.example.spoti5.ecobussing.controller.apirequest.ECIApi;
+import com.example.spoti5.ecobussing.io.net.apirequest.ECIApi;
 import com.example.spoti5.ecobussing.model.bus.Busses;
 import com.example.spoti5.ecobussing.model.jsonclasses.eciapi.EARespond;
 

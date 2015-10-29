@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.adapters.listadapters.CompanySearchAdapter;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
@@ -25,7 +25,7 @@ import java.util.TimerTask;
 /**
  * Created by matildahorppu on 09/10/15.
  */
-public class ConnectCompanyFragment extends Fragment {
+public class ConnectToCompanyFragment extends Fragment {
 
     private EditText searchField;
     private ImageView searchButton;
@@ -33,7 +33,7 @@ public class ConnectCompanyFragment extends Fragment {
 
     private CompanySearchAdapter adapter;
 
-    public ConnectCompanyFragment(){}
+    public ConnectToCompanyFragment(){}
 
 
     @Override

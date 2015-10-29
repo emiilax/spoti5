@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.adapters.pageradapter.MedalPagerAdapter;
+import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ToplistPagerAdapter;
 
 /**
  * Created by emilaxelsson on 17/10/15.
@@ -47,6 +48,16 @@ public class MedalViewSwiper extends Fragment{
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));
     }
 
+    @Override
+    public void onResume() {
+        System.out.println("Resuming");
+        mPagerAdapter =
+                new MedalPagerAdapter(
+                        getChildFragmentManager());
+        mViewPager = (ViewPager)view.findViewById(R.id.pager_medal_view);
+        mViewPager.setAdapter(mPagerAdapter);
 
+        super.onResume();
+    }
 
 }

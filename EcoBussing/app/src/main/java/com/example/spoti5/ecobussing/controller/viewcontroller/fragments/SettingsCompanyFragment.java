@@ -1,4 +1,4 @@
-package com.example.spoti5.ecobussing.view.fragments;
+package com.example.spoti5.ecobussing.controller.viewcontroller.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +12,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.spoti5.ecobussing.Activites.MainActivity;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.MainActivity;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.Company;
+import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
 import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * Created by matildahorppu on 13/10/15.
  */
-public class ConnectedCompanyFragment extends Fragment {
+public class SettingsCompanyFragment extends Fragment {
 
     private IDatabase database;
     private IUser currentUser;
@@ -41,7 +42,7 @@ public class ConnectedCompanyFragment extends Fragment {
 
     private List<String> usersConnected;
 
-    public ConnectedCompanyFragment(){
+    public SettingsCompanyFragment(){
     }
 
 
@@ -67,8 +68,11 @@ public class ConnectedCompanyFragment extends Fragment {
         disconnectCompany = (Button)view.findViewById(R.id.buttonDisconnect);
 
         disconnectCompany.setOnClickListener(disconnectFromComp);
-        companyName.setText(currentUser.getCompany());
+        Company company = (Company)database.getCompany(currentUser.getCompany());
+        companyName.setText(company.getName());
 
+        employees.setText("Anställda: " + company.getNbrEmployees());
+        co2Saved.setText("Sparad co2: " + company.getCO2Saved());
         usersConnected = new ArrayList<>();
 
         createListView();

@@ -6,7 +6,7 @@
     android:layout_centerHorizontal="true"
 
 
-    tools:context="com.example.spoti5.ecobussing.view.fragments.ToplistFragment"
+    tools:context="com.example.spoti5.ecobussing.controller.viewcontroller.fragments.ToplistFragment"
     android:orientation="vertical">
 
 

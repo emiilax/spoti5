@@ -1,8 +1,8 @@
-package com.example.spoti5.ecobussing.controller.apirequest;
+package com.example.spoti5.ecobussing.io.net.apirequest;
 
 import android.os.StrictMode;
 
-import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
 import com.example.spoti5.ecobussing.model.bus.Bus;
 import com.example.spoti5.ecobussing.model.bus.Busses;
 import com.example.spoti5.ecobussing.model.jsonclasses.eciapi.EARespond;
