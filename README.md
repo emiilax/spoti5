@@ -34,6 +34,7 @@ Make sure to open the EcoBussing folder when opening in Android studio.
 To try our devmode and simulate a trip you have to switch branch. You do this by:
 
   $ git fetch origin dev:dev
+  
   $ git checkout dev
 
 
