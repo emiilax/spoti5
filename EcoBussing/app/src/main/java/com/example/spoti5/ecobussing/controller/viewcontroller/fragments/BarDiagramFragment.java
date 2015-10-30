@@ -46,8 +46,8 @@ public class BarDiagramFragment extends Fragment {
     public final static int LAST_SEVEN_WEEKS = 1;
     public final static int LAST_SEVEN_MONTHS = 2;
 
+
     public BarDiagramFragment() {
-        // Required empty public constructor
         diagramBarData = new DiagramBarData(this);
     }
 
@@ -71,6 +71,10 @@ public class BarDiagramFragment extends Fragment {
 
     }
 
+    /**
+     * Sets the profile and decides whether its a company or not.
+     * @param profile, the profile that is suppost to
+     */
     public void setProfile(IProfile profile){
         try{
             this.profile = (IUser)profile;

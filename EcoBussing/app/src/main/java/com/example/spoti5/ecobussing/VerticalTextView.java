@@ -9,18 +9,15 @@ import android.widget.TextView;
 
 /**
  * Created by emilaxelsson on 28/10/15.
+ *
+ * Class used in barchart. A vertical text with the unit is supposed to be shown.
+ * Android's textview does not work as we wanted to, therefore this textview were made
  */
 public class VerticalTextView extends TextView {
-    final boolean topDown;
+
 
     public VerticalTextView(Context context, AttributeSet attrs){
         super(context, attrs);
-        final int gravity = getGravity();
-        if(Gravity.isVertical(gravity) && (gravity&Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
-            setGravity((gravity&Gravity.HORIZONTAL_GRAVITY_MASK) | Gravity.TOP);
-            topDown = false;
-        }else
-            topDown = true;
     }
 
     @Override
@@ -29,6 +26,7 @@ public class VerticalTextView extends TextView {
         setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
     }
 
+    //This is where the magic happens. This is where it rotates and draws.
     @Override
     protected void onDraw(Canvas canvas){
         TextPaint textPaint = getPaint();
@@ -36,11 +34,8 @@ public class VerticalTextView extends TextView {
         textPaint.drawableState = getDrawableState();
 
         canvas.save();
-
-            canvas.translate(0, getHeight());
-            canvas.rotate(-90);
-
-
+        canvas.translate(0, getHeight());
+        canvas.rotate(-90);
 
         canvas.translate(getCompoundPaddingLeft(), getExtendedPaddingTop());
 

@@ -60,7 +60,7 @@ public class OverviewActivity extends ActivityController {
      * The animation of increasing a number until it reaches another number.
      * Should probably be moved, maybe?
      */
-    private void animateTextView(double initialValue, double finalValue, final TextView  textview) {
+    private void animateTextView(double initialValue, final double finalValue, final TextView  textview) {
         ValueAnimator valueAnimator = ValueAnimator.ofInt((int)initialValue, (int)finalValue);
         valueAnimator.setDuration(3000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -74,7 +74,11 @@ public class OverviewActivity extends ActivityController {
                         tempString = tempString + ".";
                     }
                 }
-                textview.setText(tempString + " kg");
+                if(finalValue < 1000){
+                    textview.setText(tempString + " g");
+                }else{
+                    textview.setText(tempString + " kg");
+                }
             }
         });
         valueAnimator.start();

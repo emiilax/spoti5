@@ -2,6 +2,7 @@ package com.example.spoti5.ecobussing.controller.viewcontroller.activities;
 
 import android.annotation.TargetApi;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -221,77 +222,93 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         String usrCompanyString = currentUser.getCompany();
         Company company = (Company) database.getCompany(usrCompanyString);
-        switch (position) {
-            case 0:
-                ProfileViewFragment pv = ProfileViewFragment.newInstance(currentUser);
-                changeFragment("Min profil", pv);
-                break;
-            case 1:
-                Fragment fragment = null;
-                try{
-                    IProfile usercompany = database.getCompany(currentUser.getCompany());
-                    if(usercompany != null){
-                        fragment = ProfileViewFragment.newInstance(usercompany);
-                    }else{
-                        throw new NullPointerException();
-                    }
-                } catch(NullPointerException e){
-                    fragment = new CompanySwipeFragment();
-                }
 
-                title = "Mitt företag";
-                changeFragment(title, fragment);
-                break;
-            case 2:
-                ToplistSwiper test = new ToplistSwiper();
-                title = "Topplistor";
-                changeFragment(title, test);
-                break;
-            case 3:
-                MedalViewSwiper medalFragment = new MedalViewSwiper();
-                title = "Medaljer";
-                changeFragment(title, medalFragment);
-                break;
-            case 4:
-                if (usrCompanyString.equals("")) {
-                    EditInfoFragment editInfoFragment = new EditInfoFragment();
-                    title = "Redigera profil";
-                    changeFragment(title, editInfoFragment);
-                } else {
-                    title = "Företagsinställningar";
-                    if (company.userIsModerator(currentUser)) {
-                        SettingsAdminCompanyFragment settingsAdminCompanyFragment = new SettingsAdminCompanyFragment();
-                        changeFragment(title, settingsAdminCompanyFragment);
-                    } else {
-                        SettingsCompanyFragment settingsCompanyFragment = new SettingsCompanyFragment();
-                        changeFragment(title, settingsCompanyFragment);
-                    }
-                }
-                break;
-            case 5:
-                if (usrCompanyString.equals("")) {
-                    logout();
-                } else {
-                    EditInfoFragment editInfoFragment = new EditInfoFragment();
-                    title = "Redigera profil";
-                    changeFragment(title, editInfoFragment);
-                }
-                break;
-            case 6:
-                if (usrCompanyString.equals("")) {
-                    title = "WiFi Detect";
-                    getSupportActionBar().setTitle(title);
-                    WifiFragment wfrag = new WifiFragment();
-                    changeFragment(title, wfrag);
+        // this switch does different thing depending on the parent, since both the menu drawer
+        // and the search drawer uses the same onClickListener.
+        switch (parent.getId()) {
+            case R.id.left_drawer:
+                switch (position) {
+                    case 0:
+                        ProfileViewFragment pv = ProfileViewFragment.newInstance(currentUser);
+                        changeFragment("Min profil", pv);
+                        break;
+                    case 1:
+                        Fragment fragment = null;
+                        try {
+                            IProfile usercompany = database.getCompany(currentUser.getCompany());
+                            if (usercompany != null) {
+                                fragment = ProfileViewFragment.newInstance(usercompany);
+                            } else {
+                                throw new NullPointerException();
+                            }
+                        } catch (NullPointerException e) {
+                            fragment = new CompanySwipeFragment();
+                        }
 
-                } else {
-                    logout();
+                        title = "Mitt företag";
+                        changeFragment(title, fragment);
+                        break;
+                    case 2:
+                        ToplistSwiper test = new ToplistSwiper();
+                        title = "Topplistor";
+                        changeFragment(title, test);
+                        break;
+                    case 3:
+                        MedalViewSwiper medalFragment = new MedalViewSwiper();
+                        title = "Medaljer";
+                        changeFragment(title, medalFragment);
+                        break;
+                    case 4:
+                        if (usrCompanyString.equals("")) {
+                            EditInfoFragment editInfoFragment = new EditInfoFragment();
+                            title = "Redigera profil";
+                            changeFragment(title, editInfoFragment);
+                        } else {
+                            title = "Företagsinställningar";
+                            if (company.userIsModerator(currentUser)) {
+                                SettingsAdminCompanyFragment settingsAdminCompanyFragment = new SettingsAdminCompanyFragment();
+                                changeFragment(title, settingsAdminCompanyFragment);
+                            } else {
+                                SettingsCompanyFragment settingsCompanyFragment = new SettingsCompanyFragment();
+                                changeFragment(title, settingsCompanyFragment);
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (usrCompanyString.equals("")) {
+                            logout();
+                        } else {
+                            EditInfoFragment editInfoFragment = new EditInfoFragment();
+                            title = "Redigera profil";
+                            changeFragment(title, editInfoFragment);
+                        }
+                        break;
+                    case 6:
+                        if (usrCompanyString.equals("")) {
+                            title = "WiFi Detect";
+                            getSupportActionBar().setTitle(title);
+                            WifiFragment wfrag = new WifiFragment();
+                            changeFragment(title, wfrag);
+
+                        } else {
+                            logout();
+                        }
+                        break;
+                    case 7:
+                        title = "WiFi Detect";
+                        WifiFragment wfrag = new WifiFragment();
+                        changeFragment(title, wfrag);
+                        break;
                 }
                 break;
-            case 7:
-                title = "WiFi Detect";
-                WifiFragment wfrag = new WifiFragment();
-                changeFragment(title, wfrag);
+            case R.id.search_result_list:
+                IProfile profile = (IProfile)searchAdapter.getItem(position);
+                title = profile.getName();
+                changeToProfileFragment(profile, title);
+                // the following lines close the search drawer and hides the input keyboard
+                drawerLayout.closeDrawer(drawerListRight);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
                 break;
         }
         view.setBackgroundResource(R.color.third);

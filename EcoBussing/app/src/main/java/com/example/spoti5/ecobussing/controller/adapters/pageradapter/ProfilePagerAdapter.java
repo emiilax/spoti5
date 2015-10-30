@@ -46,7 +46,6 @@ public class ProfilePagerAdapter extends FragmentStatePagerAdapter {
     // Used to update the views
     @Override
     public int getItemPosition(Object object) {
-        notifyDataSetChanged();
         return POSITION_NONE;
         //return super.getItemPosition(object);
     }

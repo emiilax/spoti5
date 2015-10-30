@@ -83,28 +83,17 @@ public class ProfileViewFragment extends Fragment{
         }
     };
 
-    //This should be changed a bit to look better, Hampus fix
     private View setMPagerAdapter(View viewen) {
-        ProfilePagerAdapter pagerAdapter1;
-        ProfilePagerAdapter pagerAdapter2;
-        if(thisProfile instanceof IUser) {
-            pagerAdapter1 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, false);
-            pagerAdapter2 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, true);
 
-
-        }else {
-            pagerAdapter1 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, false);
-            pagerAdapter2 = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, true);
-        }
-
-        viewPager1 = (ViewPager)view.findViewById(R.id.profilePager);
-        viewPager1.setAdapter(pagerAdapter1);
-        viewPager1.addOnPageChangeListener(new ProfilePagerListener(viewen, 1));
-
-        viewPager2 = (ViewPager)view.findViewById(R.id.profilePager2);
-        viewPager2.setAdapter(pagerAdapter2);
-        viewPager2.addOnPageChangeListener(new ProfilePagerListener(viewen, 2));
+        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager), 1, true);
+        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager2), 2, false);
         return viewen;
+    }
+
+    private void setupPager(View viewen, ViewPager vp, int n, boolean isMoney){
+        ProfilePagerAdapter pa = new ProfilePagerAdapter(getChildFragmentManager(), thisProfile, isMoney);
+        vp.setAdapter(pa);
+        vp.addOnPageChangeListener(new ProfilePagerListener(viewen, n));
     }
 
     private void setDataStrings(View view) {
@@ -167,10 +156,6 @@ public class ProfileViewFragment extends Fragment{
 
             infoText.setVisibility(View.VISIBLE);
 
-            /*
-            view.findViewById(R.id.profilePager2).setVisibility(View.GONE);
-            view.findViewById(R.id.dotRow2).setVisibility(View.GONE);
-            view.findViewById(R.id.dividerGraph1).setVisibility(View.GONE);*/
 
             IUser currentUser = SaveHandler.getCurrentUser();
             if(!(currentUser.getCompany().equals(""))){

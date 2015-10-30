@@ -12,14 +12,14 @@
 
         <ImageView
             android:id="@+id/companyPic"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:src="@drawable/user" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
@@ -42,7 +42,7 @@
                     android:id="@+id/textView14" />
                 <EditText
                     android:id="@+id/employeesEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
                     android:maxLines="1"
@@ -60,7 +60,7 @@
         android:id="@+id/infoTextField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:text="Beskrivning:"
         android:textSize="17dp"
          />
@@ -88,7 +88,7 @@
     <ListView
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="260dp"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:divider="@color/nice_green"
