@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by Erik on 2015-10-13.
+ * Does a search depending on input and shows result in list
  */
 public class SearchAdapter extends BaseAdapter {
     private List<IProfile> searchResults;

@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Created by Erik on 2015-10-13.
+ * Sets the view elements for global medal
  */
 public class GlobalMedalAdapter extends BaseAdapter {
     private List<String> medalNames;

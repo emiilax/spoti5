@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by Erik on 17/10/15.
+ * Sets the view elements for company medal
  */
 public class CompanyMedalAdapter extends BaseAdapter {
     private List<String> medalNames;

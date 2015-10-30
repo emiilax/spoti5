@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Created by emilaxelsson on 17/10/15.
+ *  Sets the view elements for user medal
  */
 public class UserMedalAdapter extends BaseAdapter {
     private List<String> medalNames;
