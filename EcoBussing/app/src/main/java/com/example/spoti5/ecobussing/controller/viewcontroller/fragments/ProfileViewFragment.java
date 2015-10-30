@@ -85,8 +85,8 @@ public class ProfileViewFragment extends Fragment{
 
     private View setMPagerAdapter(View viewen) {
 
-        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager), 1, true);
-        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager2), 2, false);
+        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager), 1, false);
+        setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager2), 2, true);
         return viewen;
     }
 
