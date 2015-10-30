@@ -8,7 +8,7 @@ To clone the object into your computer, enter:
 (This project is in a private repository, therefore you can only do this if you are invited)
 
 APK file
-There are two .apk files in the Apk folder. One development and one orginal .apk. Send that .apk file you want to your email and download it into your android phone, and install. With the development .apk you can do a simulated bus trip.
+There are two .apk files in the Apk-files.zip. One development and one orginal .apk. Send that .apk file you want to your email and download it into your android phone, and install. With the development .apk you can do a simulated bus trip.
 
 Terminal
 First thing you have to do is make sure that you have Gradle installed and a device connected (either a virtual device or other android phone). Make your way into the the project root(enter /your/path/spoti5/EcoBussing).
