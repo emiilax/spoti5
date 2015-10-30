@@ -15,11 +15,11 @@ First thing you have to do is make sure that you have Gradle installed and a dev
 
 To build project enter:
 	
-$ gradle build
+	$ gradle build
 
 To install the application into your plugged-in device, enter:
 
-$ gradle installDebug
+	$ gradle installDebug
 
 To uninstall the application from your plugged-in device, enter:
 	
@@ -33,9 +33,9 @@ Make sure to open the EcoBussing folder when opening in Android studio.
 
 To try our devmode and simulate a trip you have to switch branch. You do this by:
 
-  $ git fetch origin dev:dev
+	$ git fetch origin dev:dev
   
-  $ git checkout dev
+ 	$ git checkout dev
 
 
 All documentation files are in the folder "Documentation"
