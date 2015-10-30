@@ -27,7 +27,6 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
     private Button btnMonth;
     private Button btnYear;
     private Button btnTotal;
-    private TabLayout tabLayout;
     private View view;
 
 
@@ -65,7 +64,7 @@ public class ToplistSwiper extends Fragment implements View.OnClickListener {
      * Sets up the tablayout so it is synced with the pager.
      */
     public void fixTabLayout(){
-        tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs_toplist);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs_toplist);
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.setSelectedTabIndicatorHeight(3);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));

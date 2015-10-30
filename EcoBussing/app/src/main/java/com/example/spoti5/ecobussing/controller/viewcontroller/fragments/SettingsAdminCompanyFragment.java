@@ -31,16 +31,8 @@ public class SettingsAdminCompanyFragment extends Fragment {
     private IUser currentUser;
     private Company usersCompany;
 
-    private ImageView companyPic;
-    private TextView companyName;
     private EditText companyEmployees;
-    private TextView companyInfoText;
     private EditText companyInfo;
-    private TextView connectedUsersText;
-    private ListView userList;
-    private Button saveButton;
-    private Button removeCompany;
-
     private UserListAdapter adapter;
 
     public SettingsAdminCompanyFragment(){
@@ -61,14 +53,14 @@ public class SettingsAdminCompanyFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_edit_company, container, false);
 
-        companyPic = (ImageView)view.findViewById(R.id.companyPic);
-        companyName = (TextView)view.findViewById(R.id.companyNameTextField);
+        ImageView companyPic = (ImageView)view.findViewById(R.id.companyPic);
+        TextView companyName = (TextView)view.findViewById(R.id.companyNameTextField);
         companyEmployees = (EditText)view.findViewById(R.id.employeesEditText);
-        companyInfoText = (TextView)view.findViewById(R.id.infoTextField);
+        TextView companyInfoText = (TextView)view.findViewById(R.id.infoTextField);
         companyInfo = (EditText)view.findViewById(R.id.infoEditText);
-        connectedUsersText = (TextView)view.findViewById(R.id.usersTextView);
-        userList = (ListView)view.findViewById(R.id.expandableListView);
-        saveButton = (Button)view.findViewById(R.id.saveButton);
+        TextView connectedUsersText = (TextView)view.findViewById(R.id.usersTextView);
+        ListView userList = (ListView)view.findViewById(R.id.expandableListView);
+        Button saveButton = (Button)view.findViewById(R.id.saveButton);
 
         companyName.setText(currentUser.getCompany());
         companyEmployees.setText(Integer.toString(usersCompany.getNbrEmployees()));
@@ -76,7 +68,7 @@ public class SettingsAdminCompanyFragment extends Fragment {
 
         adapter = new UserListAdapter(this.getContext());
         userList.setAdapter(adapter);
-        removeCompany = (Button)view.findViewById(R.id.remove_company);
+        Button removeCompany = (Button)view.findViewById(R.id.remove_company);
 
         removeCompany.setOnClickListener(companyRemove);
 

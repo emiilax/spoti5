@@ -19,11 +19,11 @@ import java.util.List;
 
 /**
  * Created by emilaxelsson on 17/10/15.
+ *  Sets the view elements for user medal
  */
 public class UserMedalAdapter extends BaseAdapter {
     private List<String> medalNames;
     private UserMedal userMedal;
-    private TextView title;
     private TextView currentText;
     private TextView maxText;
     private ImageView medalImage;
@@ -69,7 +69,7 @@ public class UserMedalAdapter extends BaseAdapter {
             row = convertView;
         }
 
-        title = (TextView) row.findViewById(R.id.medalTitle);
+        TextView title = (TextView) row.findViewById(R.id.medalTitle);
         currentText = (TextView) row.findViewById(R.id.currentText);
         maxText = (TextView) row.findViewById(R.id.maxText);
         medalImage = (ImageView) row.findViewById(R.id.medalImage);

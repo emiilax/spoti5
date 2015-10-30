@@ -20,11 +20,6 @@ import com.example.spoti5.ecobussing.R;
  */
 public class CompanySwipeFragment extends Fragment {
 
-    private ViewPager pager;
-    private FragmentStatePagerAdapter adapter;
-    private TabLayout tabLayout;
-    private View view;
-
     private CharSequence titles[];
     private int nbrTabs;
 
@@ -32,16 +27,16 @@ public class CompanySwipeFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.profile_swipe, container, false);
+        View view = inflater.inflate(R.layout.profile_swipe, container, false);
         titles = new CharSequence[2];
 
         initTabInfo();
 
-        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), titles, nbrTabs);
-        pager = (ViewPager) view.findViewById(R.id.profilePager);
+        FragmentStatePagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), titles, nbrTabs);
+        ViewPager pager = (ViewPager) view.findViewById(R.id.profilePager);
         pager.setAdapter(adapter);
 
-        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(pager);
         tabLayout.setSelectedTabIndicatorHeight(3);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#000000"));

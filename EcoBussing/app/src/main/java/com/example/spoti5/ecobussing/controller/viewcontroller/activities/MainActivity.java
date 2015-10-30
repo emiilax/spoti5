@@ -66,7 +66,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private ListView drawerListLeft;
     private FrameLayout drawerListRight;
     private ListView searchListView;
-    private Tools tools;
 
     private Stack<Fragment> prevFragments;
 
@@ -86,7 +85,6 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     private List<? super Fragment> fragmentsVisited;
 
     private IUser currentUser;
-    private boolean connected;
 
     private String title;
 
@@ -97,7 +95,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         currentUser = SaveHandler.getCurrentUser();
         database = DatabaseHolder.getDatabase();
-        connected = currentUser.getCompany().equals("");
+        Boolean connected = currentUser.getCompany().equals("");
 
         fragmentsVisitedName = new ArrayList<>();
         fragmentsVisited = new ArrayList<>();
@@ -140,7 +138,7 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
 
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        tools = Tools.getInstance();
+        Tools tools = Tools.getInstance();
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -156,17 +154,18 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         loadSelection(0);
 
 
-        startFirstFragemnt();
+        startFirstFragment();
     }
 
-    private void startFirstFragemnt() {
+    //starts profileview fragment
+    private void startFirstFragment() {
         IUser user = SaveHandler.getCurrentUser();
         String title = "Min profil";
         ProfileViewFragment profileView = ProfileViewFragment.newInstance(user);
         changeFragment(title, profileView);
     }
 
-
+    //rezizes logo in header to be smaller
     private Drawable rezizedDrawable() {
         Drawable logo = getResources().getDrawable(R.drawable.logo_compact);
         Bitmap mp = ((BitmapDrawable) logo).getBitmap();
@@ -319,14 +318,14 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
     }
 
 
-
+    /**
+     * Makes sure that when back is pressed the correct occurs.
+     * Loads list correctly or closes the sideview on back pressed
+     */
     @Override
     public void onBackPressed(){
 
         int count = prevFragments.size();
-
-
-        System.out.println("Stack size: " + count );
         if(drawerLayout.isDrawerOpen(drawerListLeft)){
 
             drawerLayout.closeDrawer(drawerListLeft);
@@ -374,6 +373,11 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         SaveHandler.changeUser(null);
     }
 
+    /**
+     * Changes fragment to a specified profile of a user
+     * @param profile The user or company that will be shown
+     * @param t Name of the title in the header
+     */
     public void changeToProfileFragment(IProfile profile, String t) {
         ProfileViewFragment profileView = ProfileViewFragment.newInstance(profile);
         changeFragment(t, profileView);
@@ -386,6 +390,10 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         }
     }
 
+    /**
+     * Used to generate the left side navigation bar and add company settings or not
+     * @param connected true if user is connected to company, otherwise false
+     */
     public void updateList(boolean connected) {
         listAdapter.changeLayout(connected);
         drawerListLeft.setAdapter(listAdapter);
@@ -396,6 +404,9 @@ public class MainActivity extends ActivityController implements AdapterView.OnIt
         searchListView.setAdapter(searchAdapter);
     }
 
+    /**
+     * Searches automatically when enter is pressed on virtual keyboard in searchview
+     */
     boolean timerRunning = false;
     View.OnKeyListener autoSearch = new View.OnKeyListener() {
         @Override

@@ -241,6 +241,7 @@ public class DatabaseCompany {
     private void updatePointMap(){
         if(pointSavedMap == null || !oldPointJson.equals(pointJson)){
             Gson gson = new Gson();
+            //noinspection unchecked,unchecked
             pointSavedMap = gson.fromJson(this.getPointJson(), DeepMap.class);
             oldPointJson = this.getPointJson();
         }
@@ -249,6 +250,7 @@ public class DatabaseCompany {
     private void updateCo2Map(){
         if(co2SavedMap == null || !oldCo2Json.equals(co2Json)){
             Gson gson = new Gson();
+            //noinspection unchecked
             co2SavedMap = gson.fromJson(this.getCo2Json(), DeepMap.class);
             oldCo2Json = this.getCo2Json();
         }

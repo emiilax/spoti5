@@ -36,11 +36,10 @@ import java.text.DecimalFormat;
  */
 public class ProfileViewFragment extends Fragment{
     private View view;
+    private ViewPager viewPager1;
+    private ViewPager viewPager2;
     private IProfile thisProfile;
     private static final Calculator calc = Calculator.getCalculator();
-    private Button connectCompanyButton;
-    private ProfilePagerAdapter pagerAdapter1;
-    private ProfilePagerAdapter pagerAdapter2;
 
     public ProfileViewFragment() {
         // Required empty public constructor
@@ -60,7 +59,7 @@ public class ProfileViewFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_profile_view, container, false);
 
         view = setMPagerAdapter(view);
-        connectCompanyButton = (Button)view.findViewById(R.id.connectButton_company);
+        Button connectCompanyButton = (Button)view.findViewById(R.id.connectButton_company);
         connectCompanyButton.setOnClickListener(connectToCompany);
 
         setDataStrings(view);
@@ -85,6 +84,7 @@ public class ProfileViewFragment extends Fragment{
     };
 
     private View setMPagerAdapter(View viewen) {
+
         setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager), 1, true);
         setupPager(viewen, (ViewPager)view.findViewById(R.id.profilePager2), 2, false);
         return viewen;

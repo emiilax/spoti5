@@ -23,7 +23,6 @@ import java.io.IOException;
  */
 public class SimulatedTripFragment extends Fragment implements View.OnClickListener {
 
-    private View view;
     private Button startStop;
     private TextView start;
     private TextView stop;
@@ -36,7 +35,7 @@ public class SimulatedTripFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view =inflater.inflate(R.layout.fragment_simulate_trip,container,false);
+        View view =inflater.inflate(R.layout.fragment_simulate_trip,container,false);
 
         startStop = (Button)view.findViewById(R.id.btnStartTrip);
         start = (TextView) view.findViewById(R.id.txtvStart);

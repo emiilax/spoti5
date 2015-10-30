@@ -14,7 +14,6 @@ import com.example.spoti5.ecobussing.R;
 public class ProfilePagerListener implements ViewPager.OnPageChangeListener {
     private ImageView dot1, dot2, dot3;
 
-    //Should probably do this with a list of some sort instead
     public ProfilePagerListener(View view, int n){
         switch(n){
             case 1:
@@ -37,7 +36,6 @@ public class ProfilePagerListener implements ViewPager.OnPageChangeListener {
 
     @Override
     public void onPageSelected(int position) {
-        //Should probably do this with a list of some sort instead
         switch(position){
             case 0:
                 setBigDot(dot1);

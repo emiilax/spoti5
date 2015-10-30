@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * This test class tests the User, Company as well as the iUser, iCompany and DeepMap classes
  * Created by Hampus on 2015-10-27.
  */
 public class UserTestJUnit {
@@ -138,5 +139,4 @@ public class UserTestJUnit {
 
         assertTrue(initTimes == (testUser.getTotaltTimesTraveled() - 4));
     }
-
 }

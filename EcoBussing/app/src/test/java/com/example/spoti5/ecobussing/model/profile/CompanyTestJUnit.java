@@ -8,6 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * This test class tests the Company class
  * Created by Hampus on 2015-10-29.
  */
 public class CompanyTestJUnit {

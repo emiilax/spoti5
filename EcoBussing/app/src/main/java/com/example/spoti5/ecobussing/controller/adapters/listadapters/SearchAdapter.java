@@ -16,14 +16,15 @@ import java.util.List;
 
 /**
  * Created by Erik on 2015-10-13.
+ * Does a search depending on input and shows result in list
  */
 public class SearchAdapter extends BaseAdapter {
     private List<IProfile> searchResults;
     private Context context;
-    private Tools simpelSearch = Tools.getInstance();
 
     public SearchAdapter(Context context, String searchWord){
         this.context = context;
+        Tools simpelSearch = Tools.getInstance();
         if(searchWord.equals("")) {
             searchWord = "---";
         }

@@ -20,11 +20,9 @@ import com.example.spoti5.ecobussing.controller.adapters.pageradapter.ToplistPag
  * Created by Erik on 2015-10-17.
  */
 public class MedalFragment extends Fragment {
-    private Activity currentActivity;
-    private View view;
-    private ListView listView;
     private int medalType;
     private ListAdapter listAdapter;
+    private Activity currentActivity;
 
     public static final int USER_MEDALS = 0;
     public static final int COMPANY_MEDALS = 1;
@@ -46,10 +44,10 @@ public class MedalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.medal_list, container, false);
+        View view = inflater.inflate(R.layout.medal_list, container, false);
 
         currentActivity = getActivity();
-        listView = (ListView)view.findViewById(R.id.medalList);
+        ListView listView = (ListView)view.findViewById(R.id.medalList);
 
         listAdapter = selectMedal();
 

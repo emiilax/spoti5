@@ -25,11 +25,9 @@ import java.util.TimerTask;
  */
 public class LoginActivity extends ActivityController implements IDatabaseConnected{
 
-    private Button loginButton;
     private TextView emailField;
     private TextView passwordField;
     private IDatabase database;
-    private TextView register;
     private Tools tools;
 
     @Override
@@ -38,13 +36,13 @@ public class LoginActivity extends ActivityController implements IDatabaseConnec
 
         setContentView(R.layout.login_screen);
 
-        loginButton = (Button) findViewById(R.id.loginButton);
+        Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(login);
         tools = Tools.getInstance();
 
         emailField = (TextView) findViewById(R.id.emailField);
         passwordField = (TextView) findViewById(R.id.passwordField);
-        register = (TextView) findViewById(R.id.register_label);
+        TextView register = (TextView) findViewById(R.id.register_label);
 
         register.setOnClickListener(registerListener);
         passwordField.setOnKeyListener(autoLogin);

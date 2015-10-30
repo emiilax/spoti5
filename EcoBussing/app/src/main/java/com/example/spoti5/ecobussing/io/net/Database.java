@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * Created by matildahorppu on 30/09/15.
+ * This class handles all connection to the Firebase database. It holds toplists for companies
+ * and users that are sorted by themselfs on the database
  */
 public class Database implements IDatabase {
 
@@ -120,9 +122,9 @@ public class Database implements IDatabase {
      */
     @Override
     public int getPosition(Company comp){
-        int index = 0;
+        int index = topListAllCompanies.size();
         for(IProfile u: topListAllCompanies){
-            if(u.getName().equals(u.getName())){
+            if(u.getName().equals(comp.getName())){
                 return index;
             }
             index = index -1;
