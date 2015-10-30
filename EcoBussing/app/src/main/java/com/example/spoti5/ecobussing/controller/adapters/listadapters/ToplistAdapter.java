@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
-import com.example.spoti5.ecobussing.model.profile.Company;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.Company;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.example.spoti5.ecobussing.R;
 
 import java.text.DecimalFormat;

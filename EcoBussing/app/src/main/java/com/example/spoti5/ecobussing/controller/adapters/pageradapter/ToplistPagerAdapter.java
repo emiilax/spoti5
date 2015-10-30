@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.spoti5.ecobussing.view.fragments.ToplistFragment;
+import com.example.spoti5.ecobussing.controller.viewcontroller.fragments.ToplistFragment;
 
 /**
  * Created by Emil Axelsson on 03/10/15.
@@ -47,7 +47,7 @@ public class ToplistPagerAdapter extends FragmentStatePagerAdapter {
     // Used to update the views
     @Override
     public int getItemPosition(Object object) {
-        notifyDataSetChanged();
+       // notifyDataSetChanged();
         return POSITION_NONE;
         //return super.getItemPosition(object);
     }

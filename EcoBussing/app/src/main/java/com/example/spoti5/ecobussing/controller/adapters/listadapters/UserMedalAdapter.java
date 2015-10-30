@@ -84,7 +84,9 @@ public class UserMedalAdapter extends BaseAdapter {
         return row;
     }
 
-
+    /*
+    Sets all values to the medal view, such as progress, pictures etc.
+     */
     private View saveTogheterMedal(View row) {
         DecimalFormat df = new DecimalFormat("#.00");
 
@@ -116,7 +118,7 @@ public class UserMedalAdapter extends BaseAdapter {
         int perDone = userMedal.getTravelMorePercantage();
         progBar.setProgress(perDone);
 
-        if(perDone > 100) {
+        if(perDone < 100) {
             medalImage.setImageResource(R.drawable.bus);
         }else {
             medalImage.setImageResource(R.drawable.colorizedbus);

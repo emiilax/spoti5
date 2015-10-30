@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 
 import com.example.spoti5.ecobussing.R;
 import com.example.spoti5.ecobussing.controller.SaveHandler;
-import com.example.spoti5.ecobussing.model.profile.Company;
-import com.example.spoti5.ecobussing.model.profile.User;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IProfile;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.Company;
+import com.example.spoti5.ecobussing.controller.profile.User;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IProfile;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;

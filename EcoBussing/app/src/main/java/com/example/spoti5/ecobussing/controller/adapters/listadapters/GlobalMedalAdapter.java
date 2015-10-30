@@ -83,6 +83,9 @@ public class GlobalMedalAdapter extends BaseAdapter {
         return row;
     }
 
+    /*
+    Sets all values to the medal view, such as progress, pictures etc.
+     */
     private View saveTogheterMedal(View row) {
 
         DecimalFormat df = new DecimalFormat("#.00");

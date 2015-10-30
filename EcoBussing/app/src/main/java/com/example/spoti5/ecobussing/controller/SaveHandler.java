@@ -1,12 +1,12 @@
 package com.example.spoti5.ecobussing.controller;
 import android.content.Context;
 
-import com.example.spoti5.ecobussing.Activites.ActivityController;
+import com.example.spoti5.ecobussing.controller.viewcontroller.activities.ActivityController;
 import com.example.spoti5.ecobussing.controller.database.DatabaseHolder;
 import com.example.spoti5.ecobussing.controller.database.interfaces.IDatabase;
 import com.example.spoti5.ecobussing.model.profile.DatabaseUser;
-import com.example.spoti5.ecobussing.model.profile.User;
-import com.example.spoti5.ecobussing.model.profile.interfaces.IUser;
+import com.example.spoti5.ecobussing.controller.profile.User;
+import com.example.spoti5.ecobussing.controller.profile.interfaces.IUser;
 
 
 import java.io.FileInputStream;
