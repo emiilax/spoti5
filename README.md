@@ -32,6 +32,7 @@ If you already have started Android Studio, press File > Open > (find the projec
 Make sure to open the EcoBussing folder when opening in Android studio.
 
 If you want to see diagrams in a profile, log in with Et-mannen or search for him. 
+
 	Username: et@mannen.se
 	Password: Qwertyu
 
