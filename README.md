@@ -44,3 +44,10 @@ To try our devmode and simulate a trip you have to switch branch. You do this by
 
 
 All documentation files are in the folder "Documentation"
+
+## Team members: 
+- Emil Axelsson - emiilax
+- Johannes Hildén - hildenjohannes
+- Matilda Horppu - MatildaHorppu
+- Erik Karlkvist - ErikKarlkvist
+- Hampus Rönström - ClausX
