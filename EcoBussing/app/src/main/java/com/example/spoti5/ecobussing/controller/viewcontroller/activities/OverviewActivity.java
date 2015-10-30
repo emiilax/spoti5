@@ -12,8 +12,8 @@ import com.example.spoti5.ecobussing.controller.SaveHandler;
 
 /**
  * Created by hilden on 2015-09-17.
- * A class to store the animations that displays your increase in saved carbondioxide.
- *
+ * A class to store the animations that displays when you open the app and has increased in
+ * saved carbon dioxide since last startup.
  */
 public class OverviewActivity extends ActivityController {
 
@@ -39,7 +39,6 @@ public class OverviewActivity extends ActivityController {
     }
 
     private void setOverviewText() {
-        System.out.println("-------------------------------------------------------------------------- " + currentDistance);
         currentDistance = SaveHandler.getCurrentUser().getCurrentDistance();
         double currentCO2Saved = Calculator.getCalculator().calculateCarbonSaved(currentDistance);
         double totCO2Saved = SaveHandler.getCurrentUser().getCO2Saved();
@@ -49,6 +48,7 @@ public class OverviewActivity extends ActivityController {
         animateTextView((totCO2Saved - currentCO2Saved)*1000, (totCO2Saved)*1000, textViewTotal);
     }
 
+    //SetOverviewText helpmethod.
     private double transformValue(double value) {
         value = value * 1000;
         int tempValue = (int)value;

@@ -8,6 +8,9 @@ import java.util.Map;
 
 /**
  * Created by hilden on 2015-10-07.
+ * A class to be able to store a specific value to a specific date.
+ * Uses three hashmaps inside each other where the keys act as year, month, and day.
+ * Also uses Java Calendar class to be able to calculate today's date.
 */
 public class DeepMap<K1, K2, K3, V> implements Serializable{
 
